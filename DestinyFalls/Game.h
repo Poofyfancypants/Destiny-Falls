@@ -52,7 +52,7 @@ private:
 
 	Game( const Game& ) = delete;	// copy constructor
 	Game& operator= ( const Game& ) = delete;	// assignment operator
-
+	void GetGame();
 
 };
 
