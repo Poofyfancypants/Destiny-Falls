@@ -1,59 +1,84 @@
-﻿Build started 11/4/2014 8:21:27 PM.
-     1>Project "C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\DestinyFalls.vcxproj" on node 2 (Build target(s)).
+﻿Build started 11/4/2014 8:24:41 PM.
+     1>Project "C:\Users\Numi\Desktop\FullSail\SGP\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         F:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\DestinyFalls.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp WinMain.cpp
-         Game.cpp
-         Generating Code...
-     1>cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
-         Compiling...
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\DestinyFalls.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt AnimatedObject.cpp AnimationManager.cpp Chest.cpp CombatState.cpp Companion.cpp CreditState.cpp DestinyFalls.cpp Enemy.cpp FinalBoss.cpp FireTrap.cpp GamePauseState.cpp GameplayState.cpp IGameState.cpp IListener.cpp Inventory.cpp LevelBoss.cpp MainMenuState.cpp MiniBoss.cpp Minion.cpp MovingObject.cpp Object.cpp OptionsState.cpp ParticleManager.cpp Player.cpp "SGD Wrappers\SGD_Event.cpp" "SGD Wrappers\SGD_EventManager.cpp" "SGD Wrappers\SGD_Geometry.cpp" "SGD Wrappers\SGD_Listener.cpp" "SGD Wrappers\SGD_Message.cpp" "SGD Wrappers\SGD_MessageManager.cpp" SpikeTrap.cpp StaticObject.cpp TileManager.cpp Trap.cpp WinMain.cpp iObject.cpp
+         iObject.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\iobject.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
          WinMain.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\winmain.cpp(16): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         Trap.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\trap.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         TileManager.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\tilemanager.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         StaticObject.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\staticobject.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         SpikeTrap.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\spiketrap.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         SGD_MessageManager.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\sgd wrappers\sgd_messagemanager.cpp(15): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         SGD_Message.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\sgd wrappers\sgd_message.cpp(15): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         SGD_Listener.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\sgd wrappers\sgd_listener.cpp(15): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         SGD_Geometry.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\sgd wrappers\sgd_geometry.cpp(24): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         SGD_EventManager.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\sgd wrappers\sgd_eventmanager.cpp(15): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         SGD_Event.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\sgd wrappers\sgd_event.cpp(15): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         Player.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\player.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         ParticleManager.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\particlemanager.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         OptionsState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\optionsstate.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         Object.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\object.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         MovingObject.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\movingobject.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         Minion.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\minion.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         MiniBoss.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\miniboss.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         MainMenuState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\mainmenustate.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
          Generating Code...
-       Link:
-         F:\VS2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.lib" /MACHINE:X86 Debug\DestinyFalls.res
-         Debug\AnimatedObject.obj
-         Debug\AnimationManager.obj
-         Debug\Chest.obj
-         Debug\CombatState.obj
-         Debug\Companion.obj
-         Debug\CreditState.obj
-         Debug\DestinyFalls.obj
-         Debug\Enemy.obj
-         Debug\FinalBoss.obj
-         Debug\FireTrap.obj
-         Debug\Game.obj
-         Debug\GamePauseState.obj
-         Debug\GameplayState.obj
-         Debug\IGameState.obj
-         Debug\IListener.obj
-         Debug\Inventory.obj
-         Debug\iObject.obj
-         Debug\LevelBoss.obj
-         Debug\MainMenuState.obj
-         Debug\MiniBoss.obj
-         Debug\Minion.obj
-         Debug\MovingObject.obj
-         Debug\Object.obj
-         Debug\OptionsState.obj
-         Debug\ParticleManager.obj
-         Debug\Player.obj
-         Debug\SGD_AudioManager.obj
-         Debug\SGD_Event.obj
-         Debug\SGD_EventManager.obj
-         Debug\SGD_Geometry.obj
-         Debug\SGD_GraphicsManager.obj
-         Debug\SGD_InputManager.obj
-         Debug\SGD_Listener.obj
-         Debug\SGD_Message.obj
-         Debug\SGD_MessageManager.obj
-         Debug\SpikeTrap.obj
-         Debug\StaticObject.obj
-         Debug\stdafx.obj
-         Debug\TileManager.obj
-         Debug\Trap.obj
-         Debug\WinMain.obj
-         DestinyFalls.vcxproj -> C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.exe
-     1>Done Building Project "C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\DestinyFalls.vcxproj" (Build target(s)).
+         Compiling...
+         LevelBoss.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\levelboss.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         Inventory.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\inventory.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         IListener.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\ilistener.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         IGameState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\igamestate.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         GameplayState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\gameplaystate.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         GamePauseState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\gamepausestate.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         FireTrap.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\firetrap.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         FinalBoss.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\finalboss.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         Enemy.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\enemy.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         DestinyFalls.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\destinyfalls.cpp(4): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         CreditState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\creditstate.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         Companion.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\companion.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         CombatState.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\combatstate.cpp(1): fatal error C1041: cannot open program database 'c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.pdb'; if multiple CL.EXE write to the same .PDB file, please use /FS
+         Chest.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\chest.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         AnimationManager.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\animationmanager.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         AnimatedObject.cpp
+     1>c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\animatedobject.cpp(1): error C2859: c:\users\numi\desktop\fullsail\sgp\destiny-falls\destinyfalls\debug\vc120.idb is not the idb file that was used when this precompiled header was created, recreate the precompiled header.
+         Generating Code...
+     1>Done Building Project "C:\Users\Numi\Desktop\FullSail\SGP\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.37
+Time Elapsed 00:00:01.31
