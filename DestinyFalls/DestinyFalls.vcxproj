@@ -77,17 +77,101 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedObject.h" />
+    <ClInclude Include="AnimationManager.h" />
+    <ClInclude Include="Chest.h" />
+    <ClInclude Include="CombatState.h" />
+    <ClInclude Include="Companion.h" />
+    <ClInclude Include="CreditState.h" />
     <ClInclude Include="DestinyFalls.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FinalBoss.h" />
+    <ClInclude Include="FireTrap.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="GamePauseState.h" />
+    <ClInclude Include="GameplayState.h" />
+    <ClInclude Include="IGameState.h" />
+    <ClInclude Include="IListener.h" />
+    <ClInclude Include="Inventory.h" />
+    <ClInclude Include="iObject.h" />
+    <ClInclude Include="LevelBoss.h" />
+    <ClInclude Include="MainMenuState.h" />
+    <ClInclude Include="MiniBoss.h" />
+    <ClInclude Include="Minion.h" />
+    <ClInclude Include="MovingObject.h" />
+    <ClInclude Include="Object.h" />
+    <ClInclude Include="OptionsState.h" />
+    <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Color.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Declarations.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Event.h" />
+    <ClInclude Include="SGD Wrappers\SGD_EventManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Geometry.h" />
+    <ClInclude Include="SGD Wrappers\SGD_GraphicsManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Handle.h" />
+    <ClInclude Include="SGD Wrappers\SGD_HandleManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_HandleManager.hpp" />
+    <ClInclude Include="SGD Wrappers\SGD_InputManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Key.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Listener.h" />
+    <ClInclude Include="SGD Wrappers\SGD_Message.h" />
+    <ClInclude Include="SGD Wrappers\SGD_MessageManager.h" />
+    <ClInclude Include="SGD Wrappers\SGD_String.h" />
+    <ClInclude Include="SpikeTrap.h" />
+    <ClInclude Include="StaticObject.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TileManager.h" />
+    <ClInclude Include="Trap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedObject.cpp" />
+    <ClCompile Include="AnimationManager.cpp" />
+    <ClCompile Include="Chest.cpp" />
+    <ClCompile Include="CombatState.cpp" />
+    <ClCompile Include="Companion.cpp" />
+    <ClCompile Include="CreditState.cpp" />
     <ClCompile Include="DestinyFalls.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FinalBoss.cpp" />
+    <ClCompile Include="FireTrap.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GamePauseState.cpp" />
+    <ClCompile Include="GameplayState.cpp" />
+    <ClCompile Include="IGameState.cpp" />
+    <ClCompile Include="IListener.cpp" />
+    <ClCompile Include="Inventory.cpp" />
+    <ClCompile Include="iObject.cpp" />
+    <ClCompile Include="LevelBoss.cpp" />
+    <ClCompile Include="MainMenuState.cpp" />
+    <ClCompile Include="MiniBoss.cpp" />
+    <ClCompile Include="Minion.cpp" />
+    <ClCompile Include="MovingObject.cpp" />
+    <ClCompile Include="Object.cpp" />
+    <ClCompile Include="OptionsState.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_Event.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_EventManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_Geometry.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_GraphicsManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_InputManager.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_Listener.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_Message.cpp" />
+    <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp" />
+    <ClCompile Include="SpikeTrap.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="TileManager.cpp" />
+    <ClCompile Include="Trap.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc" />

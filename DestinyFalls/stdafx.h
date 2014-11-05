@@ -12,6 +12,7 @@
 #include <windows.h>
 
 // C RunTime Header Files
+
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
@@ -19,3 +20,4 @@
 
 
 // TODO: reference additional headers your program requires here
+#include "SGD Wrappers\SGD_Declarations.h"

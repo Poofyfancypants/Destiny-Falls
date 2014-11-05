@@ -1,0 +1,59 @@
+﻿Build started 11/4/2014 8:21:27 PM.
+     1>Project "C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\DestinyFalls.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         F:\VS2013\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\DestinyFalls.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt Game.cpp WinMain.cpp
+         Game.cpp
+         Generating Code...
+     1>cl : Command line warning D9028: minimal rebuild failure, reverting to normal build
+         Compiling...
+         WinMain.cpp
+         Generating Code...
+       Link:
+         F:\VS2013\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.lib" /MACHINE:X86 Debug\DestinyFalls.res
+         Debug\AnimatedObject.obj
+         Debug\AnimationManager.obj
+         Debug\Chest.obj
+         Debug\CombatState.obj
+         Debug\Companion.obj
+         Debug\CreditState.obj
+         Debug\DestinyFalls.obj
+         Debug\Enemy.obj
+         Debug\FinalBoss.obj
+         Debug\FireTrap.obj
+         Debug\Game.obj
+         Debug\GamePauseState.obj
+         Debug\GameplayState.obj
+         Debug\IGameState.obj
+         Debug\IListener.obj
+         Debug\Inventory.obj
+         Debug\iObject.obj
+         Debug\LevelBoss.obj
+         Debug\MainMenuState.obj
+         Debug\MiniBoss.obj
+         Debug\Minion.obj
+         Debug\MovingObject.obj
+         Debug\Object.obj
+         Debug\OptionsState.obj
+         Debug\ParticleManager.obj
+         Debug\Player.obj
+         Debug\SGD_AudioManager.obj
+         Debug\SGD_Event.obj
+         Debug\SGD_EventManager.obj
+         Debug\SGD_Geometry.obj
+         Debug\SGD_GraphicsManager.obj
+         Debug\SGD_InputManager.obj
+         Debug\SGD_Listener.obj
+         Debug\SGD_Message.obj
+         Debug\SGD_MessageManager.obj
+         Debug\SpikeTrap.obj
+         Debug\StaticObject.obj
+         Debug\stdafx.obj
+         Debug\TileManager.obj
+         Debug\Trap.obj
+         Debug\WinMain.obj
+         DestinyFalls.vcxproj -> C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\Debug\DestinyFalls.exe
+     1>Done Building Project "C:\Users\fullsail\Desktop\Destiny-FallsRepo\DestinyFalls\DestinyFalls.vcxproj" (Build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:01.37
