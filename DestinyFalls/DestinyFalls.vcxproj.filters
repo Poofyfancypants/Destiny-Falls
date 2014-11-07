@@ -1,14 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -25,23 +17,24 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{29f4c247-0ebf-47e9-a945-43f1839904f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Messages">
+      <UniqueIdentifier>{8b5af297-87f0-4dd1-abe7-1444ce030dc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game Core">
+      <UniqueIdentifier>{c209ec01-b893-4f20-9616-5ffc78bef0b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engines">
+      <UniqueIdentifier>{b682ae03-8159-4ba6-bc4f-436127f40800}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DestinyFalls.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SGD Wrappers\SGD_AudioManager.h">
       <Filter>SGD Wrappers</Filter>
     </ClInclude>
@@ -141,9 +134,6 @@
     <ClInclude Include="Inventory.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
-    <ClInclude Include="IListener.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="IGameState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
@@ -174,17 +164,13 @@
     <ClInclude Include="AnimationManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="DestinyFalls.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DestinyFalls.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
       <Filter>SGD Wrappers</Filter>
     </ClCompile>
@@ -239,9 +225,6 @@
     <ClCompile Include="SpikeTrap.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
-    <ClCompile Include="WinMain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Companion.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
@@ -265,9 +248,6 @@
     </ClCompile>
     <ClCompile Include="Inventory.cpp">
       <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="IListener.cpp">
-      <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="IGameState.cpp">
       <Filter>GameStates</Filter>
@@ -299,9 +279,10 @@
     <ClCompile Include="AnimationManager.cpp">
       <Filter>Managers</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClCompile Include="DestinyFalls.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">

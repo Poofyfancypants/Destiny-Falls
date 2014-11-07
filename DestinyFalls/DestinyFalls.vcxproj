@@ -41,6 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>D:\Full Sail\DirectX SDK\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Full Sail\DirectX SDK\Lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -91,7 +93,6 @@
     <ClInclude Include="GamePauseState.h" />
     <ClInclude Include="GameplayState.h" />
     <ClInclude Include="IGameState.h" />
-    <ClInclude Include="IListener.h" />
     <ClInclude Include="Inventory.h" />
     <ClInclude Include="iObject.h" />
     <ClInclude Include="LevelBoss.h" />
@@ -142,7 +143,6 @@
     <ClCompile Include="GamePauseState.cpp" />
     <ClCompile Include="GameplayState.cpp" />
     <ClCompile Include="IGameState.cpp" />
-    <ClCompile Include="IListener.cpp" />
     <ClCompile Include="Inventory.cpp" />
     <ClCompile Include="iObject.cpp" />
     <ClCompile Include="LevelBoss.cpp" />
