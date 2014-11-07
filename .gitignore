@@ -1,10 +1,8 @@
-*.sdf
+
 *.opensdf
-*.suo
-*.user
-ipch
-Debug
-Release
+/DestinyFalls/*.suo
+/DestinyFalls/*.user
+
 /UnitTester/Defines.h
 
 # Compiled Object files
@@ -35,3 +33,6 @@ Release
 *.exe
 *.out
 *.app
+/DestinyFalls/Debug
+/DestinyFalls/ipch
+/DestinyFalls/*.sdf
