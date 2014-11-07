@@ -17,10 +17,6 @@
     <Filter Include="Managers">
       <UniqueIdentifier>{29f4c247-0ebf-47e9-a945-43f1839904f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Messages">
       <UniqueIdentifier>{8b5af297-87f0-4dd1-abe7-1444ce030dc9}</UniqueIdentifier>
     </Filter>
@@ -83,92 +79,96 @@
     <ClInclude Include="SGD Wrappers\SGD_String.h">
       <Filter>SGD Wrappers</Filter>
     </ClInclude>
-    <ClInclude Include="iObject.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="StaticObject.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimatedObject.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="MovingObject.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Trap.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="FireTrap.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Chest.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="SpikeTrap.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Companion.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Minion.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="FinalBoss.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="LevelBoss.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="MiniBoss.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Inventory.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="IGameState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="MainMenuState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="GameplayState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="OptionsState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="CombatState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="CreditState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="GamePauseState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="TileManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="ParticleManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="AnimationManager.h">
-      <Filter>Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h" />
-    <ClInclude Include="DestinyFalls.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Source\Game Objects\AnimatedObject.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Chest.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Companion.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Enemy.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\FinalBoss.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\FireTrap.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Inventory.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\iObject.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\LevelBoss.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\MiniBoss.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Minion.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\MovingObject.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Object.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Player.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\SpikeTrap.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\StaticObject.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Trap.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\AnimationManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\ParticleManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\TileManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Core\DestinyFalls.h">
+      <Filter>Game Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Core\Game.h">
+      <Filter>Game Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\CombatState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\CreditState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\GamePauseState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\GameplayState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\IGameState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\MainMenuState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\OptionsState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -198,91 +198,97 @@
     <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp">
       <Filter>SGD Wrappers</Filter>
     </ClCompile>
-    <ClCompile Include="iObject.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Object.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="StaticObject.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimatedObject.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="MovingObject.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Trap.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Chest.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="FireTrap.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="SpikeTrap.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Companion.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="FinalBoss.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="LevelBoss.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="MiniBoss.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Minion.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Inventory.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="IGameState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="MainMenuState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="CombatState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="GameplayState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="OptionsState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="CreditState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="GamePauseState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="TileManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="ParticleManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationManager.cpp">
-      <Filter>Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="DestinyFalls.cpp" />
-    <ClCompile Include="Game.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="WinMain.cpp" />
+    <ClCompile Include="Source\Game Objects\AnimatedObject.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Chest.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Companion.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Enemy.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\FinalBoss.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\FireTrap.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Inventory.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\iObject.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\LevelBoss.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\MiniBoss.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Minion.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\MovingObject.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Object.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Player.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\SpikeTrap.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\StaticObject.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Trap.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\AnimationManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\ParticleManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\TileManager.cpp">
+      <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Core\DestinyFalls.cpp">
+      <Filter>Game Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Core\Game.cpp">
+      <Filter>Game Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Core\WinMain.cpp">
+      <Filter>Game Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\CombatState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\CreditState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\GamePauseState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\GameplayState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\IGameState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\MainMenuState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\OptionsState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">

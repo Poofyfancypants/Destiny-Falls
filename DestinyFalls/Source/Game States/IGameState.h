@@ -1,7 +1,7 @@
 #pragma once
-#include "IListener.h"
-class IGameState :
-	public IListener
+#include "../../SGD Wrappers/SGD_Listener.h"
+
+class IGameState
 {
 public:
 	IGameState();

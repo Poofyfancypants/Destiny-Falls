@@ -10,7 +10,7 @@
 #define GAME_H
 
 #include <vector>
-#include "SGD Wrappers/SGD_Handle.h"
+#include "../../SGD Wrappers/SGD_Handle.h"
 /**************************************************************/
 // Forward class declaration
 //	- tells the compiler that the type exists
