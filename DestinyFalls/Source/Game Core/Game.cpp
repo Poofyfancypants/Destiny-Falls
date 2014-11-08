@@ -14,7 +14,6 @@
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
-
 /**************************************************************/
 // Singleton
 //	- instantiate the static member
@@ -37,7 +36,6 @@
 	delete s_pInstance;
 	s_pInstance = nullptr;
 }
-
 
 /**************************************************************/
 // Initialize
@@ -63,7 +61,6 @@ bool Game::Initialize( float width, float height )
 	return true;	// success!
 }
 
-
 /**************************************************************/
 // Update
 //	- update the SGD wrappers
@@ -75,7 +72,6 @@ int Game::Update( void )
 		|| SGD::GraphicsManager::GetInstance()->Update() == false
 		|| SGD::InputManager::GetInstance()->Update() == false)
 		return -10;		// exit FAILURE!
-	
 
 	unsigned long now = GetTickCount();					// current time in milliseconds
 	float elapsedTime = (now - m_ulGameTime) / 1000.0f;	// convert to fraction of a second
@@ -95,8 +91,10 @@ int Game::Update( void )
 	if (m_nCurrState == pCurrent)
 		m_pStateStack[m_nCurrState]->Update(elapsedTime);
 
-	for( int i = 0; i < (int)m_pStateStack.size()-1; i++ )
+	for( int i = 0; i <= (int)m_pStateStack.size()-1; i++ )
 		m_pStateStack[i]->Render();
+
+	//m_pStateStack[m_nCurrState]->Render();
 
 	return 0;		// keep playing!
 }
@@ -108,7 +106,6 @@ int Game::Update( void )
 //	- terminate the SGD wrappers
 void Game::Terminate( void )
 {
-
 	// Terminate the core SGD wrappers
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
@@ -132,4 +129,13 @@ void Game::RemoveState()
 	m_pStateStack[m_nCurrState]->Exit();
 	m_pStateStack.pop_back();
 	m_nCurrState--;
+}
+
+void Game::ClearStates()
+{
+	for (size_t i = 0; m_pStateStack.size(); i++)
+	{
+		m_pStateStack.pop_back();
+		m_nCurrState--;
+	}
 }

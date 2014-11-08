@@ -79,6 +79,9 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Animation.h" />
+    <ClInclude Include="AnimationTimeStamp.h" />
+    <ClInclude Include="Frame.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_Color.h" />
@@ -125,10 +128,16 @@
     <ClInclude Include="Source\Managers\AnimationManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
+    <ClInclude Include="Source\Messages\MessageID.h" />
+    <ClInclude Include="Source\TinyXML\tinystr.h" />
+    <ClInclude Include="Source\TinyXML\tinyxml.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Animation.cpp" />
+    <ClCompile Include="AnimationTimeStamp.cpp" />
+    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Event.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_EventManager.cpp" />
@@ -167,6 +176,10 @@
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />
+    <ClCompile Include="Source\TinyXML\tinystr.cpp" />
+    <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

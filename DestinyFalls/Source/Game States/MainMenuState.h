@@ -1,13 +1,14 @@
 #pragma once
 #include "IGameState.h"
-#include "../../SGD Wrappers/SGD_GraphicsManager.h"
-#include "../../SGD Wrappers/SGD_AudioManager.h"
+#include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../../SGD Wrappers/SGD_Geometry.h"
 
 class MainMenuState :
 	public IGameState
 {
 public:
 	static MainMenuState* GetInstance(void);
+	enum MenuSelections{play, load, options, howToPlay, credits, exit,};
 
 	virtual void Enter(void)				override;
 	virtual void Exit(void)					override;
@@ -24,5 +25,7 @@ private:
 
 	int m_nCursor = 0;
 	bool m_bSelect = false;
+
+	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
 };
 
