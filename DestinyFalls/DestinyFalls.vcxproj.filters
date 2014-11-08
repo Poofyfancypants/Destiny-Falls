@@ -280,9 +280,6 @@
     <ClCompile Include="Source\Game States\GameplayState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game States\IGameState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game States\MainMenuState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>

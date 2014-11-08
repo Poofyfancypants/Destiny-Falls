@@ -162,7 +162,6 @@
     <ClCompile Include="Source\Game States\CreditState.cpp" />
     <ClCompile Include="Source\Game States\GamePauseState.cpp" />
     <ClCompile Include="Source\Game States\GameplayState.cpp" />
-    <ClCompile Include="Source\Game States\IGameState.cpp" />
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />

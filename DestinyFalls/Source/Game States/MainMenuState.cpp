@@ -1,12 +1,33 @@
 #include "stdafx.h"
 #include "MainMenuState.h"
 
-
-MainMenuState::MainMenuState()
+MainMenuState* MainMenuState::GetInstance()
 {
+	static MainMenuState s_Instance;
+	return &s_Instance;
 }
 
-
-MainMenuState::~MainMenuState()
+void MainMenuState::Enter()
 {
+
+}
+
+void MainMenuState::Exit()
+{
+
+}
+
+bool MainMenuState::Input()
+{
+	return true;
+}
+
+void MainMenuState::Update(float elapsedTime)
+{
+
+}
+
+void MainMenuState::Render()
+{
+
 }
