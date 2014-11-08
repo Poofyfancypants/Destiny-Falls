@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "GameplayState.h"
+#include "../../SGD Wrappers/SGD_MessageManager.h"
+#include "../../SGD Wrappers/SGD_Message.h"
+
 
 GameplayState* GameplayState::GetInstance()
 {
@@ -29,5 +32,19 @@ void GameplayState::Update(float elapsedTime)
 
 void GameplayState::Render()
 {
+
+}
+
+/*static*/ void GameplayState::MessageProc(const SGD::Message* pMsg)
+{
+	switch (pMsg->GetMessageID())
+	{
+	
+	default:
+	{
+			   OutputDebugStringW(L"GameplayState::MessageProc - unknown message id\n");
+	}
+		break;
+	}
 
 }
