@@ -1,7 +1,7 @@
 #pragma once
 #include "IGameState.h"
-#include "../../SGD Wrappers/SGD_GraphicsManager.h"
-#include "../../SGD Wrappers/SGD_AudioManager.h"
+#include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../../SGD Wrappers/SGD_Geometry.h"
 
 class MainMenuState :
 	public IGameState
@@ -24,5 +24,7 @@ private:
 
 	int m_nCursor = 0;
 	bool m_bSelect = false;
+
+	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
 };
 
