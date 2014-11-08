@@ -9,9 +9,19 @@
 #include "stdafx.h"
 #include "Game.h"
 
+#include "../../SGD Wrappers/SGD_AudioManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_InputManager.h"
+#include "../../SGD Wrappers/SGD_String.h"
+
+#include "../Managers/TileManager.h"
+
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
+#include <iostream>
+#include <map>
+#include <string>
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -47,6 +57,12 @@
 //	- enter the Main Menu state
 bool Game::Initialize( float width, float height )
 {
+		// Initialize the wrappers
+	if( SGD::AudioManager::GetInstance()->Initialize() == false
+		|| SGD::GraphicsManager::GetInstance()->Initialize( false ) == false
+		|| SGD::InputManager::GetInstance()->Initialize() == false )
+		return false;
+
 	// Seed First!
 	srand( (unsigned int)time( nullptr ) );
 	rand();
@@ -61,6 +77,13 @@ bool Game::Initialize( float width, float height )
 //	- run the current state
 int Game::Update( void )
 {
+
+	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->DrawString("Test", SGD::Point(50,50),SGD::Color(255,150,150));
+
+	/*TileManager tm;
+	tm.Update();
+*/
 	return 0;		// keep playing!
 }
 
