@@ -1,9 +1,9 @@
 #pragma once
 
 #include "IGameState.h"
-#include "../SGD Wrappers/SGD_Handle.h"		
-#include "../SGD Wrappers/SGD_Declarations.h"
-#include "../SGD Wrappers/SGD_Geometry.h"
+#include "../../SGD Wrappers/SGD_Handle.h"		
+#include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../../SGD Wrappers/SGD_Geometry.h"
 
 class GameplayState :
 	public IGameState
@@ -27,6 +27,8 @@ private:
 	int m_nCursor = 0;
 	bool m_bSelect = false;
 
+	/**********************************************************/
+	// Message Callback Function:
 	static void MessageProc(const SGD::Message* pMsg);
 };
 
