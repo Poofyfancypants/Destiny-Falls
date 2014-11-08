@@ -38,6 +38,7 @@ public:
 
 	void AddState(IGameState* pNewState);	//Add to stack
 	void RemoveState();						//Remove from stack
+	void ClearStates();
 
 private:
 	/**********************************************************/

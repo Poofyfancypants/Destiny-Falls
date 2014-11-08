@@ -133,3 +133,12 @@ void Game::RemoveState()
 	m_pStateStack.pop_back();
 	m_nCurrState--;
 }
+
+void Game::ClearStates()
+{
+	for (size_t i = 0; m_pStateStack.size(); i++)
+	{
+		m_pStateStack.pop_back();
+		m_nCurrState--;
+	}
+}
