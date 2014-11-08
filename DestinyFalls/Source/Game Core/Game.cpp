@@ -75,7 +75,7 @@ int Game::Update( void )
 		|| SGD::GraphicsManager::GetInstance()->Update() == false
 		|| SGD::InputManager::GetInstance()->Update() == false)
 		return -10;		// exit FAILURE!
-
+	
 
 	unsigned long now = GetTickCount();					// current time in milliseconds
 	float elapsedTime = (now - m_ulGameTime) / 1000.0f;	// convert to fraction of a second
@@ -93,10 +93,10 @@ int Game::Update( void )
 
 	// Update & render the current state if it was not changed
 	if (m_nCurrState == pCurrent)
-	{
 		m_pStateStack[m_nCurrState]->Update(elapsedTime);
-		m_pStateStack[m_nCurrState]->Render();
-	}
+
+	for( int i = 0; i < (int)m_pStateStack.size()-1; i++ )
+		m_pStateStack[i]->Render();
 
 	return 0;		// keep playing!
 }
