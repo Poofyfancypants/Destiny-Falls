@@ -2,11 +2,26 @@
 #include "OptionsState.h"
 
 
-OptionsState::OptionsState()
+void OptionsState::Enter()
 {
 }
 
-
-OptionsState::~OptionsState()
+void OptionsState::Exit()
 {
+}
+
+bool OptionsState::Input()
+{
+
+	return true;
+}
+
+void OptionsState::Update(float elapsedTime)
+{
+
+}
+
+void OptionsState::Render()
+{
+
 }

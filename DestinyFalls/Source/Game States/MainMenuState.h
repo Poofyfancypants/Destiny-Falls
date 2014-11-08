@@ -8,6 +8,7 @@ class MainMenuState :
 {
 public:
 	static MainMenuState* GetInstance(void);
+	enum MenuSelections{play, load, options, howToPlay, credits, exit,};
 
 	virtual void Enter(void)				override;
 	virtual void Exit(void)					override;
