@@ -5,6 +5,7 @@
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "MainMenuState.h"
 
 GameplayState* GameplayState::GetInstance()
 {
@@ -29,6 +30,7 @@ bool GameplayState::Input()
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
+		Game::GetInstance()->AddState(MainMenuState::GetInstance());
 	}
 
 	return true;

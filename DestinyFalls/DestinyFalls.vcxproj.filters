@@ -181,6 +181,15 @@
     <ClInclude Include="Source\TinyXML\tinyxml.h">
       <Filter>TinyXML</Filter>
     </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationTimeStamp.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -309,6 +318,15 @@
     </ClCompile>
     <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp">
       <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTimeStamp.cpp">
+      <Filter>Engines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
