@@ -1,10 +1,17 @@
 #pragma once
-#include "../../SGD Wrappers/SGD_Listener.h"
 
 class IGameState
 {
+protected:
+	IGameState() = default;
+	virtual ~IGameState() = default;
+
 public:
-	IGameState();
-	~IGameState();
+	virtual void Enter() = 0;
+	virtual void Exit() = 0;
+
+	virtual bool Input() = 0;
+	virtual void Update(float elapsedTime) = 0;
+	virtual void Render() = 0;
 };
 
