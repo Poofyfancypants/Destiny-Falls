@@ -6,6 +6,8 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "MainMenuState.h"
+#include "../Messages/MessageID.h"
+
 
 GameplayState* GameplayState::GetInstance()
 {
@@ -15,7 +17,7 @@ GameplayState* GameplayState::GetInstance()
 
 void GameplayState::Enter()
 {
-
+	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 }
 
 void GameplayState::Exit()
@@ -38,6 +40,9 @@ bool GameplayState::Input()
 
 void GameplayState::Update(float elapsedTime)
 {
+	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+
+	SGD::MessageManager::GetInstance()->Update();
 
 }
 

@@ -11,9 +11,6 @@
     <Filter Include="Game Objects">
       <UniqueIdentifier>{7eaba937-f3f9-48d6-a0b7-c02eae70d3d6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="GameStates">
-      <UniqueIdentifier>{4b972936-6457-432d-a103-be85b26ecfc7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Managers">
       <UniqueIdentifier>{29f4c247-0ebf-47e9-a945-43f1839904f9}</UniqueIdentifier>
     </Filter>
@@ -28,6 +25,15 @@
     </Filter>
     <Filter Include="TinyXML">
       <UniqueIdentifier>{4a009a88-6cbb-4b3c-879f-78f655af1fb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quick Time">
+      <UniqueIdentifier>{0a761906-5ec9-47d3-959e-4f72572195b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Runes">
+      <UniqueIdentifier>{370f5d01-aab2-40bd-886a-d388ccfc8723}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameStates">
+      <UniqueIdentifier>{4b972936-6457-432d-a103-be85b26ecfc7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -190,6 +196,15 @@
     <ClInclude Include="AnimationTimeStamp.h">
       <Filter>Engines</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Runes\RuneManager.h">
+      <Filter>Runes</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Quick Time\QuickTime.h">
+      <Filter>Quick Time</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Runes\Runes.h">
+      <Filter>Runes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -327,6 +342,15 @@
     </ClCompile>
     <ClCompile Include="AnimationTimeStamp.cpp">
       <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Runes\RuneManager.cpp">
+      <Filter>Runes</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Quick Time\QuickTime.cpp">
+      <Filter>Quick Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Runes\Runes.cpp">
+      <Filter>Runes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
