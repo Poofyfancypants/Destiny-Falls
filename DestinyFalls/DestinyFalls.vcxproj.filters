@@ -23,6 +23,9 @@
     <Filter Include="Engines">
       <UniqueIdentifier>{b682ae03-8159-4ba6-bc4f-436127f40800}</UniqueIdentifier>
     </Filter>
+    <Filter Include="TinyXML">
+      <UniqueIdentifier>{4a009a88-6cbb-4b3c-879f-78f655af1fb9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Quick Time">
       <UniqueIdentifier>{0a761906-5ec9-47d3-959e-4f72572195b1}</UniqueIdentifier>
     </Filter>
@@ -178,6 +181,21 @@
     <ClInclude Include="Source\Messages\MessageID.h">
       <Filter>Messages</Filter>
     </ClInclude>
+    <ClInclude Include="Source\TinyXML\tinystr.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\TinyXML\tinyxml.h">
+      <Filter>TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Frame.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationTimeStamp.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
     <ClInclude Include="Source\Runes\RuneManager.h">
       <Filter>Runes</Filter>
     </ClInclude>
@@ -186,9 +204,6 @@
     </ClInclude>
     <ClInclude Include="Source\Runes\Runes.h">
       <Filter>Runes</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Messages\TestMessage.h">
-      <Filter>Messages</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -307,6 +322,27 @@
     <ClCompile Include="Source\Game States\OptionsState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinystr.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxml.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp">
+      <Filter>TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Frame.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="Animation.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationTimeStamp.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Runes\RuneManager.cpp">
       <Filter>Runes</Filter>
     </ClCompile>
@@ -315,9 +351,6 @@
     </ClCompile>
     <ClCompile Include="Source\Runes\Runes.cpp">
       <Filter>Runes</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Messages\TestMessage.cpp">
-      <Filter>Messages</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

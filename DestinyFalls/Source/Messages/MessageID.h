@@ -2,6 +2,6 @@
 
 enum class MessageID
 {
-	TestMessage = 0,
+	
 };
 

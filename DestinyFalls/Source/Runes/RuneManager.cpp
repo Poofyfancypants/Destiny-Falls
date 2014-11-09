@@ -27,7 +27,7 @@ ComboElements RuneManager::ElementCombination(Elements x, Elements y)
 float RuneManager::DamagetoBaseElement(Elements x, Elements y)
 {
 	if ((x == Fire) && (y == Water))
-		return 0.5f;
+		return 0.5;
 	if ((x == Water) && (y == Fire))
 		return 2;
 	if ((x == Fire) && (y == Air))
@@ -60,56 +60,56 @@ float RuneManager::DamageComboElement(ComboElements x, Elements y)
 	if ((x == Dust) && (y == Fire))
 		return 2;
 	if ((x == Dust) && (y == Water))
-		return 0.5;
-	if ((x == Dust) && (y == Air))
 		return 1;
+	if ((x == Dust) && (y == Air))
+		return 0.5;
 	if ((x == Dust) && (y == Earth))
 		return 1;
 
 	if ((x == Ice) && (y == Fire))
-		return 0.5;
+		return 1;
 	if ((x == Ice) && (y == Water))
-		return 2;
-	if ((x == Ice) && (y == Air))
 		return 0.5;
-	if ((x == Ice) && (y == Earth))
+	if ((x == Ice) && (y == Air))
 		return 2;
+	if ((x == Ice) && (y == Earth))
+		return 1;
 
 	if ((x == Lightning) && (y == Fire))
-		return 1;
+		return 0.5;
 	if ((x == Lightning) && (y == Water))
 		return 2;
 	if ((x == Lightning) && (y == Air))
-		return 0.5;
+		return 1;
 	if ((x == Lightning) && (y == Earth))
-		return 0.5;
+		return 1;
 
 	if ((x == Magma) && (y == Fire))
-		return 1;
-	if ((x == Magma) && (y == Water))
 		return 0.5;
-	if ((x == Magma) && (y == Air))
-		return 2;
-	if ((x == Magma) && (y == Earth))
+	if ((x == Magma) && (y == Water))
 		return 1;
+	if ((x == Magma) && (y == Air))
+		return 1;
+	if ((x == Magma) && (y == Earth))
+		return 2;
 
 	if ((x == Mud) && (y == Fire))
-		return 2;
+		return 1;
 	if ((x == Mud) && (y == Water))
 		return 1;
 	if ((x == Mud) && (y == Air))
 		return 2;
 	if ((x == Mud) && (y == Earth))
-		return 1;
+		return 0.5;
 
 	if ((x == Steam) && (y == Fire))
-		return 0.5;
+		return 2;
 	if ((x == Steam) && (y == Water))
 		return 1;
 	if ((x == Steam) && (y == Air))
-		return 1;
+		return 0.5;
 	if ((x == Steam) && (y == Earth))
-		return 2;
+		return 1;
 
 	return 1;
 }

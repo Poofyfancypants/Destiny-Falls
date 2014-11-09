@@ -91,8 +91,10 @@ int Game::Update( void )
 	if (m_nCurrState == pCurrent)
 		m_pStateStack[m_nCurrState]->Update(elapsedTime);
 
-	for( int i = 0; i < (int)m_pStateStack.size()-1; i++ )
+	for( int i = 0; i <= (int)m_pStateStack.size()-1; i++ )
 		m_pStateStack[i]->Render();
+
+	//m_pStateStack[m_nCurrState]->Render();
 
 	return 0;		// keep playing!
 }
