@@ -2,6 +2,7 @@
 #include "GameplayState.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
+#include "../Messages/MessageID.h"
 
 
 GameplayState* GameplayState::GetInstance()
