@@ -30,7 +30,7 @@ void QuickTime::Render()
 void QuickTime::SetLength(unsigned int x)
 {
 	m_unlength = x;
-	for (int i = 0; i < m_unlength; i++)
+	for (unsigned int i = 0; i < m_unlength; i++)
 	{
 		GenerateRandomLetter();
 	}

@@ -22,7 +22,8 @@ void GameplayState::Enter()
 
 void GameplayState::Exit()
 {
-
+	SGD::MessageManager::GetInstance()->Terminate();
+	SGD::MessageManager::DeleteInstance();
 }
 
 bool GameplayState::Input()

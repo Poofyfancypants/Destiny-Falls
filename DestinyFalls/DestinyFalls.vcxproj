@@ -79,9 +79,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="AnimationTimeStamp.h" />
-    <ClInclude Include="Frame.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_Color.h" />
@@ -99,7 +96,9 @@
     <ClInclude Include="SGD Wrappers\SGD_Message.h" />
     <ClInclude Include="SGD Wrappers\SGD_MessageManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_String.h" />
-    <ClInclude Include="Source\Game Core\DestinyFalls.h" />
+    <ClInclude Include="Source\Engines\Animation.h" />
+    <ClInclude Include="Source\Engines\AnimationTimeStamp.h" />
+    <ClInclude Include="Source\Engines\Frame.h" />
     <ClInclude Include="Source\Game Core\Game.h" />
     <ClInclude Include="Source\Game Objects\AnimatedObject.h" />
     <ClInclude Include="Source\Game Objects\Chest.h" />
@@ -138,9 +137,6 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="AnimationTimeStamp.cpp" />
-    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Event.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_EventManager.cpp" />
@@ -150,7 +146,9 @@
     <ClCompile Include="SGD Wrappers\SGD_Listener.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Message.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp" />
-    <ClCompile Include="Source\Game Core\DestinyFalls.cpp" />
+    <ClCompile Include="Source\Engines\Animation.cpp" />
+    <ClCompile Include="Source\Engines\AnimationTimeStamp.cpp" />
+    <ClCompile Include="Source\Engines\Frame.cpp" />
     <ClCompile Include="Source\Game Core\Game.cpp" />
     <ClCompile Include="Source\Game Core\WinMain.cpp" />
     <ClCompile Include="Source\Game Objects\AnimatedObject.cpp" />

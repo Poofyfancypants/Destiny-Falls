@@ -1,5 +1,5 @@
 #pragma once
-#include "SGD Wrappers\SGD_Geometry.h"
+#include "../../SGD Wrappers\SGD_Geometry.h"
 #include <vector>
 #include <string>
 using namespace std;

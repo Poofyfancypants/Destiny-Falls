@@ -2,6 +2,12 @@
 #include "OptionsState.h"
 
 
+OptionsState* OptionsState::GetInstance()
+{
+	static OptionsState* s_Instance;
+	return s_Instance;
+}
+
 void OptionsState::Enter()
 {
 }
