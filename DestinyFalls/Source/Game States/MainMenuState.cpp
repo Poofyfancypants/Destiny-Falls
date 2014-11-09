@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "MainMenuState.h"
 #include "GameplayState.h"
+#include "OptionsState.h"
+#include "CreditState.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -32,8 +34,7 @@ bool MainMenuState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
-		Exit();
-		return false;
+		m_nCursor = MenuSelections::exit;
 	}
 	if (pInput->IsKeyPressed(SGD::Key::Up))
 	{
@@ -54,17 +55,22 @@ bool MainMenuState::Input()
 	{
 		switch (m_nCursor)
 		{
+
 		case MenuSelections::play:
+			Game::GetInstance()->AddState(GameplayState::GetInstance());
 			break;
 		case MenuSelections::load:
 			break;
 		case MenuSelections::options:
+			Game::GetInstance()->AddState(OptionsState::GetInstance());
 			break;
 		case MenuSelections::howToPlay:
 			break;
 		case MenuSelections::credits:
+			Game::GetInstance()->AddState(CreditState::GetInstance());
 			break;
 		case MenuSelections::exit:
+			return false;
 			break;
 		default:
 			break;
@@ -77,7 +83,7 @@ bool MainMenuState::Input()
 	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(PlayGame))
 		{
-			Game::GetInstance()->RemoveState();
+			//Game::GetInstance()->RemoveState();
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
 		}
 	}
@@ -94,6 +100,6 @@ void MainMenuState::Update(float elapsedTime)
 void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-
+	pGraphics->SetClearColor();
 	pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
 }

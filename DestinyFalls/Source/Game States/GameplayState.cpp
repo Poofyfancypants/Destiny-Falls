@@ -45,8 +45,7 @@ void GameplayState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
-
-	//pGraphics->SetClearColor();
+	
 	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 255, 0 });
 }
 
