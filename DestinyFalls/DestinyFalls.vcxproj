@@ -126,6 +126,10 @@
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
     <ClInclude Include="Source\Messages\MessageID.h" />
+    <ClInclude Include="Source\Messages\TestMessage.h" />
+    <ClInclude Include="Source\Quick Time\QuickTime.h" />
+    <ClInclude Include="Source\Runes\RuneManager.h" />
+    <ClInclude Include="Source\Runes\Runes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -168,6 +172,10 @@
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />
+    <ClCompile Include="Source\Messages\TestMessage.cpp" />
+    <ClCompile Include="Source\Quick Time\QuickTime.cpp" />
+    <ClCompile Include="Source\Runes\RuneManager.cpp" />
+    <ClCompile Include="Source\Runes\Runes.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

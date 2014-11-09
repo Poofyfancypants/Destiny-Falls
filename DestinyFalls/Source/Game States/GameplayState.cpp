@@ -40,7 +40,10 @@ void GameplayState::Render()
 {
 	switch (pMsg->GetMessageID())
 	{
-	
+	case MessageID::TestMessage:
+	{
+
+	}
 	default:
 	{
 			   OutputDebugStringW(L"GameplayState::MessageProc - unknown message id\n");
