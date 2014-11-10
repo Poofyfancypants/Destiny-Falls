@@ -75,7 +75,23 @@ void AnimationManager::Update( AnimationTimeStamp& ts , float dt )
 void AnimationManager::Load( string fileName )
 {
 
+	//create the TinyXML Document
+	TiXmlDocument doc;
 
+	//Attempt to load the file
+	//	(will allocate & set the Entire tree)
+	if( doc.LoadFile( fileName.c_str() ) == false )
+	{
+		return;
+	}
+
+	//Access the root Element ("players_list")
+	TiXmlElement* pRoot = doc.RootElement();
+
+	if( pRoot == nullptr )
+	{
+		return;
+	}
 
 }
 
