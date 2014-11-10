@@ -1,12 +1,13 @@
 #include "stdafx.h"
 #include "../Game Core/Game.h"
 #include "GameplayState.h"
+#include "MainMenuState.h"
+#include "InventoryState.h"
+#include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
-#include "MainMenuState.h"
-#include "../Messages/MessageID.h"
 
 
 GameplayState* GameplayState::GetInstance()
@@ -36,6 +37,12 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState(MainMenuState::GetInstance());
 	}
 
+	if (pInput->IsKeyPressed(SGD::Key::E))
+	{
+		Game::GetInstance()->RemoveState(); //Make this Pause
+		Game::GetInstance()->AddState(InventoryState::GetInstance());
+	}
+
 	return true;
 }
 
@@ -44,6 +51,7 @@ void GameplayState::Update(float elapsedTime)
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 	SGD::MessageManager::GetInstance()->Update();
+
 
 }
 

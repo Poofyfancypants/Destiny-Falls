@@ -202,6 +202,9 @@
     <ClInclude Include="Source\Engines\Frame.h">
       <Filter>Engines</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game States\InventoryState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -345,6 +348,9 @@
     </ClCompile>
     <ClCompile Include="Source\Engines\Frame.cpp">
       <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\InventoryState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

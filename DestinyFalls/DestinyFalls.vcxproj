@@ -122,6 +122,7 @@
     <ClInclude Include="Source\Game States\GamePauseState.h" />
     <ClInclude Include="Source\Game States\GameplayState.h" />
     <ClInclude Include="Source\Game States\IGameState.h" />
+    <ClInclude Include="Source\Game States\InventoryState.h" />
     <ClInclude Include="Source\Game States\MainMenuState.h" />
     <ClInclude Include="Source\Game States\OptionsState.h" />
     <ClInclude Include="Source\Managers\AnimationManager.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Source\Game States\CreditState.cpp" />
     <ClCompile Include="Source\Game States\GamePauseState.cpp" />
     <ClCompile Include="Source\Game States\GameplayState.cpp" />
+    <ClCompile Include="Source\Game States\InventoryState.cpp" />
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
