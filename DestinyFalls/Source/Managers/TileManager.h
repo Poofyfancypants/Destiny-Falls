@@ -8,8 +8,8 @@
 using namespace std;
 struct Tile
 {
-	SGD::Point m_ptSource;
-	SGD::Size m_szSize;
+	int nX, nY;
+	int nWidth, nHeight;
 	int m_nTileID;
 
 };
@@ -20,7 +20,7 @@ public:
 	TileManager();
 	~TileManager();
 
-	bool ReadXML(string _tilePath);
+	bool ReadXML(const char* _tilePath);
 	bool DrawMap();
 
 private:
