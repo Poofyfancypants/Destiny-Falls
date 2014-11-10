@@ -85,13 +85,15 @@ void AnimationManager::Load( string fileName )
 		return;
 	}
 
-	//Access the root Element ("players_list")
+	//Access the root Element ("Animation_List")
 	TiXmlElement* pRoot = doc.RootElement();
 
 	if( pRoot == nullptr )
 	{
 		return;
 	}
+
+
 
 }
 
