@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "../Game Core/Game.h"
 #include "GameplayState.h"
+#include "../Game Objects/Player.h"
+#include "../Game Objects/Enemy.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
 #include "../Messages/MessageID.h"
@@ -8,6 +10,9 @@
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+
+#include "../../SGD Wrappers/SGD_EventManager.h"
+#include "MainMenuState.h"
 
 
 GameplayState* GameplayState::GetInstance()
@@ -18,13 +23,39 @@ GameplayState* GameplayState::GetInstance()
 
 void GameplayState::Enter()
 {
-	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
+	
+	m_pObjects = new ObjectManager;
+
+	m_pPlayer = CreatePlayer();
+	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
+
+	for (unsigned int i = 0; i < 1; i++)
+	{
+		Object* tempEnemy = nullptr;
+		tempEnemy = CreateEnemy();
+		m_pObjects->AddObject(tempEnemy, ENEMY_BUCKET);
+		tempEnemy->Release();
+	}
 }
 
 void GameplayState::Exit()
 {
-	SGD::MessageManager::GetInstance()->Terminate();
-	SGD::MessageManager::DeleteInstance();
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
+	if (m_pPlayer != nullptr)
+	{
+		m_pPlayer->Release();
+		m_pPlayer = nullptr;
+	}
+
+	pGraphics->UnloadTexture(m_hBackImage);
+
+	m_pObjects->RemoveAll();
+	delete m_pObjects;
+	m_pObjects = nullptr;
+	
+
+
 }
 
 bool GameplayState::Input()
@@ -39,7 +70,7 @@ bool GameplayState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
-		Game::GetInstance()->RemoveState(); //Make this Pause
+		//Game::GetInstance()->RemoveState(); //Make this Pause
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
 
@@ -52,7 +83,8 @@ void GameplayState::Update(float elapsedTime)
 
 	SGD::MessageManager::GetInstance()->Update();
 
-
+	m_pObjects->UpdateAll(elapsedTime);
+	m_pObjects->RenderAll();
 }
 
 void GameplayState::Render()
@@ -61,18 +93,22 @@ void GameplayState::Render()
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
 	
 	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 255, 0 });
+
+	m_pObjects->RenderAll();
 }
 
-/*static*/ void GameplayState::MessageProc(const SGD::Message* pMsg)
+Object* GameplayState::CreatePlayer()
 {
-	switch (pMsg->GetMessageID())
-	{
+	Player* temp = new Player;
+	temp->SetSize({ 64, 64 });
+	temp->SetPosition(SGD::Point(150, 150));
+	return temp;
+}
 
-	default:
-	{
-			   OutputDebugStringW(L"GameplayState::MessageProc - unknown message id\n");
-	}
-		break;
-	}
-
+Object* GameplayState::CreateEnemy()
+{
+	Enemy* temp = new Enemy;
+	temp->SetSize({ 64, 64 });
+	temp->SetPosition(SGD::Point(250, 300));
+	return temp;
 }
