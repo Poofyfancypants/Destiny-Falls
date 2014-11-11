@@ -11,6 +11,9 @@
 #include "..\Engines\Animation.h"
 #include "..\Engines\AnimationTimeStamp.h"
 
+#include "../TinyXML/tinyxml.h"
+#include "../TinyXML/tinystr.h"
+
 #include <string>
 #include <map>
 using namespace std;

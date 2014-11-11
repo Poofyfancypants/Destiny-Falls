@@ -9,6 +9,7 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
+#include "../Game States/AnimationTestState.h"
 
 MainMenuState* MainMenuState::GetInstance()
 {
@@ -18,6 +19,9 @@ MainMenuState* MainMenuState::GetInstance()
 
 void MainMenuState::Enter()
 {
+	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
+
+
 	PlayGame = { 50, 50, 100, 80 };
 
 	Options = { 50, 90, 100, 120 };
@@ -26,6 +30,27 @@ void MainMenuState::Enter()
 	Credit = { 50, 210, 100, 240 };
 	ExitGame = { 50, 250, 100, 280 };
 	
+	TestAnimationSystem = { 300 , 150 , 350 , 200 };
+
+	int nMusic, nEffects, nScreen;
+	std::ifstream load;
+	load.open("Options.txt");
+	if (load.is_open())
+	{
+		load >> nMusic >> nEffects >> nScreen;
+		pAudio->SetMasterVolume(SGD::AudioGroup::Music, nMusic);
+		pAudio->SetMasterVolume(SGD::AudioGroup::SoundEffects, nEffects);
+		load.close();
+
+		bool windowed;
+		if (nScreen != 0)
+		{
+			windowed = true;
+		}
+		else
+			windowed = false;
+		SGD::GraphicsManager::GetInstance()->Resize({ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, windowed);
+	}
 }
 
 void MainMenuState::Exit()
@@ -95,7 +120,14 @@ bool MainMenuState::Input()
 		}
 	}
 
-
+	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	{
+		if( pInput->GetCursorPosition().IsPointInRectangle( TestAnimationSystem ) )
+		{
+			//Game::GetInstance()->RemoveState();
+			Game::GetInstance()->AddState( AnimationTestState::GetInstance() );
+		}
+	}
 	return true;
 }
 
@@ -109,6 +141,8 @@ void MainMenuState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
 	pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle( TestAnimationSystem , SGD::Color { 255 , 0 , 255 , 255 } );
+
 	pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
 	pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
 	pGraphics->DrawRectangle(HowToPlay, SGD::Color{ 255, 255, 0, 255 });

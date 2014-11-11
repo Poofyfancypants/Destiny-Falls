@@ -116,6 +116,7 @@
     <ClInclude Include="Source\Game Objects\SpikeTrap.h" />
     <ClInclude Include="Source\Game Objects\StaticObject.h" />
     <ClInclude Include="Source\Game Objects\Trap.h" />
+    <ClInclude Include="Source\Game States\AnimationTestState.h" />
     <ClInclude Include="Source\Game States\CombatState.h" />
     <ClInclude Include="Source\Game States\CreditState.h" />
     <ClInclude Include="Source\Game States\GamePauseState.h" />
@@ -168,6 +169,7 @@
     <ClCompile Include="Source\Game Objects\SpikeTrap.cpp" />
     <ClCompile Include="Source\Game Objects\StaticObject.cpp" />
     <ClCompile Include="Source\Game Objects\Trap.cpp" />
+    <ClCompile Include="Source\Game States\AnimationTestState.cpp" />
     <ClCompile Include="Source\Game States\CombatState.cpp" />
     <ClCompile Include="Source\Game States\CreditState.cpp" />
     <ClCompile Include="Source\Game States\GamePauseState.cpp" />

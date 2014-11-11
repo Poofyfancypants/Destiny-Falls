@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+  <animation>
+    <animation_info name="SwordSwing" numFrames="3" looping="1" hTexture="resource/graphics/Claudius.png">
+      <frame duration="0.5" damage="0" event="none" dLeft="4" dTop="520" dRight="47" dBottom="580" cLeft="4" cTop="518" cRight="47" cBottom="580" x="0" y="0"/>
+      <frame duration="2.0" damage="0" event="none" dLeft="68" dTop="520" dRight="113" dBottom="582" cLeft="68" cTop="518" cRight="113" cBottom="582" x="0" y="0"/>
+      <frame duration="0.5" damage="0" event="none" dLeft="124" dTop="515" dRight="174" dBottom="581" cLeft="124" cTop="518" cRight="174" cBottom="581" x="0" y="0"/>
+    </animation_info>
+  </animation>
+</Root>

@@ -21,8 +21,8 @@ class Animation
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
 
 public:
-	Animation();
-	~Animation();
+	Animation() = default;
+	~Animation() = default;
 
 	///////////////////////////////////////////////////////
 	//ACCESSORS
