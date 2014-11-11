@@ -40,8 +40,8 @@ public:
 	void RemoveState();						//Remove from stack
 	void ClearStates();
 
-	float	GetScreenWidth(void) const	{ return m_fScreenWidth; }
-	float	GetScreenHeight(void) const	{ return m_fScreenHeight; }
+	float GetScreenWidth(void) const { return m_fScreenWidth; }
+	float GetScreenHeight(void) const { return m_fScreenHeight; }
 
 private:
 	/**********************************************************/

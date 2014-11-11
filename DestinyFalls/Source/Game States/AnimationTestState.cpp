@@ -1,6 +1,8 @@
 #include "stdafx.h"
+#include "../Game Core/Game.h"
 #include "AnimationTestState.h"
 #include "MainMenuState.h"
+#include "../../SGD Wrappers/SGD_InputManager.h"
 
 
 AnimationTestState* AnimationTestState::GetInstance()
@@ -25,6 +27,13 @@ void AnimationTestState::Exit()
 
 bool AnimationTestState::Input()
 {
+	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+
+	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	{
+		Game::GetInstance()->RemoveState();
+	}
+
 	return true;
 }
 	

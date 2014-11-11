@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "Enemy.h"
+#include "../Messages/DestroyObjectMessage.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Event.h"
@@ -35,7 +36,9 @@ SGD::Rectangle Enemy::GetRect() const
 
 void Enemy::HandleCollision(const iObject* pOther)
 {
-
+	DestroyObjectMessage* pMsg = new DestroyObjectMessage(this);
+	pMsg->QueueMessage();
+	pMsg = nullptr;
 }
 
 void Enemy::HandleEvent(const SGD::Event* pEvent)

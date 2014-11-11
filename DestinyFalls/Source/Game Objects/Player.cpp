@@ -1,5 +1,7 @@
 #include "stdafx.h"
 #include "Player.h"
+#include "../Game Core/Game.h"
+#include "../Game States/CombatState.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Event.h"
@@ -74,5 +76,8 @@ void Player::HandleEvent(const SGD::Event* pEvent) /*override*/
 
 void Player::HandleCollision(const iObject* pOther)
 {
-
+	if (pOther->GetType() == OBJ_ENEMY)
+	{
+		Game::GetInstance()->AddState(CombatState::GetInstance());
+	}
 }

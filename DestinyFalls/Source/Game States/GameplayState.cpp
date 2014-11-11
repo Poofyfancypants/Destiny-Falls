@@ -41,7 +41,8 @@ void GameplayState::Enter()
 	// - Manage The map
 	m_pMap->LoadLevel("testMap.xml");
 
-	for (unsigned int i = 0; i < 1; i++)
+
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		Object* tempEnemy = nullptr;
 		tempEnemy = CreateEnemy();
@@ -66,8 +67,8 @@ void GameplayState::Exit()
 	delete m_pObjects;
 	m_pObjects = nullptr;
 	
-
-
+	delete m_pMap;
+	m_pMap = nullptr;
 }
 
 bool GameplayState::Input()
@@ -91,8 +92,9 @@ bool GameplayState::Input()
 void GameplayState::Update(float elapsedTime)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-
 	SGD::MessageManager::GetInstance()->Update();
+
+	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET);
 
 	m_pObjects->UpdateAll(elapsedTime);
 
@@ -127,6 +129,9 @@ Object* GameplayState::CreateEnemy()
 {
 	Enemy* temp = new Enemy;
 	temp->SetSize({ 64, 64 });
-	temp->SetPosition(SGD::Point(250, 300));
+	int posx = rand() % 300 + 200;
+	int posy = rand() % 300 + 250;
+
+	temp->SetPosition(SGD::Point(posx, posy));
 	return temp;
 }

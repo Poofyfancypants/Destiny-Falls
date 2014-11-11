@@ -6,6 +6,7 @@
 #include <cassert>
 
 #include "../Game States/IGameState.h"
+#include "../Game States/GameplayState.h"
 #include "../Game States/MainMenuState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -15,6 +16,8 @@
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_EventManager.h"
+
+#include "../Messages/DestroyObjectMessage.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -26,9 +29,9 @@
 
 // GetInstance
 //	- allocate the ONE instance & return it
-/*static*/ Game* Game::GetInstance( void )
+/*static*/ Game* Game::GetInstance(void)
 {
-	if( s_pInstance == nullptr )
+	if (s_pInstance == nullptr)
 		s_pInstance = new Game;
 
 	return s_pInstance;
@@ -36,7 +39,7 @@
 
 // DeleteInstance
 //	- deallocate the ONE instance
-/*static*/ void Game::DeleteInstance( void )
+/*static*/ void Game::DeleteInstance(void)
 {
 	delete s_pInstance;
 	s_pInstance = nullptr;
@@ -46,10 +49,10 @@
 // Initialize
 //	- initialize the SGD wrappers
 //	- enter the Main Menu state
-bool Game::Initialize( float width, float height )
+bool Game::Initialize(float width, float height)
 {
 	// Seed First!
-	srand( (unsigned int)time( nullptr ) );
+	srand((unsigned int)time(nullptr));
 	rand();
 
 	if (SGD::AudioManager::GetInstance()->Initialize() == false
@@ -73,7 +76,7 @@ bool Game::Initialize( float width, float height )
 // Update
 //	- update the SGD wrappers
 //	- run the current state
-int Game::Update( void )
+int Game::Update(void)
 {	
 	unsigned long now = GetTickCount();					// current time in milliseconds
 	float elapsedTime = (now - m_ulGameTime) / 1000.0f;	// convert to fraction of a second
@@ -104,7 +107,7 @@ int Game::Update( void )
 	if (m_nCurrState == pCurrent)
 		m_pStateStack[m_nCurrState]->Update(elapsedTime);
 
-	for( int i = 0; i <= (int)m_pStateStack.size()-1; i++ )
+	for (int i = 0; i <= (int)m_pStateStack.size() - 1; i++)
 		m_pStateStack[i]->Render();
 
 	//m_pStateStack[m_nCurrState]->Render();
@@ -117,7 +120,7 @@ int Game::Update( void )
 // Terminate
 //	- exit the current state
 //	- terminate the SGD wrappers
-void Game::Terminate( void )
+void Game::Terminate(void)
 {
 	// Terminate the core SGD wrappers
 	SGD::AudioManager::GetInstance()->Terminate();
@@ -163,7 +166,15 @@ void Game::ClearStates()
 {
 	switch (pMsg->GetMessageID())
 	{
+	case MessageID::MSG_DESTROY_OBJECT:
+	{
+										  const DestroyObjectMessage* pDestroyMSG = dynamic_cast<const DestroyObjectMessage*>(pMsg);
 
+										  assert(pDestroyMSG != nullptr);
+										  iObject* ptr = pDestroyMSG->GetiObject();
+										  GameplayState::GetInstance()->GetObjManager()->RemoveObject(ptr);
+	}
+		break;
 	default:
 	{
 			   OutputDebugStringW(L"GameplayState::MessageProc - unknown message id\n");

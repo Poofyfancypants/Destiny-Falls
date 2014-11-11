@@ -22,7 +22,7 @@ public:
 	virtual bool Input(void)				override;
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
-
+	ObjectManager* GetObjManager() const { return m_pObjects; }
 	// World Size Accessors
 	float	GetWorldWidth(void) const	{ return m_fWorldWidth; }
 	float	GetWorldHeight(void) const	{ return m_fWorldHeight; }

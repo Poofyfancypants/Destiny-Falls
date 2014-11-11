@@ -129,6 +129,7 @@
     <ClInclude Include="Source\Managers\ObjectManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
+    <ClInclude Include="Source\Messages\DestroyObjectMessage.h" />
     <ClInclude Include="Source\Messages\MessageID.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
     <ClInclude Include="Source\TinyXML\tinyxml.h" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Source\Managers\ObjectManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />
+    <ClCompile Include="Source\Messages\DestroyObjectMessage.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp" />
