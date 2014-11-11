@@ -39,7 +39,7 @@ bool GameplayState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
-		Game::GetInstance()->RemoveState(); //Make this Pause
+		//Game::GetInstance()->RemoveState(); //Make this Pause
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
 
