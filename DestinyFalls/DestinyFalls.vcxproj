@@ -125,6 +125,7 @@
     <ClInclude Include="Source\Game States\MainMenuState.h" />
     <ClInclude Include="Source\Game States\OptionsState.h" />
     <ClInclude Include="Source\Managers\AnimationManager.h" />
+    <ClInclude Include="Source\Managers\ObjectManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
     <ClInclude Include="Source\Messages\MessageID.h" />
@@ -158,7 +159,6 @@
     <ClCompile Include="Source\Game Objects\FinalBoss.cpp" />
     <ClCompile Include="Source\Game Objects\FireTrap.cpp" />
     <ClCompile Include="Source\Game Objects\Inventory.cpp" />
-    <ClCompile Include="Source\Game Objects\iObject.cpp" />
     <ClCompile Include="Source\Game Objects\LevelBoss.cpp" />
     <ClCompile Include="Source\Game Objects\MiniBoss.cpp" />
     <ClCompile Include="Source\Game Objects\Minion.cpp" />
@@ -175,6 +175,7 @@
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
+    <ClCompile Include="Source\Managers\ObjectManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
