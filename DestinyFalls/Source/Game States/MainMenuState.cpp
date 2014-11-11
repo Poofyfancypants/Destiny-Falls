@@ -3,6 +3,7 @@
 #include "GameplayState.h"
 #include "OptionsState.h"
 #include "CreditState.h"
+#include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -17,8 +18,14 @@ MainMenuState* MainMenuState::GetInstance()
 
 void MainMenuState::Enter()
 {
-	PlayGame = { 50, 50, 100, 100 };
+	PlayGame = { 50, 50, 100, 80 };
 
+	Options = { 50, 90, 100, 120 };
+	LoadGame = { 50, 130, 100, 160 };
+	HowToPlay = { 50, 170, 100, 200 };
+	Credit = { 50, 210, 100, 240 };
+	ExitGame = { 50, 250, 100, 280 };
+	
 }
 
 void MainMenuState::Exit()
@@ -56,7 +63,6 @@ bool MainMenuState::Input()
 	{
 		switch (m_nCursor)
 		{
-
 		case MenuSelections::play:
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
 			break;
@@ -68,7 +74,7 @@ bool MainMenuState::Input()
 		case MenuSelections::howToPlay:
 			break;
 		case MenuSelections::credits:
-			Game::GetInstance()->AddState(CreditState::GetInstance());
+			//Game::GetInstance()->AddState(CreditState::GetInstance());
 			break;
 		case MenuSelections::exit:
 			return false;
@@ -95,7 +101,7 @@ bool MainMenuState::Input()
 
 void MainMenuState::Update(float elapsedTime)
 {
-
+	return;
 }
 
 void MainMenuState::Render()
@@ -103,4 +109,11 @@ void MainMenuState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
 	pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(HowToPlay, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
+
+	pGraphics->DrawRectangle(SGD::Rectangle{ 40, (float)(40 * m_nCursor + 60), 50, (float)(40 * m_nCursor + 70) }, SGD::Color{ 255, 0, 255, 0 });
 }

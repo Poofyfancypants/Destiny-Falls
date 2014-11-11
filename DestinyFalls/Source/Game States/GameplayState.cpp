@@ -25,9 +25,15 @@ void GameplayState::Enter()
 {
 	
 	m_pObjects = new ObjectManager;
+	m_pMap = new TileManager;
 
 	m_pPlayer = CreatePlayer();
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
+
+
+	// - Manage The map
+	m_pMap->LoadLevel("testMap.xml");
+
 
 	for (unsigned int i = 0; i < 3; i++)
 	{
@@ -54,6 +60,8 @@ void GameplayState::Exit()
 	delete m_pObjects;
 	m_pObjects = nullptr;
 	
+	delete m_pMap;
+	m_pMap = nullptr;
 }
 
 bool GameplayState::Input()
@@ -90,6 +98,7 @@ void GameplayState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
+	m_pMap->DrawLevel();
 	
 	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 255, 0 });
 

@@ -27,5 +27,13 @@ private:
 	bool m_bSelect = false;
 
 	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
+
+	SGD::Rectangle Options = { 0, 0, 0, 0 };
+	SGD::Rectangle LoadGame = { 0, 0, 0, 0 };
+	SGD::Rectangle HowToPlay = { 0, 0, 0, 0 };
+	SGD::Rectangle Credit = { 0, 0, 0, 0 };
+	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
+
+
 };
 

@@ -7,6 +7,7 @@
 #include "../../SGD Wrappers/SGD_Handle.h"		
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
+#include "../Managers/TileManager.h"
 
 class GameplayState :
 	public IGameState
@@ -34,7 +35,7 @@ private:
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
-	
+	TileManager* m_pMap;
 	SGD::HTexture m_hBackImage;
 
 	Object* CreatePlayer();
