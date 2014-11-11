@@ -74,6 +74,7 @@ void AnimationManager::Update( AnimationTimeStamp& ts , float dt )
 
 void AnimationManager::Load( string fileName )
 {
+	SGD::GraphicsManager*	pGraphics = SGD::GraphicsManager::GetInstance();
 
 	//create the TinyXML Document
 	TiXmlDocument doc;
@@ -85,7 +86,7 @@ void AnimationManager::Load( string fileName )
 		return;
 	}
 
-	//Access the root Element ("Animation_List")
+	//Access the root Element ("animation")
 	TiXmlElement* pRoot = doc.RootElement();
 
 	if( pRoot == nullptr )
@@ -93,8 +94,147 @@ void AnimationManager::Load( string fileName )
 		return;
 	}
 
+	//Access the root's first "animation_info" Element
+	TiXmlElement* pAnimation = pRoot->FirstChildElement( "animation_info" );
+
+	//Get all the animations
+	while( pAnimation != nullptr )
+	{
+		Animation* a = new Animation;
+
+		//Access the animation element's name
+		string szText = "";
+		szText = pAnimation->Attribute( "name" );
+
+		if( szText != "" )
+		{
+			a->SetName( szText );
+		}
+
+		Loaded[ a->GetName() ] = a;
+
+		//Get the looping bool
+		bool bLoops;
+		int temp;
+		pAnimation->Attribute( "looping" , &temp );
+		bLoops = temp;
+		Loaded[ a->GetName() ]->SetLooping( bLoops );
+
+		//Get the filepath for the image
+		string  tName = "";
+		tName = pAnimation->Attribute( "hTexture" );
+
+		SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
+		m_hImage = pGraphics->LoadTexture( tName.c_str() );
+		Loaded[ a->GetName() ]->SetImage( m_hImage );
+
+		//Get the number of frames in the animation
+		int nFrames = 0;
+
+		pAnimation->Attribute( "numFrames" , &nFrames );
+
+		//Access the animations's first "frame" Element
+		TiXmlElement* pFrame = pRoot->FirstChildElement( "frame" );
+
+		//get each of the frames in the image
+		for( unsigned int i = 0; i < nFrames; i++ )
+		{
+			Frame f;
+			/*<frame duration="0.5" damage="0" event="none" dLeft="4" dTop="520" dRight="47" dBottom="580" cLeft="4" cTop="520" cRight="47" cBottom="580" x="24" y="577"/>*/
+
+			//Get the frame's duration
+			double dur;
+			pFrame->Attribute( "duration" , &dur );
+			f.SetDuration( dur );
+
+			//Get the frame's damage
+			int dam;
+			pFrame->Attribute( "damage" , &dam );
+			f.SetDamage( dam );
+
+			//Get the frame's event name
+			string eve = "";
+			eve = pAnimation->Attribute( "event" );
+			f.SetEventName( eve );
+
+			//Get the drawRect
+			SGD::Rectangle dRect;
+
+				//Get the drawRect left
+				int dleft;
+				pFrame->Attribute( "dLeft" , &dleft );
+
+				//Get the drawRect top
+				int dtop;
+				pFrame->Attribute( "dTop" , &dtop );
+
+				//Get the drawRect right
+				int drig;
+				pFrame->Attribute( "dRight" , &drig );
+
+				//Get the drawRect bottom
+				int dbot;
+				pFrame->Attribute( "dBottom" , &dbot );
+
+				//set the drect left/top/bottom/right to the read in variables
+				dRect.left = dleft;
+				dRect.top = dtop;
+				dRect.right = drig;
+				dRect.bottom = dbot;
+
+				//set the frame's draw rect to the drect
+				f.SetDrawRect( dRect );
 
 
+			//Get the collisionRect
+			SGD::Rectangle cRect;
+
+				//Get the collisionRect left
+				int cleft;
+
+				//Get the collisionRect top
+				int ctop;
+
+				//Get the collisionRect right
+				int crig;
+
+				//Get the collisionRect bottom
+				int cbot;
+			
+				//set the crect left/top/bottom/right to the read in variables
+				cRect.left = cleft;
+				cRect.top = ctop;
+				cRect.right = crig;
+				cRect.bottom = cbot;
+
+				//add the crect to the frame collisionrects vector
+				f.AddCollisionRect( cRect );
+
+			//Get anchor point
+				SGD::Point aP;
+			//Get anchor point x
+				int aX;
+			//Get anchor point y
+				int aY;
+				
+				aP.x = aX;
+				aP.y = aY;
+
+				f.SetAnchorPoint( aP );
+
+			//Add the new frame to a's frame vector
+			Loaded[ a->GetName() ]->AddFrame( f );
+
+			
+			//Move to the next "frame" Sibling Element if there are more frames
+			if( nFrames > i )
+			{
+				pFrame = pFrame->NextSiblingElement( "frame" );
+
+			}
+		}
+		//pAnimation = pAnimation->NextSiblingElement( "animation_info" );
+	}
 }
 
 void AnimationManager::AddToAnimationMap( Animation* animation )
