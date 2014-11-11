@@ -35,7 +35,7 @@ SGD::Rectangle Enemy::GetRect() const
 
 void Enemy::HandleCollision(const iObject* pOther)
 {
-
+	
 }
 
 void Enemy::HandleEvent(const SGD::Event* pEvent)

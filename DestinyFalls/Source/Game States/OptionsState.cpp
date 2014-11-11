@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "OptionsState.h"
-
+#include "../Game Core/Game.h"
+#include "GameplayState.h"
+#include "../Game Objects/Player.h"
+#include "../Game Objects/Enemy.h"
 
 OptionsState* OptionsState::GetInstance()
 {
