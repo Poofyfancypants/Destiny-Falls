@@ -2,6 +2,7 @@
 #include "../Game Core/Game.h"
 #include "GameplayState.h"
 #include "../Game Objects/Player.h"
+#include "../Game Objects/Enemy.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
 #include "../Messages/MessageID.h"
@@ -9,7 +10,6 @@
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
-
 
 #include "../../SGD Wrappers/SGD_EventManager.h"
 #include "MainMenuState.h"
@@ -23,13 +23,19 @@ GameplayState* GameplayState::GetInstance()
 
 void GameplayState::Enter()
 {
-	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
-	SGD::EventManager::GetInstance()->Initialize();
-
+	
 	m_pObjects = new ObjectManager;
 
 	m_pPlayer = CreatePlayer();
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
+
+	for (unsigned int i = 0; i < 1; i++)
+	{
+		Object* tempEnemy = nullptr;
+		tempEnemy = CreateEnemy();
+		m_pObjects->AddObject(tempEnemy, ENEMY_BUCKET);
+		tempEnemy->Release();
+	}
 }
 
 void GameplayState::Exit()
@@ -48,11 +54,7 @@ void GameplayState::Exit()
 	delete m_pObjects;
 	m_pObjects = nullptr;
 	
-	SGD::MessageManager::GetInstance()->Terminate();
-	SGD::MessageManager::DeleteInstance();
 
-	SGD::EventManager::GetInstance()->Terminate();
-	SGD::EventManager::DeleteInstance();
 
 }
 
@@ -95,24 +97,18 @@ void GameplayState::Render()
 	m_pObjects->RenderAll();
 }
 
-/*static*/ void GameplayState::MessageProc(const SGD::Message* pMsg)
-{
-	switch (pMsg->GetMessageID())
-	{
-
-	default:
-	{
-			   OutputDebugStringW(L"GameplayState::MessageProc - unknown message id\n");
-	}
-		break;
-	}
-
-}
-
 Object* GameplayState::CreatePlayer()
 {
 	Player* temp = new Player;
 	temp->SetSize({ 64, 64 });
 	temp->SetPosition(SGD::Point(150, 150));
+	return temp;
+}
+
+Object* GameplayState::CreateEnemy()
+{
+	Enemy* temp = new Enemy;
+	temp->SetSize({ 64, 64 });
+	temp->SetPosition(SGD::Point(250, 300));
 	return temp;
 }
