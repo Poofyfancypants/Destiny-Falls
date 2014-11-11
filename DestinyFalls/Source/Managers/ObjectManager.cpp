@@ -97,7 +97,7 @@ void ObjectManager::RemoveAll(void)
 void ObjectManager::UpdateAll(float elapsedTime)
 {
 	// Validate the iteration state
-	assert(m_bIterating == false && "EntityManager::UpdateAll - cannot update while iterating");
+	assert(m_bIterating == false && "ObjectManager::UpdateAll - cannot update while iterating");
 
 	// Lock the iterator
 	m_bIterating = true;
@@ -117,7 +117,7 @@ void ObjectManager::UpdateAll(float elapsedTime)
 void ObjectManager::RenderAll(void)
 {
 	// Validate the iteration state
-	assert(m_bIterating == false && "EntityManager::RenderAll - cannot render while iterating");
+	assert(m_bIterating == false && "ObjectManager::RenderAll - cannot render while iterating");
 
 	// Lock the iterator
 	m_bIterating = true;
@@ -136,5 +136,10 @@ void ObjectManager::RenderAll(void)
 
 void ObjectManager::CheckCollisions(unsigned int bucket1, unsigned int bucket2)
 {
+	assert(m_bIterating == false && "ObjectManager::CheckCollisions - cannot collide while iterating");
+
+	if (bucket1 >= m_tObjects.size() || bucket2 >= m_tObjects.size()
+		|| m_tObjects[bucket1].size() == 0 || m_tObjects[bucket2].size() == 0)
+		return;
 
 }
