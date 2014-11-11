@@ -3,6 +3,8 @@
 #include "../TinyXML/tinystr.h"
 #include "../TinyXML/tinyxml.h"
 
+#include "../Game States/GameplayState.h"
+
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 TileManager::TileManager()
@@ -78,7 +80,7 @@ bool TileManager::DrawLevel()
 
 			pGraphics->DrawTextureSection(
 				tileSet,
-				SGD::Point( (float)(i*m_TileMap[i][j].nWidth), float(j*m_TileMap[i][j].nWidth )),
+				SGD::Point((float)((i*m_TileMap[i][j].nWidth) - GameplayState::GetInstance()->GetWorldCam().x), (float)((j*m_TileMap[i][j].nHeight) - GameplayState::GetInstance()->GetWorldCam().y)),
 				SGD::Rectangle( (float)left, (float)top, (float)width, (float)height )
 				);
 		}

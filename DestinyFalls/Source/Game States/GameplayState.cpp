@@ -10,7 +10,7 @@
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
-
+#include "../../SGD Wrappers/SGD_AudioManager.h"
 #include "../../SGD Wrappers/SGD_EventManager.h"
 #include "MainMenuState.h"
 
@@ -23,12 +23,17 @@ GameplayState* GameplayState::GetInstance()
 
 void GameplayState::Enter()
 {
-	
+	SGD::AudioManager*	  pAudio = SGD::AudioManager::GetInstance();
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
 	m_pObjects = new ObjectManager;
 	m_pMap = new TileManager;
 
+	m_hplayer = pGraphics->LoadTexture(L"resource/graphics/testhero.png");
+
 	m_pPlayer = CreatePlayer();
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
+
 
 	m_fWorldWidth = 1024;
 	m_fWorldHeight = 1024;
@@ -91,7 +96,7 @@ void GameplayState::Update(float elapsedTime)
 
 	m_pObjects->UpdateAll(elapsedTime);
 
-	m_ptWorldCam = { m_pPlayer->GetPosition().x - m_fScreenWidth / 2.0f, m_pPlayer->GetPosition().y - m_fScreenHeight / 2.0f };
+	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_pObjects->RenderAll();
 }
@@ -111,8 +116,10 @@ void GameplayState::Render()
 Object* GameplayState::CreatePlayer()
 {
 	Player* temp = new Player;
+	temp->SetImage(m_hplayer);
 	temp->SetSize({ 64, 64 });
 	temp->SetPosition(SGD::Point(150, 150));
+	temp->SetRotation(0);
 	return temp;
 }
 

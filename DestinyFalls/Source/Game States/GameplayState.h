@@ -23,10 +23,6 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
-	// Screen Size Accessors
-	float	GetScreenWidth(void) const	{ return m_fScreenWidth; }
-	float	GetScreenHeight(void) const	{ return m_fScreenHeight; }
-
 	// World Size Accessors
 	float	GetWorldWidth(void) const	{ return m_fWorldWidth; }
 	float	GetWorldHeight(void) const	{ return m_fWorldHeight; }
@@ -43,15 +39,13 @@ private:
 	int m_nCursor = 0;
 	bool m_bSelect = false;
 
-	// Screen Size
-	float					m_fScreenWidth = 1;
-	float					m_fScreenHeight = 1;
-
 	// World Size
-	float					m_fWorldWidth = 1;
-	float					m_fWorldHeight = 1;
+	float m_fWorldWidth = 1;
+	float m_fWorldHeight = 1;
 
-	SGD::Point				m_ptWorldCam = SGD::Point{ 0, 0 };
+	SGD::Point m_ptWorldCam = SGD::Point{ 0, 0 };
+
+	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
@@ -60,4 +54,6 @@ private:
 
 	Object* CreatePlayer();
 	Object* CreateEnemy();
+
+
 };

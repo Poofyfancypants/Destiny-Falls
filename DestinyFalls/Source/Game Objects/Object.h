@@ -26,9 +26,10 @@ public:
 	SGD::HTexture GetImage() const { return m_hImage; }
 	SGD::Point GetPosition() const { return m_ptPosition; }
 
-	void SetPosition(SGD::Point	pos) 	{ m_ptPosition = pos; }
-	void SetSize(SGD::Size size) 	{ m_szSize = size; }
-	void SetRotation(float rad)	{ m_fRotation = rad; }
+	void SetImage		(SGD::HTexture img)	{ m_hImage = img; }
+	void SetPosition	(SGD::Point	pos) 	{ m_ptPosition = pos; }
+	void SetSize		(SGD::Size size) 	{ m_szSize = size; }
+	void SetRotation	(float rad)			{ m_fRotation = rad; }
 
 protected:
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;

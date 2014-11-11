@@ -74,17 +74,22 @@ bool Game::Initialize( float width, float height )
 //	- update the SGD wrappers
 //	- run the current state
 int Game::Update( void )
-{
+{	
+	unsigned long now = GetTickCount();					// current time in milliseconds
+	float elapsedTime = (now - m_ulGameTime) / 1000.0f;	// convert to fraction of a second
+	if (elapsedTime == 0.0f)
+		return 0;
+
+	m_ulGameTime = now;
+
 	// Update the wrappers
 	if (SGD::AudioManager::GetInstance()->Update() == false
 		|| SGD::GraphicsManager::GetInstance()->Update() == false
 		|| SGD::InputManager::GetInstance()->Update() == false)
 		return -10;		// exit FAILURE!
 
-	unsigned long now = GetTickCount();					// current time in milliseconds
-	float elapsedTime = (now - m_ulGameTime) / 1000.0f;	// convert to fraction of a second
 
-	m_ulGameTime = now;
+
 
 	// Cap the elapsed time to 1/8th of a second
 	if (elapsedTime >= 0.125f)
