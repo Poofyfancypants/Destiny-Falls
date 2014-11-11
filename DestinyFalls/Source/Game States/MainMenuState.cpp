@@ -18,6 +18,7 @@ MainMenuState* MainMenuState::GetInstance()
 void MainMenuState::Enter()
 {
 	PlayGame = { 50, 50, 100, 100 };
+
 }
 
 void MainMenuState::Exit()

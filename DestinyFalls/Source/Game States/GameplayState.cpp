@@ -29,7 +29,7 @@ void GameplayState::Enter()
 	m_pPlayer = CreatePlayer();
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
 
-	for (unsigned int i = 0; i < 1; i++)
+	for (unsigned int i = 0; i < 3; i++)
 	{
 		Object* tempEnemy = nullptr;
 		tempEnemy = CreateEnemy();
@@ -54,8 +54,6 @@ void GameplayState::Exit()
 	delete m_pObjects;
 	m_pObjects = nullptr;
 	
-
-
 }
 
 bool GameplayState::Input()
@@ -80,8 +78,9 @@ bool GameplayState::Input()
 void GameplayState::Update(float elapsedTime)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-
 	SGD::MessageManager::GetInstance()->Update();
+
+	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET);
 
 	m_pObjects->UpdateAll(elapsedTime);
 	m_pObjects->RenderAll();
@@ -109,6 +108,9 @@ Object* GameplayState::CreateEnemy()
 {
 	Enemy* temp = new Enemy;
 	temp->SetSize({ 64, 64 });
-	temp->SetPosition(SGD::Point(250, 300));
+	int posx = rand() % 300 + 200;
+	int posy = rand() % 300 + 250;
+
+	temp->SetPosition(SGD::Point(posx, posy));
 	return temp;
 }

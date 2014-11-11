@@ -21,7 +21,7 @@ public:
 	virtual bool Input(void)				override;
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
-
+	ObjectManager* GetObjManager() const { return m_pObjects; }
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
