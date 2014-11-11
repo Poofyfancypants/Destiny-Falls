@@ -3,6 +3,7 @@
 #include "GameplayState.h"
 #include "OptionsState.h"
 #include "CreditState.h"
+#include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -103,7 +104,7 @@ bool MainMenuState::Input()
 
 void MainMenuState::Update(float elapsedTime)
 {
-
+	return;
 }
 
 void MainMenuState::Render()
