@@ -33,9 +33,22 @@ void Player::TakeInput(float elapsedTime)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if (pInput->IsKeyDown(SGD::Key::Up))
+	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W))
 	{
-		m_ptPosition.y -= 10 * elapsedTime;
+		m_ptPosition.y -= 100 * elapsedTime;
+	}
+	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S))
+	{
+		m_ptPosition.y += 100 * elapsedTime;
+	}
+
+	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A))
+	{
+		m_ptPosition.x -= 100 * elapsedTime;
+	}
+	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D))
+	{
+		m_ptPosition.x += 100 * elapsedTime;
 	}
 }
 

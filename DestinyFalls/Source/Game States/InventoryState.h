@@ -20,10 +20,10 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
-	void AddRunesToInventory(Runes* _addrune);
-	void AddRunesToSword(Runes* _addrune);
-	void AddRunesToRing(Runes* _addrune);
-	void AddRunesToArmor(Runes* _addrune);
+	void AddRunesToInventoryfromWorld(Runes* _addrune);
+	void AddRunesToSwordfromInventory(Runes* _addrune);
+	void AddRunesToRingfromInventory(Runes* _addrune);
+	void AddRunesToArmorfromInventory(Runes* _addrune);
 
 private:
 	InventoryState() = default;
@@ -35,6 +35,24 @@ private:
 	int m_nCursor = 0;
 	bool m_bSelect = false;
 
+	SGD::Rectangle rect = { 50, 50, 650, 550 };
+	SGD::Rectangle rect1 = { 50, 50, 250, 200 };
+	SGD::Rectangle rect2 = { 250, 50, 450, 200 };
+	SGD::Rectangle rect3 = { 450, 50, 650, 200 };
+
+	SGD::Rectangle IventoryRect1	= { 50, 200, 200, 317 };
+	SGD::Rectangle IventoryRect2	= { 50, 317, 200, 434 };
+	SGD::Rectangle IventoryRect3	= { 50, 434, 200, 550 };
+	SGD::Rectangle IventoryRect4	= { 200, 200, 350, 317 };
+	SGD::Rectangle IventoryRect5	= { 200, 317, 350, 434 };
+	SGD::Rectangle IventoryRect6	= { 200, 434, 350, 550 };
+	SGD::Rectangle IventoryRect7	= { 350, 200, 500, 317 };
+	SGD::Rectangle IventoryRect8	= { 350, 317, 500, 434 };
+	SGD::Rectangle IventoryRect9	= { 350, 434, 500, 550 };
+	SGD::Rectangle IventoryRect10	= { 500, 200, 650, 317 };
+	SGD::Rectangle IventoryRect11	= { 500, 317, 650, 434 };
+	SGD::Rectangle IventoryRect12	= { 500, 434, 650, 550 };
+
 
 protected:
 
@@ -43,6 +61,9 @@ protected:
 	std::vector<Runes*> m_vArmor;
 	std::vector<Runes*> m_vRunes;
 
+	SGD::HTexture m_hSword		= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hRing		= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hArmor		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFiret1		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFiret2		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFiret3		= SGD::INVALID_HANDLE;
