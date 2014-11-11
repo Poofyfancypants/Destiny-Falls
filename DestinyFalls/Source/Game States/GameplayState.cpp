@@ -30,6 +30,9 @@ void GameplayState::Enter()
 	m_pPlayer = CreatePlayer();
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
 
+	m_fWorldWidth = 1024;
+	m_fWorldHeight = 1024;
+
 	// - Manage The map
 	m_pMap->LoadLevel("testMap.xml");
 
@@ -74,7 +77,6 @@ bool GameplayState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
-		//Game::GetInstance()->RemoveState(); //Make this Pause
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
 
@@ -88,6 +90,9 @@ void GameplayState::Update(float elapsedTime)
 	SGD::MessageManager::GetInstance()->Update();
 
 	m_pObjects->UpdateAll(elapsedTime);
+
+	m_ptWorldCam = { m_pPlayer->GetPosition().x - m_fScreenWidth / 2.0f, m_pPlayer->GetPosition().y - m_fScreenHeight / 2.0f };
+
 	m_pObjects->RenderAll();
 }
 
@@ -95,6 +100,7 @@ void GameplayState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
+
 	m_pMap->DrawLevel();
 	
 	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 255, 0 });
