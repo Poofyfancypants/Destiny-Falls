@@ -233,7 +233,7 @@ void AnimationManager::Load( string fileName )
 
 			}
 		}
-		//pAnimation = pAnimation->NextSiblingElement( "animation_info" );
+		pAnimation = pAnimation->NextSiblingElement( "animation_info" );
 	}
 }
 
