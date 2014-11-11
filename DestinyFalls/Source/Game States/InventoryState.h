@@ -34,11 +34,27 @@ private:
 
 	int m_nCursor = 0;
 	bool m_bSelect = false;
+	bool m_bsword = false;
+	bool m_barmor = false;
+	bool m_bring = false;
 
-	SGD::Rectangle rect = { 50, 50, 650, 550 };
-	SGD::Rectangle rect1 = { 50, 50, 250, 200 };
-	SGD::Rectangle rect2 = { 250, 50, 450, 200 };
-	SGD::Rectangle rect3 = { 450, 50, 650, 200 };
+	SGD::Rectangle rect				= { 50, 50, 650, 550 };
+
+	SGD::Rectangle rect1			= { 50, 50, 250, 200 };
+	SGD::Rectangle swordslot1		= { 75,  125, 125, 175 };
+	SGD::Rectangle swordslot2		= { 125, 125, 175, 175 };
+	SGD::Rectangle swordslot3		= { 175, 125, 225, 175 };
+
+	SGD::Rectangle rect2			= { 250, 50, 450, 200 };
+	SGD::Rectangle armorslot1		= { 50, 50, 250, 200 };
+	SGD::Rectangle armorslot2		= { 50, 50, 250, 200 };
+	SGD::Rectangle armorslot3		= { 50, 50, 250, 200 };
+
+	SGD::Rectangle rect3			= { 450, 50, 650, 200 };
+	SGD::Rectangle ringslot1		= { 50, 50, 250, 200 };
+	SGD::Rectangle ringslot2		= { 50, 50, 250, 200 };
+	SGD::Rectangle ringslot3		= { 50, 50, 250, 200 };
+
 
 	SGD::Rectangle IventoryRect1	= { 50, 200, 200, 317 };
 	SGD::Rectangle IventoryRect2	= { 50, 317, 200, 434 };

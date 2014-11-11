@@ -51,6 +51,7 @@ bool InventoryState::Input()
 		{
 
 		}
+	
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
 		{
 
@@ -100,7 +101,6 @@ bool InventoryState::Input()
 
 		}
 	}*/
-
 	return true;
 }
 
@@ -119,8 +119,15 @@ void InventoryState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	pGraphics->DrawRectangle(rect, SGD::Color{ 200, 100, 100, 100 }, SGD::Color{ 255, 255, 255, 255 });
+
 	pGraphics->DrawRectangle(rect1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+
+	pGraphics->DrawRectangle(swordslot1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(swordslot2, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(swordslot3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+
 	pGraphics->DrawRectangle(rect2, SGD::Color{ 200, 200, 200, 200 }, SGD::Color{ 255, 255, 255, 255 });
+
 	pGraphics->DrawRectangle(rect3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 
 	pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
