@@ -31,7 +31,7 @@ void GameplayState::Enter()
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
 
 	// - Manage The map
-	m_pMap->LoadLevel("testMap.xml");
+	m_pMap->LoadLevel("Test.xml");
 
 	for (unsigned int i = 0; i < 1; i++)
 	{
@@ -53,7 +53,7 @@ void GameplayState::Exit()
 	}
 
 	pGraphics->UnloadTexture(m_hBackImage);
-
+	delete m_pMap;
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;

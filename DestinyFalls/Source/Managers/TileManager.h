@@ -11,6 +11,9 @@ struct Tile
 	int nX, nY;
 	int nWidth, nHeight;
 	int m_nTileID;
+	bool collisionTile;
+	SGD::Rectangle CollisionRect;
+
 
 };
 

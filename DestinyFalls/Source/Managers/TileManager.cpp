@@ -30,7 +30,7 @@ bool TileManager::LoadLevel( const char* _file )
 		return false;
 
 	Tile readTile;
-	int xIndex, yIndex, nMapSizeX, nMapSizeY;
+	int xIndex, yIndex, nMapSizeX, nMapSizeY, col;
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
@@ -39,7 +39,7 @@ bool TileManager::LoadLevel( const char* _file )
 
 	// - Access roots first ChildElement.
 	TiXmlElement* pTile = pRoot->FirstChildElement();
-	
+
 
 	while( pTile != nullptr )
 	{
@@ -47,12 +47,19 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "sourceY", &readTile.nY );
 		pTile->Attribute( "xIndex", &xIndex );
 		pTile->Attribute( "yIndex", &yIndex );
+		pTile->Attribute( "Collision", &col );
 
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
 			m_TileMap[i].resize( nMapSizeY );
 
+		readTile.collisionTile = (bool)col;
 
+		readTile.CollisionRect = SGD::Rectangle((float)(xIndex*readTile.nWidth),
+			(float)(yIndex*readTile.nHeight),
+			(float)xIndex*readTile.nWidth + readTile.nWidth,
+			(float)yIndex*readTile.nHeight + readTile.nHeight );
+		
 		m_TileMap[xIndex][yIndex] = readTile;
 		pTile = pTile->NextSiblingElement();
 	}
@@ -78,7 +85,7 @@ bool TileManager::DrawLevel()
 
 			pGraphics->DrawTextureSection(
 				tileSet,
-				SGD::Point( (float)(i*m_TileMap[i][j].nWidth), float(j*m_TileMap[i][j].nWidth )),
+				SGD::Point( (float)( i*m_TileMap[i][j].nWidth ), float( j*m_TileMap[i][j].nWidth ) ),
 				SGD::Rectangle( (float)left, (float)top, (float)width, (float)height )
 				);
 		}
