@@ -205,6 +205,9 @@
     <ClInclude Include="Source\Game States\InventoryState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Managers\ObjectManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -254,9 +257,6 @@
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\Inventory.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game Objects\iObject.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\LevelBoss.cpp">
@@ -351,6 +351,9 @@
     </ClCompile>
     <ClCompile Include="Source\Game States\InventoryState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\ObjectManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

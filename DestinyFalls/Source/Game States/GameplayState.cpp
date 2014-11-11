@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "../Game Core/Game.h"
 #include "GameplayState.h"
+#include "../Game Objects/Player.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
 #include "../Messages/MessageID.h"
@@ -8,6 +9,10 @@
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+
+
+#include "../../SGD Wrappers/SGD_EventManager.h"
+#include "MainMenuState.h"
 
 
 GameplayState* GameplayState::GetInstance()
@@ -19,12 +24,36 @@ GameplayState* GameplayState::GetInstance()
 void GameplayState::Enter()
 {
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
+	SGD::EventManager::GetInstance()->Initialize();
+
+	m_pObjects = new ObjectManager;
+
+	m_pPlayer = CreatePlayer();
+	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
 }
 
 void GameplayState::Exit()
 {
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
+	if (m_pPlayer != nullptr)
+	{
+		m_pPlayer->Release();
+		m_pPlayer = nullptr;
+	}
+
+	pGraphics->UnloadTexture(m_hBackImage);
+
+	m_pObjects->RemoveAll();
+	delete m_pObjects;
+	m_pObjects = nullptr;
+	
 	SGD::MessageManager::GetInstance()->Terminate();
 	SGD::MessageManager::DeleteInstance();
+
+	SGD::EventManager::GetInstance()->Terminate();
+	SGD::EventManager::DeleteInstance();
+
 }
 
 bool GameplayState::Input()
@@ -52,7 +81,8 @@ void GameplayState::Update(float elapsedTime)
 
 	SGD::MessageManager::GetInstance()->Update();
 
-
+	m_pObjects->UpdateAll(elapsedTime);
+	m_pObjects->RenderAll();
 }
 
 void GameplayState::Render()
@@ -61,6 +91,8 @@ void GameplayState::Render()
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
 	
 	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 255, 0 });
+
+	m_pObjects->RenderAll();
 }
 
 /*static*/ void GameplayState::MessageProc(const SGD::Message* pMsg)
@@ -75,4 +107,12 @@ void GameplayState::Render()
 		break;
 	}
 
+}
+
+Object* GameplayState::CreatePlayer()
+{
+	Player* temp = new Player;
+	temp->SetSize({ 64, 64 });
+	temp->SetPosition(SGD::Point(150, 150));
+	return temp;
 }
