@@ -90,8 +90,8 @@ bool MainMenuState::Input()
 void MainMenuState::Update(float elapsedTime)
 {
 	TileManager tm;
-	tm.ReadXML("testMap.xml");
-	tm.DrawMap();
+	tm.LoadLevel("testMap.xml");
+	tm.DrawLevel();
 	return;
 }
 

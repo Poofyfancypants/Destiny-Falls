@@ -20,8 +20,8 @@ public:
 	TileManager();
 	~TileManager();
 
-	bool ReadXML(const char* _tilePath);
-	bool DrawMap();
+	bool LoadLevel(const char* _tilePath);
+	bool DrawLevel();
 
 private:
 	string m_strTileSetPath;

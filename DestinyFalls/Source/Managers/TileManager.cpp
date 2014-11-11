@@ -16,7 +16,7 @@ TileManager::~TileManager()
 
 }
 
-bool TileManager::ReadXML( const char* _file )
+bool TileManager::LoadLevel( const char* _file )
 {
 	TiXmlDocument doc;
 
@@ -29,43 +29,38 @@ bool TileManager::ReadXML( const char* _file )
 	if( pRoot == nullptr )
 		return false;
 
-	//m_TileMap.clear();
+	Tile readTile;
+	int xIndex, yIndex, nMapSizeX, nMapSizeY;
+
+	pRoot->Attribute( "MapSizeX", &nMapSizeX );
+	pRoot->Attribute( "MapSizeY", &nMapSizeY );
+	pRoot->Attribute( "tileWidth", &readTile.nWidth );
+	pRoot->Attribute( "tileHeight", &readTile.nHeight );
 
 	// - Access roots first ChildElement.
 	TiXmlElement* pTile = pRoot->FirstChildElement();
+	
 
 	while( pTile != nullptr )
 	{
-		Tile readTile;
-		int xIndex, yIndex, nMapSizeX, nMapSizeY;
-
-		pTile->Attribute( "MapSizeX", &nMapSizeX );
-		pTile->Attribute( "MapSizeY", &nMapSizeY );
-
-		pTile->Attribute( "tileWidth", &readTile.nWidth );
-		pTile->Attribute( "tileHeight", &readTile.nHeight );
 		pTile->Attribute( "sourceX", &readTile.nX );
 		pTile->Attribute( "sourceY", &readTile.nY );
 		pTile->Attribute( "xIndex", &xIndex );
 		pTile->Attribute( "yIndex", &yIndex );
 
-		m_TileMap.resize(nMapSizeX);
+		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
-			m_TileMap[i].resize(nMapSizeY);
+			m_TileMap[i].resize( nMapSizeY );
 
 
-		//for( size_t i = 0; i < m_TileMap.size(); i++ )
-		//{
-		//	for( size_t j = 0; j < m_TileMap[0].size(); j++ )
-				m_TileMap[xIndex][yIndex] = readTile;
-		//}
+		m_TileMap[xIndex][yIndex] = readTile;
 		pTile = pTile->NextSiblingElement();
 	}
-		return true;
+	return true;
 
 }
 
-bool TileManager::DrawMap()
+bool TileManager::DrawLevel()
 {
 	// - Load the tile set image
 	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
@@ -83,13 +78,13 @@ bool TileManager::DrawMap()
 
 			pGraphics->DrawTextureSection(
 				tileSet,
-				SGD::Point( i*m_TileMap[i][j].nWidth, j*m_TileMap[i][j].nWidth ),
-				SGD::Rectangle( left, top, width, height )
+				SGD::Point( (float)(i*m_TileMap[i][j].nWidth), float(j*m_TileMap[i][j].nWidth )),
+				SGD::Rectangle( (float)left, (float)top, (float)width, (float)height )
 				);
 		}
 	}
 
-	pGraphics->UnloadTexture(tileSet);
+	pGraphics->UnloadTexture( tileSet );
 	return true;
 
 }
