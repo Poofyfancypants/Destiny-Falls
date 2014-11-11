@@ -60,6 +60,11 @@ private:
 
 	std::vector<IGameState*> m_pStateStack;
 
+
+	/**********************************************************/
+	// Message Callback Function:
+	static void MessageProc(const SGD::Message* pMsg);
+
 };
 
 #endif //GAME_H

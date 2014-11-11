@@ -79,9 +79,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Animation.h" />
-    <ClInclude Include="AnimationTimeStamp.h" />
-    <ClInclude Include="Frame.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="SGD Wrappers\SGD_AudioManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_Color.h" />
@@ -99,7 +96,9 @@
     <ClInclude Include="SGD Wrappers\SGD_Message.h" />
     <ClInclude Include="SGD Wrappers\SGD_MessageManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_String.h" />
-    <ClInclude Include="Source\Game Core\DestinyFalls.h" />
+    <ClInclude Include="Source\Engines\Animation.h" />
+    <ClInclude Include="Source\Engines\AnimationTimeStamp.h" />
+    <ClInclude Include="Source\Engines\Frame.h" />
     <ClInclude Include="Source\Game Core\Game.h" />
     <ClInclude Include="Source\Game Objects\AnimatedObject.h" />
     <ClInclude Include="Source\Game Objects\Chest.h" />
@@ -107,7 +106,6 @@
     <ClInclude Include="Source\Game Objects\Enemy.h" />
     <ClInclude Include="Source\Game Objects\FinalBoss.h" />
     <ClInclude Include="Source\Game Objects\FireTrap.h" />
-    <ClInclude Include="Source\Game Objects\Inventory.h" />
     <ClInclude Include="Source\Game Objects\iObject.h" />
     <ClInclude Include="Source\Game Objects\LevelBoss.h" />
     <ClInclude Include="Source\Game Objects\MiniBoss.h" />
@@ -123,21 +121,23 @@
     <ClInclude Include="Source\Game States\GamePauseState.h" />
     <ClInclude Include="Source\Game States\GameplayState.h" />
     <ClInclude Include="Source\Game States\IGameState.h" />
+    <ClInclude Include="Source\Game States\InventoryState.h" />
     <ClInclude Include="Source\Game States\MainMenuState.h" />
     <ClInclude Include="Source\Game States\OptionsState.h" />
     <ClInclude Include="Source\Managers\AnimationManager.h" />
+    <ClInclude Include="Source\Managers\ObjectManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
     <ClInclude Include="Source\Messages\MessageID.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
     <ClInclude Include="Source\TinyXML\tinyxml.h" />
+    <ClInclude Include="Source\Quick Time\QuickTime.h" />
+    <ClInclude Include="Source\Runes\RuneManager.h" />
+    <ClInclude Include="Source\Runes\Runes.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Animation.cpp" />
-    <ClCompile Include="AnimationTimeStamp.cpp" />
-    <ClCompile Include="Frame.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Event.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_EventManager.cpp" />
@@ -147,7 +147,9 @@
     <ClCompile Include="SGD Wrappers\SGD_Listener.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Message.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp" />
-    <ClCompile Include="Source\Game Core\DestinyFalls.cpp" />
+    <ClCompile Include="Source\Engines\Animation.cpp" />
+    <ClCompile Include="Source\Engines\AnimationTimeStamp.cpp" />
+    <ClCompile Include="Source\Engines\Frame.cpp" />
     <ClCompile Include="Source\Game Core\Game.cpp" />
     <ClCompile Include="Source\Game Core\WinMain.cpp" />
     <ClCompile Include="Source\Game Objects\AnimatedObject.cpp" />
@@ -156,8 +158,6 @@
     <ClCompile Include="Source\Game Objects\Enemy.cpp" />
     <ClCompile Include="Source\Game Objects\FinalBoss.cpp" />
     <ClCompile Include="Source\Game Objects\FireTrap.cpp" />
-    <ClCompile Include="Source\Game Objects\Inventory.cpp" />
-    <ClCompile Include="Source\Game Objects\iObject.cpp" />
     <ClCompile Include="Source\Game Objects\LevelBoss.cpp" />
     <ClCompile Include="Source\Game Objects\MiniBoss.cpp" />
     <ClCompile Include="Source\Game Objects\Minion.cpp" />
@@ -171,15 +171,20 @@
     <ClCompile Include="Source\Game States\CreditState.cpp" />
     <ClCompile Include="Source\Game States\GamePauseState.cpp" />
     <ClCompile Include="Source\Game States\GameplayState.cpp" />
+    <ClCompile Include="Source\Game States\InventoryState.cpp" />
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
+    <ClCompile Include="Source\Managers\ObjectManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="Source\Quick Time\QuickTime.cpp" />
+    <ClCompile Include="Source\Runes\RuneManager.cpp" />
+    <ClCompile Include="Source\Runes\Runes.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

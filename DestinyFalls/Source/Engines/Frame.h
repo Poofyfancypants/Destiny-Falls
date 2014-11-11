@@ -1,5 +1,5 @@
 #pragma once
-#include "SGD Wrappers\SGD_Geometry.h"
+#include "..\..\SGD Wrappers\SGD_Geometry.h"
 #include <vector>
 #include <string>
 using namespace std;
@@ -10,14 +10,16 @@ class Frame
 	vector<SGD::Rectangle> m_vCollisionRects;
 	string m_szEvent;
 	SGD::Point m_ptAnchorPoint;
-	
+
+	float m_fDuration;
+
 	int m_nDamage = 0;
-	
+
 	bool m_bTriggerCombat = false;
 	bool m_bTriggerQT = false;
-	
 
-	
+
+
 public:
 	Frame();
 	~Frame();
@@ -40,6 +42,9 @@ public:
 	//Returns m_ptAnchorPoint
 	SGD::Point GetAnchorPoint(){ return m_ptAnchorPoint; }
 
+	//returns m_fDuration
+	float GetDuration(){ return m_fDuration; }
+
 	//returns m_nDamage
 	int GetDamage(){ return m_nDamage; }
 
@@ -51,7 +56,7 @@ public:
 
 	///////////////////////////////////////////////////////
 	//MUTATORS
-	
+
 	//Set m_rDrawRect
 	void SetDrawRect( SGD::Rectangle drawRect ){ m_rDrawRect = drawRect; }
 
@@ -70,10 +75,13 @@ public:
 	//Set m_ptAnchorPoint
 	void SetAnchorPoint( SGD::Point anchorPoint ) { m_ptAnchorPoint = anchorPoint; }
 
+	//Set m_fDuration
+	void SetDuration( float duration ) { m_fDuration = duration; }
+
 	//Set m_nDamage 
 	//	-	how much damage is triggered by this frame
 	void SetDamage( int damage ) { m_nDamage = damage; }
-	
+
 	//Set m_bTriggerCombat
 	//	-	Does this frame trigger combat?
 	void SetCombatTrigger( bool combatTrigger ) { m_bTriggerCombat = combatTrigger; }
@@ -90,7 +98,7 @@ public:
 	//push a new collision rect back into the collisionRects vector
 	void AddCollisionRect( SGD::Rectangle collisionRect );
 
-	
+
 
 
 };

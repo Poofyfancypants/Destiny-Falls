@@ -4,11 +4,13 @@
 
 Animation::Animation()
 {
+
 }
 
 
 Animation::~Animation()
 {
+
 }
 
 //AddFrame adds frames to the m_vFrames vector

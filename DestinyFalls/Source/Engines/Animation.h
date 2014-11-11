@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Frame.h"
+#include "..\..\SGD Wrappers\SGD_Handle.h"
 
 #include <vector>
 #include <string>
@@ -14,9 +15,10 @@ class Animation
 	string m_szNextAnimation;
 
 	bool m_bLooping;
-	
+
 	int m_nImageID;
 
+	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
 
 public:
 	Animation();
@@ -44,6 +46,9 @@ public:
 	//Return m_nImageID
 	int GetImageID() { return m_nImageID; }
 
+	//Return m_hImage
+	SGD::HTexture GetImage() { return m_hImage; }
+
 	///////////////////////////////////////////////////////
 	//MUTATORS
 
@@ -66,6 +71,8 @@ public:
 	//Set m_nImageID
 	void SetImageID( int id ) { m_nImageID = id; }
 
+	//Set m_hImage
+	void SetImage( SGD::HTexture image ) { m_hImage = image; }
 
 	///////////////////////////////////////////////////////
 	//FUNCTIONS
