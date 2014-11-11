@@ -106,7 +106,6 @@
     <ClInclude Include="Source\Game Objects\Enemy.h" />
     <ClInclude Include="Source\Game Objects\FinalBoss.h" />
     <ClInclude Include="Source\Game Objects\FireTrap.h" />
-    <ClInclude Include="Source\Game Objects\Inventory.h" />
     <ClInclude Include="Source\Game Objects\iObject.h" />
     <ClInclude Include="Source\Game Objects\LevelBoss.h" />
     <ClInclude Include="Source\Game Objects\MiniBoss.h" />
@@ -159,7 +158,6 @@
     <ClCompile Include="Source\Game Objects\Enemy.cpp" />
     <ClCompile Include="Source\Game Objects\FinalBoss.cpp" />
     <ClCompile Include="Source\Game Objects\FireTrap.cpp" />
-    <ClCompile Include="Source\Game Objects\Inventory.cpp" />
     <ClCompile Include="Source\Game Objects\LevelBoss.cpp" />
     <ClCompile Include="Source\Game Objects\MiniBoss.cpp" />
     <ClCompile Include="Source\Game Objects\Minion.cpp" />

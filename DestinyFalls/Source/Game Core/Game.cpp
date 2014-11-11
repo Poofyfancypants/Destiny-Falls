@@ -7,9 +7,14 @@
 
 #include "../Game States/IGameState.h"
 #include "../Game States/MainMenuState.h"
-#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
+
+#include "../Messages/MessageID.h"
+#include "../../SGD Wrappers/SGD_MessageManager.h"
+#include "../../SGD Wrappers/SGD_Message.h"
+#include "../../SGD Wrappers/SGD_EventManager.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -51,6 +56,9 @@ bool Game::Initialize( float width, float height )
 		|| SGD::GraphicsManager::GetInstance()->Initialize(false) == false
 		|| SGD::InputManager::GetInstance()->Initialize() == false)
 		return false;
+
+	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
+	SGD::EventManager::GetInstance()->Initialize();
 
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
@@ -115,6 +123,12 @@ void Game::Terminate( void )
 
 	SGD::InputManager::GetInstance()->Terminate();
 	SGD::InputManager::DeleteInstance();
+
+	SGD::MessageManager::GetInstance()->Terminate();
+	SGD::MessageManager::DeleteInstance();
+
+	SGD::EventManager::GetInstance()->Terminate();
+	SGD::EventManager::DeleteInstance();
 }
 
 void Game::AddState(IGameState* pNewState)
@@ -138,4 +152,18 @@ void Game::ClearStates()
 		m_pStateStack.pop_back();
 		m_nCurrState--;
 	}
+}
+
+/*static*/ void Game::MessageProc(const SGD::Message* pMsg)
+{
+	switch (pMsg->GetMessageID())
+	{
+
+	default:
+	{
+			   OutputDebugStringW(L"GameplayState::MessageProc - unknown message id\n");
+	}
+		break;
+	}
+
 }

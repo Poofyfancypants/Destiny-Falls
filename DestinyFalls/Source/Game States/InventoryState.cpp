@@ -32,10 +32,7 @@ bool InventoryState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
-	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
-		Game::GetInstance()->AddState(GameplayState::GetInstance());
-	}
 
 	return true;
 }

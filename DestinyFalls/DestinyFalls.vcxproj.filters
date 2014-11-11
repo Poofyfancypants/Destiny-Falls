@@ -109,9 +109,6 @@
     <ClInclude Include="Source\Game Objects\FireTrap.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game Objects\Inventory.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game Objects\iObject.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
@@ -254,9 +251,6 @@
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\FireTrap.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game Objects\Inventory.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\LevelBoss.cpp">

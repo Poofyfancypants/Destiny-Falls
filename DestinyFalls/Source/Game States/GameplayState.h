@@ -13,7 +13,7 @@ class GameplayState :
 {
 public:
 
-	enum BucketList {PLAYER_BUCKET = 0, };
+	enum BucketList {PLAYER_BUCKET, ENEMY_BUCKET,};
 	static GameplayState* GetInstance(void);
 
 	virtual void Enter(void)				override;
@@ -32,14 +32,11 @@ private:
 	int m_nCursor = 0;
 	bool m_bSelect = false;
 
-	/**********************************************************/
-	// Message Callback Function:
-	static void MessageProc(const SGD::Message* pMsg);
-
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
 	
 	SGD::HTexture m_hBackImage;
 
 	Object* CreatePlayer();
+	Object* CreateEnemy();
 };

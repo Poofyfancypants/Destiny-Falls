@@ -1,11 +1,11 @@
 #include "stdafx.h"
 #include "Player.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Event.h"
 
 Player::Player() : Listener(this)
 {
-
 }
 
 Player::~Player()
@@ -16,7 +16,7 @@ Player::~Player()
 
 void Player::Update(float elapsedTime)
 {
-
+	TakeInput(elapsedTime);
 }
 
 void Player::Render(void)
@@ -24,7 +24,17 @@ void Player::Render(void)
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	SGD::Rectangle playerRect = { m_ptPosition.x, m_ptPosition.y, m_ptPosition.x + 64, m_ptPosition.y + 64 };
-	pGraphics->DrawRectangle(playerRect, SGD::Color(255, 0, 0));
+	pGraphics->DrawRectangle(playerRect, SGD::Color(0, 0, 255));
+}
+
+void Player::TakeInput(float elapsedTime)
+{
+	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+
+	if (pInput->IsKeyDown(SGD::Key::Up))
+	{
+		m_ptPosition.y -= 10 * elapsedTime;
+	}
 }
 
 SGD::Rectangle Player::GetRect(void) const
