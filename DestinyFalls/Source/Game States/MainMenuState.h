@@ -27,5 +27,6 @@ private:
 	bool m_bSelect = false;
 
 	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
+	SGD::Rectangle TestAnimationSystem = { 0 , 0 , 0 , 0 };
 };
 
