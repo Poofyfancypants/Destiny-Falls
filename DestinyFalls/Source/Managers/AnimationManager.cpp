@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "AnimationManager.h"
 #include <fstream>
-
+#include <cassert>
 #include "..\..\SGD Wrappers\SGD_Geometry.h"
 #include"..\..\SGD Wrappers\SGD_GraphicsManager.h"
 
@@ -51,7 +51,7 @@ void AnimationManager::Update( AnimationTimeStamp& ts , float dt )
 	else
 	{
 		//What is the last frame in the animation?
-		int lastFrame = Loaded[ ts.GetCurrentAnimation() ]->GetFrameVector().size();
+		int lastFrame = Loaded[ ts.GetCurrentAnimation() ]->GetFrameVector().size()-1;
 
 		//if we are not on the last frame in the animation
 		if( ts.GetCurrentFrame() < lastFrame )
@@ -69,15 +69,19 @@ void AnimationManager::Update( AnimationTimeStamp& ts , float dt )
 			ts.SetCurrentFrame( lastFrame );
 		}
 
+		ts.SetTimeOnFrame( 0.0f );
+
 	}
 }
 
 void AnimationManager::Load( string fileName )
 {
+	assert( fileName.c_str() != nullptr && fileName[ 0 ] != '\0' && "AnimationManager:Load - Invalid filename" );
 	SGD::GraphicsManager*	pGraphics = SGD::GraphicsManager::GetInstance();
 
 	//create the TinyXML Document
 	TiXmlDocument doc;
+	
 
 	//Attempt to load the file
 	//	(will allocate & set the Entire tree)
@@ -86,7 +90,7 @@ void AnimationManager::Load( string fileName )
 		return;
 	}
 
-	//Access the root Element ("animation")
+	//Access the root Element ("Root")
 	TiXmlElement* pRoot = doc.RootElement();
 
 	if( pRoot == nullptr )
@@ -94,8 +98,24 @@ void AnimationManager::Load( string fileName )
 		return;
 	}
 
+	//Access the root's first "Root" Element
+	//TiXmlElement* pAnimation = pRoot->FirstChildElement( "Root" );
+
+	//Access the root's first "animation" Element
+	TiXmlElement* pAnimation = pRoot->FirstChildElement(); 
+	
+	if( pAnimation == nullptr )
+	{
+		return;
+	}
+
 	//Access the root's first "animation_info" Element
-	TiXmlElement* pAnimation = pRoot->FirstChildElement( "animation_info" );
+	pAnimation = pAnimation->FirstChildElement( );
+
+	if( pAnimation == nullptr )
+	{
+		return;
+	}
 
 	//Get all the animations
 	while( pAnimation != nullptr )
@@ -128,16 +148,19 @@ void AnimationManager::Load( string fileName )
 		m_hImage = pGraphics->LoadTexture( tName.c_str() );
 		Loaded[ a->GetName() ]->SetImage( m_hImage );
 
+		//Clear the frames vector
+		Loaded[ a->GetName() ]->GetFrameVector().clear();
+
 		//Get the number of frames in the animation
 		int nFrames = 0;
 
 		pAnimation->Attribute( "numFrames" , &nFrames );
 
 		//Access the animations's first "frame" Element
-		TiXmlElement* pFrame = pRoot->FirstChildElement( "frame" );
+		TiXmlElement* pFrame = pAnimation->FirstChildElement();
 
 		//get each of the frames in the image
-		for( unsigned int i = 0; i < nFrames; i++ )
+		while( pFrame != nullptr )
 		{
 			Frame f;
 			/*<frame duration="0.5" damage="0" event="none" dLeft="4" dTop="520" dRight="47" dBottom="580" cLeft="4" cTop="520" cRight="47" cBottom="580" x="24" y="577"/>*/
@@ -154,7 +177,7 @@ void AnimationManager::Load( string fileName )
 
 			//Get the frame's event name
 			string eve = "";
-			eve = pAnimation->Attribute( "event" );
+			eve = pFrame->Attribute( "event" );
 			f.SetEventName( eve );
 
 			//Get the drawRect
@@ -191,15 +214,19 @@ void AnimationManager::Load( string fileName )
 
 				//Get the collisionRect left
 				int cleft;
+				pFrame->Attribute( "cLeft" , &cleft );
 
 				//Get the collisionRect top
 				int ctop;
+				pFrame->Attribute( "cTop" , &ctop );
 
 				//Get the collisionRect right
 				int crig;
+				pFrame->Attribute( "cRight" , &crig );
 
 				//Get the collisionRect bottom
 				int cbot;
+				pFrame->Attribute( "cBottom" , &cbot );
 			
 				//set the crect left/top/bottom/right to the read in variables
 				cRect.left = cleft;
@@ -214,9 +241,12 @@ void AnimationManager::Load( string fileName )
 				SGD::Point aP;
 			//Get anchor point x
 				int aX;
+				pFrame->Attribute( "x" , &aX );
+
 			//Get anchor point y
 				int aY;
-				
+				pFrame->Attribute( "y" , &aY );
+
 				aP.x = aX;
 				aP.y = aY;
 
@@ -227,13 +257,10 @@ void AnimationManager::Load( string fileName )
 
 			
 			//Move to the next "frame" Sibling Element if there are more frames
-			if( nFrames > i )
-			{
-				pFrame = pFrame->NextSiblingElement( "frame" );
-
-			}
+			pFrame = pFrame->NextSiblingElement( );
+			
 		}
-		pAnimation = pAnimation->NextSiblingElement( "animation_info" );
+		pAnimation = pAnimation->NextSiblingElement();
 	}
 }
 

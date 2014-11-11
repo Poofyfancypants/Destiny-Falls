@@ -8,6 +8,7 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
+#include "../Game States/AnimationTestState.h"
 
 MainMenuState* MainMenuState::GetInstance()
 {
@@ -18,6 +19,7 @@ MainMenuState* MainMenuState::GetInstance()
 void MainMenuState::Enter()
 {
 	PlayGame = { 50, 50, 100, 100 };
+	TestAnimationSystem = { 50 , 150 , 100 , 200 };
 }
 
 void MainMenuState::Exit()
@@ -88,7 +90,14 @@ bool MainMenuState::Input()
 		}
 	}
 
-
+	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	{
+		if( pInput->GetCursorPosition().IsPointInRectangle( TestAnimationSystem ) )
+		{
+			//Game::GetInstance()->RemoveState();
+			Game::GetInstance()->AddState( AnimationTestState::GetInstance() );
+		}
+	}
 	return true;
 }
 
@@ -102,4 +111,6 @@ void MainMenuState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
 	pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle( TestAnimationSystem , SGD::Color { 255 , 0 , 255 , 255 } );
+
 }

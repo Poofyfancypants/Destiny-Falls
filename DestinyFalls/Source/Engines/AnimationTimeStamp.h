@@ -13,8 +13,8 @@ private:
 
 
 public:
-	AnimationTimeStamp();
-	~AnimationTimeStamp();
+	AnimationTimeStamp()=default;
+	~AnimationTimeStamp()=default;
 
 	///////////////////////////////////////////////////////
 	//ACCESSORS
