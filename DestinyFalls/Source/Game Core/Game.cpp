@@ -91,6 +91,7 @@ int Game::Update(void)
 		|| SGD::InputManager::GetInstance()->Update() == false)
 		return -10;		// exit FAILURE!
 
+	SGD::MessageManager::GetInstance()->Update();
 
 
 
@@ -107,10 +108,10 @@ int Game::Update(void)
 	if (m_nCurrState == pCurrent)
 		m_pStateStack[m_nCurrState]->Update(elapsedTime);
 
-	for (int i = 0; i <= (int)m_pStateStack.size() - 1; i++)
-		m_pStateStack[i]->Render();
+	//for (int i = 0; i <= (int)m_pStateStack.size() - 1; i++)
+	//	m_pStateStack[i]->Render();
 
-	//m_pStateStack[m_nCurrState]->Render();
+	m_pStateStack[m_nCurrState]->Render();
 
 	return 0;		// keep playing!
 }

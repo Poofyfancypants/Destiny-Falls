@@ -15,7 +15,7 @@ Player::Player() : Listener(this)
 Player::~Player()
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
-	pGraphics->UnloadTexture(m_hImage);
+	//pGraphics->UnloadTexture(m_hImage);
 }
 
 void Player::Update(float elapsedTime)

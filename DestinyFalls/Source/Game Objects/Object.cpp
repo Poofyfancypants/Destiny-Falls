@@ -6,7 +6,7 @@
 Object::~Object(void)
 {
 	assert(m_unRefCount == 0 && "~Object - reference remains to destroyed object");
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hImage);
+	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hImage);
 }
 
 void Object::Update(float elapsedTime)
