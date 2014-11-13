@@ -18,6 +18,7 @@ Player::~Player()
 	pGraphics->UnloadTexture( m_hImage );
 }
 
+void Player::Update(float elapsedTime)
 void Player::Update( float elapsedTime )
 {
 	m_nDirection = 0;

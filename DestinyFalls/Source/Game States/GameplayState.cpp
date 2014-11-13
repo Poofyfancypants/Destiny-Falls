@@ -30,6 +30,7 @@ void GameplayState::Enter()
 	m_pMap = new TileManager;
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
+	m_henemy = pGraphics->LoadTexture(L"resource/graphics/1005-Rock.png");
 
 	m_pPlayer = CreatePlayer();
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
@@ -61,8 +62,8 @@ void GameplayState::Exit()
 		m_pPlayer = nullptr;
 	}
 
-	pGraphics->UnloadTexture( m_hBackImage );
-	m_pObjects->RemoveAll();
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 
 	delete m_pObjects;
 	m_pObjects = nullptr;
@@ -92,9 +93,8 @@ bool GameplayState::Input()
 void GameplayState::Update( float elapsedTime )
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	SGD::MessageManager::GetInstance()->Update();
 
-	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
+
 
 
 
@@ -131,7 +131,7 @@ Object* GameplayState::CreatePlayer()
 Object* GameplayState::CreateEnemy()
 {
 	Enemy* temp = new Enemy;
-	temp->SetSize( { 64, 64 } );
+	temp->SetImage(m_henemy);
 	int posx = rand() % 300 + 200;
 	int posy = rand() % 300 + 250;
 

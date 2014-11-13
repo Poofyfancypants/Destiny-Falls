@@ -47,11 +47,11 @@ private:
 	SGD::Point m_ptWorldCam = SGD::Point{ 0, 0 };
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
+	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
-	SGD::HTexture m_hBackImage;
 
 	Object* CreatePlayer();
 	Object* CreateEnemy();
