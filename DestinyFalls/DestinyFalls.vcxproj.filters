@@ -205,6 +205,12 @@
     <ClInclude Include="Source\Managers\ObjectManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Messages\DestroyObjectMessage.h">
+      <Filter>Messages</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\AnimationTestState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -348,6 +354,12 @@
     </ClCompile>
     <ClCompile Include="Source\Managers\ObjectManager.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Messages\DestroyObjectMessage.cpp">
+      <Filter>Messages</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\AnimationTestState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

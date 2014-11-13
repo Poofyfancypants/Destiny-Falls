@@ -21,8 +21,8 @@ class Frame
 
 
 public:
-	Frame();
-	~Frame();
+	Frame() = default;
+	~Frame() = default;
 
 	///////////////////////////////////////////////////////
 	//ACCESSORS

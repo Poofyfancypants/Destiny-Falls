@@ -2,6 +2,7 @@
 #include "IGameState.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
+#include <fstream>
 
 class MainMenuState :
 	public IGameState
@@ -27,5 +28,14 @@ private:
 	bool m_bSelect = false;
 
 	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
+	SGD::Rectangle TestAnimationSystem = { 0 , 0 , 0 , 0 };
+
+	SGD::Rectangle Options = { 0, 0, 0, 0 };
+	SGD::Rectangle LoadGame = { 0, 0, 0, 0 };
+	SGD::Rectangle HowToPlay = { 0, 0, 0, 0 };
+	SGD::Rectangle Credit = { 0, 0, 0, 0 };
+	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
+
+
 };
 

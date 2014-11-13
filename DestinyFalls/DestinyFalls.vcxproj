@@ -116,6 +116,7 @@
     <ClInclude Include="Source\Game Objects\SpikeTrap.h" />
     <ClInclude Include="Source\Game Objects\StaticObject.h" />
     <ClInclude Include="Source\Game Objects\Trap.h" />
+    <ClInclude Include="Source\Game States\AnimationTestState.h" />
     <ClInclude Include="Source\Game States\CombatState.h" />
     <ClInclude Include="Source\Game States\CreditState.h" />
     <ClInclude Include="Source\Game States\GamePauseState.h" />
@@ -128,6 +129,7 @@
     <ClInclude Include="Source\Managers\ObjectManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
+    <ClInclude Include="Source\Messages\DestroyObjectMessage.h" />
     <ClInclude Include="Source\Messages\MessageID.h" />
     <ClInclude Include="Source\TinyXML\tinystr.h" />
     <ClInclude Include="Source\TinyXML\tinyxml.h" />
@@ -167,6 +169,7 @@
     <ClCompile Include="Source\Game Objects\SpikeTrap.cpp" />
     <ClCompile Include="Source\Game Objects\StaticObject.cpp" />
     <ClCompile Include="Source\Game Objects\Trap.cpp" />
+    <ClCompile Include="Source\Game States\AnimationTestState.cpp" />
     <ClCompile Include="Source\Game States\CombatState.cpp" />
     <ClCompile Include="Source\Game States\CreditState.cpp" />
     <ClCompile Include="Source\Game States\GamePauseState.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="Source\Managers\ObjectManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />
+    <ClCompile Include="Source\Messages\DestroyObjectMessage.cpp" />
     <ClCompile Include="Source\TinyXML\tinystr.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxml.cpp" />
     <ClCompile Include="Source\TinyXML\tinyxmlerror.cpp" />
