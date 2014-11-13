@@ -29,6 +29,7 @@ public:
 
 	SGD::Point GetWorldCam(void) const	{ return m_ptWorldCam; }
 
+	TileManager* GetMap() const {return m_pMap;}
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;

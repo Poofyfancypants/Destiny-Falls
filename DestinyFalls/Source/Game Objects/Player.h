@@ -22,6 +22,10 @@ public:
 	virtual void HandleEvent(const SGD::Event* pEvent) override;
 	void TakeInput(float elapsedTime);
 
+	void SetVelocity(SGD::Vector _vel) {velocity = _vel;}
+	void SetDirection(int _direction) {m_nDirection = _direction;}
+	int GetDirection() {return m_nDirection;}
 private:
-
+	int m_nDirection;
+	SGD::Vector velocity = SGD::Vector();
 };

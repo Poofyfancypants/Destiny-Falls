@@ -25,6 +25,7 @@ public:
 
 	SGD::HTexture GetImage() const { return m_hImage; }
 	SGD::Point GetPosition() const { return m_ptPosition; }
+	SGD::Size GetSize() const {return m_szSize;}
 
 	void SetImage		(SGD::HTexture img)	{ m_hImage = img; }
 	void SetPosition	(SGD::Point	pos) 	{ m_ptPosition = pos; }
