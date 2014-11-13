@@ -136,5 +136,6 @@ Object* GameplayState::CreateEnemy()
 	int posy = rand() % 300 + 250;
 
 	temp->SetPosition( SGD::Point( (float)posx, (float)posy ) );
+	temp->SetSize(SGD::Size(65,65));
 	return temp;
 }
