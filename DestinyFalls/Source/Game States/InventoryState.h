@@ -21,9 +21,25 @@ public:
 	virtual void Render(void)				override;
 
 	void AddRunesToInventoryfromWorld(Runes* _addrune);
-	void AddRunesToSwordfromInventory(Runes* _addrune);
-	void AddRunesToRingfromInventory(Runes* _addrune);
-	void AddRunesToArmorfromInventory(Runes* _addrune);
+	void AddRunesToSword0fromInventory(Runes _addrune);
+	void AddRunesToSword1fromInventory(Runes _addrune);
+	void AddRunesToSword2fromInventory(Runes _addrune);
+	void AddRunesToRing0fromInventory(Runes _addrune);
+	void AddRunesToRing1fromInventory(Runes _addrune);
+	void AddRunesToRing2fromInventory(Runes _addrune);
+	void AddRunesToArmor0fromInventory(Runes _addrune);
+	void AddRunesToArmor1fromInventory(Runes _addrune);
+	void AddRunesToArmor2fromInventory(Runes _addrune);
+
+	void AddRunesToInventoryfromSword0();
+	void AddRunesToInventoryfromSword1();
+	void AddRunesToInventoryfromSword2();
+	void AddRunesToInventoryfromRing0();
+	void AddRunesToInventoryfromRing1();
+	void AddRunesToInventoryfromRing2();
+	void AddRunesToInventoryfromArmor0();
+	void AddRunesToInventoryfromArmor1();
+	void AddRunesToInventoryfromArmor2();
 
 private:
 	InventoryState() = default;
@@ -37,6 +53,8 @@ private:
 	bool m_bSwordSelect = false;
 	bool m_bArmorSelect = false;
 	bool m_bRingSelect = false;
+
+	Runes* m_ptSelectedRune;
 
 	SGD::Rectangle rect				= { 50, 50, 650, 550 };
 
@@ -72,10 +90,10 @@ private:
 
 protected:
 
-	std::vector<Runes*> m_vSword;
-	std::vector<Runes*> m_vRing;
-	std::vector<Runes*> m_vArmor;
-	std::vector<Runes*> m_vRunes;
+	std::vector<Runes> m_vSword;
+	std::vector<Runes> m_vRing;
+	std::vector<Runes> m_vArmor;
+	std::vector<Runes> m_vRunes;
 
 	SGD::HTexture m_hSword		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hRing		= SGD::INVALID_HANDLE;
