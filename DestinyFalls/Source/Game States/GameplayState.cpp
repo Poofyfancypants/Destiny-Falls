@@ -123,7 +123,7 @@ Object* GameplayState::CreatePlayer()
 	Player* temp = new Player;
 	temp->SetImage( m_hplayer );
 	temp->SetSize( { 38, 67 } );
-	temp->SetPosition( SGD::Point( 0, 0 ) );
+	temp->SetPosition( SGD::Point( 150, 150 ) );
 	temp->SetRotation( 0 );
 	return temp;
 }
