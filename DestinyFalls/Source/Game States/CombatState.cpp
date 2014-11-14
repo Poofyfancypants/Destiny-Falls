@@ -43,8 +43,8 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	SGD::Rectangle rect = { 450, 450, 500, 500 };
+	SGD::Rectangle AbilityRect = { 250, 375, 550, 550 };
 
-	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 255, 255, 0, 255 });
 
 }

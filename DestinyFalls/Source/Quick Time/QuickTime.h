@@ -17,6 +17,7 @@ public:
 	void SetLength(unsigned int x);
 
 	void GenerateRandomLetter();
+	void AddGuess(SGD::Key x);
 
 
 private:
@@ -25,8 +26,11 @@ private:
 	std::vector<SGD::Key> m_vInput;
 	std::vector<SGD::Key> m_vKeys;
 
-	unsigned int m_unlength;
-	unsigned int m_unNumCorrect;
+	unsigned int m_unlength = 4;
+	unsigned int m_unNumCorrect = 0;
+	float m_fSeconds = 0.0f;
+	int m_ncounter = 0;
+	bool m_bqtOver = false;
 
 protected:
 
