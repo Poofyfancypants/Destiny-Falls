@@ -32,10 +32,10 @@ void GameplayState::Enter()
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture(L"resource/graphics/1005-Rock.png");
 
-	m_pPlayer = CreatePlayer();
+	m_pPlayer = CreatePlayer(SGD::Point(150,150));
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
-
+	m_ptWorldCam = {0,0};
 	m_fWorldWidth = 800;
 	m_fWorldHeight = 600;
 
@@ -43,13 +43,13 @@ void GameplayState::Enter()
 	m_pMap->LoadLevel( "resource/XML/Test.xml" );
 
 
-	for( unsigned int i = 0; i < 3; i++ )
-	{
-		Object* tempEnemy = nullptr;
-		tempEnemy = CreateEnemy();
-		m_pObjects->AddObject( tempEnemy, ENEMY_BUCKET );
-		tempEnemy->Release();
-	}
+	//for( unsigned int i = 0; i < 3; i++ )
+	//{
+	//	Object* tempEnemy = nullptr;
+	//	tempEnemy = CreateEnemy();
+	//	m_pObjects->AddObject( tempEnemy, ENEMY_BUCKET );
+	//	tempEnemy->Release();
+	//}
 }
 
 void GameplayState::Exit()
@@ -95,7 +95,7 @@ void GameplayState::Update( float elapsedTime )
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 
-
+	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET );
 
 
 	m_pObjects->UpdateAll( elapsedTime );
@@ -118,24 +118,24 @@ void GameplayState::Render()
 	m_pObjects->RenderAll();
 }
 
-Object* GameplayState::CreatePlayer()
+Object* GameplayState::CreatePlayer(SGD::Point _pos)
 {
 	Player* temp = new Player;
 	temp->SetImage( m_hplayer );
 	temp->SetSize( { 38, 67 } );
-	temp->SetPosition( SGD::Point( 150, 150 ) );
+	temp->SetPosition( _pos );
 	temp->SetRotation( 0 );
 	return temp;
 }
 
-Object* GameplayState::CreateEnemy()
+Object* GameplayState::CreateEnemy(SGD::Point _pos)
 {
 	Enemy* temp = new Enemy;
 	temp->SetImage(m_henemy);
-	int posx = rand() % 300 + 200;
-	int posy = rand() % 300 + 250;
+	//int posx = rand() % 300 + 200;
+	//int posy = rand() % 300 + 250;
 
-	temp->SetPosition( SGD::Point( (float)posx, (float)posy ) );
+	temp->SetPosition( _pos );
 	temp->SetSize(SGD::Size(65,65));
 	return temp;
 }

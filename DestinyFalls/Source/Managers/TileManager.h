@@ -12,7 +12,9 @@ struct Tile
 {
 	int nX, nY;
 	int m_nTileID;
+	int m_nEnemyID;
 	bool collisionTile;
+	bool PlayerSpawn;
 	SGD::Rectangle CollisionRect;
 
 
@@ -27,7 +29,7 @@ public:
 	bool LoadLevel(const char* _tilePath);
 	bool DrawLevel(SGD::Point _offset, SGD::Point _playerPos);
 	bool TileCollision(Object* _player, SGD::Point _futurePos);
-
+	void SpawnEnemies();
 private:
 	string m_strTileSetPath;
 	vector<vector<Tile>> m_TileMap;
