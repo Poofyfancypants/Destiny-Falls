@@ -14,28 +14,32 @@ class GameplayState :
 {
 public:
 
-	enum BucketList {PLAYER_BUCKET, ENEMY_BUCKET,};
-	static GameplayState* GetInstance(void);
+	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, };
+	static GameplayState* GetInstance( void );
 
-	virtual void Enter(void)				override;
-	virtual void Exit(void)					override;
-	virtual bool Input(void)				override;
-	virtual void Update(float elapsedTime)	override;
-	virtual void Render(void)				override;
+	virtual void Enter( void )				override;
+	virtual void Exit( void )					override;
+	virtual bool Input( void )				override;
+	virtual void Update( float elapsedTime )	override;
+	virtual void Render( void )				override;
 	ObjectManager* GetObjManager() const { return m_pObjects; }
 	// World Size Accessors
-	float	GetWorldWidth(void) const	{ return m_fWorldWidth; }
-	float	GetWorldHeight(void) const	{ return m_fWorldHeight; }
+	float	GetWorldWidth( void ) const	{ return m_fWorldWidth; }
+	float	GetWorldHeight( void ) const	{ return m_fWorldHeight; }
 
-	SGD::Point GetWorldCam(void) const	{ return m_ptWorldCam; }
+	SGD::Point GetWorldCam( void ) const	{ return m_ptWorldCam; }
 
-	TileManager* GetMap() const {return m_pMap;}
+	Object* GetPlayer() {return m_pPlayer;}
+	TileManager* GetMap() const { return m_pMap; }
+
+	Object* CreatePlayer( SGD::Point _pos );
+	Object* CreateEnemy( SGD::Point _pos );
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
 
-	GameplayState(const GameplayState&) = delete;
-	GameplayState& operator=(const GameplayState&) = delete;
+	GameplayState( const GameplayState& ) = delete;
+	GameplayState& operator=( const GameplayState& ) = delete;
 
 	int m_nCursor = 0;
 	bool m_bSelect = false;
@@ -53,8 +57,7 @@ private:
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 
-	Object* CreatePlayer();
-	Object* CreateEnemy();
+
 
 
 };

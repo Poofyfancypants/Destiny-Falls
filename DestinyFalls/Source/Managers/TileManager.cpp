@@ -34,15 +34,15 @@ bool TileManager::LoadLevel( const char* _file )
 		return false;
 
 	Tile readTile;
-	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col;
+	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
 	pRoot->Attribute( "tileWidth", &nGridWidth );
-	pRoot->Attribute( "tileHeight", &nGridHeight);
+	pRoot->Attribute( "tileHeight", &nGridHeight );
 
-	m_szGridSize = SGD::Size((float)nGridWidth, (float)nGridHeight);
-	m_szMapSize = SGD::Size((float)nMapSizeX, (float)nMapSizeY);
+	m_szGridSize = SGD::Size( (float)nGridWidth, (float)nGridHeight );
+	m_szMapSize = SGD::Size( (float)nMapSizeX, (float)nMapSizeY );
 
 	// - Access roots first ChildElement.
 	TiXmlElement* pTile = pRoot->FirstChildElement();
@@ -52,6 +52,8 @@ bool TileManager::LoadLevel( const char* _file )
 	{
 		pTile->Attribute( "sourceX", &readTile.nX );
 		pTile->Attribute( "sourceY", &readTile.nY );
+		pTile->Attribute( "enemyID", &readTile.m_nEnemyID );
+		pTile->Attribute( "playerSpawn", &pSpawn );
 		pTile->Attribute( "xIndex", &xIndex );
 		pTile->Attribute( "yIndex", &yIndex );
 		pTile->Attribute( "Collision", &col );
@@ -61,6 +63,7 @@ bool TileManager::LoadLevel( const char* _file )
 			m_TileMap[i].resize( nMapSizeY );
 
 		readTile.collisionTile = (bool)col;
+		readTile.PlayerSpawn = (bool)pSpawn;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
@@ -70,6 +73,8 @@ bool TileManager::LoadLevel( const char* _file )
 		m_TileMap[xIndex][yIndex] = readTile;
 		pTile = pTile->NextSiblingElement();
 	}
+
+	SpawnEnemies();
 	return true;
 
 }
@@ -81,8 +86,8 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 
 	SGD::HTexture tileSet = pGraphics->LoadTexture( "default.bmp" );
 
-	float height = Game::GetInstance()->GetScreenHeight()/2;
-	float width = Game::GetInstance()->GetScreenWidth()/2;
+	float height = Game::GetInstance()->GetScreenHeight() / 2;
+	float width = Game::GetInstance()->GetScreenWidth() / 2;
 
 	for( size_t i = 0; i < m_TileMap.size(); i++ )
 	{
@@ -95,13 +100,13 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height + m_szGridSize.height ) };
 
 
-				pGraphics->DrawTextureSection(
-					tileSet,
-					dest,
-					source
-					);
+			pGraphics->DrawTextureSection(
+				tileSet,
+				dest,
+				source
+				);
 		}
-	//pGraphics->DrawRectangle(screen, SGD::Color(155,155,155));
+		//pGraphics->DrawRectangle(screen, SGD::Color(155,155,155));
 	}
 
 	pGraphics->UnloadTexture( tileSet );
@@ -124,4 +129,29 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 		}
 	}
 	return false;
+}
+
+
+void TileManager::SpawnEnemies()
+{
+	for( size_t row = 0; row < m_TileMap.size(); row++ )
+	{
+		for( size_t col = 0; col < m_TileMap[0].size(); col++ )
+		{
+			SGD::Point dest = { (float)( ( row*m_szGridSize.width ) - GameplayState::GetInstance()->GetWorldCam().x ), (float)( ( col*m_szGridSize.height ) - GameplayState::GetInstance()->GetWorldCam().y ) };
+			if( m_TileMap[row][col].m_nEnemyID != 0 )
+			{
+				// - MOER SPESIFIC WHEN WE HAVE MORE ENEMY TYPES
+
+				Object* tempEnemy = nullptr;
+				tempEnemy = GameplayState::GetInstance()->CreateEnemy( dest );
+				GameplayState::GetInstance()->GetObjManager()->AddObject( tempEnemy, GameplayState::ENEMY_BUCKET );
+				tempEnemy->Release();
+			}
+			if( m_TileMap[row][col].PlayerSpawn )
+			{
+				GameplayState::GetInstance()->GetPlayer()->SetPosition(dest);
+			}
+		}
+	}
 }
