@@ -23,27 +23,27 @@ void QuickTime::Update(float elapsedTime)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	//m_fSeconds += elapsedTime;
+	/*m_fSeconds += elapsedTime;
 
-	//if (m_fSeconds < 2.0f && m_ncounter < m_unlength)
-	//{
-	//	if (pInput->GetKeyDown(m_vOutput[m_ncounter]))
-	//	{
-	//		AddGuess(m_vOutput[m_ncounter]);
-	//		m_ncounter++;
-	//		m_fSeconds = 0.0f;
-	//	}
-	//	else if (pInput->GetAnyKeyPressed())
-	//	{
-	//		m_unNumCorrect = m_ncounter;
-	//		m_bqtOver = true;
-	//	}
-	//}
-	//else
-	//{
-	//	m_unNumCorrect = m_ncounter;
-	//	m_bqtOver = true;
-	//}
+	if (m_fSeconds < 2.0f && m_uncounter < m_unlength)
+	{
+		if (m_vOutput[m_uncounter] = pInput->GetAnyKeyDown())
+		{
+			AddGuess(m_vOutput[m_uncounter]);
+			m_ncounter++;
+			m_fSeconds = 0.0f;
+		}
+		else if (pInput->GetAnyKeyPressed())
+		{
+			m_unNumCorrect = m_uncounter;
+			m_bqtOver = true;
+		}
+	}
+	else
+	{
+		m_unNumCorrect = m_uncounter;
+		m_bqtOver = true;
+	}*/
 
 }
 

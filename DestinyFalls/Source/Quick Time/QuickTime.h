@@ -28,8 +28,8 @@ private:
 
 	unsigned int m_unlength = 4;
 	unsigned int m_unNumCorrect = 0;
+	unsigned int m_uncounter = 0;
 	float m_fSeconds = 0.0f;
-	int m_ncounter = 0;
 	bool m_bqtOver = false;
 
 protected:

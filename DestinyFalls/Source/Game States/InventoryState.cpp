@@ -19,29 +19,34 @@ void InventoryState::Enter()
 	m_hFiret2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet2.png");
 	m_hFiret3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet3.png");
 
-	m_vSword.resize(3);
-	m_vSword[0].SetElement(None);
-	m_vSword[0].SetTier(0);
-	m_vSword[1].SetElement(None);
-	m_vSword[1].SetTier(0);
-	m_vSword[2].SetElement(None);
-	m_vSword[2].SetTier(0);
+	if (m_bfirstEnter)
+	{
+		m_vSword.resize(3);
+		m_vSword[0].SetElement(None);
+		m_vSword[0].SetTier(0);
+		m_vSword[1].SetElement(None);
+		m_vSword[1].SetTier(0);
+		m_vSword[2].SetElement(None);
+		m_vSword[2].SetTier(0);
 
-	m_vArmor.resize(3);
-	m_vArmor[0].SetElement(None);
-	m_vArmor[0].SetTier(0);
-	m_vArmor[1].SetElement(None);
-	m_vArmor[1].SetTier(0);
-	m_vArmor[2].SetElement(None);
-	m_vArmor[2].SetTier(0);
-	m_vRing.resize(3);
+		m_vArmor.resize(3);
+		m_vArmor[0].SetElement(None);
+		m_vArmor[0].SetTier(0);
+		m_vArmor[1].SetElement(None);
+		m_vArmor[1].SetTier(0);
+		m_vArmor[2].SetElement(None);
+		m_vArmor[2].SetTier(0);
+		m_vRing.resize(3);
 
-	m_vRing[0].SetElement(None);
-	m_vRing[0].SetTier(0);
-	m_vRing[1].SetElement(None);
-	m_vRing[1].SetTier(0);
-	m_vRing[2].SetElement(None);
-	m_vRing[2].SetTier(0);
+		m_vRing[0].SetElement(None);
+		m_vRing[0].SetTier(0);
+		m_vRing[1].SetElement(None);
+		m_vRing[1].SetTier(0);
+		m_vRing[2].SetElement(None);
+		m_vRing[2].SetTier(0);
+	}
+
+	m_bfirstEnter = false;
 }
 
 void InventoryState::Exit()
@@ -282,10 +287,38 @@ void InventoryState::Render()
 	pGraphics->DrawRectangle(rect, SGD::Color{ 200, 100, 100, 100 }, SGD::Color{ 255, 255, 255, 255 });
 
 	pGraphics->DrawRectangle(rect1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+#pragma region SwordSlots
 	if (m_bSwordSelect)
 	{
 		pGraphics->DrawRectangle(swordslot1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 		if (m_vSword[0].GetElement() == Fire)
+		{
+			if (m_vSword[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[0].GetElement() == Water)
+		{
+			if (m_vSword[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[0].GetElement() == Air)
+		{
+			if (m_vSword[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[0].GetElement() == Earth)
 		{
 			if (m_vSword[0].GetTier() == 1)
 				pGraphics->DrawTexture(m_hFiret1, { 75, 125 }, {}, {}, {}, { 0.17f, 0.10f });
@@ -304,6 +337,33 @@ void InventoryState::Render()
 			if (m_vSword[1].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vSword[1].GetElement() == Water)
+		{
+			if (m_vSword[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[1].GetElement() == Air)
+		{
+			if (m_vSword[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[1].GetElement() == Earth)
+		{
+			if (m_vSword[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 125, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
 		pGraphics->DrawRectangle(swordslot3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 		if (m_vSword[2].GetElement() == Fire)
 		{
@@ -314,9 +374,38 @@ void InventoryState::Render()
 			if (m_vSword[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vSword[2].GetElement() == Water)
+		{
+			if (m_vSword[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[2].GetElement() == Air)
+		{
+			if (m_vSword[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vSword[2].GetElement() == Earth)
+		{
+			if (m_vSword[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vSword[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 175, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
 	}
+#pragma endregion
 
 	pGraphics->DrawRectangle(rect2, SGD::Color{ 200, 200, 200, 200 }, SGD::Color{ 255, 255, 255, 255 });
+#pragma region ArmorSlot
 	if (m_bArmorSelect)
 	{
 		pGraphics->DrawRectangle(armorslot1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
@@ -329,6 +418,34 @@ void InventoryState::Render()
 			if (m_vArmor[0].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vArmor[0].GetElement() == Water)
+		{
+			if (m_vArmor[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vArmor[0].GetElement() == Air)
+		{
+			if (m_vArmor[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vArmor[0].GetElement() == Earth)
+		{
+			if (m_vArmor[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 275, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+
 		pGraphics->DrawRectangle(armorslot2, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 		if (m_vArmor[1].GetElement() == Fire)
 		{
@@ -339,6 +456,34 @@ void InventoryState::Render()
 			if (m_vArmor[1].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vArmor[1].GetElement() == Water)
+		{
+			if (m_vArmor[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vArmor[1].GetElement() == Air)
+		{
+			if (m_vArmor[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vArmor[1].GetElement() == Earth)
+		{
+			if (m_vArmor[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 325, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+
 		pGraphics->DrawRectangle(armorslot3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 		if (m_vArmor[2].GetElement() == Fire)
 		{
@@ -349,9 +494,38 @@ void InventoryState::Render()
 			if (m_vArmor[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vArmor[2].GetElement() == Water)
+		{
+			if (m_vArmor[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vArmor[2].GetElement() == Air)
+		{
+			if (m_vArmor[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vArmor[2].GetElement() == Earth)
+		{
+			if (m_vArmor[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vArmor[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 375, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
 	}
+#pragma endregion
 
 	pGraphics->DrawRectangle(rect3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
+#pragma region RingSlot
 	if (m_bRingSelect)
 	{
 		pGraphics->DrawRectangle(ringslot1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
@@ -364,6 +538,34 @@ void InventoryState::Render()
 			if (m_vRing[0].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vRing[0].GetElement() == Water)
+		{
+			if (m_vRing[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vRing[0].GetElement() == Air)
+		{
+			if (m_vRing[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vRing[0].GetElement() == Earth)
+		{
+			if (m_vRing[0].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[0].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[0].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 475, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+
 		pGraphics->DrawRectangle(ringslot2, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 		if (m_vRing[1].GetElement() == Fire)
 		{
@@ -374,6 +576,34 @@ void InventoryState::Render()
 			if (m_vRing[1].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vRing[1].GetElement() == Water)
+		{
+			if (m_vRing[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vRing[1].GetElement() == Air)
+		{
+			if (m_vRing[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vRing[1].GetElement() == Earth)
+		{
+			if (m_vRing[1].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[1].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[1].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 525, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+
 		pGraphics->DrawRectangle(ringslot3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 		if (m_vRing[2].GetElement() == Fire)
 		{
@@ -384,7 +614,35 @@ void InventoryState::Render()
 			if (m_vRing[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
 		}
+		if (m_vRing[2].GetElement() == Water)
+		{
+			if (m_vRing[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vRing[2].GetElement() == Air)
+		{
+			if (m_vRing[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
+		if (m_vRing[2].GetElement() == Earth)
+		{
+			if (m_vRing[2].GetTier() == 1)
+				pGraphics->DrawTexture(m_hFiret1, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[2].GetTier() == 2)
+				pGraphics->DrawTexture(m_hFiret2, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+			if (m_vRing[2].GetTier() == 3)
+				pGraphics->DrawTexture(m_hFiret3, { 575, 125 }, {}, {}, {}, { 0.17f, 0.10f });
+		}
 	}
+#pragma endregion
 
 	pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hFiret1, { 50, 200 }, {}, {}, {}, { 0.5f, 0.25f });
@@ -424,7 +682,7 @@ void InventoryState::Render()
 
 }
 
-//Add
+#pragma region Add
 void InventoryState::AddRunesToInventoryfromWorld(Runes* _addrune)
 {
 	m_vRunes.push_back(*_addrune);
@@ -484,7 +742,9 @@ void InventoryState::AddRunesToArmor2fromInventory(Runes _addrune)
 	m_vArmor[2].SetTier(_addrune.GetTier());
 }
 
-//Remove
+#pragma endregion
+
+#pragma region Remove
 void InventoryState::AddRunesToInventoryfromSword0()
 {
 	m_vSword[0].SetElement(None);
@@ -538,3 +798,5 @@ void InventoryState::AddRunesToInventoryfromArmor2()
 	m_vArmor[2].SetElement(None);
 	m_vArmor[2].SetTier(0);
 }
+
+#pragma endregion
