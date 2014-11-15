@@ -65,6 +65,7 @@ void GameplayState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 
+	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;
 
@@ -97,9 +98,7 @@ void GameplayState::Update( float elapsedTime )
 
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET );
 
-
 	m_pObjects->UpdateAll( elapsedTime );
-
 
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 

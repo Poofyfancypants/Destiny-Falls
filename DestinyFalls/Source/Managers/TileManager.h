@@ -15,6 +15,9 @@ struct Tile
 	int m_nEnemyID;
 	bool collisionTile;
 	bool PlayerSpawn;
+	bool StartSlide;
+	bool EndSlide;
+	bool CheckPoint;
 	SGD::Rectangle CollisionRect;
 
 

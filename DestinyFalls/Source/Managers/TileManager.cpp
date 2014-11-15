@@ -35,6 +35,7 @@ bool TileManager::LoadLevel( const char* _file )
 
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
+	int startSlide, endSlide, checkPoint;
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
@@ -57,6 +58,10 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "xIndex", &xIndex );
 		pTile->Attribute( "yIndex", &yIndex );
 		pTile->Attribute( "Collision", &col );
+		pTile->Attribute( "startSlidingTile", &startSlide );
+		pTile->Attribute( "endSlidingTile", &endSlide );
+		pTile->Attribute( "checkPoint", &checkPoint );
+
 
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
@@ -64,6 +69,9 @@ bool TileManager::LoadLevel( const char* _file )
 
 		readTile.collisionTile = (bool)col;
 		readTile.PlayerSpawn = (bool)pSpawn;
+		readTile.StartSlide = (bool)startSlide;
+		readTile.EndSlide = (bool)endSlide;
+		readTile.CheckPoint = (bool)checkPoint;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
@@ -86,8 +94,10 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 
 	SGD::HTexture tileSet = pGraphics->LoadTexture( "default.bmp" );
 
-	float height = Game::GetInstance()->GetScreenHeight() / 2;
-	float width = Game::GetInstance()->GetScreenWidth() / 2;
+	float height = Game::GetInstance()->GetScreenHeight()/2;
+	float width = Game::GetInstance()->GetScreenWidth()/2;
+
+	//SGD::Rectangle screen = SGD::Rectangle( _playerPos.x-width, _playerPos.y-height, _playerPos.x+width, _playerPos.y +height );
 
 	for( size_t i = 0; i < m_TileMap.size(); i++ )
 	{
@@ -99,8 +109,7 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 				(float)( m_TileMap[i][j].nX*m_szGridSize.width + m_szGridSize.width ),
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height + m_szGridSize.height ) };
 
-
-			pGraphics->DrawTextureSection(
+				pGraphics->DrawTextureSection(
 				tileSet,
 				dest,
 				source
@@ -124,6 +133,19 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 	{
 		for( size_t j = 0; j < m_TileMap[0].size(); j++ )
 		{
+			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].CheckPoint )
+			{
+				player->SetCheckPoint(SGD::Point( m_TileMap[i][j].CollisionRect.left,  m_TileMap[i][j].CollisionRect.top));
+			}
+			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
+				player->SetSliding( true );
+
+			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].EndSlide )
+			{
+				player->SetSliding( false );
+				player->SetMoving( false );
+			}
+
 			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
 				return true;
 		}
@@ -150,7 +172,7 @@ void TileManager::SpawnEnemies()
 			}
 			if( m_TileMap[row][col].PlayerSpawn )
 			{
-				GameplayState::GetInstance()->GetPlayer()->SetPosition(dest);
+				GameplayState::GetInstance()->GetPlayer()->SetPosition( dest );
 			}
 		}
 	}

@@ -15,16 +15,17 @@ Player::Player() : Listener( this )
 Player::~Player()
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
-	pGraphics->UnloadTexture( m_hImage );
 }
 
 void Player::Update( float elapsedTime )
 {
-	m_nDirection = 0;
+	if( !m_bSliding )
+		m_nDirection = 0;
+
+
 	TakeInput( elapsedTime );
 	float speed = 500 * elapsedTime;
 
-	//TakeInput(elapsedTime);
 	switch( m_nDirection )
 	{
 	case 1:
@@ -43,9 +44,19 @@ void Player::Update( float elapsedTime )
 		velocity = SGD::Vector();
 		break;
 	}
+
 	SGD::Point futurePos = m_ptPosition + velocity;
 	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) )
+	{
 		m_ptPosition = futurePos;
+
+		if( m_bSliding && m_nDirection != 0 )
+			m_bMoving = true;
+	}
+	else if (m_bSliding)
+	{
+		m_bMoving = false;
+	}
 
 }
 
@@ -70,27 +81,31 @@ void Player::TakeInput( float elapsedTime )
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if( pInput->IsKeyDown( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) )
+	if( m_bMoving )
 	{
-		//m_ptPosition.y -= 500 * elapsedTime;
-		m_nDirection = 1;
+		return;
 	}
-	if( pInput->IsKeyDown( SGD::Key::Down ) || pInput->IsKeyDown( SGD::Key::S ) )
-	{
-		//m_ptPosition.y += 500 * elapsedTime;
-		m_nDirection = 2;
-	}
+		if( pInput->IsKeyDown( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) )
+		{
+			m_nDirection = 1;
+		}
+		if( pInput->IsKeyDown( SGD::Key::Down ) || pInput->IsKeyDown( SGD::Key::S ) )
+		{
+			m_nDirection = 2;
+		}
 
-	if( pInput->IsKeyDown( SGD::Key::Left ) || pInput->IsKeyDown( SGD::Key::A ) )
-	{
-		//m_ptPosition.x -= 500 * elapsedTime;
-		m_nDirection = 3;
-	}
-	if( pInput->IsKeyDown( SGD::Key::Right ) || pInput->IsKeyDown( SGD::Key::D ) )
-	{
-		//m_ptPosition.x += 500 * elapsedTime;
-		m_nDirection = 4;
-	}
+		if( pInput->IsKeyDown( SGD::Key::Left ) || pInput->IsKeyDown( SGD::Key::A ) )
+		{
+			m_nDirection = 3;
+		}
+		if( pInput->IsKeyDown( SGD::Key::Right ) || pInput->IsKeyDown( SGD::Key::D ) )
+		{
+			m_nDirection = 4;
+		}
+		//if( pInput->IsKeyDown(SGD::Key::M) )
+		//{
+		//	m_ptPosition = GetCheckpoint();
+		//}
 }
 
 SGD::Rectangle Player::GetRect( void ) const
