@@ -137,7 +137,11 @@ void AnimationManager::Load( string fileName )
 		bool bLoops;
 		int temp;
 		pAnimation->Attribute( "looping" , &temp );
-		bLoops = temp;
+		//bLoops = temp;
+		if (temp > 0)
+			bLoops = true;
+		else
+			bLoops = false;
 		Loaded[ a->GetName() ]->SetLooping( bLoops );
 
 		//Get the filepath for the image
@@ -168,7 +172,7 @@ void AnimationManager::Load( string fileName )
 			//Get the frame's duration
 			double dur;
 			pFrame->Attribute( "duration" , &dur );
-			f.SetDuration( dur );
+			f.SetDuration( (float)dur );
 
 			//Get the frame's damage
 			int dam;
@@ -200,10 +204,10 @@ void AnimationManager::Load( string fileName )
 				pFrame->Attribute( "dBottom" , &dbot );
 
 				//set the drect left/top/bottom/right to the read in variables
-				dRect.left = dleft;
-				dRect.top = dtop;
-				dRect.right = drig;
-				dRect.bottom = dbot;
+				dRect.left		= (float)dleft;
+				dRect.top		= (float)dtop;
+				dRect.right		= (float)drig;
+				dRect.bottom	= (float)dbot;
 
 				//set the frame's draw rect to the drect
 				f.SetDrawRect( dRect );
@@ -229,10 +233,10 @@ void AnimationManager::Load( string fileName )
 				pFrame->Attribute( "cBottom" , &cbot );
 			
 				//set the crect left/top/bottom/right to the read in variables
-				cRect.left = cleft;
-				cRect.top = ctop;
-				cRect.right = crig;
-				cRect.bottom = cbot;
+				cRect.left =	(float)cleft;
+				cRect.top =		(float)ctop;
+				cRect.right =	(float)crig;
+				cRect.bottom =	(float)cbot;
 
 				//add the crect to the frame collisionrects vector
 				f.AddCollisionRect( cRect );
@@ -247,8 +251,8 @@ void AnimationManager::Load( string fileName )
 				int aY;
 				pFrame->Attribute( "y" , &aY );
 
-				aP.x = aX;
-				aP.y = aY;
+				aP.x = (float)aX;
+				aP.y = (float)aY;
 
 				f.SetAnchorPoint( aP );
 

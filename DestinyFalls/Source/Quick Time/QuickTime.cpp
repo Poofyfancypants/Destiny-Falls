@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "QuickTime.h"
 
+#include "../../SGD Wrappers/SGD_InputManager.h"
+
 
 QuickTime::QuickTime()
 {
@@ -19,6 +21,29 @@ QuickTime::~QuickTime()
 
 void QuickTime::Update(float elapsedTime)
 {
+	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+
+	/*m_fSeconds += elapsedTime;
+
+	if (m_fSeconds < 2.0f && m_uncounter < m_unlength)
+	{
+		if (m_vOutput[m_uncounter] = pInput->GetAnyKeyDown())
+		{
+			AddGuess(m_vOutput[m_uncounter]);
+			m_ncounter++;
+			m_fSeconds = 0.0f;
+		}
+		else if (pInput->GetAnyKeyPressed())
+		{
+			m_unNumCorrect = m_uncounter;
+			m_bqtOver = true;
+		}
+	}
+	else
+	{
+		m_unNumCorrect = m_uncounter;
+		m_bqtOver = true;
+	}*/
 
 }
 
@@ -41,4 +66,9 @@ void QuickTime::GenerateRandomLetter()
 	int temp = rand() % 6;
 
 	m_vOutput.push_back(m_vKeys[temp]);
+}
+
+void QuickTime::AddGuess(SGD::Key x)
+{
+	m_vInput.push_back(x);
 }

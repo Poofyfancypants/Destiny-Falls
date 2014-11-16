@@ -43,8 +43,21 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	SGD::Rectangle rect = { 450, 450, 500, 500 };
+	
 
-	pGraphics->DrawRectangle(rect, SGD::Color{ 255, 255, 0, 255 });
+	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
 
+	pGraphics->DrawRectangle(Compation1HB, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(PlayerHB,	   SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(Compation2HB, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(Enemy3HB, SGD::Color{ 100, 150, 150, 150 });
+
+	pGraphics->DrawRectangle(Compation1rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Compation2rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 }

@@ -53,6 +53,7 @@ private:
 	bool m_bSwordSelect = false;
 	bool m_bArmorSelect = false;
 	bool m_bRingSelect = false;
+	bool m_bfirstEnter = true;
 
 	Runes* m_ptSelectedRune;
 
