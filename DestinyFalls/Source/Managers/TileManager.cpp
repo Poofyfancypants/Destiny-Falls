@@ -35,7 +35,7 @@ bool TileManager::LoadLevel( const char* _file )
 
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
-	int startSlide, endSlide, checkPoint;
+	int startSlide, endSlide, checkPoint, chestSpawn;
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
@@ -61,6 +61,8 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "startSlidingTile", &startSlide );
 		pTile->Attribute( "endSlidingTile", &endSlide );
 		pTile->Attribute( "checkPoint", &checkPoint );
+		pTile->Attribute( "chestSpawn", &chestSpawn );
+		pTile->Attribute( "trapID", &readTile.m_nTrapID );
 
 
 		m_TileMap.resize( nMapSizeX );
@@ -72,6 +74,7 @@ bool TileManager::LoadLevel( const char* _file )
 		readTile.StartSlide = (bool)startSlide;
 		readTile.EndSlide = (bool)endSlide;
 		readTile.CheckPoint = (bool)checkPoint;
+		readTile.ChestSpawn = (bool)chestSpawn;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
@@ -145,7 +148,10 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 				player->SetSliding( false );
 				player->SetMoving( false );
 			}
-
+			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].m_nTrapID != 0 )
+			{
+				//react to trap;
+			}
 			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
 				return true;
 		}
@@ -173,6 +179,10 @@ void TileManager::SpawnEnemies()
 			if( m_TileMap[row][col].PlayerSpawn )
 			{
 				GameplayState::GetInstance()->GetPlayer()->SetPosition( dest );
+			}
+			if( m_TileMap[row][col].ChestSpawn )
+			{
+				//spawn chest;
 			}
 		}
 	}

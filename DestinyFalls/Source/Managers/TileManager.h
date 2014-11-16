@@ -13,11 +13,14 @@ struct Tile
 	int nX, nY;
 	int m_nTileID;
 	int m_nEnemyID;
+	int m_nTrapID;
 	bool collisionTile;
 	bool PlayerSpawn;
 	bool StartSlide;
 	bool EndSlide;
 	bool CheckPoint;
+	bool ChestSpawn;
+	
 	SGD::Rectangle CollisionRect;
 
 
