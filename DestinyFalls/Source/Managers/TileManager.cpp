@@ -95,7 +95,7 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 	// - Load the tile set image
 	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
 
-	SGD::HTexture tileSet = pGraphics->LoadTexture( "default.bmp" );
+	SGD::HTexture tileSet = pGraphics->LoadTexture( "resource/graphics/default.bmp" );
 
 	float height = Game::GetInstance()->GetScreenHeight()/2;
 	float width = Game::GetInstance()->GetScreenWidth()/2;
