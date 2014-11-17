@@ -115,7 +115,7 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height + m_szGridSize.height ) };
 
 			// - Tile culling
-			if( m_TileMap[i][j].CollisionRect.left > _playerPos.x+width )
+			if( m_TileMap[i][j].CollisionRect.left > _playerPos.x+width)
 				continue;
 			else if( m_TileMap[i][j].CollisionRect.bottom <_playerPos.y-height )
 				continue;
