@@ -11,10 +11,17 @@ using namespace std;
 struct Tile
 {
 	int nX, nY;
-	int m_nTileID;
 	int m_nEnemyID;
+	int m_nTrapID;
+	int m_nWaypointID;
+	bool QTEvent;
 	bool collisionTile;
 	bool PlayerSpawn;
+	bool StartSlide;
+	bool EndSlide;
+	bool CheckPoint;
+	bool ChestSpawn;
+	
 	SGD::Rectangle CollisionRect;
 
 

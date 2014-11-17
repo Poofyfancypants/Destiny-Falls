@@ -40,7 +40,7 @@ void GameplayState::Enter()
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel("resource/XML/Test.xml");
+	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
 
 
 	//for( unsigned int i = 0; i < 3; i++ )
@@ -65,6 +65,7 @@ void GameplayState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 
+	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;
 
@@ -105,11 +106,12 @@ void GameplayState::Update(float elapsedTime)
 	if (!m_bPaused)
 	{
 		m_pObjects->UpdateAll(elapsedTime);
-
 		m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
-
-		m_pObjects->RenderAll();
 	}
+
+	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
+
+	m_pObjects->RenderAll();
 }
 
 void GameplayState::Render()
@@ -130,10 +132,10 @@ void GameplayState::Render()
 Object* GameplayState::CreatePlayer(SGD::Point _pos)
 {
 	Player* temp = new Player;
-	temp->SetImage(m_hplayer);
-	temp->SetSize({ 38, 67 });
-	temp->SetPosition(_pos);
-	temp->SetRotation(0);
+	temp->SetImage( m_hplayer );
+	temp->SetSize( { 32, 32 } );
+	temp->SetPosition( _pos );
+	temp->SetRotation( 0 );
 	return temp;
 }
 
