@@ -28,10 +28,11 @@ void CombatState::Enter(void)
 	player->SetCombat(true);
 	player->CurrentTurn(&CurrentTurn);
 	player->SetTurnPos(TurnIndex);
+	player->AddRef();
 	m_pObjects.push_back(player);
 	TurnIndex++;
 
-	for (unsigned int i = 0; i < 3; i++)
+	for (unsigned int i = 0; i < 2; i++)
 	{
 		Object* temp = AddMinion();
 		m_pObjects.push_back(temp);
@@ -45,11 +46,12 @@ void CombatState::Exit(void)
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
 	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		if (m_pObjects[i]->GetType() != Object::ObjectType::OBJ_PLAYER)
+		//if (m_pObjects[i]->GetType() != Object::ObjectType::OBJ_PLAYER)
 		{
 			m_pObjects[i]->Release();
 		}
 	}
+	m_pObjects.clear();
 }
 
 bool CombatState::Input(void)
