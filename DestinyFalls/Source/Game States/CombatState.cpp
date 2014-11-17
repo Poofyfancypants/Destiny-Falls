@@ -2,10 +2,10 @@
 #include "CombatState.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
-#include "../Game Core/Game.h"
-#include "GameplayState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
+#include "../Game Core/Game.h"
+#include "GameplayState.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -47,12 +47,12 @@ void CombatState::Render(void)
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
 
-	pGraphics->DrawRectangle(Compation1HB, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(PlayerHB,	   SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(Compation2HB, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(Enemy3HB, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(Compation1HB, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Compation2HB, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+	pGraphics->DrawRectangle(Enemy3HB, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 
 	pGraphics->DrawRectangle(Compation1rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });

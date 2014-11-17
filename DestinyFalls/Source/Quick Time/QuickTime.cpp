@@ -30,7 +30,7 @@ void QuickTime::Update(float elapsedTime)
 		if (m_vOutput[m_uncounter] = pInput->GetAnyKeyDown())
 		{
 			AddGuess(m_vOutput[m_uncounter]);
-			m_ncounter++;
+			m_uncounter++;
 			m_fSeconds = 0.0f;
 		}
 		else if (pInput->GetAnyKeyPressed())
