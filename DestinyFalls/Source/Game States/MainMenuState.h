@@ -1,6 +1,7 @@
 #pragma once
 #include "IGameState.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include <fstream>
 
@@ -36,6 +37,7 @@ private:
 	SGD::Rectangle Credit = { 0, 0, 0, 0 };
 	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
 
+	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 };
 

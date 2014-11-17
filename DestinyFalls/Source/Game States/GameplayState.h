@@ -14,7 +14,7 @@ class GameplayState :
 {
 public:
 
-	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, };
+	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET};
 	static GameplayState* GetInstance( void );
 
 	virtual void Enter( void )				override;
@@ -52,12 +52,11 @@ private:
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 
-
-
-
+	Object* CreateChest();
 };

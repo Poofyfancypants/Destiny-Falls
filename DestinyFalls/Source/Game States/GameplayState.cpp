@@ -3,6 +3,7 @@
 #include "GameplayState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
+#include "../Game Objects/Chest.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
 #include "../Messages/MessageID.h"
@@ -49,7 +50,15 @@ void GameplayState::Enter()
 	//	tempEnemy = CreateEnemy();
 	//	m_pObjects->AddObject( tempEnemy, ENEMY_BUCKET );
 	//	tempEnemy->Release();
-	//}
+	//}'
+
+	for (unsigned int i = 0; i < 3; i++)
+	{
+		Object* tempChest = nullptr;
+		tempChest = CreateChest();
+		m_pObjects->AddObject(tempChest, CHEST_BUCKET);
+		tempChest->Release();
+	}
 }
 
 void GameplayState::Exit()
@@ -64,6 +73,10 @@ void GameplayState::Exit()
 
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
+
+	pGraphics->UnloadTexture(m_hplayer);
+	pGraphics->UnloadTexture(m_henemy);
+	pGraphics->UnloadTexture(m_hChest);
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -97,6 +110,7 @@ void GameplayState::Update( float elapsedTime )
 
 
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET );
+	m_pObjects->CheckCollisions(PLAYER_BUCKET, CHEST_BUCKET);
 
 	m_pObjects->UpdateAll( elapsedTime );
 
@@ -136,5 +150,18 @@ Object* GameplayState::CreateEnemy(SGD::Point _pos)
 
 	temp->SetPosition( _pos );
 	temp->SetSize(SGD::Size(65,65));
+	return temp;
+}
+
+Object* GameplayState::CreateChest()
+{
+	Chest* temp = new Chest;
+	temp->SetImage(m_hChest);
+	temp->SetSize({ 64, 64 });
+	int posx = rand() % 800 + 300;
+	int posy = rand() % 800 + 300;
+	int numPots = rand() % 2;
+	int numRunes = rand() % 2;
+	temp->SetPosition(SGD::Point((float)posx, (float)posy));
 	return temp;
 }
