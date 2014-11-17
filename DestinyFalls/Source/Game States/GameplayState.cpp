@@ -32,6 +32,7 @@ void GameplayState::Enter()
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture(L"resource/graphics/enemy1.png");
+	m_hChest = pGraphics->LoadTexture(L"resource/graphics/chest.jpg");
 
 	m_pPlayer = CreatePlayer(SGD::Point(150,150));
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
@@ -58,6 +59,7 @@ void GameplayState::Exit()
 
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
 
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
@@ -142,7 +144,7 @@ Object* GameplayState::CreateChest(SGD::Point _pos)
 {
 	Chest* temp = new Chest;
 	temp->SetImage(m_hChest);
-	temp->SetSize({ 64, 64 });
+	temp->SetSize({ 32, 32 });
 	int numPots = rand() % 2;
 	int numRunes = rand() % 2;
 	temp->SetPosition(_pos);
