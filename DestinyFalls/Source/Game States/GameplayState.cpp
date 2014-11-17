@@ -40,7 +40,7 @@ void GameplayState::Enter()
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/Test.xml" );
+	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
 
 
 	//for( unsigned int i = 0; i < 3; i++ )
@@ -121,7 +121,7 @@ Object* GameplayState::CreatePlayer(SGD::Point _pos)
 {
 	Player* temp = new Player;
 	temp->SetImage( m_hplayer );
-	temp->SetSize( { 38, 67 } );
+	temp->SetSize( { 32, 32 } );
 	temp->SetPosition( _pos );
 	temp->SetRotation( 0 );
 	return temp;

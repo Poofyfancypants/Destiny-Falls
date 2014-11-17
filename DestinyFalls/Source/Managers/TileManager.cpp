@@ -35,7 +35,7 @@ bool TileManager::LoadLevel( const char* _file )
 
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
-	int startSlide, endSlide, checkPoint, chestSpawn;
+	int startSlide, endSlide, checkPoint, chestSpawn, QTevent;
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
@@ -63,7 +63,8 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "checkPoint", &checkPoint );
 		pTile->Attribute( "chestSpawn", &chestSpawn );
 		pTile->Attribute( "trapID", &readTile.m_nTrapID );
-
+		pTile->Attribute( "waypointID", &readTile.m_nWaypointID );
+		pTile->Attribute( "QTEvent", &QTevent);
 
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
@@ -75,6 +76,7 @@ bool TileManager::LoadLevel( const char* _file )
 		readTile.EndSlide = (bool)endSlide;
 		readTile.CheckPoint = (bool)checkPoint;
 		readTile.ChestSpawn = (bool)chestSpawn;
+		readTile.QTEvent = (bool)QTevent;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
@@ -95,7 +97,7 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 	// - Load the tile set image
 	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
 
-	SGD::HTexture tileSet = pGraphics->LoadTexture( "resource/graphics/default.bmp" );
+	SGD::HTexture tileSet = pGraphics->LoadTexture( "resource/graphics/newTile.png" );
 
 	float height = Game::GetInstance()->GetScreenHeight()/2;
 	float width = Game::GetInstance()->GetScreenWidth()/2;
@@ -111,6 +113,16 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height ),
 				(float)( m_TileMap[i][j].nX*m_szGridSize.width + m_szGridSize.width ),
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height + m_szGridSize.height ) };
+
+			// - Tile culling
+			if( m_TileMap[i][j].CollisionRect.left > _playerPos.x+width )
+				continue;
+			else if( m_TileMap[i][j].CollisionRect.bottom <_playerPos.y-height )
+				continue;
+			else if( m_TileMap[i][j].CollisionRect.right < _playerPos.x-width )
+				continue;
+			else if( m_TileMap[i][j].CollisionRect.top > _playerPos.y+height )
+				continue;
 
 				pGraphics->DrawTextureSection(
 				tileSet,
