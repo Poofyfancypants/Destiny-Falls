@@ -1,5 +1,9 @@
 #pragma once
 #include "IGameState.h"
+#include "../Managers/ObjectManager.h"
+#include "../Game Objects/Player.h"
+#include "../Game Objects/Minion.h"
+#include <vector>
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 class CombatState :
@@ -14,6 +18,8 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
+	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
+	Object* AddMinion();
 
 private:
 	CombatState() = default;
@@ -37,5 +43,14 @@ private:
 	SGD::Rectangle Enemy1rect		= { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
+
+	int CurrentTurn;
+	int TurnIndex;
+	int m_nNumEnemies;
+
+	std::vector<Object*> m_pObjects;
+
+	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
+	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
 };
 

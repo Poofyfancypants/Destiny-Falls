@@ -1,5 +1,7 @@
 #pragma once
 #include "IGameState.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
+
 class CreditState :
 	public IGameState
 {
@@ -18,5 +20,11 @@ private:
 
 	CreditState(const CreditState&) = delete;
 	CreditState& operator=(const CreditState&) = delete;
+
+
+	SGD::HAudio m_haBackground;
+	SGD::HTexture m_htBackground;
+
+	float Timer = 20.0f;
 };
 

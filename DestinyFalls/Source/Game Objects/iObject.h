@@ -10,7 +10,7 @@ protected:
 	virtual ~iObject() = default;
 
 public:
-	enum ObjectType { OBJ_BASE, OBJ_PLAYER, OBJ_ENEMY, };
+	enum ObjectType { OBJ_BASE, OBJ_PLAYER, OBJ_ENEMY, OBJ_CHEST, OBJ_MINION,};
 
 	virtual void Update(float elapsedTime) = 0;
 	virtual void Render() = 0;

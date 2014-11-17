@@ -23,7 +23,7 @@ void Player::Update( float elapsedTime )
 		m_nDirection = 0;
 
 
-	TakeInput( elapsedTime );
+	TakeInput();
 	float speed = 500 * elapsedTime;
 
 	switch( m_nDirection )
@@ -78,7 +78,7 @@ void Player::Render( void )
 
 }
 
-void Player::TakeInput( float elapsedTime )
+void Player::TakeInput()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
@@ -126,4 +126,30 @@ void Player::HandleCollision( const iObject* pOther )
 	{
 		Game::GetInstance()->AddState( CombatState::GetInstance() );
 	}
+}
+
+
+bool Player::TakeTurn()
+{
+	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	CombatState* pCombat = CombatState::GetInstance();
+
+	if (pInput->IsKeyPressed(SGD::Key::Up))
+	{
+		m_nCursor++;
+	}
+	if (pInput->IsKeyPressed(SGD::Key::Down))
+	{
+		m_nCursor--;
+	}
+	if (m_nCursor < 0)
+		m_nCursor = 0;
+	if (m_nCursor > pCombat->GetObjManager()->size())
+		m_nCursor = pCombat->GetObjManager()->size();
+
+	if (pInput->IsKeyPressed(SGD::Key::Enter))
+	{
+
+	}
+	return false;
 }

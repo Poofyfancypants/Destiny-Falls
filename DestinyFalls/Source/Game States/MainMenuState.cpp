@@ -3,6 +3,7 @@
 #include "GameplayState.h"
 #include "OptionsState.h"
 #include "CreditState.h"
+#include "HowToPlayState.h"
 #include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
@@ -20,17 +21,18 @@ MainMenuState* MainMenuState::GetInstance()
 void MainMenuState::Enter()
 {
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
+	//pGraphics->LoadTexture()
 
 	PlayGame = { 50, 50, 100, 80 };
-
-	Options = { 50, 90, 100, 120 };
-	LoadGame = { 50, 130, 100, 160 };
+	LoadGame = { 50, 90, 100, 120 };
+	Options = { 50, 130, 100, 160 };
 	HowToPlay = { 50, 170, 100, 200 };
 	Credit = { 50, 210, 100, 240 };
 	ExitGame = { 50, 250, 100, 280 };
-	
-	TestAnimationSystem = { 300 , 150 , 350 , 200 };
+
+	TestAnimationSystem = { 300, 150, 350, 200 };
 
 	int nMusic, nEffects, nScreen;
 	std::ifstream load;
@@ -49,7 +51,7 @@ void MainMenuState::Enter()
 		}
 		else
 			windowed = false;
-		SGD::GraphicsManager::GetInstance()->Resize({ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, windowed);
+		pGraphics->Resize({ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, windowed);
 	}
 }
 
@@ -97,9 +99,10 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState(OptionsState::GetInstance());
 			break;
 		case MenuSelections::howToPlay:
+			Game::GetInstance()->AddState(HowToPlayState::GetInstance());
 			break;
 		case MenuSelections::credits:
-			//Game::GetInstance()->AddState(CreditState::GetInstance());
+			Game::GetInstance()->AddState(CreditState::GetInstance());
 			break;
 		case MenuSelections::exit:
 			return false;
@@ -120,12 +123,12 @@ bool MainMenuState::Input()
 		}
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
-		if( pInput->GetCursorPosition().IsPointInRectangle( TestAnimationSystem ) )
+		if (pInput->GetCursorPosition().IsPointInRectangle(TestAnimationSystem))
 		{
 			//Game::GetInstance()->RemoveState();
-			Game::GetInstance()->AddState( AnimationTestState::GetInstance() );
+			Game::GetInstance()->AddState(AnimationTestState::GetInstance());
 		}
 	}
 	return true;
@@ -140,14 +143,22 @@ void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
-	pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
-	pGraphics->DrawRectangle( TestAnimationSystem , SGD::Color { 255 , 0 , 255 , 255 } );
+	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
-	pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
-	pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
-	pGraphics->DrawRectangle(HowToPlay, SGD::Color{ 255, 255, 0, 255 });
-	pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
-	pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
+	//pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
+	//pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
+	//pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
+	//pGraphics->DrawRectangle(HowToPlay, SGD::Color{ 255, 255, 0, 255 });
+	//pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
+	//pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
+
+	pGraphics->DrawString("Play Game", { PlayGame.left, PlayGame.top }, { 255, 225, 255, 255 });
+	pGraphics->DrawString("Load Game", { LoadGame.left, LoadGame.top }, { 255, 225, 255, 255 });
+	pGraphics->DrawString("Options", { Options.left, Options.top }, { 255, 225, 255, 255 });
+	pGraphics->DrawString("How to Play", { HowToPlay.left, HowToPlay.top }, { 255, 225, 255, 255 });
+	pGraphics->DrawString("Credits", { Credit.left, Credit.top }, { 255, 225, 255, 255 });
+	pGraphics->DrawString("Exit", { ExitGame.left, ExitGame.top }, { 255, 225, 255, 255 });
+
 
 	pGraphics->DrawRectangle(SGD::Rectangle{ 40, (float)(40 * m_nCursor + 60), 50, (float)(40 * m_nCursor + 70) }, SGD::Color{ 255, 0, 255, 0 });
 }
