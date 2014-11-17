@@ -34,6 +34,8 @@ public:
 
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
+	Object* CreateChest(SGD::Point _pos);
+
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
@@ -58,5 +60,4 @@ private:
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 
-	Object* CreateChest();
 };

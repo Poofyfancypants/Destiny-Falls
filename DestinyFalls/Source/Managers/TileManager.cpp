@@ -64,7 +64,7 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "chestSpawn", &chestSpawn );
 		pTile->Attribute( "trapID", &readTile.m_nTrapID );
 		pTile->Attribute( "waypointID", &readTile.m_nWaypointID );
-		pTile->Attribute( "QTEvent", &QTevent);
+		pTile->Attribute( "QTEvent", &QTevent );
 
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
@@ -99,8 +99,8 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 
 	SGD::HTexture tileSet = pGraphics->LoadTexture( "resource/graphics/newTile.png" );
 
-	float height = Game::GetInstance()->GetScreenHeight()/2;
-	float width = Game::GetInstance()->GetScreenWidth()/2;
+	float height = Game::GetInstance()->GetScreenHeight() / 2;
+	float width = Game::GetInstance()->GetScreenWidth() / 2;
 
 	//SGD::Rectangle screen = SGD::Rectangle( _playerPos.x-width, _playerPos.y-height, _playerPos.x+width, _playerPos.y +height );
 
@@ -115,16 +115,16 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height + m_szGridSize.height ) };
 
 			// - Tile culling
-			if( m_TileMap[i][j].CollisionRect.left > _playerPos.x+width)
+			if( m_TileMap[i][j].CollisionRect.left > _playerPos.x + width )
 				continue;
-			else if( m_TileMap[i][j].CollisionRect.bottom <_playerPos.y-height )
+			else if( m_TileMap[i][j].CollisionRect.bottom < _playerPos.y - height )
 				continue;
-			else if( m_TileMap[i][j].CollisionRect.right < _playerPos.x-width )
+			else if( m_TileMap[i][j].CollisionRect.right < _playerPos.x - width )
 				continue;
-			else if( m_TileMap[i][j].CollisionRect.top > _playerPos.y+height )
+			else if( m_TileMap[i][j].CollisionRect.top > _playerPos.y + height )
 				continue;
 
-				pGraphics->DrawTextureSection(
+			pGraphics->DrawTextureSection(
 				tileSet,
 				dest,
 				source
@@ -150,7 +150,7 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 		{
 			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].CheckPoint )
 			{
-				player->SetCheckPoint(SGD::Point( m_TileMap[i][j].CollisionRect.left,  m_TileMap[i][j].CollisionRect.top));
+				player->SetCheckPoint( SGD::Point( m_TileMap[i][j].CollisionRect.left, m_TileMap[i][j].CollisionRect.top ) );
 			}
 			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
 				player->SetSliding( true );
@@ -163,6 +163,10 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].m_nTrapID != 0 )
 			{
 				//react to trap;
+			}
+			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].QTEvent )
+			{
+				// QT Event;
 			}
 			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
 				return true;
@@ -195,6 +199,10 @@ void TileManager::SpawnEnemies()
 			if( m_TileMap[row][col].ChestSpawn )
 			{
 				//spawn chest;
+				Object* tempChest = nullptr;
+				tempChest = GameplayState::GetInstance()->CreateChest(dest);
+				GameplayState::GetInstance()->GetObjManager()->AddObject( tempChest, GameplayState::CHEST_BUCKET );
+				tempChest->Release();
 			}
 		}
 	}

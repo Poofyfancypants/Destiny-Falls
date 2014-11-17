@@ -31,7 +31,7 @@ void GameplayState::Enter()
 	m_pMap = new TileManager;
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
-	m_henemy = pGraphics->LoadTexture(L"resource/graphics/1005-Rock.png");
+	m_henemy = pGraphics->LoadTexture(L"resource/graphics/enemy1.png");
 
 	m_pPlayer = CreatePlayer(SGD::Point(150,150));
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
@@ -44,21 +44,6 @@ void GameplayState::Enter()
 	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
 
 
-	//for( unsigned int i = 0; i < 3; i++ )
-	//{
-	//	Object* tempEnemy = nullptr;
-	//	tempEnemy = CreateEnemy();
-	//	m_pObjects->AddObject( tempEnemy, ENEMY_BUCKET );
-	//	tempEnemy->Release();
-	//}'
-
-	for (unsigned int i = 0; i < 3; i++)
-	{
-		Object* tempChest = nullptr;
-		tempChest = CreateChest();
-		m_pObjects->AddObject(tempChest, CHEST_BUCKET);
-		tempChest->Release();
-	}
 }
 
 void GameplayState::Exit()
@@ -149,19 +134,17 @@ Object* GameplayState::CreateEnemy(SGD::Point _pos)
 	//int posy = rand() % 300 + 250;
 
 	temp->SetPosition( _pos );
-	temp->SetSize(SGD::Size(65,65));
+	temp->SetSize(SGD::Size(32,32));
 	return temp;
 }
 
-Object* GameplayState::CreateChest()
+Object* GameplayState::CreateChest(SGD::Point _pos)
 {
 	Chest* temp = new Chest;
 	temp->SetImage(m_hChest);
 	temp->SetSize({ 64, 64 });
-	int posx = rand() % 800 + 300;
-	int posy = rand() % 800 + 300;
 	int numPots = rand() % 2;
 	int numRunes = rand() % 2;
-	temp->SetPosition(SGD::Point((float)posx, (float)posy));
+	temp->SetPosition(_pos);
 	return temp;
 }
