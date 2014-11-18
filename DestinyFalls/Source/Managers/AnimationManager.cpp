@@ -46,8 +46,8 @@ void AnimationManager::Render( AnimationTimeStamp ts , int posX , int posY )
 {
 	//Draw the frame
 	Frame temp = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() );
-	posX = posX + temp.GetAnchorPoint().x;
-	posY = posY + temp.GetAnchorPoint().y;
+	posX = posX - temp.GetAnchorPoint().x;
+	posY = posY - temp.GetAnchorPoint().y;
 
 	SGD::Rectangle rect = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetDrawRect();
 
