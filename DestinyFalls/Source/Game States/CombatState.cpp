@@ -130,17 +130,17 @@ void CombatState::Render(void)
 	{
 		if (i == 0)
 		{
-			pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-			pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 150, 150, 150 });
+			pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
+			pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
 		}
 		if (i == 1)
 		{
-			pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+			pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 0, 255, 0 });
 		}
 		if (i == 2)
 		{
-			pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
+			pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 0, 255, 0 });
 		}
 		if (i == 3)

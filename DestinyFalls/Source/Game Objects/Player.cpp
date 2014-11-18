@@ -217,9 +217,14 @@ bool Player::TakeTurn()
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > 2)
-			m_nCursor = 2;
+		if (m_nCursor > pCombat->GetNumEnemies())
+			m_nCursor = pCombat->GetNumEnemies();
 
+		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+		{
+			ActionSelected = m_nCursor;
+			m_nCursor = 0;
+		}
 	}
 
 

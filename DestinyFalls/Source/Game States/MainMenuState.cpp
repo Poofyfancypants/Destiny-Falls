@@ -155,9 +155,7 @@ void MainMenuState::Render()
 	//pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
 
-	//pGraphics->DrawString("Play Game", { PlayGame.left, PlayGame.top }, { 255, 225, 255, 255 });
 	pFont->Draw(Game::GetInstance()->GetString(1).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 });
-	//pGraphics->DrawString("Load Game", { LoadGame.left, LoadGame.top }, { 255, 225, 255, 255 });
 	pFont->Draw(Game::GetInstance()->GetString(2).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 });
 	pFont->Draw(Game::GetInstance()->GetString(3).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 });
 	pFont->Draw(Game::GetInstance()->GetString(4).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 });
