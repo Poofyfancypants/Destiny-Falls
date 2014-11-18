@@ -13,9 +13,9 @@ AnimationTestState* AnimationTestState::GetInstance()
 
 void AnimationTestState::Enter()
 {
-	string file = "resource/XML/ChestOpeningXML.xml";
+	string file = "resource/XML/HeroWalkingXML.xml";
 	animator.GetInstance()->Load( file );
-	ts.SetCurrentAnimation( "ChestOpening" );
+	ts.SetCurrentAnimation( "WalkingRight" );
 	ts.SetCurrentFrame( 0 );
 	ts.SetTimeOnFrame( 0.0f );
 }
@@ -47,6 +47,5 @@ void AnimationTestState::Render()
 	if( animator.GetInstance()->CheckSize() )
 	{
 		animator.GetInstance()->Render( ts , 100 , 100 );
-
 	}
 }
