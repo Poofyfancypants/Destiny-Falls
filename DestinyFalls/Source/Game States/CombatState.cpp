@@ -99,8 +99,8 @@ void CombatState::Update(float elapsedTime)
 											   {
 												   if (((Player*)m_pObjects[i])->TakeTurn())
 												   {
-												   }
 													   CurrentTurn++; //Put this back in the check once player combat input is complete
+												   }
 
 											   }
 		}

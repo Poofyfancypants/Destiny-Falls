@@ -138,7 +138,7 @@ void Player::TakeInput()
 		}
 		m_nPotions--;
 	}
-	
+
 }
 
 SGD::Rectangle Player::GetRect(void) const
@@ -182,7 +182,7 @@ bool Player::TakeTurn()
 	pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 
-	if (ActionSelected == 0)
+	if (ActionSelected == 0) //Pick an action (melee magic or armor)
 	{
 
 		if (pInput->IsKeyPressed(SGD::Key::Up))
@@ -197,9 +197,15 @@ bool Player::TakeTurn()
 			m_nCursor = 0;
 		if (m_nCursor > 2)
 			m_nCursor = 2;
-	}
 
-	if (pInput->IsKeyPressed(SGD::Key::Enter))
+		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+		{
+			ActionSelected = m_nCursor;
+			m_nCursor = 0;
+		}
+
+	}
+	else //Action selected, now pick target
 	{
 		if (pInput->IsKeyPressed(SGD::Key::Up))
 		{
@@ -211,9 +217,11 @@ bool Player::TakeTurn()
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetObjManager()->size())
-			m_nCursor = pCombat->GetObjManager()->size();
+		if (m_nCursor > 2)
+			m_nCursor = 2;
+
 	}
+
 
 	return false;
 }
