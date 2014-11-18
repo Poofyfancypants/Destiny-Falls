@@ -5,6 +5,8 @@
 class PauseMenuState : public IGameState
 {
 public:
+
+	enum PauseSelections{resume, save, options, exit};
 	static PauseMenuState* GetInstance(void);
 
 	virtual void Enter(void)				override;
@@ -21,6 +23,8 @@ private:
 	PauseMenuState& operator=(const PauseMenuState&) = delete;
 
 	void SaveGame();
+
+	int m_nCursor = 0;
 
 };
 

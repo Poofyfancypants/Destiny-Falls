@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "../Game Core/Game.h"
 #include "../Game States/CombatState.h"
+#include "../Game States/PauseMenuState.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Event.h"
@@ -22,7 +23,7 @@ void Player::Update(float elapsedTime)
 	if (m_nHealth <= 0)
 	{
 		m_nHealth = 0;
-
+		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 	}
 	if (!m_bSliding)
 		m_nDirection = 0;
@@ -152,28 +153,28 @@ bool Player::TakeTurn()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
 
-		if (m_nHealth < 0)
-		{
-			return false;
-		}
+	if (m_nHealth < 0)
+	{
+		return false;
+	}
 
-		if (pInput->IsKeyPressed(SGD::Key::Up))
-		{
-			m_nCursor++;
-		}
-		if (pInput->IsKeyPressed(SGD::Key::Down))
-		{
-			m_nCursor--;
-		}
-		if (m_nCursor < 0)
-			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetObjManager()->size())
-			m_nCursor = pCombat->GetObjManager()->size();
+	if (pInput->IsKeyPressed(SGD::Key::Up))
+	{
+		m_nCursor++;
+	}
+	if (pInput->IsKeyPressed(SGD::Key::Down))
+	{
+		m_nCursor--;
+	}
+	if (m_nCursor < 0)
+		m_nCursor = 0;
+	if (m_nCursor > pCombat->GetObjManager()->size())
+		m_nCursor = pCombat->GetObjManager()->size();
 
-		if (pInput->IsKeyPressed(SGD::Key::Enter))
-		{
+	if (pInput->IsKeyPressed(SGD::Key::Enter))
+	{
 
-		}
+	}
 
 	return false;
 }
