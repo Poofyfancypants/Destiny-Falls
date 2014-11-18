@@ -122,7 +122,6 @@ void PauseMenuState::Render(void)
 
 	pGraphics->DrawString("RESUME", { 330, 215 }, { 255, 0, 0, 255 });
 
-
 	pGraphics->DrawString("OPTIONS", { 327, 315 }, { 255, 0, 0, 150 });
 
 	pGraphics->DrawString("EXIT GAME", { 327, 415 }, { 255, 0, 0, 150 });
