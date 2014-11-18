@@ -126,7 +126,6 @@
     <ClInclude Include="Source\Game States\InventoryState.h" />
     <ClInclude Include="Source\Game States\MainMenuState.h" />
     <ClInclude Include="Source\Game States\OptionsState.h" />
-    <ClInclude Include="Source\Game States\PauseMenuState.h" />
     <ClInclude Include="Source\Managers\AnimationManager.h" />
     <ClInclude Include="Source\Managers\ObjectManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
@@ -180,7 +179,6 @@
     <ClCompile Include="Source\Game States\InventoryState.cpp" />
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
-    <ClCompile Include="Source\Game States\PauseMenuState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
     <ClCompile Include="Source\Managers\ObjectManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
