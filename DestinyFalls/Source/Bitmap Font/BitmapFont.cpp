@@ -16,6 +16,11 @@ void BitmapFont::Initialize(string path)
 void BitmapFont::Terminate(void)
 {
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hImage);
+	for (size_t i = 0; i < Letters.size(); i++)
+	{
+		delete Letters[i];
+	}
+	Letters.clear();
 }
 
 void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD::Color color) const
@@ -34,6 +39,8 @@ void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD:
 	// Store the starting X position for newlines
 	float colStart = position.x;
 
+	int spacewidth = 8;
+
 	// Iterate through the characters in the string
 	for (int i = 0; output[i]; i++)
 	{
@@ -44,7 +51,7 @@ void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD:
 		if (ch == ' ')
 		{
 			// Move to the next position
-			position.x += m_nCharWidth * scale;
+			position.x += spacewidth * scale;
 			continue;
 		}
 
@@ -54,20 +61,24 @@ void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD:
 		}
 
 		// Calculate the tile ID for this character
-		int id = ch - m_cFirstChar;
+		int id = ch - 30;
 
 		// Calculate the source rect for that glyph
 		SGD::Rectangle cell;
-		cell.left = float((id % m_nNumCols) * m_nCharWidth);
-		cell.top = float((id / m_nNumCols) * m_nCharHeight);
-		cell.right = cell.left + m_nCharWidth;
-		cell.bottom = cell.top + m_nCharHeight;
+		cell.left = (float)(Letters[id]->x);
+		cell.top = (float)(Letters[id]->y);
+		cell.right = (float)(cell.left + Letters[id]->width);
+		cell.bottom = (float)(cell.top + Letters[id]->height);
+
+		SGD::Point pos = position;
+		pos.x -= (float)(Letters[id]->Xoffset * scale);
+		pos.y += (float)(Letters[id]->Yoffest * scale);
 
 		// Draw the character
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection(m_hImage, position, cell, 0.0f, {}, color, { scale, scale });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(m_hImage, pos, cell, 0.0f, {}, color, { scale, scale });
 
 		// Move to the next position
-		position.x += (int)(m_nCharWidth * scale);
+		position.x += (int)(Letters[id]->Xadvance * scale);
 	}
 }
 
@@ -89,9 +100,10 @@ bool BitmapFont::LoadFontFile(string path)
 		return false;
 	}
 
-	while (pFont != nullptr)
+	TiXmlElement* chars = pFont->FirstChildElement();
+
+	while (chars != nullptr)
 	{
-		TiXmlElement* chars = pFont->FirstChildElement();
 
 		if (chars == nullptr)
 		{
@@ -119,10 +131,6 @@ bool BitmapFont::LoadFontFile(string path)
 			pChar = pChar->NextSiblingElement();
 		}
 
-
-
-
+		chars = chars->NextSiblingElement();
 	}
-
-
 }

@@ -43,6 +43,8 @@ public:
 	float GetScreenWidth(void) const { return m_fScreenWidth; }
 	float GetScreenHeight(void) const { return m_fScreenHeight; }
 
+	const BitmapFont*	GetFont(void) const	{ return m_pFont; }
+
 private:
 	/**********************************************************/
 	// Singleton Object:

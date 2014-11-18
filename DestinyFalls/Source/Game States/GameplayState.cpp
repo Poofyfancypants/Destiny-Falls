@@ -84,7 +84,7 @@ bool GameplayState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
-		m_bPaused = !m_bPaused;
+		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
