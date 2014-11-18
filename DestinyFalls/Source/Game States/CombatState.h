@@ -10,6 +10,8 @@ class CombatState :
 	public IGameState
 {
 public:
+	enum DamType{Melee, Magic, AOE, };
+
 	static CombatState* GetInstance();
 
 	virtual void Enter(void)				override;
@@ -17,6 +19,8 @@ public:
 	virtual bool Input(void)				override;
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
+
+	bool DealDamage(int _DamType, Object* _this, int _target);
 
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion();
@@ -47,6 +51,8 @@ private:
 	int CurrentTurn;
 	int TurnIndex;
 	int m_nNumEnemies;
+
+	Object* Enemies[3];
 
 	std::vector<Object*> m_pObjects;
 

@@ -25,5 +25,7 @@ bool Minion::TakeTurn()
 {
 	CombatState* pCombat = CombatState::GetInstance();
 
+	pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
+
 	return true;
 }

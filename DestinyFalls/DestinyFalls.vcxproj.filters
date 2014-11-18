@@ -121,16 +121,10 @@
     <ClInclude Include="Source\Game Objects\MiniBoss.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game Objects\Minion.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game Objects\MovingObject.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game Objects\Object.h">
-      <Filter>Game Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game Objects\Player.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game Objects\SpikeTrap.h">
@@ -158,9 +152,6 @@
       <Filter>GameStates</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game States\CreditState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game States\GamePauseState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game States\GameplayState.h">
@@ -220,6 +211,15 @@
     <ClInclude Include="Source\Bitmap Font\BitmapFont.h">
       <Filter>Bitmap Font</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game Objects\Minion.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game Objects\Player.h">
+      <Filter>Game Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\PauseMenuState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -274,16 +274,10 @@
     <ClCompile Include="Source\Game Objects\MiniBoss.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game Objects\Minion.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game Objects\MovingObject.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\Object.cpp">
-      <Filter>Game Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game Objects\Player.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\SpikeTrap.cpp">
@@ -314,9 +308,6 @@
       <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game States\CreditState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game States\GamePauseState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game States\GameplayState.cpp">
@@ -375,6 +366,15 @@
     </ClCompile>
     <ClCompile Include="Source\Bitmap Font\BitmapFont.cpp">
       <Filter>Bitmap Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Minion.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Player.cpp">
+      <Filter>Game Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\PauseMenuState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

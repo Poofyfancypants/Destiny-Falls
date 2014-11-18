@@ -38,6 +38,7 @@ void CombatState::Enter(void)
 	{
 		Object* temp = AddMinion();
 		m_pObjects.push_back(temp);
+		Enemies[i] = temp;
 		m_nNumEnemies++;
 		TurnIndex++;
 	}
@@ -61,41 +62,67 @@ bool CombatState::Input(void)
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
-		((Player*)GameplayState::GetInstance()->GetPlayer())->SetHealth(((Player*)GameplayState::GetInstance()->GetPlayer())->GetHealth() - 20);
+		//((Player*)GameplayState::GetInstance()->GetPlayer())->SetHealth(((Player*)GameplayState::GetInstance()->GetPlayer())->GetHealth() - 20);
 		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
 		Game::GetInstance()->RemoveState();
 	}
 
 	return true;
 }
+
 void CombatState::Update(float elapsedTime)
 {
+		for (size_t i = 0; i < m_pObjects.size(); i++)
+		{
+			if (((Player*)m_pObjects[0])->GetHealth() > 0)
+			{
 
-	for (size_t i = 0; i < m_pObjects.size(); i++)
-	{
-		switch (m_pObjects[i]->GetType())
-		{
-		case Object::ObjectType::OBJ_PLAYER:
-		{
-											   if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-											   {
-												   ((Player*)m_pObjects[i])->TakeTurn();
-												   CurrentTurn++;
-											   }
+			}
+			else
+			{
+				((Player*)m_pObjects[0])->SetCombat(false);
+			}
+
+			for (size_t i = 0; i < 3; i++)
+			{
+				if (true)
+				{
+
+				}
+			}
+
+
+			switch (m_pObjects[i]->GetType())
+			{
+			case Object::ObjectType::OBJ_PLAYER:
+			{
+												   if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+												   {
+													   if (((Player*)m_pObjects[i])->TakeTurn())
+													   {
+
+													   }
+													   else
+													   {
+														   ((Player*)m_pObjects[i])->SetCombat(false);
+													   }
+													   CurrentTurn++;
+												   }
+			}
+				break;
+			case Object::ObjectType::OBJ_MINION:
+			{
+												   if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+												   {
+													   ((Minion*)m_pObjects[i])->TakeTurn();
+													   CurrentTurn++;
+												   }
+			}
+				break;
+			}
+			//CurrentTurn++;
 		}
-			break;
-		case Object::ObjectType::OBJ_MINION:
-		{
-											   if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-											   {
-												   ((Minion*)m_pObjects[i])->TakeTurn();
-												   CurrentTurn++;
-											   }
-		}
-			break;
-		}
-		//CurrentTurn++;
-	}
+		CurrentTurn = 0;
 }
 
 void CombatState::Render(void)
@@ -127,4 +154,27 @@ Object* CombatState::AddMinion()
 	temp->CurrentTurn(&CurrentTurn);
 	temp->SetTurnPos(TurnIndex);
 	return temp;
+}
+
+bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
+{
+	switch (_DamType)
+	{
+	case CombatState::DamType::Melee:
+	{
+										if (m_pObjects[_target]->GetType()==iObject::OBJ_PLAYER)
+										{
+											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+										}
+	}
+		break;
+	case CombatState::DamType::Magic:
+
+
+		break;
+	default:
+		break;
+	}
+
+	return false;
 }
