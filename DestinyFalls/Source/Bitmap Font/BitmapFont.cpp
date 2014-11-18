@@ -1,12 +1,12 @@
 #include "stdafx.h"
 #include "BitmapFont.h"
 
-#include "../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include <ctype.h>
 #include <cassert>
 #include <fstream>
-#include "TinyXML\tinystr.h"
-#include "TinyXML\tinyxml.h"
+#include "../TinyXML\tinystr.h"
+#include "../TinyXML\tinyxml.h"
 
 void BitmapFont::Initialize(string path)
 {

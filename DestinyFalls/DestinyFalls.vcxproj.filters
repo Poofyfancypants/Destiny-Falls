@@ -217,7 +217,9 @@
     <ClInclude Include="Source\Game States\HowToPlayState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="source\BitmapFont.h" />
+    <ClInclude Include="Source\Bitmap Font\BitmapFont.h">
+      <Filter>Bitmap Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -371,7 +373,9 @@
     <ClCompile Include="Source\Game States\HowToPlayState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="source\BitmapFont.cpp" />
+    <ClCompile Include="Source\Bitmap Font\BitmapFont.cpp">
+      <Filter>Bitmap Font</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">
