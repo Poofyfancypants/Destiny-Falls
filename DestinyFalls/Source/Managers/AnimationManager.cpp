@@ -46,8 +46,8 @@ void AnimationManager::Render( AnimationTimeStamp ts , int posX , int posY )
 {
 	//Draw the frame
 	Frame temp = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() );
-	posX = posX + temp.GetAnchorPoint().x;
-	posY = posY + temp.GetAnchorPoint().y;
+	posX = posX - temp.GetAnchorPoint().x;
+	posY = posY - temp.GetAnchorPoint().y;
 
 	SGD::Rectangle rect = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetDrawRect();
 
@@ -124,84 +124,88 @@ void AnimationManager::Load( string fileName )
 		return;
 	}
 
-	//Access the root's first "animation_info" Element
-	pAnimation = pAnimation->FirstChildElement( );
-
-	if( pAnimation == nullptr )
-	{
-		return;
-	}
-
-	//Get all the animations
 	while( pAnimation != nullptr )
 	{
-		Animation* a = new Animation;
+		//Access the root's first "animation_info" Element
+		TiXmlElement* pAnimationInfo = pAnimation->FirstChildElement();
 
-		//Access the animation element's name
-		string szText = "";
-		szText = pAnimation->Attribute( "name" );
+		//pAnimation = pAnimation->FirstChildElement();
 
-		if( szText != "" )
+		if( pAnimationInfo == nullptr )
 		{
-			a->SetName( szText );
+			return;
 		}
 
-		Loaded[ a->GetName() ] = a;
-
-		//Get the looping bool
-		bool bLoops;
-		int temp;
-		pAnimation->Attribute( "looping" , &temp );
-		//bLoops = temp;
-		if (temp > 0)
-			bLoops = true;
-		else
-			bLoops = false;
-		Loaded[ a->GetName() ]->SetLooping( bLoops );
-
-		//Get the filepath for the image
-		string path = "resource/graphics/";
-		string  tName = "";
-		tName = pAnimation->Attribute( "hTexture" );
-		path += tName;
-		SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
-		m_hImage = pGraphics->LoadTexture( path.c_str() );
-		Loaded[ a->GetName() ]->SetImage( m_hImage );
-
-		//Clear the frames vector
-		Loaded[ a->GetName() ]->GetFrameVector().clear();
-
-		//Get the number of frames in the animation
-		int nFrames = 0;
-
-		pAnimation->Attribute( "numFrames" , &nFrames );
-
-		//Access the animations's first "frame" Element
-		TiXmlElement* pFrame = pAnimation->FirstChildElement();
-
-		//get each of the frames in the image
-		while( pFrame != nullptr )
+		//Get all the animations
+		while( pAnimationInfo != nullptr )
 		{
-			Frame f;
-			/*<frame duration="0.5" damage="0" event="none" dLeft="4" dTop="520" dRight="47" dBottom="580" cLeft="4" cTop="520" cRight="47" cBottom="580" x="24" y="577"/>*/
+			Animation* a = new Animation;
 
-			//Get the frame's duration
-			double dur;
-			pFrame->Attribute( "duration" , &dur );
-			f.SetDuration( (float)dur );
+			//Access the animation element's name
+			string szText = "";
+			szText = pAnimationInfo->Attribute( "name" );
 
-			//Get the frame's damage
-			int dam;
-			pFrame->Attribute( "damage" , &dam );
-			f.SetDamage( dam );
+			if( szText != "" )
+			{
+				a->SetName( szText );
+			}
 
-			//Get the frame's event name
-			string eve = "";
-			eve = pFrame->Attribute( "event" );
-			f.SetEventName( eve );
+			Loaded[ a->GetName() ] = a;
 
-			//Get the drawRect
-			SGD::Rectangle dRect;
+			//Get the looping bool
+			bool bLoops;
+			int temp;
+			pAnimationInfo->Attribute( "looping" , &temp );
+			//bLoops = temp;
+			if( temp > 0 )
+				bLoops = true;
+			else
+				bLoops = false;
+			Loaded[ a->GetName() ]->SetLooping( bLoops );
+
+			//Get the filepath for the image
+			string path = "resource/graphics/";
+			string  tName = "";
+			tName = pAnimationInfo->Attribute( "hTexture" );
+			path += tName;
+			SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
+			m_hImage = pGraphics->LoadTexture( path.c_str() );
+			Loaded[ a->GetName() ]->SetImage( m_hImage );
+
+			//Clear the frames vector
+			Loaded[ a->GetName() ]->GetFrameVector().clear();
+
+			//Get the number of frames in the animation
+			int nFrames = 0;
+
+			pAnimationInfo->Attribute( "numFrames" , &nFrames );
+
+			//Access the animations's first "frame" Element
+			TiXmlElement* pFrame = pAnimationInfo->FirstChildElement();
+
+			//get each of the frames in the image
+			while( pFrame != nullptr )
+			{
+				Frame f;
+				/*<frame duration="0.5" damage="0" event="none" dLeft="4" dTop="520" dRight="47" dBottom="580" cLeft="4" cTop="520" cRight="47" cBottom="580" x="24" y="577"/>*/
+
+				//Get the frame's duration
+				double dur;
+				pFrame->Attribute( "duration" , &dur );
+				f.SetDuration( ( float ) dur );
+
+				//Get the frame's damage
+				int dam;
+				pFrame->Attribute( "damage" , &dam );
+				f.SetDamage( dam );
+
+				//Get the frame's event name
+				string eve = "";
+				eve = pFrame->Attribute( "event" );
+				f.SetEventName( eve );
+
+				//Get the drawRect
+				SGD::Rectangle dRect;
 
 				//Get the drawRect left
 				int dleft;
@@ -220,17 +224,17 @@ void AnimationManager::Load( string fileName )
 				pFrame->Attribute( "dBottom" , &dbot );
 
 				//set the drect left/top/bottom/right to the read in variables
-				dRect.left		= (float)dleft;
-				dRect.top		= (float)dtop;
-				dRect.right		= (float)drig;
-				dRect.bottom	= (float)dbot;
+				dRect.left = ( float ) dleft;
+				dRect.top = ( float ) dtop;
+				dRect.right = ( float ) drig;
+				dRect.bottom = ( float ) dbot;
 
 				//set the frame's draw rect to the drect
 				f.SetDrawRect( dRect );
 
 
-			//Get the collisionRect
-			SGD::Rectangle cRect;
+				//Get the collisionRect
+				SGD::Rectangle cRect;
 
 				//Get the collisionRect left
 				int cleft;
@@ -247,40 +251,45 @@ void AnimationManager::Load( string fileName )
 				//Get the collisionRect bottom
 				int cbot;
 				pFrame->Attribute( "cBottom" , &cbot );
-			
+
 				//set the crect left/top/bottom/right to the read in variables
-				cRect.left =	(float)cleft;
-				cRect.top =		(float)ctop;
-				cRect.right =	(float)crig;
-				cRect.bottom =	(float)cbot;
+				cRect.left = ( float ) cleft;
+				cRect.top = ( float ) ctop;
+				cRect.right = ( float ) crig;
+				cRect.bottom = ( float ) cbot;
 
 				//add the crect to the frame collisionrects vector
 				f.AddCollisionRect( cRect );
 
-			//Get anchor point
+				//Get anchor point
 				SGD::Point aP;
-			//Get anchor point x
+				//Get anchor point x
 				int aX;
 				pFrame->Attribute( "x" , &aX );
 
-			//Get anchor point y
+				//Get anchor point y
 				int aY;
 				pFrame->Attribute( "y" , &aY );
 
-				aP.x = (float)aX;
-				aP.y = (float)aY;
+				aP.x = ( float ) aX;
+				aP.y = ( float ) aY;
 
 				f.SetAnchorPoint( aP );
 
-			//Add the new frame to a's frame vector
-			Loaded[ a->GetName() ]->AddFrame( f );
+				//Add the new frame to a's frame vector
+				Loaded[ a->GetName() ]->AddFrame( f );
 
-			
-			//Move to the next "frame" Sibling Element if there are more frames
-			pFrame = pFrame->NextSiblingElement( );
-			
+
+				//Move to the next "frame" Sibling Element if there are more frames
+				pFrame = pFrame->NextSiblingElement();
+
+			}
+
+			pAnimationInfo = pAnimationInfo->NextSiblingElement();
 		}
+
 		pAnimation = pAnimation->NextSiblingElement();
+
 	}
 }
 

@@ -8,6 +8,7 @@
 #include "../Game States/IGameState.h"
 #include "../Game States/GameplayState.h"
 #include "../Game States/MainMenuState.h"
+#include "../Game States/SplashScreenState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
@@ -22,6 +23,7 @@
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
+
 
 /**************************************************************/
 // Singleton
@@ -78,9 +80,12 @@ bool Game::Initialize(float width, float height)
 	m_StringTable[0][4] = "How to Play";
 	m_StringTable[0][5] = "Credits";
 	m_StringTable[0][6] = "Exit";
+	m_StringTable[0][7] = "Resume";
+	m_StringTable[0][8] = "Save";
+	m_StringTable[0][9] = "You Died";
 
 	//Main menu state here
-	AddState(MainMenuState::GetInstance());
+	AddState(SplashScreenState::GetInstance());
 
 	return true;	// success!
 }

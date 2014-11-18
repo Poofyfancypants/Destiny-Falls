@@ -1,13 +1,15 @@
 
 #include "stdafx.h"
+#include "OptionsState.h"
+#include "GameplayState.h"
+#include "PauseMenuState.h"
 #include "MainMenuState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
-#include "OptionsState.h"
-#include "GameplayState.h"
-#include "PauseMenuState.h"
+#include "../Bitmap Font/BitmapFont.h"
+
 
 PauseMenuState* PauseMenuState::GetInstance(void)
 {
@@ -118,14 +120,17 @@ void PauseMenuState::Render(void)
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
 
-	pGraphics->DrawString("SAVE", { 350, 115 }, { 255, 0, 0, 255 });
+	const BitmapFont* pFont = Game::GetInstance()->GetFont();
 
-	pGraphics->DrawString("RESUME", { 330, 215 }, { 255, 0, 0, 255 });
+	if (((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth() <= 0)
+	{
+		pFont->Draw(Game::GetInstance()->GetString(9).c_str(), { 100, 100 }, 4, { 255, 0, 0, 255 });
+	}
 
-
-	pGraphics->DrawString("OPTIONS", { 327, 315 }, { 255, 0, 0, 150 });
-
-	pGraphics->DrawString("EXIT GAME", { 327, 415 }, { 255, 0, 0, 150 });
+	pFont->Draw(Game::GetInstance()->GetString(8).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(7).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(3).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 });
+	pFont->Draw(Game::GetInstance()->GetString(6).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 });
 }
 
 void PauseMenuState::SaveGame()
