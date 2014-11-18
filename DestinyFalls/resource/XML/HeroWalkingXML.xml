@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="WalkingUp" numFrames="5" looping="1" hTexture="linkhero2.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="3" dTop="175" dRight="29" dBottom="200" cLeft="4" cTop="176" cRight="30" cBottom="199" x="15" y="22" />
+      <frame duration="0.25" damage="0" event="none" dLeft="31" dTop="176" dRight="55" dBottom="199" cLeft="32" cTop="177" cRight="56" cBottom="198" x="12" y="21" />
+      <frame duration="0.25" damage="0" event="none" dLeft="56" dTop="176" dRight="77" dBottom="198" cLeft="57" cTop="177" cRight="78" cBottom="199" x="11" y="20" />
+      <frame duration="0.25" damage="0" event="none" dLeft="78" dTop="176" dRight="101" dBottom="200" cLeft="79" cTop="177" cRight="100" cBottom="199" x="11" y="20" />
+      <frame duration="0.25" damage="0" event="none" dLeft="101" dTop="176" dRight="122" dBottom="200" cLeft="100" cTop="177" cRight="122" cBottom="199" x="10" y="21" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="WalkingDown" numFrames="9" looping="1" hTexture="linkhero2.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="83" dTop="10" dRight="109" dBottom="35" cLeft="84" cTop="11" cRight="110" cBottom="36" x="14" y="23" />
+      <frame duration="0.25" damage="0" event="none" dLeft="115" dTop="10" dRight="141" dBottom="36" cLeft="116" cTop="11" cRight="140" cBottom="35" x="14" y="22" />
+      <frame duration="0.25" damage="0" event="none" dLeft="142" dTop="9" dRight="168" dBottom="36" cLeft="143" cTop="10" cRight="167" cBottom="35" x="13" y="23" />
+      <frame duration="0.25" damage="0" event="none" dLeft="170" dTop="7" dRight="190" dBottom="37" cLeft="170" cTop="8" cRight="192" cBottom="36" x="11" y="24" />
+      <frame duration="0.25" damage="0" event="none" dLeft="195" dTop="10" dRight="215" dBottom="35" cLeft="196" cTop="10" cRight="214" cBottom="35" x="10" y="23" />
+      <frame duration="0.25" damage="0" event="none" dLeft="219" dTop="7" dRight="240" dBottom="37" cLeft="220" cTop="8" cRight="240" cBottom="37" x="11" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="246" dTop="7" dRight="266" dBottom="36" cLeft="247" cTop="8" cRight="267" cBottom="36" x="11" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="268" dTop="8" dRight="291" dBottom="36" cLeft="269" cTop="9" cRight="290" cBottom="36" x="10" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="293" dTop="7" dRight="316" dBottom="39" cLeft="294" cTop="8" cRight="315" cBottom="38" x="12" y="27" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="WalkingLeft" numFrames="9" looping="1" hTexture="linkhero2.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="5" dTop="376" dRight="24" dBottom="405" cLeft="6" cTop="377" cRight="25" cBottom="403" x="9" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="27" dTop="377" dRight="46" dBottom="404" cLeft="27" cTop="377" cRight="48" cBottom="404" x="10" y="24" />
+      <frame duration="0.25" damage="0" event="none" dLeft="48" dTop="375" dRight="68" dBottom="404" cLeft="48" cTop="375" cRight="68" cBottom="403" x="10" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="72" dTop="375" dRight="97" dBottom="406" cLeft="72" cTop="376" cRight="97" cBottom="406" x="11" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="96" dTop="375" dRight="120" dBottom="404" cLeft="96" cTop="375" cRight="120" cBottom="404" x="11" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="120" dTop="375" dRight="142" dBottom="404" cLeft="120" cTop="375" cRight="142" cBottom="404" x="10" y="24" />
+      <frame duration="0.25" damage="0" event="none" dLeft="145" dTop="374" dRight="171" dBottom="403" cLeft="146" cTop="375" cRight="172" cBottom="402" x="14" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="171" dTop="374" dRight="196" dBottom="404" cLeft="171" cTop="374" cRight="196" cBottom="404" x="12" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="197" dTop="376" dRight="226" dBottom="406" cLeft="197" cTop="376" cRight="225" cBottom="405" x="13" y="25" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="WalkingRight" numFrames="9" looping="1" hTexture="linkhero2.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="2" dTop="55" dRight="25" dBottom="80" cLeft="2" cTop="55" cRight="25" cBottom="80" x="12" y="23" />
+      <frame duration="0.25" damage="0" event="none" dLeft="25" dTop="51" dRight="53" dBottom="81" cLeft="25" cTop="52" cRight="52" cBottom="79" x="16" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="52" dTop="53" dRight="75" dBottom="80" cLeft="52" cTop="53" cRight="74" cBottom="79" x="14" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="78" dTop="51" dRight="103" dBottom="80" cLeft="79" cTop="51" cRight="103" cBottom="78" x="17" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="104" dTop="53" dRight="128" dBottom="79" cLeft="104" cTop="53" cRight="128" cBottom="79" x="13" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="127" dTop="51" dRight="152" dBottom="79" cLeft="127" cTop="51" cRight="151" cBottom="78" x="15" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="153" dTop="52" dRight="175" dBottom="80" cLeft="153" cTop="53" cRight="175" cBottom="78" x="13" y="25" />
+      <frame duration="0.25" damage="0" event="none" dLeft="177" dTop="49" dRight="197" dBottom="81" cLeft="177" cTop="49" cRight="196" cBottom="81" x="11" y="28" />
+      <frame duration="0.25" damage="0" event="none" dLeft="198" dTop="51" dRight="217" dBottom="80" cLeft="198" cTop="51" cRight="217" cBottom="80" x="11" y="27" />
+    </animation_info>
+  </animation>
+</Root>

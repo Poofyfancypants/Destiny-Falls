@@ -220,6 +220,7 @@
     <ClInclude Include="Source\Game States\PauseMenuState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game States\SplashScreenState.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -376,6 +377,7 @@
     <ClCompile Include="Source\Game States\PauseMenuState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Game States\SplashScreenState.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">
