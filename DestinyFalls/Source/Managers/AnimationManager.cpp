@@ -4,6 +4,7 @@
 #include <cassert>
 #include "..\..\SGD Wrappers\SGD_Geometry.h"
 #include"..\..\SGD Wrappers\SGD_GraphicsManager.h"
+#include <iterator>
 
 //***********************************************************************
 // SINGLETON
@@ -27,19 +28,33 @@ AnimationManager* AnimationManager::GetInstance()
 //	- deallocate the singleton
 void AnimationManager::DeleteInstance()
 {
+
+	//GetInstance()->Loaded.clear();
+	auto iter = GetInstance()->Loaded.begin();
+
+	for( ; iter != GetInstance()->Loaded.end(); ++iter )
+	{
+		// Do some stuff
+		delete GetInstance()->Loaded[ iter->first ];
+	}
+
 	delete s_pInstance;
 	s_pInstance = nullptr;
 }
 
-void AnimationManager::Render( AnimationTimeStamp& ts , int posX , int posY )
+void AnimationManager::Render( AnimationTimeStamp ts , int posX , int posY )
 {
 	//Draw the frame
+	Frame temp = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() );
+	posX = posX + temp.GetAnchorPoint().x;
+	posY = posY + temp.GetAnchorPoint().y;
+
+	SGD::Rectangle rect = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetDrawRect();
+
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(
 		Loaded[ ts.GetCurrentAnimation() ]->GetImage() ,
-		{ posX - Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetAnchorPoint().x ,
-		posY - Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetAnchorPoint().y } ,
-		Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetDrawRect()
-		);
+		SGD::Point( posX  ,	posY   ) ,		
+		rect);
 }
 
 void AnimationManager::Update( AnimationTimeStamp& ts , float dt )
@@ -97,7 +112,7 @@ void AnimationManager::Load( string fileName )
 	{
 		return;
 	}
-
+	
 	//Access the root's first "Root" Element
 	//TiXmlElement* pAnimation = pRoot->FirstChildElement( "Root" );
 
@@ -145,11 +160,12 @@ void AnimationManager::Load( string fileName )
 		Loaded[ a->GetName() ]->SetLooping( bLoops );
 
 		//Get the filepath for the image
+		string path = "resource/graphics/";
 		string  tName = "";
 		tName = pAnimation->Attribute( "hTexture" );
-
+		path += tName;
 		SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
-		m_hImage = pGraphics->LoadTexture( tName.c_str() );
+		m_hImage = pGraphics->LoadTexture( path.c_str() );
 		Loaded[ a->GetName() ]->SetImage( m_hImage );
 
 		//Clear the frames vector
@@ -274,4 +290,9 @@ void AnimationManager::AddToAnimationMap( Animation* animation )
 	{
 		Loaded[ animation->GetName() ] = animation;
 	}
+}
+
+int AnimationManager::CheckSize()
+{
+	return Loaded.size();
 }
