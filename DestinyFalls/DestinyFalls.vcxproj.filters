@@ -154,13 +154,7 @@
     <ClInclude Include="Source\Game Core\Game.h">
       <Filter>Game Core</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game States\CombatState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game States\CreditState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Game States\GamePauseState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game States\GameplayState.h">
@@ -216,6 +210,12 @@
     </ClInclude>
     <ClInclude Include="Source\Game States\HowToPlayState.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bitmap Font\BitmapFont.h">
+      <Filter>Bitmap Font</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\CombatState.h">
+      <Filter>Game Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -307,13 +307,7 @@
     <ClCompile Include="Source\Game Core\WinMain.cpp">
       <Filter>Game Core</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game States\CombatState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game States\CreditState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Game States\GamePauseState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game States\GameplayState.cpp">
@@ -369,6 +363,12 @@
     </ClCompile>
     <ClCompile Include="Source\Game States\HowToPlayState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bitmap Font\BitmapFont.cpp">
+      <Filter>Bitmap Font</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\CombatState.cpp">
+      <Filter>Game Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

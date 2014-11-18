@@ -11,7 +11,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 #include "../Game States/AnimationTestState.h"
-#include "../BitmapFont.h"
+#include "../Bitmap Font/BitmapFont.h"
 
 MainMenuState* MainMenuState::GetInstance()
 {

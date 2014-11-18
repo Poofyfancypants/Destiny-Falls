@@ -37,6 +37,7 @@ public:
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
 	void SetCombat(bool _combat = false) { m_bCombat = _combat; }
+	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
@@ -54,5 +55,6 @@ private:
 	bool m_bCombat = false;
 	int m_nTurnPos;
 	int m_nCursor = 0;
+
 	int * m_CurrentTurn;
 };
