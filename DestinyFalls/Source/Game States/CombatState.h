@@ -21,7 +21,7 @@ public:
 	virtual void Render(void)				override;
 
 	bool DealDamage(int _DamType, Object* _this, int _target);
-
+	int GetNumEnemies() const { return m_nNumEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion();
 

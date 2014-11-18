@@ -23,6 +23,8 @@ public:
 
 	int GetNumPots() const { return numPots; }
 	int GetNumRunes() const { return numRunes; }
+	void RemoveItems() { numPots = 0; numRunes = 0; }
+	bool IsTrapped() const { return trappedChest; }
 	bool Opened = false;
 	bool Colliding = false;
 
@@ -32,6 +34,6 @@ private:
 
 	int numPots;
 	int numRunes;
-
+	bool trappedChest;
 	float textTimer = 3.0f;
 };

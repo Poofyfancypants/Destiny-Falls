@@ -155,12 +155,12 @@ void MainMenuState::Render()
 	//pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
 
-	pFont->Draw("Play Game", { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw("Load Game", { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 });
-	pGraphics->DrawString("Options", { Options.left, Options.top }, { 255, 225, 255, 255 });
-	pGraphics->DrawString("How to Play", { HowToPlay.left, HowToPlay.top }, { 255, 225, 255, 255 });
-	pGraphics->DrawString("Credits", { Credit.left, Credit.top }, { 255, 225, 255, 255 });
-	pGraphics->DrawString("Exit", { ExitGame.left, ExitGame.top }, { 255, 225, 255, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(1).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(2).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(3).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(4).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(5).c_str(), { Credit.left, Credit.top }, 1, { 255, 225, 255, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(6).c_str(), { ExitGame.left, ExitGame.top }, 1, { 255, 225, 255, 255 });
 
 
 	pGraphics->DrawRectangle(SGD::Rectangle{ 40, (float)(40 * m_nCursor + 60), 50, (float)(40 * m_nCursor + 70) }, SGD::Color{ 255, 0, 255, 0 });

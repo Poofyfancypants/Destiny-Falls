@@ -19,7 +19,6 @@ public:
 	virtual int GetType(void) const { return OBJ_PLAYER; }
 	virtual SGD::Rectangle GetRect(void) const override;
 	virtual void HandleCollision(const iObject* pOther) override;
-	virtual void HandleEvent(const SGD::Event* pEvent) override;
 	virtual bool TakeTurn();
 
 	void TakeInput();
@@ -52,8 +51,11 @@ private:
 	int m_nHealth = 100;
 	int m_nMaxHealth = 100;
 	int m_nPotions = 0;
+
 	bool m_bCombat = false;
 	int m_nTurnPos;
+
+	int ActionSelected = 0;
 	int m_nCursor = 0;
 
 	int * m_CurrentTurn;
