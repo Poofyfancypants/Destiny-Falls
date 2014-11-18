@@ -60,4 +60,7 @@ private:
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 
+	bool m_bPaused = false;
+
+
 };

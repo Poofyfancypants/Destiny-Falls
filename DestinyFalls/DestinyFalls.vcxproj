@@ -96,6 +96,7 @@
     <ClInclude Include="SGD Wrappers\SGD_Message.h" />
     <ClInclude Include="SGD Wrappers\SGD_MessageManager.h" />
     <ClInclude Include="SGD Wrappers\SGD_String.h" />
+    <ClInclude Include="source\BitmapFont.h" />
     <ClInclude Include="Source\Engines\Animation.h" />
     <ClInclude Include="Source\Engines\AnimationTimeStamp.h" />
     <ClInclude Include="Source\Engines\Frame.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="SGD Wrappers\SGD_Listener.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_Message.cpp" />
     <ClCompile Include="SGD Wrappers\SGD_MessageManager.cpp" />
+    <ClCompile Include="source\BitmapFont.cpp" />
     <ClCompile Include="Source\Engines\Animation.cpp" />
     <ClCompile Include="Source\Engines\AnimationTimeStamp.cpp" />
     <ClCompile Include="Source\Engines\Frame.cpp" />

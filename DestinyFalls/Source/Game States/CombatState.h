@@ -28,7 +28,7 @@ private:
 	CombatState(const CombatState&) = delete;
 	CombatState& operator=(const CombatState&) = delete;
 
-	SGD::Rectangle AbilityRect = { 200, 375, 600, 550 };
+	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 
 	SGD::Rectangle Compation1HB	= { 50, 110, 175, 140 };
 	SGD::Rectangle PlayerHB		= { 75, 200, 200, 230 };

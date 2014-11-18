@@ -2,6 +2,7 @@
 #include "QuickTime.h"
 
 #include "../../SGD Wrappers/SGD_InputManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 
 QuickTime::QuickTime()
@@ -23,17 +24,17 @@ void QuickTime::Update(float elapsedTime)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	/*m_fSeconds += elapsedTime;
+	m_fSeconds += elapsedTime;
 
 	if (m_fSeconds < 2.0f && m_uncounter < m_unlength)
 	{
-		if (m_vOutput[m_uncounter] = pInput->GetAnyKeyDown())
+		if (m_vOutput[m_uncounter] == pInput->GetAnyKeyDown())
 		{
 			AddGuess(m_vOutput[m_uncounter]);
-			m_ncounter++;
+			m_uncounter++;
 			m_fSeconds = 0.0f;
 		}
-		else if (pInput->GetAnyKeyPressed())
+		else if (pInput->IsAnyKeyPressed())
 		{
 			m_unNumCorrect = m_uncounter;
 			m_bqtOver = true;
@@ -43,13 +44,15 @@ void QuickTime::Update(float elapsedTime)
 	{
 		m_unNumCorrect = m_uncounter;
 		m_bqtOver = true;
-	}*/
+	}
 
 }
 
 void QuickTime::Render()
 {
+	SGD::Rectangle rect = { 250, 300, 300, 350 };
 
+	SGD::GraphicsManager::GetInstance()->DrawRectangle(rect, SGD::Color{ 255, 100, 100, 100 });
 }
 
 void QuickTime::SetLength(unsigned int x)

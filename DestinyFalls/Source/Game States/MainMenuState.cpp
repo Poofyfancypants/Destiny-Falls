@@ -26,8 +26,8 @@ void MainMenuState::Enter()
 	//pGraphics->LoadTexture()
 
 	PlayGame = { 50, 50, 100, 80 };
-	Options = { 50, 90, 100, 120 };
-	LoadGame = { 50, 130, 100, 160 };
+	LoadGame = { 50, 90, 100, 120 };
+	Options = { 50, 130, 100, 160 };
 	HowToPlay = { 50, 170, 100, 200 };
 	Credit = { 50, 210, 100, 240 };
 	ExitGame = { 50, 250, 100, 280 };

@@ -2,6 +2,7 @@
 #include "../Game Core/Game.h"
 #include "HowToPlayState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 HowToPlayState* HowToPlayState::GetInstance()
 {
@@ -35,5 +36,6 @@ void HowToPlayState::Update(float elapsedTime)
 
 void HowToPlayState::Render()
 {
+	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 690, 575 }, { 255, 255, 255 });
 
 }
