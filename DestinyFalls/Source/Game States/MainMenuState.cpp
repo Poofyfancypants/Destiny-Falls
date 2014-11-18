@@ -146,6 +146,8 @@ void MainMenuState::Render()
 	pGraphics->SetClearColor();
 	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
+	const BitmapFont* pFont = Game::GetInstance()->GetFont();
+
 	//pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
@@ -153,8 +155,10 @@ void MainMenuState::Render()
 	//pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
 
-	pGraphics->DrawString("Play Game", { PlayGame.left, PlayGame.top }, { 255, 225, 255, 255 });
-	pGraphics->DrawString("Load Game", { LoadGame.left, LoadGame.top }, { 255, 225, 255, 255 });
+	//pGraphics->DrawString("Play Game", { PlayGame.left, PlayGame.top }, { 255, 225, 255, 255 });
+	pFont->Draw("Play Game", { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 });
+	//pGraphics->DrawString("Load Game", { LoadGame.left, LoadGame.top }, { 255, 225, 255, 255 });
+	pFont->Draw("Load Game", { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 });
 	pGraphics->DrawString("Options", { Options.left, Options.top }, { 255, 225, 255, 255 });
 	pGraphics->DrawString("How to Play", { HowToPlay.left, HowToPlay.top }, { 255, 225, 255, 255 });
 	pGraphics->DrawString("Credits", { Credit.left, Credit.top }, { 255, 225, 255, 255 });

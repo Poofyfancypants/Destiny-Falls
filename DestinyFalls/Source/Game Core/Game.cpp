@@ -68,8 +68,8 @@ bool Game::Initialize(float width, float height)
 	m_fScreenHeight = height;
 
 	m_pFont = new BitmapFont;
-	m_pFont->Initialize("resource/graphics/font1.png");
-	//m_pFont->LoadFontFile("resource/XML/Font.xml");
+	m_pFont->Initialize("resource/graphics/newfont_0.png");
+	m_pFont->LoadFontFile("resource/XML/newfont.xml");
 
 	//Main menu state here
 	AddState(MainMenuState::GetInstance());
