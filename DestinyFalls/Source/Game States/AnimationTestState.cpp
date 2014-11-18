@@ -13,16 +13,16 @@ AnimationTestState* AnimationTestState::GetInstance()
 
 void AnimationTestState::Enter()
 {
-	string file = "resource/XML/AnimationTestXML.xml";
+	string file = "resource/XML/ChestOpeningXML.xml";
 	animator.GetInstance()->Load( file );
-	ts.SetCurrentAnimation( "SwordSwing" );
+	ts.SetCurrentAnimation( "ChestOpening" );
 	ts.SetCurrentFrame( 0 );
 	ts.SetTimeOnFrame( 0.0f );
 }
 
 void AnimationTestState::Exit()
 {
-
+	animator.DeleteInstance();
 }
 
 bool AnimationTestState::Input()
@@ -44,5 +44,9 @@ void AnimationTestState::Update( float elapsedTime )
 
 void AnimationTestState::Render()
 {
-	animator.GetInstance()->Render( ts , 100 , 100 );
+	if( animator.GetInstance()->CheckSize() )
+	{
+		animator.GetInstance()->Render( ts , 100 , 100 );
+
+	}
 }

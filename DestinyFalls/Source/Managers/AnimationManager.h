@@ -32,7 +32,7 @@ private:
 
 public:
 	AnimationManager() = default;
-	~AnimationManager() = default;
+	~AnimationManager()=default;
 
 	//*******************************************************************
 	// SINGLETON!
@@ -40,11 +40,12 @@ public:
 	static AnimationManager* GetInstance();
 	static void DeleteInstance();
 
-	void Render( AnimationTimeStamp& ts , int posX , int posY );
+	void Render( AnimationTimeStamp ts , int posX , int posY );
 	void Update( AnimationTimeStamp& ts , float dt );
 	void Load( string fileName );
 
 	void AddToAnimationMap( Animation* animation );
 
+	int CheckSize();
 };
 
