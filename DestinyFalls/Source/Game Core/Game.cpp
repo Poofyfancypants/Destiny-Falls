@@ -78,6 +78,9 @@ bool Game::Initialize(float width, float height)
 	m_StringTable[0][4] = "How to Play";
 	m_StringTable[0][5] = "Credits";
 	m_StringTable[0][6] = "Exit";
+	m_StringTable[0][7] = "Resume";
+	m_StringTable[0][8] = "Save";
+	m_StringTable[0][9] = "You Died";
 
 	//Main menu state here
 	AddState(MainMenuState::GetInstance());
