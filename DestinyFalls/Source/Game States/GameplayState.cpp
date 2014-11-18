@@ -44,7 +44,6 @@ void GameplayState::Enter()
 	// - Manage The map
 	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
 
-
 }
 
 void GameplayState::Exit()

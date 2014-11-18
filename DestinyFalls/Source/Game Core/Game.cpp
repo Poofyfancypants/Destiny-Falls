@@ -143,6 +143,8 @@ void Game::Terminate(void)
 
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
+
+	delete m_pFont;
 }
 
 void Game::AddState(IGameState* pNewState)

@@ -28,7 +28,46 @@ void PauseMenuState::Exit(void)
 bool PauseMenuState::Input(void)
 {
 	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
-	
+
+	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	{
+		m_nCursor = PauseSelections::exit;
+	}
+	if (pInput->IsKeyPressed(SGD::Key::Up))
+	{
+		if (m_nCursor <= 0)
+			m_nCursor = PauseSelections::exit;
+		else
+			m_nCursor--;
+	}
+	else if (pInput->IsKeyPressed(SGD::Key::Down))
+	{
+		if (m_nCursor >= PauseSelections::exit)
+			m_nCursor = PauseSelections::resume;
+		else
+			m_nCursor++;
+	}
+
+	if (pInput->IsKeyPressed(SGD::Key::Enter))
+	{
+		switch (m_nCursor)
+		{
+		case PauseSelections::resume:
+			Game::GetInstance()->AddState(GameplayState::GetInstance());
+			break;
+		case PauseSelections::save:
+			break;
+		case PauseSelections::options:
+			Game::GetInstance()->AddState(OptionsState::GetInstance());
+			break;
+		case PauseSelections::exit:
+			Game::GetInstance()->AddState(MainMenuState::GetInstance());
+			break;
+		default:
+			break;
+		}
+	}
+
 	//Pause game rect
 	SGD::Rectangle rSaveRect = { 300.0f, 100.0f, 500.0f, 150.0f };
 
@@ -79,36 +118,14 @@ void PauseMenuState::Render(void)
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
 
-	//Play game button
-	pGraphics->DrawRectangle(
-	{ 300.0f, 100.0f, 500.0f, 150.0f },
-	{ 255, 0, 255, 255 },
-	{ 255, 0, 0, 255 }
-	);
 	pGraphics->DrawString("SAVE", { 350, 115 }, { 255, 0, 0, 255 });
-	//Particle button
-	pGraphics->DrawRectangle(
-		{300.0f, 200.0f, 500.0f, 250.0f}, 
-		{ 255, 0, 255, 255 }, 
-		{ 255, 0, 0, 255 }
-	);
+
 	pGraphics->DrawString("RESUME", { 330, 215 }, { 255, 0, 0, 255 });
 
-	//Animation button
-	pGraphics->DrawRectangle(
-	{ 300.0f, 300.0f, 500.0f, 350.0f },
-	{ 255, 150, 0, 175 },
-	{ 255, 50, 0, 150 }
-	);
-	pGraphics->DrawString("OPTIONS", { 327, 315 }, { 255, 50, 0, 150 });
 
-	//Animation button
-	pGraphics->DrawRectangle(
-	{ 300.0f, 400.0f, 500.0f, 450.0f },
-	{ 255, 150, 0, 175 },
-	{ 255, 50, 0, 150 }
-	);
-	pGraphics->DrawString("EXIT GAME", { 327, 415 }, { 255, 50, 0, 150 });
+	pGraphics->DrawString("OPTIONS", { 327, 315 }, { 255, 0, 0, 150 });
+
+	pGraphics->DrawString("EXIT GAME", { 327, 415 }, { 255, 0, 0, 150 });
 }
 
 void PauseMenuState::SaveGame()
