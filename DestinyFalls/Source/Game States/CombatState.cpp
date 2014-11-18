@@ -85,7 +85,6 @@ void CombatState::Update(float elapsedTime)
 
 			for (size_t i = 0; i < 3; i++)
 			{
-				if (true)
 				{
 
 				}
@@ -122,7 +121,7 @@ void CombatState::Update(float elapsedTime)
 			}
 			//CurrentTurn++;
 		}
-		CurrentTurn = 0;
+		//CurrentTurn = 0;
 }
 
 void CombatState::Render(void)
