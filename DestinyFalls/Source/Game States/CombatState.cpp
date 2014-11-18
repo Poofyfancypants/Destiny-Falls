@@ -42,6 +42,10 @@ void CombatState::Enter(void)
 		m_nNumEnemies++;
 		TurnIndex++;
 	}
+
+	PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
+
+
 }
 
 void CombatState::Exit(void)
@@ -116,7 +120,7 @@ void CombatState::Update(float elapsedTime)
 			break;
 		}
 	}
-	CurrentTurn = 0;
+	//CurrentTurn = 0;
 }
 
 void CombatState::Render(void)
