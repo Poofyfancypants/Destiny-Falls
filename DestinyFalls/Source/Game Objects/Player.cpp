@@ -191,7 +191,7 @@ bool Player::TakeTurn()
 
 	pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
-	pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
+	//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
 
 	if (selected == false) //Pick an action (melee magic or armor)
@@ -207,8 +207,8 @@ bool Player::TakeTurn()
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > 2)
-			m_nCursor = 2;
+		if (m_nCursor > 1)
+			m_nCursor = 1;
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
 		{
@@ -237,6 +237,7 @@ bool Player::TakeTurn()
 		{
 			int target = m_nCursor + 1;
 			pCombat->DealDamage(ActionSelected, this, target);
+			selected = false;
 			return true;
 		}
 	}
