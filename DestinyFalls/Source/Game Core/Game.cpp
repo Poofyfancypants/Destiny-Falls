@@ -132,6 +132,7 @@ void Game::Terminate(void)
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
 
+	m_pFont->Terminate();
 	SGD::GraphicsManager::GetInstance()->Terminate();
 	SGD::GraphicsManager::DeleteInstance();
 
