@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="ChestOpening" numFrames="4" looping="0" hTexture="ChestAnimation.png">
+      <frame duration="0.15" damage="0" event="none" dLeft="19" dTop="15" dRight="79" dBottom="56" cLeft="21" cTop="15" cRight="76" cBottom="53" x="26" y="34" />
+      <frame duration="0.15" damage="0" event="none" dLeft="80" dTop="16" dRight="138" dBottom="56" cLeft="82" cTop="17" cRight="135" cBottom="53" x="24" y="35" />
+      <frame duration="0.15" damage="0" event="none" dLeft="138" dTop="6" dRight="195" dBottom="55" cLeft="140" cTop="8" cRight="194" cBottom="53" x="25" y="42" />
+      <frame duration="2.5" damage="0" event="none" dLeft="198" dTop="11" dRight="258" dBottom="56" cLeft="200" cTop="13" cRight="254" cBottom="52" x="24" y="39" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="ChestExploding" numFrames="4" looping="1" hTexture="ChestAnimation.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="17" dTop="123" dRight="75" dBottom="166" cLeft="19" cTop="126" cRight="76" cBottom="163" x="28" y="36" />
+      <frame duration="0.25" damage="0" event="none" dLeft="80" dTop="125" dRight="137" dBottom="168" cLeft="82" cTop="126" cRight="134" cBottom="167" x="24" y="37" />
+      <frame duration="0.25" damage="0" event="none" dLeft="139" dTop="126" dRight="197" dBottom="175" cLeft="141" cTop="128" cRight="194" cBottom="172" x="28" y="38" />
+      <frame duration="0.25" damage="0" event="none" dLeft="198" dTop="126" dRight="274" dBottom="188" cLeft="199" cTop="127" cRight="273" cBottom="187" x="34" y="51" />
+    </animation_info>
+  </animation>
+</Root>
