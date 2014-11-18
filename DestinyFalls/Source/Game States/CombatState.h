@@ -10,7 +10,7 @@ class CombatState :
 	public IGameState
 {
 public:
-	enum DamType{Melee, Magic, AOE, };
+	enum DamType{Melee, Magic, Armor, AOE, };
 
 	static CombatState* GetInstance();
 

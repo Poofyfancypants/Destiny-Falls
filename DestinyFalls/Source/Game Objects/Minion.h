@@ -20,6 +20,7 @@ public:
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
 	int GetHealth() const { return m_nHealth; }
+	void SetHealth(int _health) { m_nHealth = _health; }
 
 	Minion();
 	~Minion();

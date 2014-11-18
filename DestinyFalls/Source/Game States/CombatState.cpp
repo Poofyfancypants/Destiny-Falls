@@ -34,7 +34,7 @@ void CombatState::Enter(void)
 	m_pObjects.push_back(player);
 	TurnIndex++;
 
-	for (unsigned int i = 0; i < rand()%3+1; i++)
+	for (unsigned int i = 0; i < rand() % 3 + 1; i++)
 	{
 		Object* temp = AddMinion();
 		m_pObjects.push_back(temp);
@@ -115,9 +115,8 @@ void CombatState::Update(float elapsedTime)
 		}
 			break;
 		}
-		//CurrentTurn++;
 	}
-	//CurrentTurn = 0;
+	CurrentTurn = 0;
 }
 
 void CombatState::Render(void)
@@ -181,11 +180,28 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										{
 											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
 										}
+										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+										{
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 20);
+										}
 	}
 		break;
 	case CombatState::DamType::Magic:
+	{
+										if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
+										{
+											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+										}
+										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+										{
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 20);
+										}
+	}
+		break;
+	case CombatState::DamType::Armor:
+	{
 
-
+	}
 		break;
 	default:
 		break;

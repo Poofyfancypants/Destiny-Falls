@@ -11,6 +11,7 @@
 
 Player::Player() : Listener(this)
 {
+
 }
 
 Player::~Player()
@@ -173,6 +174,15 @@ bool Player::TakeTurn()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
+	
+	float posX = 200.0f;
+	if (selected)
+	{
+		posX = 400.0f;
+	}
+
+	SGD::Rectangle PlayerSelection{ posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
+
 
 	if (m_nHealth < 0)
 	{
@@ -181,8 +191,9 @@ bool Player::TakeTurn()
 	pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
+	pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
 
-	if (ActionSelected == 0) //Pick an action (melee magic or armor)
+	if (selected == false) //Pick an action (melee magic or armor)
 	{
 
 		if (pInput->IsKeyPressed(SGD::Key::Up))
@@ -201,6 +212,7 @@ bool Player::TakeTurn()
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
 		{
 			ActionSelected = m_nCursor;
+			selected = true;
 			m_nCursor = 0;
 		}
 
@@ -217,13 +229,14 @@ bool Player::TakeTurn()
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetNumEnemies())
-			m_nCursor = pCombat->GetNumEnemies();
+		if (m_nCursor > pCombat->GetNumEnemies()-1)
+			m_nCursor = pCombat->GetNumEnemies()-1;
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
-			ActionSelected = m_nCursor;
-			m_nCursor = 0;
+			int target = m_nCursor + 1;
+			pCombat->DealDamage(ActionSelected, this, target);
+			return true;
 		}
 	}
 
