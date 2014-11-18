@@ -68,6 +68,10 @@ private:
 	// Message Callback Function:
 	static void MessageProc(const SGD::Message* pMsg);
 
+	/**********************************************************/
+	// Game Font
+	BitmapFont*				m_pFont = nullptr;
+
 };
 
 #endif //GAME_H

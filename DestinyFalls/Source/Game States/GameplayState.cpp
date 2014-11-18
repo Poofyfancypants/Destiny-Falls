@@ -77,7 +77,7 @@ bool GameplayState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Alt) && pInput->IsKeyPressed(SGD::Key::F4))
+	if (pInput->IsKeyPressed(SGD::Key::F1))
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
 		Game::GetInstance()->AddState(MainMenuState::GetInstance());

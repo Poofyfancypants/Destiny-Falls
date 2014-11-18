@@ -18,6 +18,7 @@
 #include "../../SGD Wrappers/SGD_EventManager.h"
 
 #include "../Messages/DestroyObjectMessage.h"
+#include "../BitmapFont.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -65,6 +66,10 @@ bool Game::Initialize(float width, float height)
 
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
+
+	m_pFont = new BitmapFont;
+	m_pFont->Initialize("../resource/graphics/font1.png");
+	m_pFont->LoadFontFile("../resource/XML/Font.xml");
 
 	//Main menu state here
 	AddState(MainMenuState::GetInstance());
