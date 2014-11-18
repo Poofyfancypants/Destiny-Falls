@@ -7,6 +7,13 @@
 
 Chest::Chest()
 {
+	if (rand() % 10 > 6)
+		trappedChest = true;
+	else
+		trappedChest = false;
+
+	numPots = rand() % 3;
+	numRunes = rand() % 2;
 }
 
 
@@ -71,7 +78,7 @@ void Chest::HandleCollision(const iObject* pOther)
 {
 	if (pOther->GetType() == OBJ_PLAYER)
 	{
-		if (Colliding == false)
+		if (Colliding == false && (numPots > 0 || numRunes > 0))
 		{
 			Colliding = true;
 			textTimer = 3.0f;
