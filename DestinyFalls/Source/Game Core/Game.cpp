@@ -71,6 +71,14 @@ bool Game::Initialize(float width, float height)
 	m_pFont->Initialize("resource/graphics/newfont_0.png");
 	m_pFont->LoadFontFile("resource/XML/newfont.xml");
 
+
+	m_StringTable[0][1] = "Play Game";
+	m_StringTable[0][2] = "Load Game";
+	m_StringTable[0][3] = "Options";
+	m_StringTable[0][4] = "How to Play";
+	m_StringTable[0][5] = "Credits";
+	m_StringTable[0][6] = "Exit";
+
 	//Main menu state here
 	AddState(MainMenuState::GetInstance());
 

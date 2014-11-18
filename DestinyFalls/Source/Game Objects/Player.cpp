@@ -6,7 +6,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Event.h"
-
+#include "Chest.h"
 #include "../Game States/GameplayState.h"
 
 Player::Player() : Listener(this)
@@ -24,6 +24,10 @@ void Player::Update(float elapsedTime)
 	{
 		m_nHealth = 0;
 		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
+
+
+		//m_ptPosition = GetCheckpoint();
+		//m_nHealth = 100;
 	}
 	if (!m_bSliding)
 		m_nDirection = 0;
@@ -85,15 +89,18 @@ void Player::Render(void)
 
 	SGD::Point currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
 		(Game::GetInstance()->GetScreenHeight() * 6 / 8) };
-
 	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
 		(Game::GetInstance()->GetScreenHeight() * 11 / 13) };
-	SGD::GraphicsManager::GetInstance()->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y },
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y },
 	{ 255, 0, 0 }, 17U);
 	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
 		(Game::GetInstance()->GetScreenHeight() * 11 / 13) };
-	SGD::GraphicsManager::GetInstance()->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y },
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y },
 	{ 0, 255, 0 }, 17U);
+
+	std::string potString = std::to_string(m_nPotions);
+	potString += " P";
+	pGraphics->DrawString(potString.c_str(), { (Game::GetInstance()->GetScreenWidth() - 100), (Game::GetInstance()->GetScreenHeight() - 100) }, SGD::Color(255, 255, 0, 0));
 }
 
 void Player::TakeInput()
@@ -121,10 +128,17 @@ void Player::TakeInput()
 	{
 		m_nDirection = 4;
 	}
-	//if( pInput->IsKeyDown(SGD::Key::M) )
-	//{
-	//	m_ptPosition = GetCheckpoint();
-	//}
+
+	if (pInput->IsKeyPressed(SGD::Key::P) && m_nPotions > 0 && m_nHealth < 100)
+	{
+		m_nHealth += 30;
+		if (m_nHealth > 100)
+		{
+			m_nCursor = 100;
+		}
+		m_nPotions--;
+	}
+
 }
 
 SGD::Rectangle Player::GetRect(void) const
@@ -133,16 +147,23 @@ SGD::Rectangle Player::GetRect(void) const
 	return sourceRect;
 }
 
-void Player::HandleEvent(const SGD::Event* pEvent) /*override*/
-{
-
-}
-
 void Player::HandleCollision(const iObject* pOther)
 {
 	if (pOther->GetType() == OBJ_ENEMY)
 	{
 		Game::GetInstance()->AddState(CombatState::GetInstance());
+	}
+	if (pOther->GetType() == OBJ_CHEST)
+	{
+		if (SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Q))
+		{
+			if (((Chest*)pOther)->IsTrapped())
+			{
+				Game::GetInstance()->AddState(CombatState::GetInstance());
+			}
+			m_nPotions += ((Chest*)pOther)->GetNumPots();
+			((Chest*)pOther)->RemoveItems();
+		}
 	}
 }
 
@@ -157,24 +178,55 @@ bool Player::TakeTurn()
 	{
 		return false;
 	}
+	pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
+	pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+	pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 
-	if (pInput->IsKeyPressed(SGD::Key::Up))
-	{
-		m_nCursor++;
-	}
-	if (pInput->IsKeyPressed(SGD::Key::Down))
-	{
-		m_nCursor--;
-	}
-	if (m_nCursor < 0)
-		m_nCursor = 0;
-	if (m_nCursor > pCombat->GetObjManager()->size())
-		m_nCursor = pCombat->GetObjManager()->size();
-
-	if (pInput->IsKeyPressed(SGD::Key::Enter))
+	if (ActionSelected == 0) //Pick an action (melee magic or armor)
 	{
 
+		if (pInput->IsKeyPressed(SGD::Key::Up))
+		{
+			m_nCursor++;
+		}
+		if (pInput->IsKeyPressed(SGD::Key::Down))
+		{
+			m_nCursor--;
+		}
+		if (m_nCursor < 0)
+			m_nCursor = 0;
+		if (m_nCursor > 2)
+			m_nCursor = 2;
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+		{
+			ActionSelected = m_nCursor;
+			m_nCursor = 0;
+		}
+
 	}
+	else //Action selected, now pick target
+	{
+		if (pInput->IsKeyPressed(SGD::Key::Up))
+		{
+			m_nCursor++;
+		}
+		if (pInput->IsKeyPressed(SGD::Key::Down))
+		{
+			m_nCursor--;
+		}
+		if (m_nCursor < 0)
+			m_nCursor = 0;
+		if (m_nCursor > pCombat->GetNumEnemies())
+			m_nCursor = pCombat->GetNumEnemies();
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+		{
+			ActionSelected = m_nCursor;
+			m_nCursor = 0;
+		}
+	}
+
 
 	return false;
 }
