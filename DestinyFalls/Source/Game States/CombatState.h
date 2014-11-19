@@ -24,6 +24,7 @@ public:
 	int GetNumEnemies() const { return m_nNumEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion();
+	Object* AddMinion1();
 
 private:
 	CombatState() = default;

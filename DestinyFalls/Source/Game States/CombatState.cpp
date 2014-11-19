@@ -32,14 +32,28 @@ void CombatState::Enter(void)
 	m_pObjects.push_back(player);
 	TurnIndex++;
 
-	for (unsigned int i = 0; i < rand() % 3 + 1; i++)
-	{
+	//for (unsigned int i = 0; i < rand() % 3 + 1; i++)
+	//{
+	//	Object* temp = AddMinion();
+	//	m_pObjects.push_back(temp);
+	//	Enemies[i] = temp;
+	//	m_nNumEnemies++;
+	//	TurnIndex++;
+	//}
+
 		Object* temp = AddMinion();
 		m_pObjects.push_back(temp);
-		Enemies[i] = temp;
+		Enemies[0] = temp;
 		m_nNumEnemies++;
 		TurnIndex++;
-	}
+
+		Object* temp1 = AddMinion1();
+		m_pObjects.push_back(temp1);
+		Enemies[1] = temp1;
+		m_nNumEnemies++;
+		TurnIndex++;
+	
+
 
 	PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
 
@@ -173,9 +187,20 @@ Object* CombatState::AddMinion()
 	return temp;
 }
 
+Object* CombatState::AddMinion1()
+{
+	Minion* temp = new Minion;
+	temp->SetImage(m_henemy);
+	temp->SetSize({ 64, 64 });
+	temp->CurrentTurn(&CurrentTurn);
+	temp->SetTurnPos(TurnIndex);
+	temp->SetAffinity(None);
+	return temp;
+}
+
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
-	RuneManager mag;
+	RuneManager* mag = new RuneManager;
 
 	switch (_DamType)
 	{
@@ -188,8 +213,8 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 
-												(mag.DamageComboElement(
-												mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), 
+												(mag->DamageComboElement(
+												mag->ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), 
 												InventoryState::GetInstance()->GetSwordSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
@@ -203,8 +228,8 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
-												(mag.DamageComboElement(
-												mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(),
+												(mag->DamageComboElement(
+												mag->ElementCombination(InventoryState::GetInstance()->GetRingSlot1(),
 												InventoryState::GetInstance()->GetRingSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
@@ -217,6 +242,8 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 	default:
 		break;
 	}
+
+	delete mag;
 
 	return false;
 }
