@@ -8,6 +8,7 @@
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../Managers/TileManager.h"
+#include "../Managers/AnimationManager.h"
 
 class GameplayState :
 	public IGameState
@@ -59,6 +60,7 @@ private:
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
+	AnimationManager* m_pAnimator;
 
 	bool m_bPaused = false;
 

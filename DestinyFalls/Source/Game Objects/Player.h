@@ -3,6 +3,7 @@
 #include "Object.h"
 
 #include "../../SGD Wrappers/SGD_Listener.h"
+#include "../Managers/AnimationManager.h"
 
 class Player :
 	public AnimatedObject,
@@ -59,4 +60,5 @@ private:
 	int m_nCursor = 0;
 
 	int * m_CurrentTurn;
+	AnimationManager* m_pAnimator = nullptr;
 };

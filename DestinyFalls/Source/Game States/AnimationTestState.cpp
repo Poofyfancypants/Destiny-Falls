@@ -13,9 +13,9 @@ AnimationTestState* AnimationTestState::GetInstance()
 
 void AnimationTestState::Enter()
 {
-	string file = "resource/XML/HeroWalkingXML.xml";
+	string file = "resource/XML/TestAnimation.xml";
 	animator.GetInstance()->Load( file );
-	ts.SetCurrentAnimation( "WalkingRight" );
+	ts.SetCurrentAnimation( "test" );
 	ts.SetCurrentFrame( 0 );
 	ts.SetTimeOnFrame( 0.0f );
 }

@@ -29,6 +29,10 @@ void GameplayState::Enter()
 
 	m_pObjects = new ObjectManager;
 	m_pMap = new TileManager;
+	m_pAnimator = m_pAnimator->GetInstance();
+	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
+	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
+
 
 	m_hplayer = pGraphics->LoadTexture(L"resource/graphics/testhero.png");
 	m_henemy = pGraphics->LoadTexture(L"resource/graphics/enemy1.png");
@@ -70,6 +74,7 @@ void GameplayState::Exit()
 
 	delete m_pMap;
 	m_pMap = nullptr;
+	m_pAnimator->DeleteInstance();
 }
 
 bool GameplayState::Input()
