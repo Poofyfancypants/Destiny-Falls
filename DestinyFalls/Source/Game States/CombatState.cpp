@@ -2,18 +2,16 @@
 #include "CombatState.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
-#include "../Game Objects/Player.h"
-#include "../Game Objects/Enemy.h"
-#include "../Game Core/Game.h"
-#include "GameplayState.h"
 #include "CombatState.h"
 #include "GameplayState.h"
-#include "../Game Objects/Minion.h"
-#include "../../SGD Wrappers/SGD_GraphicsManager.h"
-#include "../../SGD Wrappers/SGD_InputManager.h"
+#include "GameplayState.h"
+#include "InventoryState.h"
 #include "../Game Core/Game.h"
+#include "../Game Objects/Minion.h"
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
+#include "../Runes/RuneManager.h"
+#include "../Runes/Runes.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -34,7 +32,7 @@ void CombatState::Enter(void)
 	m_pObjects.push_back(player);
 	TurnIndex++;
 
-	for (unsigned int i = 0; i < rand()%3+1; i++)
+	for (unsigned int i = 0; i < rand() % 3 + 1; i++)
 	{
 		Object* temp = AddMinion();
 		m_pObjects.push_back(temp);
@@ -42,6 +40,10 @@ void CombatState::Enter(void)
 		m_nNumEnemies++;
 		TurnIndex++;
 	}
+
+	PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
+
+
 }
 
 void CombatState::Exit(void)
@@ -115,7 +117,6 @@ void CombatState::Update(float elapsedTime)
 		}
 			break;
 		}
-		//CurrentTurn++;
 	}
 	//CurrentTurn = 0;
 }
@@ -168,11 +169,14 @@ Object* CombatState::AddMinion()
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	temp->SetTurnPos(TurnIndex);
+	temp->SetAffinity(Earth);
 	return temp;
 }
 
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
+	RuneManager mag;
+
 	switch (_DamType)
 	{
 	case CombatState::DamType::Melee:
@@ -181,11 +185,34 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										{
 											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
 										}
+										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+										{
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 
+												(mag.DamageComboElement(
+												mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), 
+												InventoryState::GetInstance()->GetSwordSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+										}
 	}
 		break;
 	case CombatState::DamType::Magic:
+	{
+										if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
+										{
+											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+										}
+										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+										{
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+												(mag.DamageComboElement(
+												mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(),
+												InventoryState::GetInstance()->GetRingSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+										}
+	}
+		break;
+	case CombatState::DamType::Armor:
+	{
 
-
+	}
 		break;
 	default:
 		break;

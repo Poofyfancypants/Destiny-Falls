@@ -20,11 +20,14 @@ public:
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
 	int GetHealth() const { return m_nHealth; }
+	void SetHealth(int _health) { m_nHealth = _health; }
+	Elements GetAffinity() { return m_rAffinity; }
+	void SetAffinity(Elements x) { m_rAffinity = x; }
 
 	Minion();
 	~Minion();
 
-	Runes m_rAffinity;
+	Elements m_rAffinity;
 
 private:
 	int * m_CurrentTurn;

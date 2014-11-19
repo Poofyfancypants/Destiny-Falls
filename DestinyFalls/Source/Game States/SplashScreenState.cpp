@@ -30,7 +30,9 @@ bool SplashScreenState::Input()
 	if( pInput->IsAnyKeyDown() )
 	{
 		//Main menu state here
+		Game::GetInstance()->RemoveState();
 		Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+
 	}
 
 	return true;

@@ -17,6 +17,8 @@
 #include <Windows.h>		// Win32 Application
 #include <vld.h>			// Visual Leak Detector!!!
 #include "Game.h"			// Our Game class
+#include "../Game States/PauseMenuState.h"
+#include "../Game States/GameplayState.h"
 
 //*********************************************************************//
 // Preprocessor Constants
@@ -236,6 +238,10 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 		}
 		else									//	losing focus (pause)
 		{
+
+			if (Game::GetInstance()->GetCurrentState() == GameplayState::GetInstance())
+				Game::GetInstance()->AddState(PauseMenuState::GetInstance());
+
 		}
 		break;
 

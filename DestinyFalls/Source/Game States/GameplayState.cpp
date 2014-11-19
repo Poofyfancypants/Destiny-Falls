@@ -1,11 +1,13 @@
 #include "stdafx.h"
 #include "../Game Core/Game.h"
-#include "GameplayState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Objects/Chest.h"
+#include "GameplayState.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
+#include "MainMenuState.h"
+#include "PauseMenuState.h"
 #include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
@@ -13,7 +15,6 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 #include "../../SGD Wrappers/SGD_EventManager.h"
-#include "MainMenuState.h"
 
 
 GameplayState* GameplayState::GetInstance()
@@ -89,13 +90,20 @@ bool GameplayState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
-		Game::GetInstance()->AddState(InventoryState::GetInstance());
+		m_bPaused = !m_bPaused;
+		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 	}
+
+	//if (pInput->IsKeyPressed(SGD::Key::Alt) && pInput->IsKeyPressed(SGD::Key::Tab))
+	//{
+	//	m_bPaused = !m_bPaused;
+	//}
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
+
 
 	return true;
 }

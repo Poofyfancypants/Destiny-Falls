@@ -44,6 +44,7 @@ public:
 
 private:
 
+
 	int m_nDirection;
 	bool m_bSliding = false;
 	bool m_bMoving = false;
@@ -57,6 +58,7 @@ private:
 	int m_nTurnPos;
 
 	int ActionSelected = 0;
+	bool selected = false;
 	int m_nCursor = 0;
 
 	int * m_CurrentTurn;
