@@ -85,13 +85,20 @@ bool GameplayState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
+		m_bPaused = !m_bPaused;
 		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 	}
+
+	//if (pInput->IsKeyPressed(SGD::Key::Alt) && pInput->IsKeyPressed(SGD::Key::Tab))
+	//{
+	//	m_bPaused = !m_bPaused;
+	//}
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
+
 
 	return true;
 }

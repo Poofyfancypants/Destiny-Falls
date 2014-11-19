@@ -41,6 +41,18 @@ public:
 	void AddRunesToInventoryfromArmor1();
 	void AddRunesToInventoryfromArmor2();
 
+	Elements GetSwordSlot1()  { return m_vSword[0].GetElement(); }
+	Elements GetSwordSlot2()  { return m_vSword[1].GetElement(); }
+	Elements GetSwordSlot3()  { return m_vSword[2].GetElement(); }
+
+	Elements GetArmorSlot1()  { return m_vArmor[0].GetElement(); }
+	Elements GetArmorSlot2()  { return m_vArmor[1].GetElement(); }
+	Elements GetArmorSlot3()  { return m_vArmor[2].GetElement(); }
+	
+	Elements GetRingSlot1()  { return m_vRing[0].GetElement(); }
+	Elements GetRingSlot2()  { return m_vRing[1].GetElement(); }
+	Elements GetRingSlot3()  { return m_vRing[2].GetElement(); }
+
 private:
 	InventoryState() = default;
 	virtual ~InventoryState() = default;

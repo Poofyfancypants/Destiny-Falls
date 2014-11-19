@@ -5,10 +5,13 @@
 #include "CombatState.h"
 #include "GameplayState.h"
 #include "GameplayState.h"
+#include "InventoryState.h"
 #include "../Game Core/Game.h"
 #include "../Game Objects/Minion.h"
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
+#include "../Runes/RuneManager.h"
+#include "../Runes/Runes.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -166,11 +169,14 @@ Object* CombatState::AddMinion()
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	temp->SetTurnPos(TurnIndex);
+	temp->SetAffinity(Earth);
 	return temp;
 }
 
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
+	RuneManager mag;
+
 	switch (_DamType)
 	{
 	case CombatState::DamType::Melee:
@@ -181,7 +187,10 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
-											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 20);
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 
+												(mag.DamageComboElement(
+												mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), 
+												InventoryState::GetInstance()->GetSwordSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
 		break;
@@ -193,7 +202,10 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
-											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 20);
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+												(mag.DamageComboElement(
+												mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(),
+												InventoryState::GetInstance()->GetRingSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
 		break;

@@ -39,6 +39,7 @@ public:
 	void AddState(IGameState* pNewState);	//Add to stack
 	void RemoveState();						//Remove from stack
 	void ClearStates();
+	IGameState* GetCurrentState() const { return m_pStateStack[m_nCurrState]; }
 
 	float GetScreenWidth(void) const { return m_fScreenWidth; }
 	float GetScreenHeight(void) const { return m_fScreenHeight; }
