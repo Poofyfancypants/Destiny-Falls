@@ -34,6 +34,8 @@ void AnimationManager::DeleteInstance()
 
 	for( ; iter != GetInstance()->Loaded.end(); ++iter )
 	{
+		SGD::GraphicsManager::GetInstance()->UnloadTexture( GetInstance()->Loaded[ iter->first ]->GetImage() );
+
 		// Do some stuff
 		delete GetInstance()->Loaded[ iter->first ];
 	}
