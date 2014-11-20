@@ -4,6 +4,7 @@
 #include "OptionsState.h"
 #include "CreditState.h"
 #include "HowToPlayState.h"
+#include "SaveandLoadState.h"
 #include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
@@ -95,6 +96,7 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
 			break;
 		case MenuSelections::load:
+			Game::GetInstance()->AddState(SaveandLoadState::GetInstance());
 			break;
 		case MenuSelections::options:
 			Game::GetInstance()->AddState(OptionsState::GetInstance());

@@ -113,7 +113,7 @@ void CombatState::Update(float elapsedTime)
 		{
 											   if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
 											   {
-												   if (((Player*)m_pObjects[i])->TakeTurn())
+												   if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
 												   {
 													   CurrentTurn++; //Put this back in the check once player combat input is complete
 												   }
@@ -132,7 +132,7 @@ void CombatState::Update(float elapsedTime)
 			break;
 		}
 	}
-	//CurrentTurn = 0;
+	CurrentTurn = 0;
 }
 
 void CombatState::Render(void)
@@ -202,6 +202,8 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
 	RuneManager* mag = new RuneManager;
 
+	Game::GetInstance()->AddState(InventoryState::GetInstance());
+
 	switch (_DamType)
 	{
 	case CombatState::DamType::Melee:
@@ -221,6 +223,7 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 		break;
 	case CombatState::DamType::Magic:
 	{
+										m_bCoolDown = true;
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
 										{
 											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);

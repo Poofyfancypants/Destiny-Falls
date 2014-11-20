@@ -44,6 +44,8 @@ void InventoryState::Enter()
 		m_vRing[1].SetTier(0);
 		m_vRing[2].SetElement(None);
 		m_vRing[2].SetTier(0);
+
+		Game::GetInstance()->RemoveState();
 	}
 
 	m_bfirstEnter = false;

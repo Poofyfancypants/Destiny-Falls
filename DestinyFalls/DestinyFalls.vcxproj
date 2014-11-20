@@ -127,6 +127,7 @@
     <ClInclude Include="Source\Game States\MainMenuState.h" />
     <ClInclude Include="Source\Game States\OptionsState.h" />
     <ClInclude Include="Source\Game States\PauseMenuState.h" />
+    <ClInclude Include="Source\Game States\SaveandLoadState.h" />
     <ClInclude Include="Source\Game States\SplashScreenState.h" />
     <ClInclude Include="Source\Managers\AnimationManager.h" />
     <ClInclude Include="Source\Managers\ObjectManager.h" />
@@ -182,6 +183,7 @@
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
     <ClCompile Include="Source\Game States\PauseMenuState.cpp" />
+    <ClCompile Include="Source\Game States\SaveandLoadState.cpp" />
     <ClCompile Include="Source\Game States\SplashScreenState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
     <ClCompile Include="Source\Managers\ObjectManager.cpp" />

@@ -8,6 +8,8 @@
 #include "../../SGD Wrappers/SGD_Event.h"
 #include "Chest.h"
 #include "../Game States/GameplayState.h"
+#include "../Bitmap Font/BitmapFont.h"
+#include "../Quick Time/QuickTime.h"
 
 Player::Player() : Listener(this)
 {
@@ -169,12 +171,14 @@ void Player::HandleCollision(const iObject* pOther)
 }
 
 
-bool Player::TakeTurn()
+bool Player::TakeTurn(float elapsedTime)
 {
+	currentQT = nullptr;
+
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
-	
+
 	float posX = 200.0f;
 	if (selected)
 	{
@@ -190,7 +194,14 @@ bool Player::TakeTurn()
 	}
 
 	pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
-	pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+	if (CombatState::GetInstance()->GetCooldown())
+	{
+		pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
+	}
+	else
+	{
+		pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+	}
 	//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
 
@@ -212,9 +223,19 @@ bool Player::TakeTurn()
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
 		{
-			ActionSelected = m_nCursor;
-			selected = true;
-			m_nCursor = 0;
+			if (m_nCursor == 0)
+			{
+				ActionSelected = m_nCursor;
+				selected = true;
+				m_nCursor = 0;
+			}
+
+			if (!CombatState::GetInstance()->GetCooldown() && m_nCursor == 1)
+			{
+				ActionSelected = m_nCursor;
+				selected = true;
+				m_nCursor = 0;
+			}
 		}
 
 	}
@@ -230,15 +251,40 @@ bool Player::TakeTurn()
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetNumEnemies()-1)
-			m_nCursor = pCombat->GetNumEnemies()-1;
+		if (m_nCursor > pCombat->GetNumEnemies() - 1)
+			m_nCursor = pCombat->GetNumEnemies() - 1;
+
+		int target;
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
-			int target = m_nCursor + 1;
-			pCombat->DealDamage(ActionSelected, this, target);
+			target = m_nCursor + 1;
+			m_bdoqt = true;
 			selected = false;
-			return true;
+		}
+
+		if (m_bdoqt)
+		{
+			do
+			{
+				if (currentQT == nullptr)
+				{
+					currentQT = new QuickTime();
+				}
+				else if (currentQT->m_bqtOver)
+				{
+					pCombat->DealDamage(ActionSelected, this, target);
+					m_bdoqt = false;
+					return true;
+				}
+
+				currentQT->Update(elapsedTime);
+				currentQT->Render();
+
+			} while (currentQT->m_bqtOver == false);
+
+			delete currentQT;
+			currentQT = nullptr;
 		}
 	}
 

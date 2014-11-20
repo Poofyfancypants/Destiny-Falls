@@ -3,6 +3,7 @@
 #include "Object.h"
 
 #include "../../SGD Wrappers/SGD_Listener.h"
+#include "../Quick Time/QuickTime.h"
 
 class Player :
 	public AnimatedObject,
@@ -19,7 +20,7 @@ public:
 	virtual int GetType(void) const { return OBJ_PLAYER; }
 	virtual SGD::Rectangle GetRect(void) const override;
 	virtual void HandleCollision(const iObject* pOther) override;
-	virtual bool TakeTurn();
+	virtual bool TakeTurn(float elapsedTime);
 
 	void TakeInput();
 
@@ -61,4 +62,7 @@ private:
 	int m_nCursor = 0;
 
 	int * m_CurrentTurn;
+
+	QuickTime* currentQT = nullptr;
+	bool m_bdoqt = false;
 };

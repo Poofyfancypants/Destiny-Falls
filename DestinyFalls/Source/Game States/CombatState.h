@@ -26,6 +26,8 @@ public:
 	Object* AddMinion();
 	Object* AddMinion1();
 
+	bool GetCooldown() { return m_bCoolDown; }
+
 private:
 	CombatState() = default;
 	virtual ~CombatState() = default;
@@ -52,6 +54,8 @@ private:
 	int CurrentTurn;
 	int TurnIndex;
 	int m_nNumEnemies;
+
+	bool m_bCoolDown = false;
 
 	Object* Enemies[3];
 
