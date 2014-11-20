@@ -108,7 +108,7 @@ void CombatState::Update(float elapsedTime)
 			((Player*)m_pObjects[0])->SetCombat(false);
 		}
 
-		for (size_t i = 0; i < 3; i++)
+		for (size_t j = 0; j < 3; j++)
 		{
 			{
 

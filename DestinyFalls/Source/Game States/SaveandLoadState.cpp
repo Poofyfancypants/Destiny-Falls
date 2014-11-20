@@ -160,7 +160,7 @@ void SaveandLoadState::Save3()
 void SaveandLoadState::Load()
 {
 	fstream fin;
-	fin.open("resorce/Save/Save.txt", ios_base::out | ios_base::binary);
+	fin.open("resorce/Save/Save.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
 		int health;
@@ -180,7 +180,7 @@ void SaveandLoadState::Load()
 void SaveandLoadState::Load2()
 {
 	fstream fin;
-	fin.open("resorce/Save/Save2.txt", ios_base::out | ios_base::binary);
+	fin.open("resorce/Save/Save2.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
 		int health;
@@ -200,7 +200,7 @@ void SaveandLoadState::Load2()
 void SaveandLoadState::Load3()
 {
 	fstream fin;
-	fin.open("resorce/Save/Save3.txt", ios_base::out | ios_base::binary);
+	fin.open("resorce/Save/Save3.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
 		int health;
