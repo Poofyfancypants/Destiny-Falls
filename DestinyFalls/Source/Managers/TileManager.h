@@ -4,6 +4,7 @@
 #include <vector>
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 class Object;
 
@@ -38,7 +39,9 @@ public:
 	bool TileCollision(Object* _player, SGD::Point _futurePos);
 	void SpawnEnemies();
 private:
+	SGD::HTexture tileSet = SGD::INVALID_HANDLE;
 	string m_strTileSetPath;
+	string tilePath;
 	vector<vector<Tile>> m_TileMap;
 	SGD::Size m_szMapSize;
 	SGD::Size m_szGridSize;

@@ -36,11 +36,13 @@ bool TileManager::LoadLevel( const char* _file )
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
 	int startSlide, endSlide, checkPoint, chestSpawn, QTevent;
-
+	tilePath = "resource/graphics/";
+	
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
 	pRoot->Attribute( "tileWidth", &nGridWidth );
 	pRoot->Attribute( "tileHeight", &nGridHeight );
+	tilePath += pRoot->Attribute("tileSetPath");
 
 	m_szGridSize = SGD::Size( (float)nGridWidth, (float)nGridHeight );
 	m_szMapSize = SGD::Size( (float)nMapSizeX, (float)nMapSizeY );
@@ -97,7 +99,8 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 	// - Load the tile set image
 	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
 
-	SGD::HTexture tileSet = pGraphics->LoadTexture( "resource/graphics/newTile.png" );
+	tileSet = pGraphics->LoadTexture( tilePath.c_str() );
+
 
 	float height = Game::GetInstance()->GetScreenHeight() / 2;
 	float width = Game::GetInstance()->GetScreenWidth() / 2;
@@ -200,7 +203,7 @@ void TileManager::SpawnEnemies()
 			{
 				//spawn chest;
 				Object* tempChest = nullptr;
-				tempChest = GameplayState::GetInstance()->CreateChest(dest);
+				tempChest = GameplayState::GetInstance()->CreateChest( dest );
 				GameplayState::GetInstance()->GetObjManager()->AddObject( tempChest, GameplayState::CHEST_BUCKET );
 				tempChest->Release();
 			}
