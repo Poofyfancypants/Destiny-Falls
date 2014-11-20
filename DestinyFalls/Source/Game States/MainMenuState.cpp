@@ -4,8 +4,7 @@
 #include "OptionsState.h"
 #include "CreditState.h"
 #include "HowToPlayState.h"
-#include "../Managers/ParticleManager.h"
-#include "../Managers/TileManager.h"
+#include "SaveandLoadState.h"#include "../Managers/ParticleManager.h"#include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -55,6 +54,21 @@ void MainMenuState::Enter()
 			windowed = false;
 		pGraphics->Resize({ Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, windowed);
 	}
+
+
+	InventoryState::GetInstance()->m_vSword.resize(3);
+	InventoryState::GetInstance()->SetSwordSlot1(None, 0);
+	InventoryState::GetInstance()->SetSwordSlot2(None, 0);
+	InventoryState::GetInstance()->SetSwordSlot3(None, 0);
+	InventoryState::GetInstance()->m_vArmor.resize(3);
+	InventoryState::GetInstance()->SetArmorSlot1(None, 0);
+	InventoryState::GetInstance()->SetArmorSlot2(None, 0);
+	InventoryState::GetInstance()->SetArmorSlot3(None, 0);
+	InventoryState::GetInstance()->m_vRing.resize(3);
+	InventoryState::GetInstance()->SetRingSlot1(None, 0);
+	InventoryState::GetInstance()->SetRingSlot2(None, 0);
+	InventoryState::GetInstance()->SetRingSlot3(None, 0);
+
 }
 
 void MainMenuState::Exit()
@@ -96,6 +110,7 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
 			break;
 		case MenuSelections::load:
+			Game::GetInstance()->AddState(SaveandLoadState::GetInstance());
 			break;
 		case MenuSelections::options:
 			Game::GetInstance()->AddState(OptionsState::GetInstance());

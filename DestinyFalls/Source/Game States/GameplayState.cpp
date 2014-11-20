@@ -47,7 +47,7 @@ void GameplayState::Enter()
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
+	m_pMap->LoadLevel("resource/XML/testMap1.xml");
 	m_particle.ReadXML("resource/XML/Test2.xml");
 
 }
@@ -95,11 +95,6 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 	}
 
-	//if (pInput->IsKeyPressed(SGD::Key::Alt) && pInput->IsKeyPressed(SGD::Key::Tab))
-	//{
-	//	m_bPaused = !m_bPaused;
-	//}
-
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
@@ -117,11 +112,8 @@ void GameplayState::Update(float elapsedTime)
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, CHEST_BUCKET);
 
-	if (!m_bPaused)
-	{
-		m_pObjects->UpdateAll(elapsedTime);
-		m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
-	}
+	m_pObjects->UpdateAll(elapsedTime);
+	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
@@ -138,17 +130,12 @@ void GameplayState::Render()
 	m_pMap->DrawLevel(m_ptWorldCam, m_pPlayer->GetPosition());
 
 	m_pObjects->RenderAll();
-
-	m_particle.Render();
-	if (m_bPaused)
-	{
-		pGraphics->DrawRectangle( rect, SGD::Color{ 255, 255, 255, 0 } );
-	}
-}
+	m_particle.Render();}
 
 Object* GameplayState::CreatePlayer(SGD::Point _pos)
 {
 	Player* temp = new Player;
+
 	temp->SetImage( m_hplayer );
 	temp->SetSize( { 16, 16 } );
 	temp->SetPosition( _pos );
@@ -163,8 +150,8 @@ Object* GameplayState::CreateEnemy(SGD::Point _pos)
 	//int posx = rand() % 300 + 200;
 	//int posy = rand() % 300 + 250;
 
-	temp->SetPosition( _pos );
-	temp->SetSize(SGD::Size(32,32));
+	temp->SetPosition(_pos);
+	temp->SetSize(SGD::Size(32, 32));
 	return temp;
 }
 

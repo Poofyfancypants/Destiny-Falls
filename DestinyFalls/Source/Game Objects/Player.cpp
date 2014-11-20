@@ -10,6 +10,9 @@
 #include "../Game States/GameplayState.h"
 #include "../Managers/ParticleManager.h"
 
+#include "../Bitmap Font/BitmapFont.h"
+#include "../Quick Time/QuickTime.h"
+
 Player::Player() : Listener(this)
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
@@ -91,20 +94,17 @@ void Player::Render(void)
 	SGD::Rectangle rec = GetRect();
 	rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
 
-	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	//pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
 
 	//pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
 	
-	SGD::Point currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
-		(Game::GetInstance()->GetScreenHeight() * 6 / 8) };
-	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
-		(Game::GetInstance()->GetScreenHeight() * 11 / 13) };
-	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y },
-	{ 255, 0, 0 }, 17U);
-	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
-		(Game::GetInstance()->GetScreenHeight() * 11 / 13) };
-	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y },
-	{ 0, 255, 0 }, 17U);
+	SGD::Point currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 6 / 8) };
+	
+	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 11 / 13) };
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U);
+	
+	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 11 / 13) };
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U);
 
 	std::string potString = std::to_string(m_nPotions);
 	potString += " P";
@@ -212,12 +212,12 @@ void Player::HandleCollision(const iObject* pOther)
 }
 
 
-bool Player::TakeTurn()
+bool Player::TakeTurn(float elapsedTime)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
-	
+
 	float posX = 200.0f;
 	if (selected)
 	{
@@ -233,7 +233,14 @@ bool Player::TakeTurn()
 	}
 
 	pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
-	pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+	if (CombatState::GetInstance()->GetCooldown())
+	{
+		pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
+	}
+	else
+	{
+		pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+	}
 	//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
 
@@ -255,9 +262,19 @@ bool Player::TakeTurn()
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
 		{
-			ActionSelected = m_nCursor;
-			selected = true;
-			m_nCursor = 0;
+			if (m_nCursor == 0)
+			{
+				ActionSelected = m_nCursor;
+				selected = true;
+				m_nCursor = 0;
+			}
+
+			if (!CombatState::GetInstance()->GetCooldown() && m_nCursor == 1)
+			{
+				ActionSelected = m_nCursor;
+				selected = true;
+				m_nCursor = 0;
+			}
 		}
 
 	}
@@ -273,16 +290,19 @@ bool Player::TakeTurn()
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetNumEnemies()-1)
-			m_nCursor = pCombat->GetNumEnemies()-1;
+		if (m_nCursor > pCombat->GetNumEnemies() - 1)
+			m_nCursor = pCombat->GetNumEnemies() - 1;
+
+		int target;
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
-			int target = m_nCursor + 1;
-			pCombat->DealDamage(ActionSelected, this, target);
+			target = m_nCursor + 1;
 			selected = false;
+			pCombat->DealDamage(ActionSelected, this, target);
 			return true;
 		}
+
 	}
 
 

@@ -223,13 +223,12 @@
     <ClInclude Include="Source\Game States\CombatState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Engines\Particle.h">
+    <ClInclude Include="Source\Game States\SaveandLoadState.h" />    <ClInclude Include="Source\Engines\Particle.h">
       <Filter>Engines</Filter>
     </ClInclude>
     <ClInclude Include="Source\Engines\Emitter.h">
       <Filter>Engines</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude>  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
       <Filter>SGD Wrappers</Filter>
@@ -393,8 +392,7 @@
     </ClCompile>
     <ClCompile Include="Source\Engines\Particle.cpp">
       <Filter>Engines</Filter>
-    </ClCompile>
-  </ItemGroup>
+    </ClCompile>    <ClCompile Include="Source\Game States\SaveandLoadState.cpp" />  </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">
       <Filter>Resource Files</Filter>
