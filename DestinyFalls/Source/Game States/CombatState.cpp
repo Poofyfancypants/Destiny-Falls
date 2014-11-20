@@ -212,9 +212,10 @@ Object* CombatState::AddMinion1()
 
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
-	RuneManager* mag = new RuneManager;
+	RuneManager mag;
 
-	Game::GetInstance()->AddState(InventoryState::GetInstance());
+	//Game::GetInstance()->AddState(InventoryState::GetInstance());
+	
 
 	switch (_DamType)
 	{
@@ -226,10 +227,11 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
+
+											ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
+
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 
-												(mag->DamageComboElement(
-												mag->ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), 
-												InventoryState::GetInstance()->GetSwordSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+												(mag.DamageComboElement( d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
 		break;
@@ -242,10 +244,10 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
+											ComboElements d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
+
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
-												(mag->DamageComboElement(
-												mag->ElementCombination(InventoryState::GetInstance()->GetRingSlot1(),
-												InventoryState::GetInstance()->GetRingSlot2()), ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+												(mag.DamageComboElement(d2, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
 		break;
@@ -257,8 +259,6 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 	default:
 		break;
 	}
-
-	delete mag;
 
 	return false;
 }

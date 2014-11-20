@@ -93,20 +93,17 @@ void Player::Render(void)
 	SGD::Rectangle rec = GetRect();
 	rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
 
-	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	//pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
 
 	//pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
 	
-	SGD::Point currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
-		(Game::GetInstance()->GetScreenHeight() * 6 / 8) };
-	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
-		(Game::GetInstance()->GetScreenHeight() * 11 / 13) };
-	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y },
-	{ 255, 0, 0 }, 17U);
-	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
-		(Game::GetInstance()->GetScreenHeight() * 11 / 13) };
-	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y },
-	{ 0, 255, 0 }, 17U);
+	SGD::Point currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 6 / 8) };
+	
+	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 11 / 13) };
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U);
+	
+	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 11 / 13) };
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U);
 
 	std::string potString = std::to_string(m_nPotions);
 	potString += " P";
@@ -115,7 +112,7 @@ void Player::Render(void)
 	if( m_pAnimator->GetInstance()->CheckSize() )
 	{
 		//AnimationTimeStamp ts = *this->GetTimeStamp();
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x , point.y );
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x + ( m_szSize.width / 2 ) , point.y + ( m_szSize.height / 2 ) );
 	}
 }
 
@@ -215,8 +212,6 @@ void Player::HandleCollision(const iObject* pOther)
 
 bool Player::TakeTurn(float elapsedTime)
 {
-	currentQT = nullptr;
-
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
@@ -301,33 +296,11 @@ bool Player::TakeTurn(float elapsedTime)
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
 			target = m_nCursor + 1;
-			m_bdoqt = true;
 			selected = false;
+			pCombat->DealDamage(ActionSelected, this, target);
+			return true;
 		}
 
-		if (m_bdoqt)
-		{
-			do
-			{
-				if (currentQT == nullptr)
-				{
-					currentQT = new QuickTime();
-				}
-				else if (currentQT->m_bqtOver)
-				{
-					pCombat->DealDamage(ActionSelected, this, target);
-					m_bdoqt = false;
-					return true;
-				}
-
-				currentQT->Update(elapsedTime);
-				currentQT->Render();
-
-			} while (currentQT->m_bqtOver == false);
-
-			delete currentQT;
-			currentQT = nullptr;
-		}
 	}
 
 

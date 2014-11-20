@@ -45,14 +45,30 @@ public:
 	Elements GetSwordSlot2()  { return m_vSword[1].GetElement(); }
 	Elements GetSwordSlot3()  { return m_vSword[2].GetElement(); }
 
+	void SetSwordSlot1(Elements x, int t)  { m_vSword[0].SetElement(x); m_vSword[0].SetTier(t); }
+	void SetSwordSlot2(Elements x, int t)  { m_vSword[1].SetElement(x); m_vSword[1].SetTier(t); }
+	void SetSwordSlot3(Elements x, int t)  { m_vSword[2].SetElement(x); m_vSword[2].SetTier(t); }
+
 	Elements GetArmorSlot1()  { return m_vArmor[0].GetElement(); }
 	Elements GetArmorSlot2()  { return m_vArmor[1].GetElement(); }
 	Elements GetArmorSlot3()  { return m_vArmor[2].GetElement(); }
+
+	void SetArmorSlot1(Elements x, int t)  { m_vArmor[0].SetElement(x); m_vArmor[0].SetTier(t); }
+	void SetArmorSlot2(Elements x, int t)  { m_vArmor[1].SetElement(x); m_vArmor[1].SetTier(t); }
+	void SetArmorSlot3(Elements x, int t)  { m_vArmor[2].SetElement(x); m_vArmor[2].SetTier(t); }
 	
 	Elements GetRingSlot1()  { return m_vRing[0].GetElement(); }
 	Elements GetRingSlot2()  { return m_vRing[1].GetElement(); }
 	Elements GetRingSlot3()  { return m_vRing[2].GetElement(); }
 
+	void SetRingSlot1(Elements x, int t)  { m_vRing[0].SetElement(x);  m_vRing[0].SetTier(t); }
+	void SetRingSlot2(Elements x, int t)  { m_vRing[1].SetElement(x);  m_vRing[1].SetTier(t); }
+	void SetRingSlot3(Elements x, int t)  { m_vRing[2].SetElement(x);  m_vRing[2].SetTier(t); }
+
+	std::vector<Runes> m_vSword;
+	std::vector<Runes> m_vRing;
+	std::vector<Runes> m_vArmor;
+	std::vector<Runes> m_vRunes;
 private:
 	InventoryState() = default;
 	virtual ~InventoryState() = default;
@@ -103,10 +119,6 @@ private:
 
 protected:
 
-	std::vector<Runes> m_vSword;
-	std::vector<Runes> m_vRing;
-	std::vector<Runes> m_vArmor;
-	std::vector<Runes> m_vRunes;
 
 	SGD::HTexture m_hSword		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hRing		= SGD::INVALID_HANDLE;
