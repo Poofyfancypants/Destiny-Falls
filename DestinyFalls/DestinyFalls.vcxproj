@@ -99,7 +99,9 @@
     <ClInclude Include="Source\Bitmap Font\BitmapFont.h" />
     <ClInclude Include="Source\Engines\Animation.h" />
     <ClInclude Include="Source\Engines\AnimationTimeStamp.h" />
+    <ClInclude Include="Source\Engines\Emitter.h" />
     <ClInclude Include="Source\Engines\Frame.h" />
+    <ClInclude Include="Source\Engines\Particle.h" />
     <ClInclude Include="Source\Game Core\Game.h" />
     <ClInclude Include="Source\Game Objects\AnimatedObject.h" />
     <ClInclude Include="Source\Game Objects\Chest.h" />
@@ -155,7 +157,9 @@
     <ClCompile Include="Source\Bitmap Font\BitmapFont.cpp" />
     <ClCompile Include="Source\Engines\Animation.cpp" />
     <ClCompile Include="Source\Engines\AnimationTimeStamp.cpp" />
+    <ClCompile Include="Source\Engines\Emitter.cpp" />
     <ClCompile Include="Source\Engines\Frame.cpp" />
+    <ClCompile Include="Source\Engines\Particle.cpp" />
     <ClCompile Include="Source\Game Core\Game.cpp" />
     <ClCompile Include="Source\Game Core\WinMain.cpp" />
     <ClCompile Include="Source\Game Objects\AnimatedObject.cpp" />

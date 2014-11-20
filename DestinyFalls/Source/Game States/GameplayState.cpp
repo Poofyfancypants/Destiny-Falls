@@ -48,6 +48,7 @@ void GameplayState::Enter()
 
 	// - Manage The map
 	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
+	m_particle.ReadXML("resource/XML/Test2.xml");
 
 }
 
@@ -125,6 +126,8 @@ void GameplayState::Update(float elapsedTime)
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_pObjects->RenderAll();
+
+
 }
 
 void GameplayState::Render()
@@ -136,6 +139,7 @@ void GameplayState::Render()
 
 	m_pObjects->RenderAll();
 
+	m_particle.Render();
 	if (m_bPaused)
 	{
 		pGraphics->DrawRectangle( rect, SGD::Color{ 255, 255, 255, 0 } );

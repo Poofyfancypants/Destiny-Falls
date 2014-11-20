@@ -8,6 +8,7 @@
 #include "../../SGD Wrappers/SGD_Event.h"
 #include "Chest.h"
 #include "../Game States/GameplayState.h"
+#include "../Managers/ParticleManager.h"
 
 Player::Player() : Listener(this)
 {
@@ -77,7 +78,6 @@ void Player::Update(float elapsedTime)
 
 	m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
 
-
 }
 
 void Player::Render(void)
@@ -115,6 +115,7 @@ void Player::Render(void)
 		//AnimationTimeStamp ts = *this->GetTimeStamp();
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x + ( m_szSize.width / 2 ) , point.y + ( m_szSize.height / 2 ) );
 	}
+
 }
 
 void Player::TakeInput()

@@ -223,6 +223,12 @@
     <ClInclude Include="Source\Game States\CombatState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engines\Particle.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Engines\Emitter.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -381,6 +387,12 @@
     </ClCompile>
     <ClCompile Include="Source\Game States\CombatState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engines\Emitter.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engines\Particle.cpp">
+      <Filter>Engines</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

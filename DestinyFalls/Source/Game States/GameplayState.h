@@ -9,6 +9,7 @@
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../Managers/TileManager.h"
 #include "../Managers/AnimationManager.h"
+#include "../Managers/ParticleManager.h"
 
 class GameplayState :
 	public IGameState
@@ -61,6 +62,8 @@ private:
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 	AnimationManager* m_pAnimator;
+
+	ParticleManager m_particle;
 
 	bool m_bPaused = false;
 
