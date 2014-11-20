@@ -19,7 +19,7 @@ void InventoryState::Enter()
 	m_hFiret2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet2.png");
 	m_hFiret3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet3.png");
 
-	if (m_bfirstEnter)
+	/*if (m_bfirstEnter)
 	{
 		m_vSword.resize(3);
 		m_vSword[0].SetElement(None);
@@ -44,9 +44,11 @@ void InventoryState::Enter()
 		m_vRing[1].SetTier(0);
 		m_vRing[2].SetElement(None);
 		m_vRing[2].SetTier(0);
+
+		Game::GetInstance()->RemoveState();
 	}
 
-	m_bfirstEnter = false;
+	m_bfirstEnter = false;*/
 }
 
 void InventoryState::Exit()

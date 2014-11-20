@@ -24,6 +24,9 @@ public:
 	int GetNumEnemies() const { return m_nNumEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion();
+	Object* AddMinion1();
+
+	bool GetCooldown() { return m_bCoolDown; }
 
 private:
 	CombatState() = default;
@@ -52,11 +55,15 @@ private:
 	int TurnIndex;
 	int m_nNumEnemies;
 
+	bool m_bCoolDown = false;
+
 	Object* Enemies[3];
 
 	std::vector<Object*> m_pObjects;
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	SGD::HTexture m_henemy2 = SGD::INVALID_HANDLE;
+
 };
 
