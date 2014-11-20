@@ -1,90 +1,8 @@
-﻿Build started 11/20/2014 11:36:43 AM.
-     1>Project "C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" on node 2 (Rebuild target(s)).
+﻿Build started 11/20/2014 11:45:37 AM.
+     1>Project "C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yc"stdafx.h" /Fp"Release\DestinyFalls.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt stdafx.cpp
-         stdafx.cpp
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\DestinyFalls.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "SGD Wrappers\SGD_AudioManager.cpp" "SGD Wrappers\SGD_Event.cpp" "SGD Wrappers\SGD_EventManager.cpp" "SGD Wrappers\SGD_Geometry.cpp" "SGD Wrappers\SGD_GraphicsManager.cpp" "SGD Wrappers\SGD_InputManager.cpp" "SGD Wrappers\SGD_Listener.cpp" "SGD Wrappers\SGD_Message.cpp" "SGD Wrappers\SGD_MessageManager.cpp" "Source\Bitmap Font\BitmapFont.cpp" Source\Engines\Animation.cpp Source\Engines\AnimationTimeStamp.cpp Source\Engines\Emitter.cpp Source\Engines\Frame.cpp Source\Engines\Particle.cpp "Source\Game Core\Game.cpp" "Source\Game Core\WinMain.cpp" "Source\Game Objects\AnimatedObject.cpp" "Source\Game Objects\Chest.cpp" "Source\Game Objects\Companion.cpp" "Source\Game Objects\Enemy.cpp" "Source\Game Objects\FinalBoss.cpp" "Source\Game Objects\FireTrap.cpp" "Source\Game Objects\LevelBoss.cpp" "Source\Game Objects\MiniBoss.cpp" "Source\Game Objects\Minion.cpp" "Source\Game Objects\MovingObject.cpp" "Source\Game Objects\Object.cpp" "Source\Game Objects\Player.cpp" "Source\Game Objects\SpikeTrap.cpp" "Source\Game Objects\StaticObject.cpp" "Source\Game Objects\Trap.cpp" "Source\Game States\AnimationTestState.cpp" "Source\Game States\CombatState.cpp" "Source\Game States\CreditState.cpp" "Source\Game States\GameplayState.cpp" "Source\Game States\HowToPlayState.cpp" "Source\Game States\InventoryState.cpp" "Source\Game States\MainMenuState.cpp" "Source\Game States\OptionsState.cpp" "Source\Game States\PauseMenuState.cpp" "Source\Game States\SaveandLoadState.cpp" "Source\Game States\SplashScreenState.cpp" Source\Managers\AnimationManager.cpp Source\Managers\ObjectManager.cpp Source\Managers\ParticleManager.cpp Source\Managers\TileManager.cpp Source\Messages\DestroyObjectMessage.cpp Source\TinyXML\tinystr.cpp Source\TinyXML\tinyxml.cpp Source\TinyXML\tinyxmlerror.cpp Source\TinyXML\tinyxmlparser.cpp "Source\Quick Time\QuickTime.cpp" Source\Runes\RuneManager.cpp Source\Runes\Runes.cpp
-         SGD_AudioManager.cpp
-         SGD_Event.cpp
-         SGD_EventManager.cpp
-         SGD_Geometry.cpp
-         SGD_GraphicsManager.cpp
-         SGD_InputManager.cpp
-         SGD_Listener.cpp
-         SGD_Message.cpp
-         SGD_MessageManager.cpp
-         BitmapFont.cpp
-         Animation.cpp
-         AnimationTimeStamp.cpp
-         Emitter.cpp
-         Frame.cpp
-         Particle.cpp
-         Game.cpp
-         WinMain.cpp
-         AnimatedObject.cpp
-         Chest.cpp
-         Companion.cpp
-         Compiling...
-         Enemy.cpp
-         FinalBoss.cpp
-         FireTrap.cpp
-         LevelBoss.cpp
-         MiniBoss.cpp
-         Minion.cpp
-         MovingObject.cpp
-         Object.cpp
-         Player.cpp
-     1>Source\Game Objects\Player.cpp(116): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-         SpikeTrap.cpp
-         StaticObject.cpp
-         Trap.cpp
-         AnimationTestState.cpp
-         CombatState.cpp
-     1>Source\Game States\CombatState.cpp(234): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-     1>Source\Game States\CombatState.cpp(250): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
-         CreditState.cpp
-         GameplayState.cpp
-         HowToPlayState.cpp
-         InventoryState.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\DestinyFalls.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "Source\Game States\MainMenuState.cpp"
          MainMenuState.cpp
-         OptionsState.cpp
-         Compiling...
-         PauseMenuState.cpp
-         SaveandLoadState.cpp
-         SplashScreenState.cpp
-         AnimationManager.cpp
-     1>Source\Managers\AnimationManager.cpp(51): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>Source\Managers\AnimationManager.cpp(52): warning C4244: '=' : conversion from 'float' to 'int', possible loss of data
-     1>Source\Managers\AnimationManager.cpp(58): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         ObjectManager.cpp
-         ParticleManager.cpp
-     1>Source\Managers\ParticleManager.cpp(47): warning C4018: '<' : signed/unsigned mismatch
-     1>Source\Managers\ParticleManager.cpp(74): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\ParticleManager.cpp(75): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\ParticleManager.cpp(76): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\ParticleManager.cpp(97): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>Source\Managers\ParticleManager.cpp(98): warning C4244: 'initializing' : conversion from 'float' to 'int', possible loss of data
-     1>Source\Managers\ParticleManager.cpp(102): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>Source\Managers\ParticleManager.cpp(103): warning C4244: '=' : conversion from 'int' to 'float', possible loss of data
-     1>Source\Managers\ParticleManager.cpp(113): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
-         TileManager.cpp
-     1>Source\Managers\TileManager.cpp(75): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\TileManager.cpp(76): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\TileManager.cpp(77): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\TileManager.cpp(78): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\TileManager.cpp(79): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\TileManager.cpp(80): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-     1>Source\Managers\TileManager.cpp(81): warning C4800: 'int' : forcing value to bool 'true' or 'false' (performance warning)
-         DestroyObjectMessage.cpp
-         tinystr.cpp
-         tinyxml.cpp
-         tinyxmlerror.cpp
-         tinyxmlparser.cpp
-         QuickTime.cpp
-         RuneManager.cpp
-         Runes.cpp
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.1\bin\x86\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\DestinyFalls.res" DestinyFalls.rc 
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.lib" /MACHINE:X86 /SAFESEH Release\DestinyFalls.res
          Release\SGD_AudioManager.obj
@@ -146,8 +64,8 @@
          Generating code
          Finished generating code
          DestinyFalls.vcxproj -> C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.exe
-     1>Done Building Project "C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:21.80
+Time Elapsed 00:00:05.44

@@ -142,14 +142,14 @@ bool MainMenuState::Input()
 		}
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
-	{
-		if (pInput->GetCursorPosition().IsPointInRectangle(TestAnimationSystem))
-		{
-			//Game::GetInstance()->RemoveState();
-			Game::GetInstance()->AddState(AnimationTestState::GetInstance());
-		}
-	}
+	//if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	//{
+	//	if (pInput->GetCursorPosition().IsPointInRectangle(TestAnimationSystem))
+	//	{
+	//		//Game::GetInstance()->RemoveState();
+	//		Game::GetInstance()->AddState(AnimationTestState::GetInstance());
+	//	}
+	//}
 	return true;
 }
 
@@ -169,7 +169,7 @@ void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
-	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
+	//pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
 	const BitmapFont* pFont = Game::GetInstance()->GetFont();
 
