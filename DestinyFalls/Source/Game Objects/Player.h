@@ -3,6 +3,7 @@
 #include "Object.h"
 
 #include "../../SGD Wrappers/SGD_Listener.h"
+#include "../Managers/AnimationManager.h"
 #include "../Quick Time/QuickTime.h"
 
 class Player :
@@ -62,6 +63,7 @@ private:
 	int m_nCursor = 0;
 
 	int * m_CurrentTurn;
+	AnimationManager* m_pAnimator = nullptr;
 
 	QuickTime* currentQT = nullptr;
 	bool m_bdoqt = false;

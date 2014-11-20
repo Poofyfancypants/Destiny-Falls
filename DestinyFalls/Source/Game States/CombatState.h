@@ -63,5 +63,7 @@ private:
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	SGD::HTexture m_henemy2 = SGD::INVALID_HANDLE;
+
 };
 

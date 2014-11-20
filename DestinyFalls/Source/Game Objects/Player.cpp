@@ -13,12 +13,16 @@
 
 Player::Player() : Listener(this)
 {
-
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	m_pAnimator = m_pAnimator->GetInstance();
+	this->GetTimeStamp()->SetCurrentAnimation( "WalkingDown" );
+	this->GetTimeStamp()->SetCurrentFrame( 0 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 }
 
 Player::~Player()
 {
-	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	
 }
 
 void Player::Update(float elapsedTime)
@@ -73,6 +77,9 @@ void Player::Update(float elapsedTime)
 		m_bMoving = false;
 	}
 
+	m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+
+
 }
 
 void Player::Render(void)
@@ -86,10 +93,10 @@ void Player::Render(void)
 	SGD::Rectangle rec = GetRect();
 	rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
 
-	//pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
 
-	pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
-
+	//pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
+	
 	SGD::Point currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
 		(Game::GetInstance()->GetScreenHeight() * 6 / 8) };
 	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75,
@@ -104,6 +111,12 @@ void Player::Render(void)
 	std::string potString = std::to_string(m_nPotions);
 	potString += " P";
 	pGraphics->DrawString(potString.c_str(), { (Game::GetInstance()->GetScreenWidth() - 100), (Game::GetInstance()->GetScreenHeight() - 100) }, SGD::Color(255, 255, 0, 0));
+
+	if( m_pAnimator->GetInstance()->CheckSize() )
+	{
+		//AnimationTimeStamp ts = *this->GetTimeStamp();
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x , point.y );
+	}
 }
 
 void Player::TakeInput()
@@ -117,19 +130,48 @@ void Player::TakeInput()
 	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W))
 	{
 		m_nDirection = 1;
+
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingUp" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "WalkingUp" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
+		
+		
+		
 	}
 	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S))
 	{
 		m_nDirection = 2;
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingDown" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "WalkingDown" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
 	}
 
 	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A))
 	{
 		m_nDirection = 3;
+
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingLeft" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "WalkingLeft" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
 	}
 	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D))
 	{
 		m_nDirection = 4;
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingRight" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "WalkingRight" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
 	}
 
 	if (pInput->IsKeyPressed(SGD::Key::P) && m_nPotions > 0 && m_nHealth < 100)

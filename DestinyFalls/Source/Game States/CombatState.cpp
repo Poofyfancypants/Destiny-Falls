@@ -32,6 +32,10 @@ void CombatState::Enter(void)
 	m_pObjects.push_back(player);
 	TurnIndex++;
 
+	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/ShadowKnight.png");
+	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
+	m_henemy2 = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Plant.png");
+
 	//for (unsigned int i = 0; i < rand() % 3 + 1; i++)
 	//{
 	//	Object* temp = AddMinion();
@@ -63,6 +67,11 @@ void CombatState::Enter(void)
 void CombatState::Exit(void)
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
+	pGraphics->UnloadTexture(m_hplayer);
+	pGraphics->UnloadTexture(m_henemy);
+	pGraphics->UnloadTexture(m_henemy2);
+
 	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
 		//if (m_pObjects[i]->GetType() != Object::ObjectType::OBJ_PLAYER)
@@ -146,16 +155,19 @@ void CombatState::Render(void)
 		if (i == 0)
 		{
 			pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
+			pGraphics->DrawTexture(m_hplayer, { Playerrect.left- 20, Playerrect.top -10 }, {}, {}, {}, { .5, .5 });
 			pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
 		}
 		if (i == 1)
 		{
 			pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
+			pGraphics->DrawTexture(m_henemy, { Enemy1rect.left, Enemy1rect.top }, {}, {}, {}, {.5, .5});
 			pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 0, 255, 0 });
 		}
 		if (i == 2)
 		{
 			pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
+			pGraphics->DrawTexture(m_henemy2, { Enemy2rect.left, Enemy2rect.top }, {}, {}, {}, { .5, .5 });
 			pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 0, 255, 0 });
 		}
 		if (i == 3)
@@ -190,7 +202,7 @@ Object* CombatState::AddMinion()
 Object* CombatState::AddMinion1()
 {
 	Minion* temp = new Minion;
-	temp->SetImage(m_henemy);
+	temp->SetImage(m_henemy2);
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	temp->SetTurnPos(TurnIndex);
