@@ -91,7 +91,7 @@ void Player::Render(void)
 	SGD::Rectangle rec = GetRect();
 	rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
 
-	//pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
 
 	//pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
 	
@@ -113,7 +113,7 @@ void Player::Render(void)
 	if( m_pAnimator->GetInstance()->CheckSize() )
 	{
 		//AnimationTimeStamp ts = *this->GetTimeStamp();
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x , point.y );
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x + ( m_szSize.width / 2 ) , point.y + ( m_szSize.height / 2 ) );
 	}
 }
 
