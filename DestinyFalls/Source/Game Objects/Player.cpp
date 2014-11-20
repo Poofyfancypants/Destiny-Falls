@@ -113,7 +113,7 @@ void Player::Render(void)
 	if( m_pAnimator->GetInstance()->CheckSize() )
 	{
 		//AnimationTimeStamp ts = *this->GetTimeStamp();
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x + ( m_szSize.width / 2 ) , point.y + ( m_szSize.height / 2 ) );
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , (int)(point.x + ( m_szSize.width / 2.0f )) , (int)(point.y + ( m_szSize.height / 2.0f )) );
 	}
 
 }
