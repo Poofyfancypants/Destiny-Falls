@@ -133,4 +133,5 @@ bool BitmapFont::LoadFontFile(string path)
 
 		chars = chars->NextSiblingElement();
 	}
+	return true;
 }
