@@ -62,14 +62,14 @@ void GameplayState::Exit()
 		m_pPlayer = nullptr;
 	}
 
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
+	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
+	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
+	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
 
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
 	pGraphics->UnloadTexture(m_hChest);
-
+	m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;

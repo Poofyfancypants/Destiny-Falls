@@ -9,17 +9,25 @@
 
 ParticleManager::ParticleManager()
 {
-	//SGD::GraphicsManager::GetInstance()->Initialize();
-	
+
 }
 
+ParticleManager::~ParticleManager()
+{
 
+}
+
+void ParticleManager::Exit()
+{
+
+	SGD::GraphicsManager *gm = SGD::GraphicsManager::GetInstance();
+	gm->UnloadTexture(pImage);
+}
 
 void ParticleManager::ReadXML(const char* filepath)
 {
-	
+
 	SGD::GraphicsManager* gm = SGD::GraphicsManager::GetInstance();
-	//gm.LoadTexture();
 
 
 	TiXmlDocument doc;
@@ -27,18 +35,18 @@ void ParticleManager::ReadXML(const char* filepath)
 		return;
 
 	TiXmlElement * RootElement = doc.RootElement();
-	
+
 	RootElement->Attribute("ParticleAmount", &numParticles);
 	managerFilepath = "resource/graphics/";
+	managerFilepath += RootElement->Attribute("Texture");
+	pImage = gm->LoadTexture(managerFilepath.c_str(), SGD::Color(0, 0, 0));
+
 	int particleCircle;
 	int particleSquare;
 	int particleLine;
 	for (unsigned int i = 0; i < numParticles; i++)
 	{
 		Particle ptemp;
-		managerFilepath += RootElement->Attribute("Texture");
-		ptemp.pImage = gm->LoadTexture(managerFilepath.c_str(), SGD::Color(0,0,0));
-		managerFilepath = "resource/graphics/";
 
 		RootElement->Attribute("ParticleLifeTime", &ptemp.particleLifeTime);
 		RootElement->Attribute("Scale", &ptemp.scale);
@@ -66,12 +74,12 @@ void ParticleManager::ReadXML(const char* filepath)
 		ptemp.circle = (bool)particleCircle;
 		ptemp.square = (bool)particleSquare;
 		ptemp.line = (bool)particleLine;
-	
+
 		particlevector.push_back(ptemp);
 
 	}
 
-	
+
 
 }
 
@@ -79,7 +87,7 @@ void ParticleManager::Render(Object * rhs)
 {
 	SGD::GraphicsManager * gm = SGD::GraphicsManager::GetInstance();
 	//gm.LoadTexture();
-	
+
 	for (unsigned int i = 0; i < particlevector.size(); i++)
 	{
 
@@ -94,17 +102,17 @@ void ParticleManager::Render(Object * rhs)
 			particlevector[i].position.x = (x + rand() % (width - x) + x);
 			particlevector[i].position.y = (y + rand() % (height - y) + y);
 
-		gm->DrawTexture(particlevector[i].pImage,
-			SGD::Point(particlevector[i].position.x,
-			particlevector[i].position.y));
+			gm->DrawTexture(pImage,
+				SGD::Point(particlevector[i].position.x,
+				particlevector[i].position.y));
 		}
 		else
 		{
-			gm->DrawTexture(particlevector[i].pImage,
-				SGD::Point(rand()%100,
-				rand()%100));
+			gm->DrawTexture(pImage,
+				SGD::Point(rand() % 100,
+				rand() % 100));
 		}
-		
+
 	}
 
 

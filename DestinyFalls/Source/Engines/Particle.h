@@ -31,7 +31,6 @@ public:
 	int endColorG = 0;
 	int endColorB = 0;
 
-	SGD::HTexture pImage = SGD::INVALID_HANDLE;
 
 	Particle();
 	~Particle();

@@ -12,6 +12,8 @@ private:
 	int numParticles;
 	Emitter size;
 	std::string managerFilepath;
+	SGD::HTexture pImage = SGD::INVALID_HANDLE;
+
 
 public:
 
@@ -21,6 +23,7 @@ public:
 	void ReadXML(const char* filepath);
 	void Render(Object * rhs = nullptr);
 	void Update();
+	void Exit();
 
 
 };

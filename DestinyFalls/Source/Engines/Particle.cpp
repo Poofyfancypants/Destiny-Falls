@@ -9,10 +9,5 @@ Particle::Particle()
 
 Particle::~Particle()
 {
-	SGD::GraphicsManager* gm = SGD::GraphicsManager::GetInstance();
-	
-	//gm->UnloadTexture(pImage);
-
-	
 
 }
