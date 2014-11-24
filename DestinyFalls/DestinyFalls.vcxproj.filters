@@ -232,10 +232,9 @@
     <ClInclude Include="Source\Game States\SaveandLoadState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game Objects\Boulder.h">
+    <ClInclude Include="Source\Managers\BitmapFontManager.h" />    <ClInclude Include="Source\Game Objects\Boulder.h">
       <Filter>Game Objects</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude>  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
       <Filter>SGD Wrappers</Filter>
@@ -403,10 +402,9 @@
     <ClCompile Include="Source\Game States\SaveandLoadState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game Objects\Boulder.cpp">
+    <ClCompile Include="Source\Managers\BitmapFontManager.cpp" />    <ClCompile Include="Source\Game Objects\Boulder.cpp">
       <Filter>Game Objects</Filter>
-    </ClCompile>
-  </ItemGroup>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">
       <Filter>Resource Files</Filter>
