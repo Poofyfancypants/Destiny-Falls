@@ -134,7 +134,6 @@ int Game::Update(void)
 	return 0;		// keep playing!
 }
 
-
 /**************************************************************/
 // Terminate
 //	- exit the current state

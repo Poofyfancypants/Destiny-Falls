@@ -1,8 +1,10 @@
-﻿Build started 11/20/2014 11:45:37 AM.
+﻿Build started 11/20/2014 1:58:53 PM.
      1>Project "C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\DestinyFalls.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\DestinyFalls.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "Source\Game States\MainMenuState.cpp"
-         MainMenuState.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _UNICODE /D UNICODE /Gm- /EHsc /MD /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\DestinyFalls.pch" /Fo"Release\\" /Fd"Release\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt "Source\Game States\CombatState.cpp"
+         CombatState.cpp
+     1>Source\Game States\CombatState.cpp(235): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
+     1>Source\Game States\CombatState.cpp(251): warning C4244: 'argument' : conversion from 'float' to 'int', possible loss of data
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\fullsail\Desktop\New folder (2)\Destiny-Falls\DestinyFalls\Release\DestinyFalls.lib" /MACHINE:X86 /SAFESEH Release\DestinyFalls.res
          Release\SGD_AudioManager.obj
@@ -68,4 +70,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:05.44
+Time Elapsed 00:00:04.05

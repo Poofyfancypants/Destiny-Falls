@@ -221,6 +221,7 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 	{
 	case CombatState::DamType::Melee:
 	{
+										//m_bCoolDown = false;
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
 										{
 											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
