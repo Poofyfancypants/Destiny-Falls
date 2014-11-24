@@ -4,7 +4,7 @@
 class AnimatedObject :
 	public Object
 {
-	AnimationTimeStamp *m_pTS;
+	AnimationTimeStamp *m_pTS = nullptr;
 
 public:
 	AnimatedObject();
