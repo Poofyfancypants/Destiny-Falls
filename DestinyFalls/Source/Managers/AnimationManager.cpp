@@ -48,14 +48,14 @@ void AnimationManager::Render( AnimationTimeStamp ts , int posX , int posY )
 {
 	//Draw the frame
 	Frame temp = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() );
-	posX = posX - temp.GetAnchorPoint().x;
-	posY = posY - temp.GetAnchorPoint().y;
+	posX = posX - (int)temp.GetAnchorPoint().x;
+	posY = posY - (int)temp.GetAnchorPoint().y;
 
 	SGD::Rectangle rect = Loaded[ ts.GetCurrentAnimation() ]->GetFrame( ts.GetCurrentFrame() ).GetDrawRect();
 
 	SGD::GraphicsManager::GetInstance()->DrawTextureSection(
 		Loaded[ ts.GetCurrentAnimation() ]->GetImage() ,
-		SGD::Point( posX  ,	posY   ) ,		
+		SGD::Point( (float)posX  ,	(float)posY   ) ,		
 		rect);
 }
 
