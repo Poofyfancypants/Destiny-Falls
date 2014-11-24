@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "../Game Core/Game.h"
 #include "../Game Objects/Player.h"
+#include "../Game Objects/Boulder.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Objects/Chest.h"
 #include "../Game Objects/SpikeTrap.h"
@@ -112,6 +113,7 @@ void GameplayState::Update( float elapsedTime )
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 
+	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
@@ -203,4 +205,15 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id )
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
+}
+
+Object* GameplayState::CreateBoulder( SGD::Point _pos)
+{
+	// 1 == fire trap || 2 == spike trap
+		Boulder* temp = new Boulder;
+		temp->SetPosition( _pos );
+		temp->SetSize( SGD::Size( 32, 32 ) );
+		return temp;
+	
+
 }

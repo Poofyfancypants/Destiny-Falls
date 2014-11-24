@@ -31,6 +31,8 @@ Player::~Player()
 
 void Player::Update( float elapsedTime )
 {
+	m_bBoulderCollision = false;
+
 	if( m_nHealth <= 0 )
 	{
 		m_nHealth = 0;
@@ -42,7 +44,6 @@ void Player::Update( float elapsedTime )
 	}
 	if( !m_bSliding )
 		m_nDirection = 0;
-
 
 	TakeInput();
 	float speed;
@@ -70,8 +71,14 @@ void Player::Update( float elapsedTime )
 		break;
 	}
 
+	// - I don't even!
+	m_ptPosition += velocity;
+	GameplayState::GetInstance()->GetObjManager()->CheckCollisions( GameplayState::PLAYER_BUCKET, GameplayState::BOULDER_BUCKET );
+	m_ptPosition -= velocity;
+
+
 	SGD::Point futurePos = m_ptPosition + velocity;
-	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) )
+	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) && !m_bBoulderCollision )
 	{
 		m_ptPosition = futurePos;
 
@@ -81,6 +88,7 @@ void Player::Update( float elapsedTime )
 	else if( m_bSliding )
 	{
 		m_bMoving = false;
+		m_nDirection = 0;
 	}
 
 	m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp(), elapsedTime );
@@ -118,7 +126,8 @@ void Player::Render( void )
 	{
 		//AnimationTimeStamp ts = *this->GetTimeStamp();
 
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , (int)(point.x + ( m_szSize.width / 2.0f )) , (int)(point.y + ( m_szSize.height / 2.0f )) );	}
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), (int)( point.x + ( m_szSize.width / 2.0f ) ), (int)( point.y + ( m_szSize.height / 2.0f ) ) );
+	}
 
 }
 
@@ -216,9 +225,13 @@ void Player::HandleCollision( const iObject* pOther )
 	if( pOther->GetType() == OBJ_TRAP )
 	{
 		const Trap* trap = dynamic_cast<const Trap*>( pOther );
-		
-//		m_nHealth -= trap->GetDamage();
+
+		//		m_nHealth -= trap->GetDamage();
 		m_nHealth -= 10;
+	}
+	if( pOther->GetType() == OBJ_BOULDER )
+	{
+		m_bBoulderCollision = true;
 	}
 }
 

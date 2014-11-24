@@ -6,6 +6,8 @@
 
 #include "../Game States/GameplayState.h"
 #include "../Game Objects/Player.h"
+#include "../Game Objects/Boulder.h"
+#include "../Game Objects/iObject.h"
 
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
@@ -37,12 +39,12 @@ bool TileManager::LoadLevel( const char* _file )
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
 	int startSlide, endSlide, checkPoint, boulderSpawn, QTevent;
 	tilePath = "resource/graphics/";
-	
+
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
 	pRoot->Attribute( "tileWidth", &nGridWidth );
 	pRoot->Attribute( "tileHeight", &nGridHeight );
-	tilePath += pRoot->Attribute("tileSetPath");
+	tilePath += pRoot->Attribute( "tileSetPath" );
 
 	m_szGridSize = SGD::Size( (float)nGridWidth, (float)nGridHeight );
 	m_szMapSize = SGD::Size( (float)nMapSizeX, (float)nMapSizeY );
@@ -67,7 +69,7 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "trapID", &readTile.m_nTrapID );
 		pTile->Attribute( "waypointID", &readTile.m_nWaypointID );
 		pTile->Attribute( "QTEvent", &QTevent );
-		pTile->Attribute("chestID", &readTile.m_nChestID);
+		pTile->Attribute( "chestID", &readTile.m_nChestID );
 
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
@@ -145,41 +147,57 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 {
 
-	Player* player = dynamic_cast<Player*>( _player );
-	SGD::Rectangle PlayerCollision = SGD::Rectangle( _futurePos, player->GetSize() );
-
-	for( size_t i = 0; i < m_TileMap.size(); i++ )
+	if( _player->GetType() == iObject::OBJ_PLAYER )
 	{
-		for( size_t j = 0; j < m_TileMap[0].size(); j++ )
-		{
-			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].CheckPoint )
-			{
-				player->SetCheckPoint( SGD::Point( m_TileMap[i][j].CollisionRect.left, m_TileMap[i][j].CollisionRect.top ) );
-			}
-			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
-				player->SetSliding( true );
+		Player* player = dynamic_cast<Player*>( _player );
+		SGD::Rectangle PlayerCollision = SGD::Rectangle( _futurePos, player->GetSize() );
 
-			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].EndSlide )
+		for( size_t i = 0; i < m_TileMap.size(); i++ )
+		{
+			for( size_t j = 0; j < m_TileMap[0].size(); j++ )
 			{
-				player->SetSliding( false );
-				player->SetMoving( false );
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].CheckPoint )
+				{
+					player->SetCheckPoint( SGD::Point( m_TileMap[i][j].CollisionRect.left, m_TileMap[i][j].CollisionRect.top ) );
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
+					player->SetSliding( true );
+
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].EndSlide )
+				{
+					player->SetSliding( false );
+					player->SetMoving( false );
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].m_nTrapID != 0 )
+				{
+					//react to trap;
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].QTEvent )
+				{
+					// QT Event;
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
+					return true;
 			}
-			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].m_nTrapID != 0 )
-			{
-				//react to trap;
-			}
-			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].QTEvent )
-			{
-				// QT Event;
-			}
-			if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
-				return true;
 		}
+	}
+	else if( _player->GetType() == iObject::OBJ_BOULDER )
+	{
+		Boulder* boulder = dynamic_cast<Boulder*>( _player );
+		SGD::Rectangle PlayerCollision = SGD::Rectangle( _futurePos, boulder->GetSize() );
+
+		for( size_t i = 0; i < m_TileMap.size(); i++ )
+		{
+			for( size_t j = 0; j < m_TileMap[0].size(); j++ )
+			{
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
+					return true;
+			}
+		}
+
 	}
 	return false;
 }
-
-
 void TileManager::SpawnEnemies()
 {
 	for( size_t row = 0; row < m_TileMap.size(); row++ )
@@ -212,9 +230,16 @@ void TileManager::SpawnEnemies()
 			{
 				// - Spawn Traps
 				Object* tempTrap = nullptr;
-				tempTrap = GameplayState::GetInstance()->CreateTrap(dest, m_TileMap[row][col].m_nTrapID);
-				GameplayState::GetInstance()->GetObjManager()->AddObject(tempTrap, GameplayState::TRAP_BUCKET);
+				tempTrap = GameplayState::GetInstance()->CreateTrap( dest, m_TileMap[row][col].m_nTrapID );
+				GameplayState::GetInstance()->GetObjManager()->AddObject( tempTrap, GameplayState::TRAP_BUCKET );
 				tempTrap->Release();
+			}
+			if( m_TileMap[row][col].BoulderSpawn )
+			{
+				Object* tempObj = nullptr;
+				tempObj = GameplayState::GetInstance()->CreateBoulder( dest );
+				GameplayState::GetInstance()->GetObjManager()->AddObject( tempObj, GameplayState::BOULDER_BUCKET );
+				tempObj->Release();
 			}
 		}
 	}
