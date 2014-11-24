@@ -232,6 +232,7 @@
     <ClInclude Include="Source\Game States\SaveandLoadState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Managers\BitmapFontManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -400,6 +401,7 @@
     <ClCompile Include="Source\Game States\SaveandLoadState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Managers\BitmapFontManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DestinyFalls.rc">
