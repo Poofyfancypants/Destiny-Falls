@@ -42,6 +42,7 @@ void GameplayState::Enter()
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
+	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
 
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
@@ -73,6 +74,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
+	pGraphics->UnloadTexture(m_hBoulder);
+
 	m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -211,6 +214,7 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos)
 {
 	// 1 == fire trap || 2 == spike trap
 		Boulder* temp = new Boulder;
+		temp->SetImage(m_hBoulder);
 		temp->SetPosition( _pos );
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;

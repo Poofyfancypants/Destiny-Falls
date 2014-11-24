@@ -53,12 +53,17 @@ void Boulder::Update( float elapsedTime )
 void Boulder::Render( void )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
+	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
 
 
 	SGD::Rectangle rec = GetRect();
 	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
 	// - Collision Rectangle
-	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 0 ) );
+	//pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 0 ) );
+
+	pGraphics->DrawTexture(m_hImage, point);
+
 }
 SGD::Rectangle Boulder::GetRect( void ) const
 {
