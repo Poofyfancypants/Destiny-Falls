@@ -35,7 +35,7 @@ bool TileManager::LoadLevel( const char* _file )
 
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
-	int startSlide, endSlide, checkPoint, chestSpawn, QTevent;
+	int startSlide, endSlide, checkPoint, boulderSpawn, QTevent;
 	tilePath = "resource/graphics/";
 	
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
@@ -63,10 +63,11 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "startSlidingTile", &startSlide );
 		pTile->Attribute( "endSlidingTile", &endSlide );
 		pTile->Attribute( "checkPoint", &checkPoint );
-		pTile->Attribute( "chestSpawn", &chestSpawn );
+		pTile->Attribute( "Boulder", &boulderSpawn );
 		pTile->Attribute( "trapID", &readTile.m_nTrapID );
 		pTile->Attribute( "waypointID", &readTile.m_nWaypointID );
 		pTile->Attribute( "QTEvent", &QTevent );
+		pTile->Attribute("chestID", &readTile.m_nChestID);
 
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
@@ -77,7 +78,7 @@ bool TileManager::LoadLevel( const char* _file )
 		readTile.StartSlide = (bool)startSlide;
 		readTile.EndSlide = (bool)endSlide;
 		readTile.CheckPoint = (bool)checkPoint;
-		readTile.ChestSpawn = (bool)chestSpawn;
+		readTile.BoulderSpawn = (bool)boulderSpawn;
 		readTile.QTEvent = (bool)QTevent;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
@@ -199,13 +200,21 @@ void TileManager::SpawnEnemies()
 			{
 				GameplayState::GetInstance()->GetPlayer()->SetPosition( dest );
 			}
-			if( m_TileMap[row][col].ChestSpawn )
+			if( m_TileMap[row][col].m_nChestID != 0 )
 			{
 				//spawn chest;
 				Object* tempChest = nullptr;
-				tempChest = GameplayState::GetInstance()->CreateChest( dest );
+				tempChest = GameplayState::GetInstance()->CreateChest( dest, m_TileMap[row][col].m_nChestID );
 				GameplayState::GetInstance()->GetObjManager()->AddObject( tempChest, GameplayState::CHEST_BUCKET );
 				tempChest->Release();
+			}
+			if( m_TileMap[row][col].m_nTrapID != 0 )
+			{
+				// - Spawn Traps
+				Object* tempTrap = nullptr;
+				tempTrap = GameplayState::GetInstance()->CreateTrap(dest, m_TileMap[row][col].m_nTrapID);
+				GameplayState::GetInstance()->GetObjManager()->AddObject(tempTrap, GameplayState::TRAP_BUCKET);
+				tempTrap->Release();
 			}
 		}
 	}

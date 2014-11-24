@@ -74,7 +74,7 @@ bool Game::Initialize(float width, float height)
 	m_pFont->LoadFontFile("resource/XML/newfont.xml");
 
 
-	m_StringTable[0][1] = "Play Game";
+	m_StringTable[0][1] = "Play";
 	m_StringTable[0][2] = "Load Game";
 	m_StringTable[0][3] = "Options";
 	m_StringTable[0][4] = "How to Play";
