@@ -74,15 +74,15 @@ bool Game::Initialize( float width , float height )
 	m_pFont->LoadFontFile( "resource/XML/newfont.xml" );
 
 
-	m_StringTable[ 0 ][ 1 ] = "Play Game";
-	m_StringTable[ 0 ][ 2 ] = "Load Game";
-	m_StringTable[ 0 ][ 3 ] = "Options";
-	m_StringTable[ 0 ][ 4 ] = "How to Play";
-	m_StringTable[ 0 ][ 5 ] = "Credits";
-	m_StringTable[ 0 ][ 6 ] = "Exit";
-	m_StringTable[ 0 ][ 7 ] = "Resume";
-	m_StringTable[ 0 ][ 8 ] = "Save";
-	m_StringTable[ 0 ][ 9 ] = "You Died";
+	m_StringTable[0][1] = "Play";
+	m_StringTable[0][2] = "Load Game";
+	m_StringTable[0][3] = "Options";
+	m_StringTable[0][4] = "How to Play";
+	m_StringTable[0][5] = "Credits";
+	m_StringTable[0][6] = "Exit";
+	m_StringTable[0][7] = "Resume";
+	m_StringTable[0][8] = "Save";
+	m_StringTable[0][9] = "You Died";
 
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );

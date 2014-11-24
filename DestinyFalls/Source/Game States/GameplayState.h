@@ -16,7 +16,7 @@ class GameplayState :
 {
 public:
 
-	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET};
+	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET};
 	static GameplayState* GetInstance( void );
 
 	virtual void Enter( void )				override;
@@ -36,7 +36,8 @@ public:
 
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
-	Object* CreateChest(SGD::Point _pos);
+	Object* CreateChest(SGD::Point _pos, int _id);
+	Object* CreateTrap(SGD::Point _pos, int _id);
 
 private:
 	GameplayState() = default;
