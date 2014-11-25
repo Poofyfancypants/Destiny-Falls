@@ -37,12 +37,11 @@ public:
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
 	SGD::Point GetCheckpoint() {return m_ptCheckpoint;}
-	int GetDirection() {return m_nDirection;}
+	int GetDirection() const {return m_nDirection;}
 	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
-
 private:
 
 

@@ -16,7 +16,7 @@ class GameplayState :
 {
 public:
 
-	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET};
+	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET, BOULDER_BUCKET };
 	static GameplayState* GetInstance( void );
 
 	virtual void Enter( void )				override;
@@ -31,13 +31,14 @@ public:
 
 	SGD::Point GetWorldCam( void ) const	{ return m_ptWorldCam; }
 
-	Object* GetPlayer() {return m_pPlayer;}
+	Object* GetPlayer() { return m_pPlayer; }
 	TileManager* GetMap() const { return m_pMap; }
 
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
-	Object* CreateChest(SGD::Point _pos, int _id);
-	Object* CreateTrap(SGD::Point _pos, int _id);
+	Object* CreateChest( SGD::Point _pos, int _id );
+	Object* CreateTrap( SGD::Point _pos, int _id );
+	Object* CreateBoulder( SGD::Point _pos );
 
 private:
 	GameplayState() = default;
@@ -58,6 +59,7 @@ private:
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hBoulder = SGD::INVALID_HANDLE;
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
