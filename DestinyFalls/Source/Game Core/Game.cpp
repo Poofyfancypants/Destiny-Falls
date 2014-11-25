@@ -19,7 +19,6 @@
 #include "../../SGD Wrappers/SGD_EventManager.h"
 
 #include "../Messages/DestroyObjectMessage.h"
-#include "../Bitmap Font/BitmapFont.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -68,10 +67,17 @@ bool Game::Initialize( float width , float height )
 
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
+	
+	//set the font pointer to the BitmapFontManager Instance
+	m_pFonts = m_pFonts->GetInstance();
 
-	m_pFont = new BitmapFont;
-	m_pFont->Initialize( "resource/graphics/newfont_0.png" );
-	m_pFont->LoadFontFile( "resource/XML/newfont.xml" );
+	//Load the Bernardo font
+	string fontName = "Bernardo";
+	string imageName = "resource/graphics/newfont_0.png";
+	string xmlFile = "resource/XML/newfont.xml";
+	m_pFonts->Load( fontName , imageName , xmlFile );
+	
+
 
 
 	m_StringTable[0][1] = "Play";
@@ -144,7 +150,7 @@ void Game::Terminate( void )
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
 
-	m_pFont->Terminate();
+	m_pFonts->DeleteInstance();
 	SGD::GraphicsManager::GetInstance()->Terminate();
 	SGD::GraphicsManager::DeleteInstance();
 
@@ -157,7 +163,7 @@ void Game::Terminate( void )
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
 
-	delete m_pFont;
+	
 }
 
 void Game::AddState( IGameState* pNewState )

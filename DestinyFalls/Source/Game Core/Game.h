@@ -5,6 +5,7 @@
 #include <vector>
 #include "../../SGD Wrappers/SGD_Handle.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../Managers/BitmapFontManager.h"
 
 /**************************************************************/
 // Forward class declaration
@@ -44,7 +45,7 @@ public:
 	float GetScreenWidth(void) const { return m_fScreenWidth; }
 	float GetScreenHeight(void) const { return m_fScreenHeight; }
 
-	const BitmapFont*	GetFont(void) const	{ return m_pFont; }
+	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
 	std::string GetString(int _string) { return m_StringTable[0][_string]; }
 
 private:
@@ -75,7 +76,8 @@ private:
 
 	/**********************************************************/
 	// Game Font
-	BitmapFont*				m_pFont = nullptr;
+	//BitmapFont*				m_pFont = nullptr;
+	BitmapFontManager * m_pFonts = nullptr;
 
 };
 

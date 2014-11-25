@@ -4,7 +4,7 @@
 #include "PauseMenuState.h"
 #include "../Game Core/Game.h"
 #include "../Game Objects/Player.h"
-#include "../Bitmap Font/BitmapFont.h"
+#include "../Managers/BitmapFontManager.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -88,15 +88,15 @@ void SaveandLoadState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
 
-	const BitmapFont* pFont = Game::GetInstance()->GetFont();
+	/*const BitmapFont* pFont = Game::GetInstance()->GetFont();*/
 
-	pFont->Draw("Save 1", { saveslot1.left, saveslot1.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw("Save 2", { saveslot2.left, saveslot2.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw("Save 3", { saveslot3.left, saveslot3.top }, 1, { 255, 225, 255, 255 });
-
-	pFont->Draw("Load 1", { loadslot1.left, loadslot1.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw("Load 2", { loadslot2.left, loadslot2.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw("Load 3", { loadslot3.left, loadslot3.top }, 1, { 255, 225, 255, 255 });
+	BitmapFontManager* pFonts = pFonts->GetInstance();
+	pFonts->Render("Bernardo", "Save 1", { saveslot1.left, saveslot1.top }, 1, { 255, 225, 255, 255 });
+	pFonts->Render("Bernardo", "Save 2", { saveslot2.left, saveslot2.top }, 1, { 255, 225, 255, 255 });
+	pFonts->Render("Bernardo", "Save 3", { saveslot3.left, saveslot3.top }, 1, { 255, 225, 255, 255 });		 
+	pFonts->Render("Bernardo", "Load 1", { loadslot1.left, loadslot1.top }, 1, { 255, 225, 255, 255 });
+	pFonts->Render("Bernardo", "Load 2", { loadslot2.left, loadslot2.top }, 1, { 255, 225, 255, 255 });
+	pFonts->Render("Bernardo", "Load 3", { loadslot3.left, loadslot3.top }, 1, { 255, 225, 255, 255 });
 	
 }
 
