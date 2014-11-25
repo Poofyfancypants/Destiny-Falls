@@ -309,6 +309,7 @@ bool Player::TakeTurn( float elapsedTime )
 				ActionSelected = m_nCursor;
 				selected = true;
 				m_nCursor = 0;
+				CombatState::GetInstance()->SetCooldown(false);
 			}
 
 			if( !CombatState::GetInstance()->GetCooldown() && m_nCursor == 1 )

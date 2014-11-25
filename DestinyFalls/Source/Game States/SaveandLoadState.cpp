@@ -103,7 +103,8 @@ void SaveandLoadState::Render()
 void SaveandLoadState::Save()
 {
 	fstream fout;
-	fout.open("../resorce/Save/Save.txt", ios_base::out | ios_base::binary);
+fout.open("resource/Save/Save.txt", ios_base::out | ios_base::binary);
+
 	if (fout.is_open())
 	{
 		int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
@@ -121,7 +122,7 @@ void SaveandLoadState::Save()
 void SaveandLoadState::Save2()
 {
 	fstream fout;
-	fout.open("resorce/Save/Save2.txt", ios_base::out | ios_base::binary);
+	fout.open("resource/Save/Save2.txt", ios_base::out | ios_base::binary);
 	if (fout.is_open())
 	{
 		int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
@@ -140,7 +141,7 @@ void SaveandLoadState::Save2()
 void SaveandLoadState::Save3()
 {
 	fstream fout;
-	fout.open("resorce/Save/Save3.txt", ios_base::out | ios_base::binary);
+	fout.open("resource/Save/Save3.txt", ios_base::out | ios_base::binary);
 	if (fout.is_open())
 	{
 		int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
@@ -160,15 +161,15 @@ void SaveandLoadState::Save3()
 void SaveandLoadState::Load()
 {
 	fstream fin;
-	fin.open("resorce/Save/Save.txt", ios_base::in | ios_base::binary);
+	fin.open("resource/Save/Save.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
 		int health;
 		float posx, posy;
 
-		fin.write((char*)&health, sizeof(int));
-		fin.write((char*)&posx, sizeof(float));
-		fin.write((char*)&posy, sizeof(float));
+		fin.read((char*)&health, sizeof(int));
+		fin.read((char*)&posx, sizeof(float));
+		fin.read((char*)&posy, sizeof(float));
 
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{posx, posy});
@@ -180,15 +181,15 @@ void SaveandLoadState::Load()
 void SaveandLoadState::Load2()
 {
 	fstream fin;
-	fin.open("resorce/Save/Save2.txt", ios_base::in | ios_base::binary);
+	fin.open("resource/Save/Save2.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
 		int health;
 		float posx, posy;
 
-		fin.write((char*)&health, sizeof(int));
-		fin.write((char*)&posx, sizeof(float));
-		fin.write((char*)&posy, sizeof(float));
+		fin.read((char*)&health, sizeof(int));
+		fin.read((char*)&posx, sizeof(float));
+		fin.read((char*)&posy, sizeof(float));
 
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ posx, posy });
@@ -200,15 +201,15 @@ void SaveandLoadState::Load2()
 void SaveandLoadState::Load3()
 {
 	fstream fin;
-	fin.open("resorce/Save/Save3.txt", ios_base::in | ios_base::binary);
+	fin.open("resource/Save/Save3.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
 		int health;
 		float posx, posy;
 
-		fin.write((char*)&health, sizeof(int));
-		fin.write((char*)&posx, sizeof(float));
-		fin.write((char*)&posy, sizeof(float));
+		fin.read((char*)&health, sizeof(int));
+		fin.read((char*)&posx, sizeof(float));
+		fin.read((char*)&posy, sizeof(float));
 
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ posx, posy });

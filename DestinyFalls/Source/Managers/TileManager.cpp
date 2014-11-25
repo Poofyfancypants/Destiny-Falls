@@ -38,7 +38,7 @@ bool TileManager::LoadLevel( const char* _file )
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
 	int startSlide, endSlide, checkPoint, boulderSpawn, QTevent;
-	tilePath = "resource/graphics/";
+	tilePath = "resource/graphics/TileSets/";
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
 	pRoot->Attribute( "MapSizeY", &nMapSizeY );
