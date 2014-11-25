@@ -23,6 +23,9 @@ public:
 
 	bool LoadFontFile(string path);
 
+	string GetFontName( void ) { return m_sFontName; }
+	void SetFontName( string fontName ){ m_sFontName = fontName; }
+
 	struct CharAttributes
 	{
 		int id;
@@ -42,6 +45,7 @@ public:
 private:
 	// image
 	SGD::HTexture	m_hImage = SGD::INVALID_HANDLE;
+	string m_sFontName;
 
 	// cell data
 	int				m_nCharWidth = 0;

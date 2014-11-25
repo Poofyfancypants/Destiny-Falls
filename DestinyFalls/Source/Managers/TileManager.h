@@ -13,7 +13,7 @@ struct Tile
 {
 	int nX, nY;
 	int m_nEnemyID;
-	int m_nTrapID;
+	int m_nTrapID, m_nChestID;
 	int m_nWaypointID;
 	bool QTEvent;
 	bool collisionTile;
@@ -21,7 +21,7 @@ struct Tile
 	bool StartSlide;
 	bool EndSlide;
 	bool CheckPoint;
-	bool ChestSpawn;
+	bool BoulderSpawn;
 	
 	SGD::Rectangle CollisionRect;
 

@@ -1,19 +1,22 @@
 #pragma once
-#include "Trap.h"
-class SpikeTrap :
-	public Trap
-{
-	int m_nDamage = 10;
-public:
-	SpikeTrap();
-	~SpikeTrap();
+#include "StaticObject.h"
 
-	int GetDamage() {return m_nDamage;}
+class Boulder :
+	public StaticObject
+{
+
+	int m_nDirection = 0;
+
+public:
+	Boulder();
+	~Boulder();
+
 
 	virtual void Update( float elapsedTime ) override;
 	virtual void Render( void ) override;
-	virtual int GetType( void ) const { return OBJ_TRAP; }
+	virtual int GetType( void ) const { return OBJ_BOULDER; }
 	virtual SGD::Rectangle GetRect( void ) const override;
 	virtual void HandleCollision( const iObject* pOther ) override;
+
 };
 

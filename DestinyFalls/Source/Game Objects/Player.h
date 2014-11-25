@@ -30,14 +30,14 @@ public:
 	void SetSliding(bool _slide) {m_bSliding = _slide;}
 	void SetVelocity(SGD::Vector _vel) {velocity = _vel;}
 	void SetDirection(int _direction) {m_nDirection = _direction;}
-	int GetDirection() {return m_nDirection;}
-	SGD::Point GetCheckpoint() {return m_ptCheckpoint;}
+	void SetCombat(bool _combat = false) { m_bCombat = _combat; }
+	void SetHealth(int _health) { m_nHealth = _health; }
 
 	int GetHealth() const { return m_nHealth; }
-	void SetHealth(int _health) { m_nHealth = _health; }
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
-	void SetCombat(bool _combat = false) { m_bCombat = _combat; }
+	SGD::Point GetCheckpoint() {return m_ptCheckpoint;}
+	int GetDirection() const {return m_nDirection;}
 	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
@@ -49,6 +49,7 @@ private:
 	int m_nDirection;
 	bool m_bSliding = false;
 	bool m_bMoving = false;
+	bool m_bBoulderCollision = false;
 	SGD::Vector velocity = SGD::Vector();
 	SGD::Point m_ptCheckpoint;
 	int m_nHealth = 100;
