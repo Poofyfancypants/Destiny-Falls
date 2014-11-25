@@ -128,13 +128,13 @@ void PauseMenuState::Render(void)
 
 	if (((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth() <= 0)
 	{
-		pFont->Draw(Game::GetInstance()->GetString(9).c_str(), { 100, 50 }, 4, { 255, 255, 0, 0 });
+		pFont->Draw(Game::GetInstance()->GetString(1,9).c_str(), { 100, 50 }, 4, { 255, 255, 0, 0 });
 	}
 
-	pFont->Draw(Game::GetInstance()->GetString(7).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(8).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(3).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 });
-	pFont->Draw(Game::GetInstance()->GetString(6).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 });
+	pFont->Draw(Game::GetInstance()->GetString(0, 7).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(0, 8).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 });
+	pFont->Draw(Game::GetInstance()->GetString(0, 3).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 });
+	pFont->Draw(Game::GetInstance()->GetString(0, 6).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 });
 }
 
 void PauseMenuState::SaveGame()

@@ -12,7 +12,6 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
-
 #include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
@@ -83,6 +82,9 @@ bool Game::Initialize(float width, float height)
 	m_StringTable[0][7] = "Resume";
 	m_StringTable[0][8] = "Save";
 	m_StringTable[0][9] = "You Died";
+
+	m_StringTable[1][1] = "Rock Elemental";
+	m_StringTable[1][2] = "Plant Monster";
 
 	//Main menu state here
 	AddState(SplashScreenState::GetInstance());

@@ -21,10 +21,9 @@ public:
 	virtual void Render(void)				override;
 
 	bool DealDamage(int _DamType, Object* _this, int _target);
-	int GetNumEnemies() const { return m_nNumEnemies; }
+	int GetNumEnemies() const { return m_pEnemies.size(); }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion();
-	Object* AddMinion1();
 
 	bool GetCooldown() { return m_bCoolDown; }
 
@@ -52,18 +51,22 @@ private:
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
 
 	int CurrentTurn;
-	int TurnIndex;
-	int m_nNumEnemies;
 
 	bool m_bCoolDown = false;
 
-	Object* Enemies[3];
+	//Soon to be vectors of CombatEntities
+	std::vector<Object*> m_pObjects; //Holds all combat entities
+	//Sorts based off initiative
+	int TurnIndex;					 //Any entity can be sub zero
 
-	std::vector<Object*> m_pObjects;
+	std::vector<Object*> m_pEnemies; //Holds all enemies
+	//When an enemy dies, this list sorts to move the dead enemy into the last position, then pops
+	int EnemyIndex;					 //Use the size of this list to check win condition
+
+	std::vector<Object*> m_pHeroes;	 //Holds player and companions
+	int HeroIndex;					 //Player is always sub zero in this list
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
-	SGD::HTexture m_henemy2 = SGD::INVALID_HANDLE;
-
 };
 

@@ -45,7 +45,7 @@ public:
 	float GetScreenHeight(void) const { return m_fScreenHeight; }
 
 	const BitmapFont*	GetFont(void) const	{ return m_pFont; }
-	std::string GetString(int _string) { return m_StringTable[0][_string]; }
+	std::string GetString(int _type ,int _string) { return m_StringTable[_type][_string]; }
 
 private:
 	/**********************************************************/
@@ -64,7 +64,7 @@ private:
 	unsigned long m_ulGameTime = 0;
 
 	int m_nCurrState = 0;
-	std::string m_StringTable[1][10];
+	std::string m_StringTable[2][10];
 
 	std::vector<IGameState*> m_pStateStack;
 
