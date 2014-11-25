@@ -36,6 +36,12 @@ public:
 
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
+	Object* CreateChest(SGD::Point _pos);
+	//Audio
+	SGD::HAudio bmusic = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
+
 	Object* CreateChest( SGD::Point _pos, int _id );
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
@@ -70,5 +76,6 @@ private:
 
 	bool m_bPaused = false;
 
+	
 
 };

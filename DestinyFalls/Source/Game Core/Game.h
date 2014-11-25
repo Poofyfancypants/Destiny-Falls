@@ -5,6 +5,7 @@
 #include <vector>
 #include "../../SGD Wrappers/SGD_Handle.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../Managers/BitmapFontManager.h"
 
 /**************************************************************/
 // Forward class declaration
@@ -44,8 +45,17 @@ public:
 	float GetScreenWidth(void) const { return m_fScreenWidth; }
 	float GetScreenHeight(void) const { return m_fScreenHeight; }
 
-	const BitmapFont*	GetFont(void) const	{ return m_pFont; }
-	std::string GetString(int _string) { return m_StringTable[0][_string]; }
+	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
+	std::string GetString(int _type ,int _string) { return m_StringTable[_type][_string]; }
+
+	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mMagicButton = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mMeleeButton = SGD::INVALID_HANDLE;
+	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
+	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
+
+
 
 private:
 	/**********************************************************/
@@ -64,7 +74,7 @@ private:
 	unsigned long m_ulGameTime = 0;
 
 	int m_nCurrState = 0;
-	std::string m_StringTable[1][10];
+	std::string m_StringTable[2][10];
 
 	std::vector<IGameState*> m_pStateStack;
 
@@ -75,7 +85,8 @@ private:
 
 	/**********************************************************/
 	// Game Font
-	BitmapFont*				m_pFont = nullptr;
+	//BitmapFont*				m_pFont = nullptr;
+	BitmapFontManager * m_pFonts = nullptr;
 
 };
 

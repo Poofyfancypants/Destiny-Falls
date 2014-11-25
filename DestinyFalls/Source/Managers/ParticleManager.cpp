@@ -14,21 +14,18 @@ ParticleManager::ParticleManager()
 
 ParticleManager::~ParticleManager()
 {
-
+	
 }
 
 void ParticleManager::Exit()
 {
-
 	SGD::GraphicsManager *gm = SGD::GraphicsManager::GetInstance();
 	gm->UnloadTexture(pImage);
 }
 
 void ParticleManager::ReadXML(const char* filepath)
 {
-
 	SGD::GraphicsManager* gm = SGD::GraphicsManager::GetInstance();
-
 
 	TiXmlDocument doc;
 	if (doc.LoadFile(filepath) == false)
@@ -76,17 +73,13 @@ void ParticleManager::ReadXML(const char* filepath)
 		ptemp.line = (bool)particleLine;
 
 		particlevector.push_back(ptemp);
-
 	}
-
-
-
 }
 
 void ParticleManager::Render(Object * rhs)
 {
 	SGD::GraphicsManager * gm = SGD::GraphicsManager::GetInstance();
-	//gm.LoadTexture();
+	
 
 	for (unsigned int i = 0; i < particlevector.size(); i++)
 	{

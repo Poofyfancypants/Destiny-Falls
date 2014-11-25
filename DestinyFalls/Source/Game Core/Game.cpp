@@ -12,14 +12,12 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
-
 #include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_EventManager.h"
 
 #include "../Messages/DestroyObjectMessage.h"
-#include "../Bitmap Font/BitmapFont.h"
 
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
@@ -65,14 +63,38 @@ bool Game::Initialize( float width , float height )
 
 	SGD::MessageManager::GetInstance()->Initialize( &MessageProc );
 	SGD::EventManager::GetInstance()->Initialize();
-
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
+	
+	//set the font pointer to the BitmapFontManager Instance
+	m_pFonts = m_pFonts->GetInstance();
 
-	m_pFont = new BitmapFont;
-	m_pFont->Initialize( "resource/graphics/newfont_0.png" );
-	m_pFont->LoadFontFile( "resource/XML/newfont.xml" );
+	//Load the Bernardo font
+	string fontName = "Bernardo";
+	string imageName = "resource/graphics/newfont_0.png";
+	string xmlFile = "resource/XML/newfont.xml";
+	m_pFonts->Load( fontName , imageName , xmlFile );
+	//Load the Bernardo font
+	string fontName1 = "Celtic";
+	string imageName1 = "resource/graphics/Celticfont_0.png";
+	string xmlFile1 = "resource/XML/Celticfont.xml";
+	m_pFonts->Load(fontName1, imageName1, xmlFile1);
+	//Load the other font
+	string fontName2 = "Other";
+	string imageName2 = "resource/graphics/otherfont1_0.png";
+	string xmlFile2 = "resource/XML/otherfont1.xml";
+	m_pFonts->Load(fontName2, imageName2, xmlFile2);
+	
 
+	m_mMusic = pAudio->LoadAudio(L"resource/audio/MenuMusic.wav");
+	m_mButton = pAudio->LoadAudio(L"resource/audio/MenuButton.wav");
+	m_mMeleeButton = pAudio->LoadAudio(L"resource/audio/Melee.wav");
+	m_mMagicButton = pAudio->LoadAudio(L"resource/audio/Magic.wav");
+	potionSound = pAudio->LoadAudio(L"resource/audio/healthPotion.wav");
+	deathSound = pAudio->LoadAudio(L"resource/audio/deathSound.wav");
+
+	pAudio->PlayAudio(m_mMusic, true);
 
 	m_StringTable[0][1] = "Play";
 	m_StringTable[0][2] = "Load Game";
@@ -83,6 +105,9 @@ bool Game::Initialize( float width , float height )
 	m_StringTable[0][7] = "Resume";
 	m_StringTable[0][8] = "Save";
 	m_StringTable[0][9] = "You Died";
+
+	m_StringTable[1][1] = "Rock Elemental";
+	m_StringTable[1][2] = "Plant Monster";
 
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );
@@ -139,11 +164,22 @@ int Game::Update( void )
 //	- terminate the SGD wrappers
 void Game::Terminate( void )
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
 	// Terminate the core SGD wrappers
+	//MainMenuState::GetInstance()->Exit();
+
+	pAudio->UnloadAudio(m_mMusic);
+	pAudio->UnloadAudio(m_mButton);
+	pAudio->UnloadAudio(m_mMagicButton);
+	pAudio->UnloadAudio(m_mMeleeButton);
+	pAudio->UnloadAudio(potionSound);
+	pAudio->UnloadAudio(deathSound);
+
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
 
-	m_pFont->Terminate();
+	m_pFonts->DeleteInstance();
 	SGD::GraphicsManager::GetInstance()->Terminate();
 	SGD::GraphicsManager::DeleteInstance();
 
@@ -156,7 +192,7 @@ void Game::Terminate( void )
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
 
-	delete m_pFont;
+	
 }
 
 void Game::AddState( IGameState* pNewState )

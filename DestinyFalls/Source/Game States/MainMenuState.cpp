@@ -13,7 +13,8 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 #include "../Game States/AnimationTestState.h"
-#include "../Bitmap Font/BitmapFont.h"
+//#include "../Bitmap Font/BitmapFont.h"
+#include "../Managers/BitmapFontManager.h"
 
 MainMenuState* MainMenuState::GetInstance()
 {
@@ -25,8 +26,10 @@ void MainMenuState::Enter()
 {
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	
 
-	//pGraphics->LoadTexture()
+	pAudio->PlayAudio(Game::GetInstance()->m_mMusic, true);
+
 
 	PlayGame = { 50, 50, 100, 80 };
 	LoadGame = { 50, 90, 100, 120 };
@@ -75,8 +78,6 @@ void MainMenuState::Enter()
 
 void MainMenuState::Exit()
 {
-	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
 
 }
@@ -84,13 +85,17 @@ void MainMenuState::Exit()
 bool MainMenuState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
 		m_nCursor = MenuSelections::exit;
 	}
 	if (pInput->IsKeyPressed(SGD::Key::Up))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
+
 		if (m_nCursor <= 0)
 			m_nCursor = MenuSelections::exit;
 		else
@@ -98,6 +103,8 @@ bool MainMenuState::Input()
 	}
 	else if (pInput->IsKeyPressed(SGD::Key::Down))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
+
 		if (m_nCursor >= MenuSelections::exit)
 			m_nCursor = MenuSelections::play;
 		else
@@ -106,10 +113,13 @@ bool MainMenuState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::Enter))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
+
 		switch (m_nCursor)
 		{
 		case MenuSelections::play:
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
+			pAudio->StopAudio(Game::GetInstance()->m_mMusic);
 			break;
 		case MenuSelections::load:
 			Game::GetInstance()->AddState(SaveandLoadState::GetInstance());
@@ -137,25 +147,23 @@ bool MainMenuState::Input()
 	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(PlayGame))
 		{
-			//Game::GetInstance()->RemoveState();
+			pAudio->PlayAudio(Game::GetInstance()->m_mButton);
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
 		}
 	}
 
-	//if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
-	//{
-	//	if (pInput->GetCursorPosition().IsPointInRectangle(TestAnimationSystem))
-	//	{
-	//		//Game::GetInstance()->RemoveState();
-	//		Game::GetInstance()->AddState(AnimationTestState::GetInstance());
-	//	}
-	//}
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	{
+		if (pInput->GetCursorPosition().IsPointInRectangle(TestAnimationSystem))
+			Game::GetInstance()->AddState(AnimationTestState::GetInstance());
+
+	}
 	return true;
 }
 
 void MainMenuState::Update(float elapsedTime)
 {
-	
+
 
 
 
@@ -171,8 +179,8 @@ void MainMenuState::Render()
 	pGraphics->SetClearColor();
 	//pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
-	const BitmapFont* pFont = Game::GetInstance()->GetFont();
-
+	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
+	BitmapFontManager * pFonts = pFonts->GetInstance();
 	//pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
@@ -180,13 +188,12 @@ void MainMenuState::Render()
 	//pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
 	//pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
 
-	pFont->Draw(Game::GetInstance()->GetString(1).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(2).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(3).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(4).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(5).c_str(), { Credit.left, Credit.top }, 1, { 255, 225, 255, 255 });
-	pFont->Draw(Game::GetInstance()->GetString(6).c_str(), { ExitGame.left, ExitGame.top }, 1, { 255, 225, 255, 255 });
-
+	pFonts->Render( "Bernardo" , Game::GetInstance()->GetString(0, 1).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 });
+	pFonts->Render( "Bernardo" , Game::GetInstance()->GetString(0, 2 ).c_str() , { LoadGame.left , LoadGame.top } , 1 , { 255 , 225 , 255 , 255 } );
+	pFonts->Render( "Bernardo" , Game::GetInstance()->GetString(0, 3 ).c_str() , { Options.left , Options.top } , 1 , { 255 , 225 , 255 , 255 } );
+	pFonts->Render( "Bernardo" , Game::GetInstance()->GetString(0, 4 ).c_str() , { HowToPlay.left , HowToPlay.top } , 1 , { 255 , 225 , 255 , 255 } );
+	pFonts->Render( "Bernardo" , Game::GetInstance()->GetString(0, 5 ).c_str() , { Credit.left , Credit.top } , 1 , { 255 , 225 , 255 , 255 } );
+	pFonts->Render( "Bernardo" , Game::GetInstance()->GetString(0, 6 ).c_str() , { ExitGame.left , ExitGame.top } , 1 , { 255 , 225 , 255 , 255 } );
 
 	pGraphics->DrawRectangle(SGD::Rectangle{ 40, (float)(40 * m_nCursor + 60), 50, (float)(40 * m_nCursor + 70) }, SGD::Color{ 255, 0, 255, 0 });
 }
