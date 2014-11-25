@@ -144,6 +144,7 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 
 }
 
+// - Returns 0 if no collision, 1 for tile collision, 2 for boulder collision
 bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 {
 
@@ -196,7 +197,7 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 		}
 
 	}
-	return false;
+	return 0;
 }
 void TileManager::SpawnEnemies()
 {

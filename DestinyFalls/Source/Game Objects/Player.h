@@ -42,14 +42,12 @@ public:
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
-
 private:
 
 
 	int m_nDirection;
 	bool m_bSliding = false;
 	bool m_bMoving = false;
-	bool m_bBoulderCollision = false;
 	SGD::Vector velocity = SGD::Vector();
 	SGD::Point m_ptCheckpoint;
 	int m_nHealth = 100;
