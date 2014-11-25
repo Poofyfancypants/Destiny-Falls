@@ -48,6 +48,15 @@ public:
 	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
 	std::string GetString(int _string) { return m_StringTable[0][_string]; }
 
+	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mMagicButton = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mMeleeButton = SGD::INVALID_HANDLE;
+	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
+	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
+
+
+
 private:
 	/**********************************************************/
 	// Singleton Object:

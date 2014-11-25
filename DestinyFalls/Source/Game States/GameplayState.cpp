@@ -12,6 +12,7 @@
 #include "InventoryState.h"
 #include "MainMenuState.h"
 #include "PauseMenuState.h"
+#include "CombatState.h"
 #include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
@@ -44,6 +45,12 @@ void GameplayState::Enter()
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
 
+	bmusic = pAudio->LoadAudio(L"resource/audio/backgroundMusic.wav");
+	
+	pAudio->PlayAudio(bmusic, true);
+	
+
+	
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
@@ -60,20 +67,28 @@ void GameplayState::Enter()
 void GameplayState::Exit()
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	SGD::AudioManager*	  pAudio = SGD::AudioManager::GetInstance();
 
 	if( m_pPlayer != nullptr )
 	{
 		m_pPlayer->Release();
 		m_pPlayer = nullptr;
 	}
+	//audio unload
+	
+	pAudio->UnloadAudio(bmusic);
 
+	//unload images
+	pGraphics->UnloadTexture(m_hplayer);
+	pGraphics->UnloadTexture(m_henemy);
+	pGraphics->UnloadTexture(m_hChest);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
 
-	pGraphics->UnloadTexture( m_hplayer );
-	pGraphics->UnloadTexture( m_henemy );
-	pGraphics->UnloadTexture( m_hChest );
+	//pGraphics->UnloadTexture( m_hplayer );
+	//pGraphics->UnloadTexture( m_henemy );
+	//pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture(m_hBoulder);
 
 	m_particle.Exit();

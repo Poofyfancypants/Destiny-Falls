@@ -9,7 +9,8 @@
 #include "Chest.h"
 #include "../Game States/GameplayState.h"
 #include "../Managers/ParticleManager.h"
-
+#include "../Game States/MainMenuState.h"
+#include "../Managers/TileManager.h"
 #include "../Bitmap Font/BitmapFont.h"
 #include "../Quick Time/QuickTime.h"
 
@@ -17,23 +18,26 @@
 
 Player::Player() : Listener( this )
 {
-	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
 	m_pAnimator = m_pAnimator->GetInstance();
 	this->GetTimeStamp()->SetCurrentAnimation( "WalkingDown" );
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
-}
 
+
+}
 Player::~Player()
 {
+
 
 }
 
 void Player::Update( float elapsedTime )
 {
-
-	if( m_nHealth <= 0 )
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+	if (m_nHealth <= 0)
 	{
+		pAudio->PlayAudio(Game::GetInstance()->deathSound, false);
 		m_nHealth = 0;
 		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 
@@ -108,8 +112,6 @@ void Player::Render( void )
 	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
 	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U );
 
-	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
-	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
 
 	std::string potString = std::to_string( m_nPotions );
 	potString += " P";
@@ -127,6 +129,7 @@ void Player::Render( void )
 void Player::TakeInput()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	if( m_bMoving )
 	{
@@ -182,7 +185,8 @@ void Player::TakeInput()
 	if( pInput->IsKeyPressed( SGD::Key::P ) && m_nPotions > 0 && m_nHealth < 100 )
 	{
 		m_nHealth += 30;
-		if( m_nHealth > 100 )
+		pAudio->PlayAudio(Game::GetInstance()->potionSound, false);
+		if (m_nHealth > 100)
 		{
 			m_nCursor = 100;
 		}
@@ -199,9 +203,12 @@ SGD::Rectangle Player::GetRect( void ) const
 
 void Player::HandleCollision( const iObject* pOther )
 {
-	if( pOther->GetType() == OBJ_ENEMY )
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+	if (pOther->GetType() == OBJ_ENEMY)
 	{
-		Game::GetInstance()->AddState( CombatState::GetInstance() );
+		pAudio->StopAudio(GameplayState::GetInstance()->bmusic);
+		Game::GetInstance()->AddState(CombatState::GetInstance());
 	}
 	if( pOther->GetType() == OBJ_CHEST )
 	{
