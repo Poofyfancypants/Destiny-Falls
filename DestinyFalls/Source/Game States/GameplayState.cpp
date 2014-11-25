@@ -14,6 +14,8 @@
 #include "PauseMenuState.h"
 #include "CombatState.h"
 #include "../Messages/MessageID.h"
+#include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../../SGD Wrappers/SGD_String.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -58,8 +60,8 @@ void GameplayState::Enter()
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
-	m_particle.ReadXML( "resource/XML/Test2.xml" );
+	m_pMap->LoadLevel( "resource/XML/testMap2.xml" );
+	//	m_particle.ReadXML( "resource/XML/Test2.xml" );
 
 }
 
@@ -83,7 +85,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture( m_hBoulder );
 
-	m_particle.Exit();
+	//m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;
@@ -122,6 +124,16 @@ bool GameplayState::Input()
 
 void GameplayState::Update( float elapsedTime )
 {
+	m_fFPSTime += elapsedTime;
+	m_nFrames++;
+	if( m_fFPSTime >= 1.0f )
+	{
+		m_nFPS = m_nFrames;
+		m_nFrames = 0;
+		m_fFPSTime = 0.0f;
+	}
+
+
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 
@@ -146,7 +158,18 @@ void GameplayState::Render()
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 
 	m_pObjects->RenderAll();
-	m_particle.Render();
+	//m_particle.Render();
+
+	if( m_bDebug )
+	{
+		SGD::OStringStream numEnt;
+		numEnt << "Objects: " << GameplayState::GetInstance()->GetObjManager()->GetNumObjects();
+		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point(10,30), { 0, 255, 0 } );
+
+		SGD::OStringStream fps;
+		fps << "FPS: " << m_nFPS;
+		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
+	}
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )

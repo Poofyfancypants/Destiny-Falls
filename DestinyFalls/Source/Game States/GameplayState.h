@@ -82,6 +82,9 @@ private:
 
 	// - Debug Mode
 	bool m_bDebug = false;
+	float m_fFPSTime = 0;
+	int m_nFrames = 0;
+	int m_nFPS = 60;
 	
 
 };

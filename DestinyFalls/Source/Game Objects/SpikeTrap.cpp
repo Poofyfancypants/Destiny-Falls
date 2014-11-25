@@ -1,10 +1,14 @@
 #include "stdafx.h"
 #include "SpikeTrap.h"
-
 #include "Player.h"
 
-#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../Game States/GameplayState.h"
+#include "../Game States/GameplayState.h"
+
+#include "../../SGD Wrappers/SGD_Event.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
+
+#include "../Messages/DestroyObjectMessage.h"
 
 SpikeTrap::SpikeTrap()
 {
@@ -18,7 +22,13 @@ SpikeTrap::~SpikeTrap()
 
 void SpikeTrap::Update( float elapsedTime )
 {
+	if( m_bStartTimer )
+		m_fTimer += elapsedTime;
 
+	if( m_fTimer >= .2 )
+	{
+		// do what ever
+	}
 }
 void SpikeTrap::Render( void )
 {
@@ -45,5 +55,9 @@ SGD::Rectangle SpikeTrap::GetRect( void ) const
 }
 void SpikeTrap::HandleCollision( const iObject* pOther )
 {
-
+	if( pOther->GetType() == iObject::OBJ_PLAYER )
+	{
+		if( !m_bStartTimer )
+			m_bStartTimer = true;
+	}
 }

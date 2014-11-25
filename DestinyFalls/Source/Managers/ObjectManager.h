@@ -19,6 +19,7 @@ public:
 	void UpdateAll(float elapsedTime);
 	void RenderAll(void);
 
+	unsigned int GetNumObjects();
 
 	void CheckCollisions(unsigned int bucket1, unsigned int bucket2);
 
