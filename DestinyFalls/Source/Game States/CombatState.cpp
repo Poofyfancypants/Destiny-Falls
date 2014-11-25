@@ -12,6 +12,7 @@
 #include "../Game Objects/Enemy.h"
 #include "../Runes/RuneManager.h"
 #include "../Runes/Runes.h"
+#include "../Quick Time/QuickTime.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -19,22 +20,26 @@ CombatState* CombatState::GetInstance()
 	return &s_Instance;
 }
 
-void CombatState::Enter(void)
+void CombatState::Enter( void )
 {
 	CurrentTurn = 0;
 	TurnIndex = 0;
 
-	Player* player = (Player*)GameplayState::GetInstance()->GetPlayer();
-	player->SetCombat(true);
-	player->CurrentTurn(&CurrentTurn);
-	player->SetTurnPos(TurnIndex);
+	Player* player = ( Player* ) GameplayState::GetInstance()->GetPlayer();
+	player->SetCombat( true );
+	player->CurrentTurn( &CurrentTurn );
+	player->SetTurnPos( TurnIndex );
 	player->AddRef();
-	m_pObjects.push_back(player);
+	m_pObjects.push_back( player );
 	m_pHeroes.push_back(player);
 	TurnIndex++;
 
 	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/ShadowKnight.png");
 	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
+	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
+
+	//play combat music
+	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
 	for (unsigned int i = 0; i < rand() % 3 + 1; i++)
 	{
@@ -44,13 +49,14 @@ void CombatState::Enter(void)
 		TurnIndex++;
 	}
 
-	PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
+	PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pObjects[ 0 ] )->GetHealth();
 
 }
 
-void CombatState::Exit(void)
+void CombatState::Exit( void )
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	for (size_t i = 0; i < m_pObjects.size(); i++)
 		m_pObjects[i]->Release();
@@ -61,21 +67,33 @@ void CombatState::Exit(void)
 
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
+	
+	pAudio->UnloadAudio(cMusic);
+
 }
 
-bool CombatState::Input(void)
+bool CombatState::Input( void )
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
 		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
+		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
+	}
+
+	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
+	{
+		( ( Player* ) GameplayState::GetInstance()->GetPlayer() )->SetCombat( false );
 		Game::GetInstance()->RemoveState();
 	}
 
 	return true;
 }
 
-void CombatState::Update(float elapsedTime)
+void CombatState::Update( float elapsedTime )
 {
 
 	int numEnemies = 0;
@@ -98,7 +116,6 @@ void CombatState::Update(float elapsedTime)
 		return;
 	}
 
-
 	if (((Player*)m_pObjects[0])->GetHealth() > 0)
 		PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
 	else
@@ -111,38 +128,38 @@ void CombatState::Update(float elapsedTime)
 	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
 
-		switch (m_pObjects[i]->GetType())
+		switch( m_pObjects[ i ]->GetType() )
 		{
-		case Object::ObjectType::OBJ_PLAYER:
-		{
-											   if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-											   {
-												   if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
-												   {
-													   CurrentTurn++; //Put this back in the check once player combat input is complete
-												   }
-											   }
-		}
-			break;
-		case Object::ObjectType::OBJ_MINION:
-		{
-											   if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-											   {
-												   ((Minion*)m_pObjects[i])->TakeTurn();
-												   CurrentTurn++;
-											   }
-		}
-			break;
+			case Object::ObjectType::OBJ_PLAYER:
+			{
+				if( ( ( Player* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
+				{
+					if( ( ( Player* ) m_pObjects[ i ] )->TakeTurn( elapsedTime ) )
+					{
+						CurrentTurn++; //Put this back in the check once player combat input is complete
+					}
+				}
+			}
+				break;
+			case Object::ObjectType::OBJ_MINION:
+			{
+				if( ( ( Minion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
+				{
+					( ( Minion* ) m_pObjects[ i ] )->TakeTurn();
+					CurrentTurn++;
+				}
+			}
+				break;
 		}
 	}
 	CurrentTurn = 0;
 }
 
-void CombatState::Render(void)
+void CombatState::Render( void )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle( AbilityRect , SGD::Color { 100 , 150 , 150 , 150 } );
 
 	//for (size_t i = 0; i < m_pObjects.size(); i++)
 	//{
@@ -217,6 +234,7 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
 	RuneManager mag;
 
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	//Game::GetInstance()->AddState(InventoryState::GetInstance());
 
 
@@ -230,6 +248,7 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
+											pAudio->PlayAudio(Game::GetInstance()->m_mMeleeButton);
 											ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
@@ -246,21 +265,60 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
+											pAudio->PlayAudio(Game::GetInstance()->m_mMagicButton);
 											ComboElements d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
 												(mag.DamageComboElement(d2, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
 		break;
 	case CombatState::DamType::Armor:
-	{
+		//Game::GetInstance()->AddState(InventoryState::GetInstance());
 
-	}
-		break;
-	default:
-		break;
-	}
 
-	return false;
+		switch (_DamType)
+		{
+		case CombatState::DamType::Melee:
+		{
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
+											{
+												((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+											}
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+											{
+
+												ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
+
+												((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+													(mag.DamageComboElement(d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+											}
+		}
+			break;
+		case CombatState::DamType::Magic:
+		{
+											m_bCoolDown = true;
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
+											{
+												((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+											}
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+											{
+												ComboElements d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
+
+												((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+													(mag.DamageComboElement(d2, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+											}
+		}
+			break;
+		case CombatState::DamType::Armor:
+		{
+
+		}
+			break;
+		default:
+			break;
+		}
+
+		return false;
+	}
 }

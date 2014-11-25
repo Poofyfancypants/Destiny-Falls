@@ -5,6 +5,8 @@
 #include "../Game Objects/Minion.h"
 #include <vector>
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../../SGD Wrappers/SGD_AudioManager.h"
+
 
 class CombatState :
 	public IGameState
@@ -68,5 +70,8 @@ private:
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	SGD::HTexture m_henemy2 = SGD::INVALID_HANDLE;
+	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
+
 };
 

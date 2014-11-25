@@ -5,6 +5,7 @@
 #include "../../SGD Wrappers/SGD_Listener.h"
 #include "../Managers/AnimationManager.h"
 #include "../Quick Time/QuickTime.h"
+#include "../../SGD Wrappers/SGD_AudioManager.h"
 
 class Player :
 	public AnimatedObject,
@@ -37,12 +38,11 @@ public:
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
 	SGD::Point GetCheckpoint() {return m_ptCheckpoint;}
-	int GetDirection() {return m_nDirection;}
+	int GetDirection() const {return m_nDirection;}
 	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
-
 private:
 
 
@@ -67,4 +67,7 @@ private:
 
 	QuickTime* currentQT = nullptr;
 	bool m_bdoqt = false;
+
+	
+
 };

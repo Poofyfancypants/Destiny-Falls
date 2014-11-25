@@ -9,7 +9,8 @@
 #include "Chest.h"
 #include "../Game States/GameplayState.h"
 #include "../Managers/ParticleManager.h"
-
+#include "../Game States/MainMenuState.h"
+#include "../Managers/TileManager.h"
 #include "../Bitmap Font/BitmapFont.h"
 #include "../Quick Time/QuickTime.h"
 
@@ -17,23 +18,26 @@
 
 Player::Player() : Listener(this)
 {
-	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
 	m_pAnimator = m_pAnimator->GetInstance();
 	this->GetTimeStamp()->SetCurrentAnimation("WalkingDown");
 	this->GetTimeStamp()->SetCurrentFrame(0);
 	this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 	
-}
 
+}
 Player::~Player()
 {
+
 
 }
 
 void Player::Update(float elapsedTime)
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	if (m_nHealth <= 0)
 	{
+		pAudio->PlayAudio(Game::GetInstance()->deathSound, false);
 		m_nHealth = 0;
 		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 
@@ -42,7 +46,6 @@ void Player::Update(float elapsedTime)
 	}
 	if (!m_bSliding)
 		m_nDirection = 0;
-
 
 	TakeInput();
 	float speed;
@@ -81,6 +84,7 @@ void Player::Update(float elapsedTime)
 	else if (m_bSliding)
 	{
 		m_bMoving = false;
+		m_nDirection = 0;
 	}
 
 	m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
@@ -110,6 +114,7 @@ void Player::Render(void)
 	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 11 / 13) };
 	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U);
 
+
 	std::string potString = std::to_string(m_nPotions);
 	potString += " P";
 	pGraphics->DrawString(potString.c_str(), { (Game::GetInstance()->GetScreenWidth() - 100), (Game::GetInstance()->GetScreenHeight() - 100) }, SGD::Color(255, 255, 0, 0));
@@ -118,7 +123,7 @@ void Player::Render(void)
 	{
 		//AnimationTimeStamp ts = *this->GetTimeStamp();
 
-		m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)(point.x + (m_szSize.width / 2.0f)), (int)(point.y + (m_szSize.height / 2.0f)));
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), (int)( point.x + ( m_szSize.width / 2.0f ) ), (int)( point.y + ( m_szSize.height / 2.0f ) ) );
 	}
 
 }
@@ -126,6 +131,7 @@ void Player::Render(void)
 void Player::TakeInput()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	if (m_bMoving)
 	{
@@ -181,6 +187,7 @@ void Player::TakeInput()
 	if (pInput->IsKeyPressed(SGD::Key::P) && m_nPotions > 0 && m_nHealth < 100)
 	{
 		m_nHealth += 30;
+		pAudio->PlayAudio(Game::GetInstance()->potionSound, false);
 		if (m_nHealth > 100)
 		{
 			m_nCursor = 100;
@@ -198,8 +205,11 @@ SGD::Rectangle Player::GetRect(void) const
 
 void Player::HandleCollision(const iObject* pOther)
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
 	if (pOther->GetType() == OBJ_ENEMY)
 	{
+		pAudio->StopAudio(GameplayState::GetInstance()->bmusic);
 		Game::GetInstance()->AddState(CombatState::GetInstance());
 	}
 	if (pOther->GetType() == OBJ_CHEST)
@@ -216,10 +226,18 @@ void Player::HandleCollision(const iObject* pOther)
 	}
 	if (pOther->GetType() == OBJ_TRAP)
 	{
-		const Trap* trap = dynamic_cast<const Trap*>(pOther);
+		const Trap* trap = dynamic_cast<const Trap*>( pOther );
 
 		//		m_nHealth -= trap->GetDamage();
 		m_nHealth -= 10;
+	}
+	if( pOther->GetType() == OBJ_BOULDER )
+	{
+		if( m_bSliding )
+		{
+			m_bMoving = false;
+		}
+		m_ptPosition -= velocity;
 	}
 }
 

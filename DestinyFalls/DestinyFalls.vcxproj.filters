@@ -232,6 +232,9 @@
     <ClInclude Include="Source\Game States\SaveandLoadState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Managers\BitmapFontManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -399,6 +402,9 @@
     </ClCompile>
     <ClCompile Include="Source\Game States\SaveandLoadState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\BitmapFontManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

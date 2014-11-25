@@ -36,6 +36,7 @@ public:
 
 	bool LoadLevel(const char* _tilePath);
 	bool DrawLevel(SGD::Point _offset, SGD::Point _playerPos);
+	// - Returns false if no collision, true if collision
 	bool TileCollision(Object* _player, SGD::Point _futurePos);
 	void SpawnEnemies();
 private:

@@ -25,8 +25,8 @@ public:
 	std::vector<SGD::Key> m_vInput;
 	std::vector<SGD::Key> m_vKeys;
 
-	string m_sInput;
-	string m_sOutput;
+	string m_sInput = "";
+	string m_sOutput = "";
 
 	unsigned int m_unlength = 4;
 	unsigned int m_unNumCorrect = 0;

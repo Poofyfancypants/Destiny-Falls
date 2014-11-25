@@ -28,6 +28,7 @@ private:
 	int m_nCursor = 0;
 	bool m_bSelect = false;
 
+	//GameState Selection Rectangles
 	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
 	SGD::Rectangle TestAnimationSystem = { 0 , 0 , 0 , 0 };
 
@@ -37,7 +38,10 @@ private:
 	SGD::Rectangle Credit = { 0, 0, 0, 0 };
 	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
 
+	//Textures
 	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
+
+	
 
 };
 

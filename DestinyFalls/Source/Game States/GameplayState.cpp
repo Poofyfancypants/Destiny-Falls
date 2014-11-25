@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "../Game Core/Game.h"
 #include "../Game Objects/Player.h"
+#include "../Game Objects/Boulder.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Objects/Chest.h"
 #include "../Game Objects/SpikeTrap.h"
@@ -11,6 +12,7 @@
 #include "InventoryState.h"
 #include "MainMenuState.h"
 #include "PauseMenuState.h"
+#include "CombatState.h"
 #include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
@@ -40,7 +42,14 @@ void GameplayState::Enter()
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
+	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
 
+	bmusic = pAudio->LoadAudio(L"resource/audio/backgroundMusic.wav");
+	
+	pAudio->PlayAudio(bmusic, true);
+	
+
+	
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
@@ -57,20 +66,30 @@ void GameplayState::Enter()
 void GameplayState::Exit()
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	SGD::AudioManager*	  pAudio = SGD::AudioManager::GetInstance();
 
 	if( m_pPlayer != nullptr )
 	{
 		m_pPlayer->Release();
 		m_pPlayer = nullptr;
 	}
+	//audio unload
+	
+	pAudio->UnloadAudio(bmusic);
 
+	//unload images
+	pGraphics->UnloadTexture(m_hplayer);
+	pGraphics->UnloadTexture(m_henemy);
+	pGraphics->UnloadTexture(m_hChest);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
 
-	pGraphics->UnloadTexture( m_hplayer );
-	pGraphics->UnloadTexture( m_henemy );
-	pGraphics->UnloadTexture( m_hChest );
+	//pGraphics->UnloadTexture( m_hplayer );
+	//pGraphics->UnloadTexture( m_henemy );
+	//pGraphics->UnloadTexture( m_hChest );
+	pGraphics->UnloadTexture(m_hBoulder);
+
 	m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -111,6 +130,8 @@ void GameplayState::Update( float elapsedTime )
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 
+	m_pObjects->UpdateAll( elapsedTime );
+	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
@@ -136,7 +157,6 @@ void GameplayState::Render()
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
 {
 	Player* temp = new Player;
-
 	temp->SetImage( m_hplayer );
 	temp->SetSize( { 16, 16 } );
 	temp->SetPosition( _pos );
@@ -200,4 +220,15 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id )
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
+}
+
+Object* GameplayState::CreateBoulder( SGD::Point _pos)
+{
+		Boulder* temp = new Boulder;
+		temp->SetImage(m_hBoulder);
+		temp->SetPosition( _pos );
+		temp->SetSize( SGD::Size( 32, 32 ) );
+		return temp;
+	
+
 }
