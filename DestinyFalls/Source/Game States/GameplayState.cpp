@@ -39,7 +39,6 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 
-
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
@@ -137,6 +136,7 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
 
+	m_pObjects->UpdateAll( elapsedTime );
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_pObjects->RenderAll();
@@ -157,7 +157,6 @@ void GameplayState::Render()
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
 {
 	Player* temp = new Player;
-
 	temp->SetImage( m_hplayer );
 	temp->SetSize( { 16, 16 } );
 	temp->SetPosition( _pos );

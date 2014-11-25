@@ -217,7 +217,8 @@ void TileManager::SpawnEnemies()
 			}
 			if( m_TileMap[row][col].PlayerSpawn )
 			{
-				GameplayState::GetInstance()->GetPlayer()->SetPosition( dest );
+				GameplayState::GetInstance()->GetPlayer()->SetPosition(dest);
+				((Player*)GameplayState::GetInstance()->GetPlayer())->SetCheckPoint(dest);
 			}
 			if( m_TileMap[row][col].m_nChestID != 0 )
 			{
