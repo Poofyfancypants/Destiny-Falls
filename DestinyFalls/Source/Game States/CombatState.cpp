@@ -41,7 +41,6 @@ void CombatState::Enter( void )
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
-
 	Object* temp = AddMinion();
 	m_pObjects.push_back( temp );
 	Enemies[ 0 ] = temp;

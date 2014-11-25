@@ -112,6 +112,8 @@ void Player::Render( void )
 	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
 	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U );
 
+	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() * 11 / 13) };
+	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U);
 
 	std::string potString = std::to_string( m_nPotions );
 	potString += " P";
