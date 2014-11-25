@@ -28,6 +28,7 @@ void BitmapFontManager::DeleteInstance()
 	//Kill off all the memory leaks
 	for( ; iter != GetInstance()->LoadedFonts.end(); ++iter )
 	{
+		GetInstance()->LoadedFonts[ iter->first ]->Terminate();
 		//Delete Font Images
 		SGD::GraphicsManager::GetInstance()->UnloadTexture( GetInstance()->LoadedFonts[ iter->first ]->GetImage());
 
