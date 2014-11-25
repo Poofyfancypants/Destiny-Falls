@@ -224,6 +224,10 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_BOULDER )
 	{
+		if( m_bSliding )
+		{
+			m_bMoving = false;
+		}
 		m_ptPosition -= velocity;
 	}
 }
