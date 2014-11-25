@@ -103,7 +103,7 @@ void SaveandLoadState::Render()
 void SaveandLoadState::Save()
 {
 	fstream fout;
-	fout.open("resorce/Save/Save.txt", ios_base::out | ios_base::binary);
+	fout.open("../resorce/Save/Save.txt", ios_base::out | ios_base::binary);
 	if (fout.is_open())
 	{
 		int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();

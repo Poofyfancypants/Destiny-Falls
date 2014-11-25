@@ -38,7 +38,7 @@ public:
 	bool DrawLevel(SGD::Point _offset, SGD::Point _playerPos);
 	// - Returns false if no collision, true if collision
 	bool TileCollision(Object* _player, SGD::Point _futurePos);
-	void SpawnEnemies();
+	void SpawnObjects();
 private:
 	SGD::HTexture tileSet = SGD::INVALID_HANDLE;
 	string m_strTileSetPath;

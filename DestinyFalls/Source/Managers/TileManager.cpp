@@ -92,7 +92,7 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile = pTile->NextSiblingElement();
 	}
 
-	SpawnEnemies();
+	SpawnObjects();
 	return true;
 
 }
@@ -104,11 +104,8 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 
 	tileSet = pGraphics->LoadTexture( tilePath.c_str() );
 
-
 	float height = Game::GetInstance()->GetScreenHeight() / 2;
 	float width = Game::GetInstance()->GetScreenWidth() / 2;
-
-	//SGD::Rectangle screen = SGD::Rectangle( _playerPos.x-width, _playerPos.y-height, _playerPos.x+width, _playerPos.y +height );
 
 	for( size_t i = 0; i < m_TileMap.size(); i++ )
 	{
@@ -135,8 +132,24 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 				dest,
 				source
 				);
+
+			if( GameplayState::GetInstance()->GetDebugState() )
+			{
+				if( m_TileMap[i][j].collisionTile )
+				{ 
+					SGD::Rectangle rect = m_TileMap[i][j].CollisionRect;
+					rect.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+					pGraphics->DrawRectangle(rect, SGD::Color(255,0,0));
+				}
+				else if( m_TileMap[i][j].EndSlide || m_TileMap[i][j].StartSlide )
+				{
+					SGD::Rectangle rect = m_TileMap[i][j].CollisionRect;
+					rect.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+					pGraphics->DrawRectangle(rect, SGD::Color(0,255,0));
+
+				}
+			}
 		}
-		//pGraphics->DrawRectangle(screen, SGD::Color(155,155,155));
 	}
 
 	pGraphics->UnloadTexture( tileSet );
@@ -193,13 +206,17 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 			{
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
 					return true;
+				else if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
+					return true;
+				else if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].EndSlide )
+					return true;
 			}
 		}
 
 	}
-	return 0;
+	return false;
 }
-void TileManager::SpawnEnemies()
+void TileManager::SpawnObjects()
 {
 	for( size_t row = 0; row < m_TileMap.size(); row++ )
 	{
@@ -217,8 +234,8 @@ void TileManager::SpawnEnemies()
 			}
 			if( m_TileMap[row][col].PlayerSpawn )
 			{
-				GameplayState::GetInstance()->GetPlayer()->SetPosition(dest);
-				((Player*)GameplayState::GetInstance()->GetPlayer())->SetCheckPoint(dest);
+				GameplayState::GetInstance()->GetPlayer()->SetPosition( dest );
+				( (Player*)GameplayState::GetInstance()->GetPlayer() )->SetCheckPoint( dest );
 			}
 			if( m_TileMap[row][col].m_nChestID != 0 )
 			{

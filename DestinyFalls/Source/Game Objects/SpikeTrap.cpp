@@ -26,11 +26,18 @@ void SpikeTrap::Render( void )
 
 	SGD::Point point = { m_ptPosition.x - GameplayState::GetInstance()->GetWorldCam().x, m_ptPosition.y - GameplayState::GetInstance()->GetWorldCam().y };
 
+	if( GameplayState::GetInstance()->GetDebugState() )
+	{
+		SGD::Rectangle rec = GetRect();
+		rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+		pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	}
 
+	// - Temp Code till we have sprites.
 	SGD::Rectangle rec = GetRect();
 	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
 	// - Collision Rectangle
-	pGraphics->DrawRectangle(rec, SGD::Color());
+	pGraphics->DrawRectangle( rec, SGD::Color() );
 }
 SGD::Rectangle SpikeTrap::GetRect( void ) const
 {

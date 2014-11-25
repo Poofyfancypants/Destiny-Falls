@@ -6,7 +6,7 @@
 #include "../../SGD Wrappers/SGD_Event.h"
 #include "../Game States/GameplayState.h"
 
-Enemy::Enemy() : Listener(this)
+Enemy::Enemy() : Listener( this )
 {
 }
 
@@ -15,7 +15,7 @@ Enemy::~Enemy()
 {
 }
 
-void Enemy::Update(float elapsedTime)
+void Enemy::Update( float elapsedTime )
 {
 
 }
@@ -25,32 +25,34 @@ void Enemy::Render()
 
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-	SGD::Vector vec = { (m_ptPosition.x), (m_ptPosition.y) };
+	SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
 	//SGD::Point point = { vec.x - (m_szSize.width / 2 + GameplayState::GetInstance()->GetWorldCam().x), vec.y - (m_szSize.height / 2 + GameplayState::GetInstance()->GetWorldCam().y) };
-	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x , vec.y - GameplayState::GetInstance()->GetWorldCam().y  };
+	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
 
-	SGD::Rectangle rec = GetRect();
-	rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
+	if( GameplayState::GetInstance()->GetDebugState() )
+	{
+		SGD::Rectangle rec = GetRect();
+		rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+		pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	}
 
-	pGraphics->DrawRectangle(rec, SGD::Color(0, 0, 255));
-
-	pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
+	pGraphics->DrawTextureSection( m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 } );
 }
 
 SGD::Rectangle Enemy::GetRect() const
 {
-	SGD::Rectangle sourceRect = { m_ptPosition.x, m_ptPosition.y, (m_ptPosition.x + m_szSize.width), (m_ptPosition.y + m_szSize.height) };
+	SGD::Rectangle sourceRect = { m_ptPosition.x, m_ptPosition.y, ( m_ptPosition.x + m_szSize.width ), ( m_ptPosition.y + m_szSize.height ) };
 	return sourceRect;
 }
 
-void Enemy::HandleCollision(const iObject* pOther)
+void Enemy::HandleCollision( const iObject* pOther )
 {
-	DestroyObjectMessage* pMsg = new DestroyObjectMessage(this);
+	DestroyObjectMessage* pMsg = new DestroyObjectMessage( this );
 	pMsg->QueueMessage();
 	pMsg = nullptr;
 }
 
-void Enemy::HandleEvent(const SGD::Event* pEvent)
+void Enemy::HandleEvent( const SGD::Event* pEvent )
 {
 
 }

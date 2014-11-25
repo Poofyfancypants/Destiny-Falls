@@ -16,7 +16,7 @@ class GameplayState :
 {
 public:
 
-	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET, BOULDER_BUCKET };
+	enum BucketList { BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET  };
 	static GameplayState* GetInstance( void );
 
 	virtual void Enter( void )				override;
@@ -30,6 +30,10 @@ public:
 	float	GetWorldHeight( void ) const	{ return m_fWorldHeight; }
 
 	SGD::Point GetWorldCam( void ) const	{ return m_ptWorldCam; }
+
+	// - Debug A/M
+	bool GetDebugState() const {return m_bDebug;}
+	void SetDebugState(bool _state) {m_bDebug = _state;}
 
 	Object* GetPlayer() { return m_pPlayer; }
 	TileManager* GetMap() const { return m_pMap; }
@@ -76,6 +80,8 @@ private:
 
 	bool m_bPaused = false;
 
+	// - Debug Mode
+	bool m_bDebug = false;
 	
 
 };

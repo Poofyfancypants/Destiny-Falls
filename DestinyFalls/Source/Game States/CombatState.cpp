@@ -319,6 +319,6 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 			break;
 		}
 
-		return false;
 	}
+		return false;
 }

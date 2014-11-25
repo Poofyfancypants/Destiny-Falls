@@ -8,7 +8,7 @@ public:
 	SpikeTrap();
 	~SpikeTrap();
 
-	int GetDamage() {return m_nDamage;}
+	virtual int GetDamage() const {return m_nDamage;}
 
 	virtual void Update( float elapsedTime ) override;
 	virtual void Render( void ) override;
