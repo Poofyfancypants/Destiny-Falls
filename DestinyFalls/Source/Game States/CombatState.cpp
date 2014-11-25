@@ -12,6 +12,7 @@
 #include "../Game Objects/Enemy.h"
 #include "../Runes/RuneManager.h"
 #include "../Runes/Runes.h"
+#include "../Quick Time/QuickTime.h"
 
 CombatState* CombatState::GetInstance()
 {
