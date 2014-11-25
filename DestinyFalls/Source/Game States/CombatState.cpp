@@ -36,9 +36,7 @@ void CombatState::Enter( void )
 	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
 	m_henemy2 = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Plant.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
-	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/ShadowKnight.png" );
-	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Rock.png" );
-	m_henemy2 = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Plant.png" );
+
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
@@ -69,9 +67,6 @@ void CombatState::Exit( void )
 	pGraphics->UnloadTexture(m_henemy2);
 
 	pAudio->UnloadAudio(cMusic);
-	pGraphics->UnloadTexture( m_hplayer );
-	pGraphics->UnloadTexture( m_henemy );
-	pGraphics->UnloadTexture( m_henemy2 );
 
 	for( size_t i = 0; i < m_pObjects.size(); i++ )
 	{

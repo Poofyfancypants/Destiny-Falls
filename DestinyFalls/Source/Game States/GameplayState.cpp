@@ -86,9 +86,9 @@ void GameplayState::Exit()
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
 
-	pGraphics->UnloadTexture( m_hplayer );
-	pGraphics->UnloadTexture( m_henemy );
-	pGraphics->UnloadTexture( m_hChest );
+	//pGraphics->UnloadTexture( m_hplayer );
+	//pGraphics->UnloadTexture( m_henemy );
+	//pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture(m_hBoulder);
 
 	m_particle.Exit();
@@ -137,6 +137,7 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
 
+	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_pObjects->RenderAll();
 

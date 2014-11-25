@@ -10,7 +10,7 @@
 #include "../Game States/GameplayState.h"
 #include "../Managers/ParticleManager.h"
 #include "../Game States/MainMenuState.h"
-
+#include "../Managers/TileManager.h"
 #include "../Bitmap Font/BitmapFont.h"
 #include "../Quick Time/QuickTime.h"
 
@@ -75,7 +75,6 @@ void Player::Update( float elapsedTime )
 	}
 
 	SGD::Point futurePos = m_ptPosition + velocity;
-	if( !GameplayState::GetInstance()->GetMap()>TileCollision( this, futurePos ) && !m_bBoulderCollision )
 	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) )
 	{
 		m_ptPosition = futurePos;
