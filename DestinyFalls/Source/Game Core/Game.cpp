@@ -65,7 +65,7 @@ bool Game::Initialize(float width, float height)
 
 	SGD::MessageManager::GetInstance()->Initialize(&MessageProc);
 	SGD::EventManager::GetInstance()->Initialize();
-
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
 
@@ -73,6 +73,13 @@ bool Game::Initialize(float width, float height)
 	m_pFont->Initialize("resource/graphics/newfont_0.png");
 	m_pFont->LoadFontFile("resource/XML/newfont.xml");
 
+	m_mMusic = pAudio->LoadAudio(L"resource/audio/MenuMusic.wav");
+	m_mButton = pAudio->LoadAudio(L"resource/audio/MenuButton.wav");
+	m_mMeleeButton = pAudio->LoadAudio(L"resource/audio/Melee.wav");
+	m_mMagicButton = pAudio->LoadAudio(L"resource/audio/Magic.wav");
+
+
+	pAudio->PlayAudio(m_mMusic, true);
 
 	m_StringTable[0][1] = "Play Game";
 	m_StringTable[0][2] = "Load Game";
@@ -141,7 +148,17 @@ int Game::Update(void)
 //	- terminate the SGD wrappers
 void Game::Terminate(void)
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
 	// Terminate the core SGD wrappers
+	//MainMenuState::GetInstance()->Exit();
+
+	pAudio->UnloadAudio(m_mMusic);
+	pAudio->UnloadAudio(m_mButton);
+	pAudio->UnloadAudio(m_mMagicButton);
+	pAudio->UnloadAudio(m_mMeleeButton);
+
+
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
 
@@ -157,6 +174,8 @@ void Game::Terminate(void)
 
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
+
+	
 
 	delete m_pFont;
 }

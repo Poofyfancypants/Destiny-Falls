@@ -9,6 +9,7 @@
 #include "Chest.h"
 #include "../Game States/GameplayState.h"
 #include "../Managers/ParticleManager.h"
+#include "../Game States/MainMenuState.h"
 
 #include "../Bitmap Font/BitmapFont.h"
 #include "../Quick Time/QuickTime.h"
@@ -16,21 +17,35 @@
 Player::Player() : Listener(this)
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+	potionSound = pAudio->LoadAudio(L"resource/audio/healthPotion.wav");
+	deathSound = pAudio->LoadAudio(L"resource/audio/deathSound.wav");
+
+
 	m_pAnimator = m_pAnimator->GetInstance();
 	this->GetTimeStamp()->SetCurrentAnimation( "WalkingDown" );
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
-}
 
+
+}
 Player::~Player()
 {
-	
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+	pAudio->UnloadAudio(potionSound);
+	pAudio->UnloadAudio(deathSound);
+	//pAudio->UnloadAudio(MainMenuState::GetInstance()->)
+
 }
 
 void Player::Update(float elapsedTime)
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
 	if (m_nHealth <= 0)
 	{
+		pAudio->PlayAudio(deathSound, false);
 		m_nHealth = 0;
 		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 
@@ -121,6 +136,7 @@ void Player::Render(void)
 void Player::TakeInput()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	if (m_bMoving)
 	{
@@ -176,6 +192,7 @@ void Player::TakeInput()
 	if (pInput->IsKeyPressed(SGD::Key::P) && m_nPotions > 0 && m_nHealth < 100)
 	{
 		m_nHealth += 30;
+		pAudio->PlayAudio(potionSound, false);
 		if (m_nHealth > 100)
 		{
 			m_nCursor = 100;
@@ -193,8 +210,11 @@ SGD::Rectangle Player::GetRect(void) const
 
 void Player::HandleCollision(const iObject* pOther)
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
 	if (pOther->GetType() == OBJ_ENEMY)
 	{
+		pAudio->StopAudio(GameplayState::GetInstance()->bmusic);
 		Game::GetInstance()->AddState(CombatState::GetInstance());
 	}
 	if (pOther->GetType() == OBJ_CHEST)

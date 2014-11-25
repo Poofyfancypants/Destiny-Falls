@@ -5,6 +5,7 @@
 #include "../../SGD Wrappers/SGD_Listener.h"
 #include "../Managers/AnimationManager.h"
 #include "../Quick Time/QuickTime.h"
+#include "../../SGD Wrappers/SGD_AudioManager.h"
 
 class Player :
 	public AnimatedObject,
@@ -67,4 +68,8 @@ private:
 
 	QuickTime* currentQT = nullptr;
 	bool m_bdoqt = false;
+
+	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
+	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
+
 };

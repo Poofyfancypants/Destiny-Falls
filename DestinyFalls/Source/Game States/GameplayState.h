@@ -37,6 +37,11 @@ public:
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
 	Object* CreateChest(SGD::Point _pos);
+	//Audio
+	SGD::HAudio bmusic = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
+
 
 private:
 	GameplayState() = default;
@@ -67,5 +72,6 @@ private:
 
 	bool m_bPaused = false;
 
+	
 
 };

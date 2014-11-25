@@ -23,8 +23,10 @@ void MainMenuState::Enter()
 {
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	
 
-	//pGraphics->LoadTexture()
+	pAudio->PlayAudio(Game::GetInstance()->m_mMusic, true);
+
 
 	PlayGame = { 50, 50, 100, 80 };
 	LoadGame = { 50, 90, 100, 120 };
@@ -73,8 +75,6 @@ void MainMenuState::Enter()
 
 void MainMenuState::Exit()
 {
-	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
 
 }
@@ -82,13 +82,17 @@ void MainMenuState::Exit()
 bool MainMenuState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
 		m_nCursor = MenuSelections::exit;
 	}
 	if (pInput->IsKeyPressed(SGD::Key::Up))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
+
 		if (m_nCursor <= 0)
 			m_nCursor = MenuSelections::exit;
 		else
@@ -96,6 +100,8 @@ bool MainMenuState::Input()
 	}
 	else if (pInput->IsKeyPressed(SGD::Key::Down))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
+
 		if (m_nCursor >= MenuSelections::exit)
 			m_nCursor = MenuSelections::play;
 		else
@@ -104,10 +110,13 @@ bool MainMenuState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::Enter))
 	{
+		pAudio->PlayAudio(Game::GetInstance()->m_mButton);
+
 		switch (m_nCursor)
 		{
 		case MenuSelections::play:
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
+			pAudio->StopAudio(Game::GetInstance()->m_mMusic);
 			break;
 		case MenuSelections::load:
 			Game::GetInstance()->AddState(SaveandLoadState::GetInstance());
@@ -135,7 +144,7 @@ bool MainMenuState::Input()
 	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(PlayGame))
 		{
-			//Game::GetInstance()->RemoveState();
+			pAudio->PlayAudio(Game::GetInstance()->m_mButton);
 			Game::GetInstance()->AddState(GameplayState::GetInstance());
 		}
 	}
@@ -143,17 +152,15 @@ bool MainMenuState::Input()
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(TestAnimationSystem))
-		{
-			//Game::GetInstance()->RemoveState();
 			Game::GetInstance()->AddState(AnimationTestState::GetInstance());
-		}
+
 	}
 	return true;
 }
 
 void MainMenuState::Update(float elapsedTime)
 {
-	
+
 
 
 

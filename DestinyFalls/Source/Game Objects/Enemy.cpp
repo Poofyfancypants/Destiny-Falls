@@ -22,10 +22,6 @@ void Enemy::Update(float elapsedTime)
 
 void Enemy::Render()
 {
-	/*SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-
-	SGD::Rectangle Rect = { m_ptPosition.x, m_ptPosition.y, m_ptPosition.x + 64, m_ptPosition.y + 64 };
-	pGraphics->DrawRectangle(Rect, SGD::Color(255, 0, 0));*/
 
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 

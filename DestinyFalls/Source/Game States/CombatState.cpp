@@ -35,15 +35,9 @@ void CombatState::Enter(void)
 	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/ShadowKnight.png");
 	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
 	m_henemy2 = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Plant.png");
+	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
+	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
-	//for (unsigned int i = 0; i < rand() % 3 + 1; i++)
-	//{
-	//	Object* temp = AddMinion();
-	//	m_pObjects.push_back(temp);
-	//	Enemies[i] = temp;
-	//	m_nNumEnemies++;
-	//	TurnIndex++;
-	//}
 
 		Object* temp = AddMinion();
 		m_pObjects.push_back(temp);
@@ -67,14 +61,14 @@ void CombatState::Enter(void)
 void CombatState::Exit(void)
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
-
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+	pAudio->UnloadAudio(cMusic);
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
 	pGraphics->UnloadTexture(m_henemy2);
 
 	for (size_t i = 0; i < m_pObjects.size(); i++)
 	{
-		//if (m_pObjects[i]->GetType() != Object::ObjectType::OBJ_PLAYER)
 		{
 			m_pObjects[i]->Release();
 		}
@@ -85,10 +79,13 @@ void CombatState::Exit(void)
 bool CombatState::Input(void)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+
 	if (pInput->IsKeyPressed(SGD::Key::Escape))
 	{
-		//((Player*)GameplayState::GetInstance()->GetPlayer())->SetHealth(((Player*)GameplayState::GetInstance()->GetPlayer())->GetHealth() - 20);
 		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
+		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
 		Game::GetInstance()->RemoveState();
 	}
 
@@ -214,8 +211,7 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
 	RuneManager mag;
 
-	//Game::GetInstance()->AddState(InventoryState::GetInstance());
-	
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	switch (_DamType)
 	{
@@ -227,9 +223,8 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
-
+											pAudio->PlayAudio(Game::GetInstance()->m_mMeleeButton);
 											ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 
 												(mag.DamageComboElement( d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
@@ -244,8 +239,8 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 										}
 										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
 										{
+											pAudio->PlayAudio(Game::GetInstance()->m_mMagicButton);
 											ComboElements d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
 												(mag.DamageComboElement(d2, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
