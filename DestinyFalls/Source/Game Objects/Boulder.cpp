@@ -18,7 +18,7 @@ Boulder::~Boulder()
 
 void Boulder::Update( float elapsedTime )
 {
-	float speed = 500*elapsedTime;
+	float speed = 500 * elapsedTime;
 	SGD::Vector velocity;
 	switch( m_nDirection )
 	{
@@ -62,7 +62,7 @@ void Boulder::Render( void )
 	// - Collision Rectangle
 	//pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 0 ) );
 
-	pGraphics->DrawTexture(m_hImage, point);
+	pGraphics->DrawTexture( m_hImage, point );
 
 }
 SGD::Rectangle Boulder::GetRect( void ) const
@@ -73,6 +73,6 @@ void Boulder::HandleCollision( const iObject* pOther )
 {
 	if( pOther->GetType() == OBJ_PLAYER )
 	{
-		m_nDirection = dynamic_cast<const Player*>( pOther )->GetDirection();
+			m_nDirection = dynamic_cast<const Player*>( pOther )->GetDirection();
 	}
 }

@@ -120,7 +120,6 @@ int Game::Update( void )
 	SGD::MessageManager::GetInstance()->Update();
 
 
-
 	// Cap the elapsed time to 1/8th of a second
 	if( elapsedTime >= 0.125f )
 		elapsedTime = 0.125f;

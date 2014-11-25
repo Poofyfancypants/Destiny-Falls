@@ -131,15 +131,12 @@ void GameplayState::Update( float elapsedTime )
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 
+	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
 
-	m_pObjects->UpdateAll( elapsedTime );
-	//m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
-
-	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_pObjects->RenderAll();
 
@@ -227,7 +224,6 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id )
 
 Object* GameplayState::CreateBoulder( SGD::Point _pos)
 {
-	// 1 == fire trap || 2 == spike trap
 		Boulder* temp = new Boulder;
 		temp->SetImage(m_hBoulder);
 		temp->SetPosition( _pos );

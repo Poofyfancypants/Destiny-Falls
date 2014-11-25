@@ -55,10 +55,7 @@ void CombatState::Enter( void )
 	m_nNumEnemies++;
 	TurnIndex++;
 
-
-
 	PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pObjects[ 0 ] )->GetHealth();
-
 
 }
 
