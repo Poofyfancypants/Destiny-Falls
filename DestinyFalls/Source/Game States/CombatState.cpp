@@ -32,17 +32,15 @@ void CombatState::Enter( void )
 	m_pObjects.push_back( player );
 	TurnIndex++;
 
-<<<<<<< HEAD
 	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/ShadowKnight.png");
 	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
 	m_henemy2 = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Plant.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
-	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
-=======
 	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/ShadowKnight.png" );
 	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Rock.png" );
 	m_henemy2 = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Plant.png" );
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
+	//play combat music
+	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
 
 	Object* temp = AddMinion();
@@ -67,18 +65,16 @@ void CombatState::Enter( void )
 void CombatState::Exit( void )
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
-<<<<<<< HEAD
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-	pAudio->UnloadAudio(cMusic);
+
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
 	pGraphics->UnloadTexture(m_henemy2);
-=======
 
+	pAudio->UnloadAudio(cMusic);
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_henemy2 );
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
 
 	for( size_t i = 0; i < m_pObjects.size(); i++ )
 	{
@@ -92,7 +88,6 @@ void CombatState::Exit( void )
 bool CombatState::Input( void )
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-<<<<<<< HEAD
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 
@@ -100,12 +95,12 @@ bool CombatState::Input( void )
 	{
 		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
 		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
-=======
+	}
+
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
 		//((Player*)GameplayState::GetInstance()->GetPlayer())->SetHealth(((Player*)GameplayState::GetInstance()->GetPlayer())->GetHealth() - 20);
 		( ( Player* ) GameplayState::GetInstance()->GetPlayer() )->SetCombat( false );
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
 		Game::GetInstance()->RemoveState();
 	}
 
@@ -227,11 +222,10 @@ Object* CombatState::AddMinion1()
 	return temp;
 }
 
-bool CombatState::DealDamage( int _DamType , Object* _this , int _target )
+bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
 	RuneManager mag;
 
-<<<<<<< HEAD
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	switch (_DamType)
@@ -246,8 +240,8 @@ bool CombatState::DealDamage( int _DamType , Object* _this , int _target )
 										{
 											pAudio->PlayAudio(Game::GetInstance()->m_mMeleeButton);
 											ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() - 
-												(mag.DamageComboElement( d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+												(mag.DamageComboElement(d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
 										}
 	}
 		break;
@@ -268,43 +262,41 @@ bool CombatState::DealDamage( int _DamType , Object* _this , int _target )
 	}
 		break;
 	case CombatState::DamType::Armor:
-=======
-	//Game::GetInstance()->AddState(InventoryState::GetInstance());
+		//Game::GetInstance()->AddState(InventoryState::GetInstance());
 
 
-	switch( _DamType )
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
-	{
+		switch (_DamType)
+		{
 		case CombatState::DamType::Melee:
 		{
-			if( m_pObjects[ _target ]->GetType() == iObject::OBJ_PLAYER )
-			{
-				( ( Player* ) m_pObjects[ _target ] )->SetHealth( ( ( Player* ) m_pObjects[ _target ] )->GetHealth() - 20 );
-			}
-			if( m_pObjects[ _target ]->GetType() == iObject::OBJ_MINION )
-			{
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
+											{
+												((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+											}
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+											{
 
-				ComboElements d1 = mag.ElementCombination( InventoryState::GetInstance()->GetSwordSlot1() , InventoryState::GetInstance()->GetSwordSlot2() );
+												ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-				( ( Minion* ) m_pObjects[ _target ] )->SetHealth( ( ( Minion* ) m_pObjects[ _target ] )->GetHealth() -
-					( mag.DamageComboElement( d1 , ( ( Minion* ) m_pObjects[ _target ] )->GetAffinity() ) * 10 ) );
-			}
+												((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+													(mag.DamageComboElement(d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+											}
 		}
 			break;
 		case CombatState::DamType::Magic:
 		{
-			m_bCoolDown = true;
-			if( m_pObjects[ _target ]->GetType() == iObject::OBJ_PLAYER )
-			{
-				( ( Player* ) m_pObjects[ _target ] )->SetHealth( ( ( Player* ) m_pObjects[ _target ] )->GetHealth() - 20 );
-			}
-			if( m_pObjects[ _target ]->GetType() == iObject::OBJ_MINION )
-			{
-				ComboElements d2 = mag.ElementCombination( InventoryState::GetInstance()->GetRingSlot1() , InventoryState::GetInstance()->GetRingSlot2() );
+											m_bCoolDown = true;
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
+											{
+												((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
+											}
+											if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+											{
+												ComboElements d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
 
-				( ( Minion* ) m_pObjects[ _target ] )->SetHealth( ( ( Minion* ) m_pObjects[ _target ] )->GetHealth() -
-					( mag.DamageComboElement( d2 , ( ( Minion* ) m_pObjects[ _target ] )->GetAffinity() ) * 10 ) );
-			}
+												((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
+													(mag.DamageComboElement(d2, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+											}
 		}
 			break;
 		case CombatState::DamType::Armor:
@@ -314,7 +306,8 @@ bool CombatState::DealDamage( int _DamType , Object* _this , int _target )
 			break;
 		default:
 			break;
-	}
+		}
 
-	return false;
+		return false;
+	}
 }

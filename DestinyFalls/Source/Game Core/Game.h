@@ -51,6 +51,8 @@ public:
 	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mMagicButton = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mMeleeButton = SGD::INVALID_HANDLE;
+	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
+	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
 
 
 

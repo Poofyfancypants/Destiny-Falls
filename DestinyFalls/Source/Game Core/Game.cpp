@@ -77,7 +77,8 @@ bool Game::Initialize( float width , float height )
 	m_mButton = pAudio->LoadAudio(L"resource/audio/MenuButton.wav");
 	m_mMeleeButton = pAudio->LoadAudio(L"resource/audio/Melee.wav");
 	m_mMagicButton = pAudio->LoadAudio(L"resource/audio/Magic.wav");
-
+	potionSound = pAudio->LoadAudio(L"resource/audio/healthPotion.wav");
+	deathSound = pAudio->LoadAudio(L"resource/audio/deathSound.wav");
 
 	pAudio->PlayAudio(m_mMusic, true);
 
@@ -157,7 +158,8 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio(m_mButton);
 	pAudio->UnloadAudio(m_mMagicButton);
 	pAudio->UnloadAudio(m_mMeleeButton);
-
+	pAudio->UnloadAudio(potionSound);
+	pAudio->UnloadAudio(deathSound);
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();

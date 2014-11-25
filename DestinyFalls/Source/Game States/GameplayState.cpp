@@ -45,18 +45,14 @@ void GameplayState::Enter()
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
 
-<<<<<<< HEAD
 	bmusic = pAudio->LoadAudio(L"resource/audio/backgroundMusic.wav");
 	
 	pAudio->PlayAudio(bmusic, true);
 	
 
-	m_pPlayer = CreatePlayer(SGD::Point(150, 150));
-	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
-=======
+	
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
 
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
@@ -82,12 +78,10 @@ void GameplayState::Exit()
 	
 	pAudio->UnloadAudio(bmusic);
 
-<<<<<<< HEAD
 	//unload images
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
 	pGraphics->UnloadTexture(m_hChest);
-=======
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
 	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
@@ -97,7 +91,6 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture(m_hBoulder);
 
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
 	m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -144,7 +137,7 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
 
 	m_pObjects->UpdateAll( elapsedTime );
-	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
+	//m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 

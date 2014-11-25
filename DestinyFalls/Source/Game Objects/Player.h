@@ -70,7 +70,6 @@ private:
 	QuickTime* currentQT = nullptr;
 	bool m_bdoqt = false;
 
-	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
-	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
+	
 
 };

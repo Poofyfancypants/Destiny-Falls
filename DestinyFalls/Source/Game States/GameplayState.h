@@ -36,18 +36,15 @@ public:
 
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
-<<<<<<< HEAD
 	Object* CreateChest(SGD::Point _pos);
 	//Audio
 	SGD::HAudio bmusic = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
 
-=======
 	Object* CreateChest( SGD::Point _pos, int _id );
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
->>>>>>> 628cf9bd9cbd786bd5f663a88f601a5cca9cd73d
 
 private:
 	GameplayState() = default;
