@@ -42,6 +42,8 @@ public:
 	
 		vector<CharAttributes*> Letters;
 
+		SGD::HTexture GetImage(){ return m_hImage; }
+
 private:
 	// image
 	SGD::HTexture	m_hImage = SGD::INVALID_HANDLE;

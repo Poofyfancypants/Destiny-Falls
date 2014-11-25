@@ -25,7 +25,8 @@ public:
 	static void DeleteInstance();
 
 	void Render(string fontName, const char* output , SGD::Point position, float scale, SGD::Color color );
-	void Load( string fontName, string fileName );
+	//void Initialize( string fontName, string path );
+	void Load( string fontName, string imageName, string fileName );
 
 	void AddToBitmapFontMap( BitmapFont* font );
 

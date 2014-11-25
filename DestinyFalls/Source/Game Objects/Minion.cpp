@@ -2,7 +2,7 @@
 #include "Minion.h"
 #include "../Game Core/Game.h"
 #include "../Game States/CombatState.h"
-#include "../Bitmap Font/BitmapFont.h"
+#include "../Managers/BitmapFontManager.h"
 
 Minion::Minion()
 {
@@ -38,7 +38,7 @@ void Minion::Update(float elapsedTime)
 void Minion::Render(int _posIndex)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	const BitmapFont* pFont = Game::GetInstance()->GetFont();
+	BitmapFontManager* pFont = pFont->GetInstance();
 
 	switch (_posIndex)
 	{
@@ -46,7 +46,7 @@ void Minion::Render(int _posIndex)
 		pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawTexture(m_hMinion, { Enemy1rect.left, Enemy1rect.top }, {}, {}, {}, { .5, .5 });
 		pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 0, 255, 0 });
-		pFont->Draw(Game::GetInstance()->GetString(1, TypeString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
+		pFont->Render("Bernardo", Game::GetInstance()->GetString(1, TypeString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
 
 		break;
 	case 1: //Middle
