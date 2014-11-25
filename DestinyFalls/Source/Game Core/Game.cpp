@@ -72,17 +72,17 @@ bool Game::Initialize( float width , float height )
 
 	//Load the Bernardo font
 	string fontName = "Bernardo";
-	string imageName = "resource/graphics/newfont_0.png";
+	string imageName = "resource/graphics/Fonts/newfont_0.png";
 	string xmlFile = "resource/XML/newfont.xml";
 	m_pFonts->Load( fontName , imageName , xmlFile );
 	//Load the Bernardo font
 	string fontName1 = "Celtic";
-	string imageName1 = "resource/graphics/Celticfont_0.png";
+	string imageName1 = "resource/graphics/Fonts/Celticfont_0.png";
 	string xmlFile1 = "resource/XML/Celticfont.xml";
 	m_pFonts->Load(fontName1, imageName1, xmlFile1);
 	//Load the other font
 	string fontName2 = "Other";
-	string imageName2 = "resource/graphics/otherfont1_0.png";
+	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
 	string xmlFile2 = "resource/XML/otherfont1.xml";
 	m_pFonts->Load(fontName2, imageName2, xmlFile2);
 	
