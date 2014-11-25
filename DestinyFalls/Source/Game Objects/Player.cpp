@@ -31,7 +31,6 @@ Player::~Player()
 
 void Player::Update( float elapsedTime )
 {
-	m_bBoulderCollision = false;
 
 	if( m_nHealth <= 0 )
 	{
@@ -71,14 +70,8 @@ void Player::Update( float elapsedTime )
 		break;
 	}
 
-	// - I don't even!
-	m_ptPosition += velocity;
-	/*GameplayState::GetInstance()->GetObjManager()->CheckCollisions( GameplayState::PLAYER_BUCKET, GameplayState::BOULDER_BUCKET );
-	m_ptPosition -= velocity;*/
-
-
 	SGD::Point futurePos = m_ptPosition + velocity;
-	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) && !m_bBoulderCollision )
+	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) )
 	{
 		m_ptPosition = futurePos;
 
@@ -231,7 +224,11 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_BOULDER )
 	{
-		m_bBoulderCollision = true;
+		if( m_bSliding )
+		{
+			m_bMoving = false;
+		}
+		m_ptPosition -= velocity;
 	}
 }
 
