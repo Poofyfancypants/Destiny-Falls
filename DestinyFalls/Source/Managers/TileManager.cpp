@@ -6,6 +6,7 @@
 
 #include "../Game States/GameplayState.h"
 #include "../Game Objects/Player.h"
+#include "../Game Objects/Enemy.h"
 #include "../Game Objects/Boulder.h"
 #include "../Game Objects/iObject.h"
 
@@ -262,4 +263,36 @@ void TileManager::SpawnObjects()
 			}
 		}
 	}
+}
+
+void TileManager::NextWaypoint( Enemy* _enemy )
+{
+
+	if( _enemy->GetType() == iObject::OBJ_ENEMY )
+	{
+		int id = _enemy->GetWaypointID();
+		SGD::Point next = _enemy->GetNextWaypoint();
+		SGD::Point currPos = _enemy->GetPosition();
+		SGD::Point range = {400,400};
+		for( size_t row = 0; row < m_TileMap.size(); row++ )
+		{
+			for( size_t col = 0; col < m_TileMap[0].size(); col++ )
+			{
+				SGD::Point dest = { (float) ( row*m_szGridSize.width ), (float) ( col*m_szGridSize.height ) };
+				int temp = m_TileMap[row][col].m_nWaypointID;
+				// - Is it the next waypoint? ID == WP being chased
+				if( id == m_TileMap[row][col].m_nWaypointID )
+				{
+					// - Is waypoint within the range?
+					if( (abs(dest.x - currPos.x) <= range.x && abs(dest.y - currPos.y) <= range.y) )
+					{
+						_enemy->SetNextWaypoint(dest);
+						_enemy->SetPath(dest - currPos);
+						return;
+					}
+				}
+			}
+		}
+	}
+
 }

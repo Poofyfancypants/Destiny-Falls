@@ -18,6 +18,20 @@ Enemy::~Enemy()
 void Enemy::Update( float elapsedTime )
 {
 
+	if( abs( m_ptPosition.x - m_ptNextWaypoint.x ) <= 5 && abs( m_ptPosition.y - m_ptNextWaypoint.y ) <= 5 )
+	{
+		m_nWaypointID++;
+		GameplayState::GetInstance()->GetMap()->NextWaypoint( (Enemy*)( this ) );
+		if( m_nWaypointID >= 3 )
+			m_nWaypointID = 0;
+	}
+	else
+	{
+		SGD::Vector velocity;
+		velocity = ( m_vPath / 10 ) * elapsedTime;
+		m_ptPosition += velocity;
+	}
+
 }
 
 void Enemy::Render()

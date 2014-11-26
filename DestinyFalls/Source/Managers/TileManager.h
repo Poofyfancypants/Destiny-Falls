@@ -7,6 +7,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 class Object;
+class Enemy;
 
 using namespace std;
 struct Tile
@@ -39,6 +40,8 @@ public:
 	// - Returns false if no collision, true if collision
 	bool TileCollision(Object* _player, SGD::Point _futurePos);
 	void SpawnObjects();
+	void NextWaypoint(Enemy* _enemy);
+
 private:
 	SGD::HTexture tileSet = SGD::INVALID_HANDLE;
 	string m_strTileSetPath;

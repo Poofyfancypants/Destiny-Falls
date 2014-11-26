@@ -188,6 +188,8 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos )
 	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 32, 32 ) );
+	m_pMap->NextWaypoint(temp);
+	temp->SetWaypointID(1);
 	return temp;
 }
 
