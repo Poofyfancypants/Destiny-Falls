@@ -229,7 +229,6 @@ Object* CombatState::AddMinion()
 	return temp;
 }
 
-
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 {
 	RuneManager mag;

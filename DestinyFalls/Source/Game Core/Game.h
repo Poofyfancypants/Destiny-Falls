@@ -55,6 +55,28 @@ public:
 	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
 	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
 
+	// Combat backgrounds
+	SGD::HTexture m_hEarth1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEarth2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEarth3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEarth4 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce1	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce2	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce3	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce4	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce5	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce6	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir1	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir2	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir3	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir4	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire1	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire2	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire3	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire4	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFinal1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFinal2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFinal3 = SGD::INVALID_HANDLE;
 
 
 private:
