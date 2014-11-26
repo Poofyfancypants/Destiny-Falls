@@ -60,7 +60,7 @@ void GameplayState::Enter()
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
+	m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
 	//	m_particle.ReadXML( "resource/XML/Test2.xml" );
 
 }
@@ -188,6 +188,8 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos )
 	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 32, 32 ) );
+	m_pMap->NextWaypoint(temp);
+	temp->SetWaypointID(1);
 	return temp;
 }
 
