@@ -32,6 +32,11 @@ public:
 	void SetSize		(SGD::Size size) 	{ m_szSize = size; }
 	void SetRotation	(float rad)			{ m_fRotation = rad; }
 
+	int GetInit() const { return Initiative; }
+	void SetInit(int _init) { Initiative = _init; }
+	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
+	int GetTurnPos() const { return m_nTurnPos; }
+
 protected:
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
 	SGD::Point m_ptPosition = SGD::Point{ 0, 0 };
@@ -39,6 +44,9 @@ protected:
 	float				m_fRotation = 0.0f;
 
 private:
+	int Initiative = 0;
+	int m_nTurnPos;
+
 	unsigned int m_unRefCount = 1;
 };
 

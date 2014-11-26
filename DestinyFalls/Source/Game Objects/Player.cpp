@@ -279,11 +279,11 @@ bool Player::TakeTurn(float elapsedTime)
 	{
 		if (pInput->IsKeyPressed(SGD::Key::Up))
 		{
-			m_nCursor++;
+			m_nCursor--;
 		}
 		if (pInput->IsKeyPressed(SGD::Key::Down))
 		{
-			m_nCursor--;
+			m_nCursor++;
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
@@ -327,7 +327,7 @@ bool Player::TakeTurn(float elapsedTime)
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
 			selected = false;
-			pCombat->DealDamage(ActionSelected, this, m_nCursor+1);
+			pCombat->DealDamage(ActionSelected, this, m_nCursor);
 			m_nCursor = 0;
 			return true;
 		}

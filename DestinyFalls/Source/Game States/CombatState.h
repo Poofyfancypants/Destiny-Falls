@@ -73,5 +73,7 @@ private:
 	SGD::HTexture m_henemy2 = SGD::INVALID_HANDLE;
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
 
+	int numPots;
+	int numRunes;
 };
 

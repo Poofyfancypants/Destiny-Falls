@@ -41,10 +41,9 @@ public:
 	int GetDirection() const {return m_nDirection;}
 	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
-	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
-	int GetTurnPos() const { return m_nTurnPos; }
-private:
+	int m_nPotions = 0;
 
+private:
 
 	int m_nDirection;
 	bool m_bSliding = false;
@@ -53,10 +52,8 @@ private:
 	SGD::Point m_ptCheckpoint;
 	int m_nHealth = 100;
 	int m_nMaxHealth = 100;
-	int m_nPotions = 0;
 
 	bool m_bCombat = false;
-	int m_nTurnPos;
 
 	int ActionSelected = 0;
 	bool selected = false;

@@ -16,14 +16,13 @@ public:
 	virtual void Update(float elapsedTime);
 	virtual void Render(int _posIndex);
 	void SetCombatImage(SGD::HTexture _texture) { m_hMinion = _texture; }
-	int GetType(void) const { return OBJ_MINION; }
+	virtual int GetType(void) const { return OBJ_MINION; }
 	int GetAIType(void) const { return Minion_AI; }
 
 	void SetAIType(AI_Type _AIType) { m_AIType = _AIType; }
 
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
-	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
-	int GetTurnPos() const { return m_nTurnPos; }
+	
 	int GetHealth() const { return m_nHealth; }
 	void SetHealth(int _health) { m_nHealth = _health; }
 	Elements GetAffinity() { return m_rAffinity; }
@@ -38,7 +37,6 @@ public:
 
 private:
 	int * m_CurrentTurn;
-	int m_nTurnPos;
 	int m_nHealth = 20;
 	
 	AI_Type m_AIType;
@@ -53,6 +51,5 @@ private:
 	SGD::Rectangle Enemy1rect = { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect = { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect = { 561, 290, 625, 354 };
-
 };
 
