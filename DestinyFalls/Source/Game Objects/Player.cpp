@@ -50,9 +50,9 @@ void Player::Update( float elapsedTime )
 	TakeInput();
 	float speed;
 	if( m_bSliding )
-		speed = 400 * elapsedTime;
-	else
 		speed = 250 * elapsedTime;
+	else
+		speed = 100 * elapsedTime;
 
 	switch( m_nDirection )
 	{
