@@ -43,6 +43,12 @@ public:
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
+
+	//RunQuickTime
+	//		Turns on QuickTime
+	void RunQuickTime( );
+	void StopQuickTime();
+
 private:
 
 
@@ -66,7 +72,9 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	QuickTime* currentQT = nullptr;
-	bool m_bdoqt = false;
+	bool m_bDoQt = false;
+
+	
 
 	
 
