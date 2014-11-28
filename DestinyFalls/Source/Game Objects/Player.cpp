@@ -35,10 +35,9 @@ Player::~Player()
 void Player::Update( float elapsedTime )
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-
 	if( m_nHealth <= 0 )
 	{
-		pAudio->PlayAudio( Game::GetInstance()->deathSound , false );
+		pAudio->PlayAudio( Game::GetInstance()->deathSound, false );
 		m_nHealth = 0;
 		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 
@@ -51,31 +50,31 @@ void Player::Update( float elapsedTime )
 	TakeInput();
 	float speed;
 	if( m_bSliding )
-		speed = 400 * elapsedTime;
-	else
 		speed = 250 * elapsedTime;
+	else
+		speed = 100 * elapsedTime;
 
 	switch( m_nDirection )
 	{
-		case 1:
-			velocity = SGD::Vector( 0 , -speed );
-			break;
-		case 2:
-			velocity = SGD::Vector( 0 , speed );
-			break;
-		case 3:
-			velocity = SGD::Vector( -speed , 0 );
-			break;
-		case 4:
-			velocity = SGD::Vector( speed , 0 );
-			break;
-		default:
-			velocity = SGD::Vector();
-			break;
+	case 1:
+		velocity = SGD::Vector( 0, -speed );
+		break;
+	case 2:
+		velocity = SGD::Vector( 0, speed );
+		break;
+	case 3:
+		velocity = SGD::Vector( -speed, 0 );
+		break;
+	case 4:
+		velocity = SGD::Vector( speed, 0 );
+		break;
+	default:
+		velocity = SGD::Vector();
+		break;
 	}
 
 	SGD::Point futurePos = m_ptPosition + velocity;
-	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this , futurePos ) )
+	if( !GameplayState::GetInstance()->GetMap()->TileCollision( this, futurePos ) && !m_bCollision )
 	{
 		m_ptPosition = futurePos;
 
@@ -88,41 +87,40 @@ void Player::Update( float elapsedTime )
 		m_nDirection = 0;
 	}
 
-	m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+	m_bCollision = false;
+	m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp(), elapsedTime );
+
 }
 
 void Player::Render( void )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-		SGD::Vector vec = { ( m_ptPosition.x ) , ( m_ptPosition.y ) };
-		//SGD::Point point = { vec.x - ( m_szSize.width / 2 + GameplayState::GetInstance()->GetWorldCam().x ), vec.y - ( m_szSize.height / 2 + GameplayState::GetInstance()->GetWorldCam().y ) };
-		SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x , vec.y - GameplayState::GetInstance()->GetWorldCam().y };
+	SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
+	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
 
-		SGD::Rectangle rec = GetRect();
-		rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x , -GameplayState::GetInstance()->GetWorldCam().y );
+	if( GameplayState::GetInstance()->GetDebugState() )
+	{
+	SGD::Rectangle rec = GetRect();
+	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	}
 
-		pGraphics->DrawRectangle( rec , SGD::Color( 0 , 0 , 255 ) );
+	SGD::Point currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() * 6 / 8 ) };
 
-		//pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
+	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
+	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U );
 
-		SGD::Point currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75 , ( Game::GetInstance()->GetScreenHeight() * 6 / 8 ) };
-
-		currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75 , ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
-		pGraphics->DrawLine( currentHealthHUD , SGD::Point { currentHealthHUD.x + this->GetMaxHealth() , currentHealthHUD.y } , { 255 , 0 , 0 } , 17U );
-
-		currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75 , ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
-		pGraphics->DrawLine( currentHealthHUD , SGD::Point { currentHealthHUD.x + this->GetHealth() , currentHealthHUD.y } , { 0 , 255 , 0 } , 17U );
+	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() * 11 / 13 ) };
+	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
 
 
-		std::string potString = std::to_string( m_nPotions );
-		potString += " P";
-		pGraphics->DrawString( potString.c_str() , { ( Game::GetInstance()->GetScreenWidth() - 100 ) , ( Game::GetInstance()->GetScreenHeight() - 100 ) } , SGD::Color( 255 , 255 , 0 , 0 ) );
+	std::string potString = std::to_string( m_nPotions );
+	potString += " P";
+	pGraphics->DrawString( potString.c_str(), { ( Game::GetInstance()->GetScreenWidth() - 100 ), ( Game::GetInstance()->GetScreenHeight() - 100 ) }, SGD::Color( 255, 255, 0, 0 ) );
 
-		if( m_pAnimator->GetInstance()->CheckSize() )
-		{
-			//AnimationTimeStamp ts = *this->GetTimeStamp();
-
+	if( m_pAnimator->GetInstance()->CheckSize() )
+	{
 			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , ( int ) ( point.x + ( m_szSize.width / 2.0f ) ) , ( int ) ( point.y + ( m_szSize.height / 2.0f ) ) );
 		}
 	
@@ -188,7 +186,7 @@ void Player::TakeInput()
 	if( pInput->IsKeyPressed( SGD::Key::P ) && m_nPotions > 0 && m_nHealth < 100 )
 	{
 		m_nHealth += 30;
-		pAudio->PlayAudio( Game::GetInstance()->potionSound , false );
+		pAudio->PlayAudio( Game::GetInstance()->potionSound, false );
 		if( m_nHealth > 100 )
 		{
 			m_nCursor = 100;
@@ -200,7 +198,7 @@ void Player::TakeInput()
 
 SGD::Rectangle Player::GetRect( void ) const
 {
-	SGD::Rectangle sourceRect = { m_ptPosition.x , m_ptPosition.y , ( m_ptPosition.x + m_szSize.width ) , ( m_ptPosition.y + m_szSize.height ) };
+	SGD::Rectangle sourceRect = { m_ptPosition.x, m_ptPosition.y, ( m_ptPosition.x + m_szSize.width ), ( m_ptPosition.y + m_szSize.height ) };
 	return sourceRect;
 }
 
@@ -217,28 +215,42 @@ void Player::HandleCollision( const iObject* pOther )
 	{
 		if( SGD::InputManager::GetInstance()->IsKeyPressed( SGD::Key::Q ) )
 		{
-			if( ( ( Chest* ) pOther )->IsTrapped() )
+			if( ( (Chest*)pOther )->IsTrapped() )
 			{
 				Game::GetInstance()->AddState( CombatState::GetInstance() );
 			}
-			m_nPotions += ( ( Chest* ) pOther )->GetNumPots();
-			( ( Chest* ) pOther )->RemoveItems();
+			m_nPotions += ( (Chest*)pOther )->GetNumPots();
+			( (Chest*)pOther )->RemoveItems();
 		}
 	}
 	if( pOther->GetType() == OBJ_TRAP )
 	{
 		const Trap* trap = dynamic_cast< const Trap* >( pOther );
 
-		//		m_nHealth -= trap->GetDamage();
-		m_nHealth -= 10;
+		m_nHealth -= trap->GetDamage();
 	}
 	if( pOther->GetType() == OBJ_BOULDER )
 	{
-		if( m_bSliding )
+		switch( m_nDirection )
 		{
-			m_bMoving = false;
+		case 1: // - Up
+			m_ptPosition.y = pOther->GetRect().bottom + 3;
+			break;
+		case 2: // - Down
+			m_ptPosition.y = pOther->GetRect().top - m_szSize.height - 3;
+			break;
+		case 3: // - Left
+			m_ptPosition.x = pOther->GetRect().right + 3;
+			break;
+		case 4: // - Right
+			m_ptPosition.x = pOther->GetRect().left - m_szSize.width - 3;
+			break;
+		default:
+			velocity = SGD::Vector();
+			break;
 		}
-		m_ptPosition -= velocity;
+	//	m_ptPosition -= velocity;
+		m_bCollision = true;
 	}
 }
 
@@ -255,7 +267,7 @@ bool Player::TakeTurn( float elapsedTime )
 		posX = 400.0f;
 	}
 
-	SGD::Rectangle PlayerSelection { posX , ( float ) ( 420 + 50 * m_nCursor ) , posX + 40 , ( float ) ( 430 + 50 * m_nCursor ) };
+	SGD::Rectangle PlayerSelection{ posX, (float)( 420 + 50 * m_nCursor ), posX + 40, (float)( 430 + 50 * m_nCursor ) };
 
 
 	if( m_nHealth < 0 )
@@ -263,17 +275,17 @@ bool Player::TakeTurn( float elapsedTime )
 		return false;
 	}
 
-	pGraphics->DrawString( "Melee" , SGD::Point { 250 , 420 } , SGD::Color( 255 , 255 , 255 , 255 ) );
+	pGraphics->DrawString( "Melee", SGD::Point{ 250, 420 }, SGD::Color( 255, 255, 255, 255 ) );
 	if( CombatState::GetInstance()->GetCooldown() )
 	{
-		pGraphics->DrawString( "Magic" , SGD::Point { 250 , 470 } , SGD::Color( 150 , 255 , 255 , 255 ) );
+		pGraphics->DrawString( "Magic", SGD::Point{ 250, 470 }, SGD::Color( 150, 255, 255, 255 ) );
 	}
 	else
 	{
-		pGraphics->DrawString( "Magic" , SGD::Point { 250 , 470 } , SGD::Color( 255 , 255 , 255 , 255 ) );
+		pGraphics->DrawString( "Magic", SGD::Point{ 250, 470 }, SGD::Color( 255, 255, 255, 255 ) );
 	}
 	//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
-	pGraphics->DrawRectangle( PlayerSelection , SGD::Color( 255 , 0 , 255 , 0 ) , SGD::Color( 255 , 0 , 255 , 0 ) );
+	pGraphics->DrawRectangle( PlayerSelection, SGD::Color( 255, 0, 255, 0 ), SGD::Color( 255, 0, 255, 0 ) );
 
 
 	if( selected == false ) //Pick an action (melee magic or armor)
@@ -293,13 +305,12 @@ bool Player::TakeTurn( float elapsedTime )
 
 		if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //First Selection >> Action
 		{
-			
-
 			if( m_nCursor == 0 )
 			{
 				ActionSelected = m_nCursor;
 				selected = true;
 				m_nCursor = 0;
+				CombatState::GetInstance()->SetCooldown(false);
 			}
 
 			if( !CombatState::GetInstance()->GetCooldown() && m_nCursor == 1 )
@@ -330,9 +341,7 @@ bool Player::TakeTurn( float elapsedTime )
 		if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //Second Selection >> Target
 		{
 			selected = false;
-			RunQuickTime();
-
-			pCombat->DealDamage( ActionSelected , this , m_nCursor + 1 );
+			pCombat->DealDamage( ActionSelected, this, m_nCursor + 1 );
 			m_nCursor = 0;
 			return true;
 		}

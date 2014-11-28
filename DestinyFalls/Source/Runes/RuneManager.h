@@ -2,7 +2,7 @@
 
 #include "Runes.h"
 
-enum ComboElements {Steam, Ice, Lightning, Magma, Dust, Mud, NotCombo};
+enum ComboElements { Steam, Ice, Lightning, Magma, Dust, Mud, Inferno, Wave, Earthquake, Whirlwind, NotCombo };
 
 class RuneManager
 {

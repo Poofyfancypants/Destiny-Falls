@@ -4,13 +4,14 @@ class FireTrap :
 	public Trap
 {
 
-	int m_nDamage = 20;
-
+	int m_nDamage = 5;
+	float m_fTimer = 0;
+	bool m_bStartTimer = false;
 public:
 	FireTrap();
 	~FireTrap();
 
-	int GetDamage() {return m_nDamage;}
+	virtual int GetDamage() const {return m_nDamage;}
 
 	virtual void Update( float elapsedTime ) override;
 	virtual void Render( void ) override;

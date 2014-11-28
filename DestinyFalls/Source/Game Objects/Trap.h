@@ -8,7 +8,7 @@ public:
 	Trap();
 	~Trap();
 
-	virtual int GetDamage() = 0;
+	virtual int GetDamage() const = 0;
 
 	virtual void Update( float elapsedTime ) override;
 	virtual void Render( void ) override;

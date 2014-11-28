@@ -166,7 +166,7 @@ void AnimationManager::Load( string fileName )
 			Loaded[ a->GetName() ]->SetLooping( bLoops );
 
 			//Get the filepath for the image
-			string path = "resource/graphics/";
+			string path = "resource/graphics/SpriteSheet/";
 			string  tName = "";
 			tName = pAnimationInfo->Attribute( "hTexture" );
 			path += tName;

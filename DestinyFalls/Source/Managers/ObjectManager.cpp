@@ -5,45 +5,45 @@
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include <cassert>
 
-void ObjectManager::AddObject(iObject* pObject, unsigned int bucket)
+void ObjectManager::AddObject( iObject* pObject, unsigned int bucket )
 {
-	assert(pObject != nullptr && "ObjectManager::AddObject - parameter cannot be null");
+	assert( pObject != nullptr && "ObjectManager::AddObject - parameter cannot be null" );
 
-	if (bucket >= m_tObjects.size())
-		m_tObjects.resize(bucket + 1);
+	if( bucket >= m_tObjects.size() )
+		m_tObjects.resize( bucket + 1 );
 
-	m_tObjects[bucket].push_back(pObject);
+	m_tObjects[bucket].push_back( pObject );
 
 	pObject->AddRef();
 }
 
-void ObjectManager::RemoveObject(iObject* pObject, unsigned int bucket)
+void ObjectManager::RemoveObject( iObject* pObject, unsigned int bucket )
 {
 
 	ObjectVector& vec = m_tObjects[bucket];
 
-	for (unsigned int i = 0; i < vec.size(); i++)
+	for( unsigned int i = 0; i < vec.size(); i++ )
 	{
-		if (vec[i] == pObject)
+		if( vec[i] == pObject )
 		{
-			vec.erase(vec.begin() + i);
+			vec.erase( vec.begin() + i );
 			pObject->Release();
 			break;
 		}
 	}
 }
 
-void ObjectManager::RemoveObject(iObject* pObject)
+void ObjectManager::RemoveObject( iObject* pObject )
 {
-	for (unsigned int i = 0; i < m_tObjects.size(); i++)
+	for( unsigned int i = 0; i < m_tObjects.size(); i++ )
 	{
 		ObjectVector& vec = m_tObjects[i];
 
-		for (unsigned int i = 0; i < vec.size(); i++)
+		for( unsigned int i = 0; i < vec.size(); i++ )
 		{
-			if (vec[i] == pObject)
+			if( vec[i] == pObject )
 			{
-				vec.erase(vec.begin() + i);
+				vec.erase( vec.begin() + i );
 				pObject->Release();
 				return;
 			}
@@ -52,14 +52,14 @@ void ObjectManager::RemoveObject(iObject* pObject)
 	}
 }
 
-void ObjectManager::RemoveAll(unsigned int bucket)
+void ObjectManager::RemoveAll( unsigned int bucket )
 {
 	// Lock the iterator
 	m_bIterating = true;
 	{
 		// Release the reference to EVERY entity
 		ObjectVector& vec = m_tObjects[bucket];
-		for (unsigned int i = 0; i < vec.size(); i++)
+		for( unsigned int i = 0; i < vec.size(); i++ )
 		{
 			vec[i]->Release();
 			vec[i] = nullptr;
@@ -71,17 +71,17 @@ void ObjectManager::RemoveAll(unsigned int bucket)
 	m_bIterating = false;
 }
 
-void ObjectManager::RemoveAll(void)
+void ObjectManager::RemoveAll( void )
 {
 
 	// Lock the iterator
 	m_bIterating = true;
 	{
 		// Release every entity
-		for (unsigned int bucket = 0; bucket < m_tObjects.size(); bucket++)
+		for( unsigned int bucket = 0; bucket < m_tObjects.size(); bucket++ )
 		{
 			ObjectVector& vec = m_tObjects[bucket];
-			for (unsigned int i = 0; i < vec.size(); i++)
+			for( unsigned int i = 0; i < vec.size(); i++ )
 			{
 				vec[i]->Release();
 				vec[i] = nullptr;
@@ -96,39 +96,39 @@ void ObjectManager::RemoveAll(void)
 	m_tObjects.clear();
 }
 
-void ObjectManager::UpdateAll(float elapsedTime)
+void ObjectManager::UpdateAll( float elapsedTime )
 {
 	// Validate the iteration state
-	assert(m_bIterating == false && "ObjectManager::UpdateAll - cannot update while iterating");
+	assert( m_bIterating == false && "ObjectManager::UpdateAll - cannot update while iterating" );
 
 	// Lock the iterator
 	m_bIterating = true;
 	{
 		// Update every entity
-		for (unsigned int bucket = 0; bucket < m_tObjects.size(); bucket++)
+		for( unsigned int bucket = 0; bucket < m_tObjects.size(); bucket++ )
 		{
 			ObjectVector& vec = m_tObjects[bucket];
-			for (unsigned int i = 0; i < vec.size(); i++)
-				vec[i]->Update(elapsedTime);
+			for( unsigned int i = 0; i < vec.size(); i++ )
+				vec[i]->Update( elapsedTime );
 		}
 	}
 	// Unlock the iterator
 	m_bIterating = false;
 }
 
-void ObjectManager::RenderAll(void)
+void ObjectManager::RenderAll( void )
 {
 	// Validate the iteration state
-	assert(m_bIterating == false && "ObjectManager::RenderAll - cannot render while iterating");
+	assert( m_bIterating == false && "ObjectManager::RenderAll - cannot render while iterating" );
 
 	// Lock the iterator
 	m_bIterating = true;
 	{
 		// Render every entity
-		for (unsigned int bucket = 0; bucket < m_tObjects.size(); bucket++)
+		for( unsigned int bucket = 0; bucket < m_tObjects.size(); bucket++ )
 		{
 			ObjectVector& vec = m_tObjects[bucket];
-			for (unsigned int i = 0; i < vec.size(); i++)
+			for( unsigned int i = 0; i < vec.size(); i++ )
 				vec[i]->Render();
 		}
 	}
@@ -136,24 +136,24 @@ void ObjectManager::RenderAll(void)
 	m_bIterating = false;
 }
 
-void ObjectManager::CheckCollisions(unsigned int bucket1, unsigned int bucket2)
+void ObjectManager::CheckCollisions( unsigned int bucket1, unsigned int bucket2 )
 {
 	//Classic SGD Collisions
 
-	assert(m_bIterating == false && "ObjectManager::CheckCollisions - cannot collide while iterating");
+	assert( m_bIterating == false && "ObjectManager::CheckCollisions - cannot collide while iterating" );
 
-	if (bucket1 >= m_tObjects.size() || bucket2 >= m_tObjects.size()
-		|| m_tObjects[bucket1].size() == 0 || m_tObjects[bucket2].size() == 0)
+	if( bucket1 >= m_tObjects.size() || bucket2 >= m_tObjects.size()
+		|| m_tObjects[bucket1].size() == 0 || m_tObjects[bucket2].size() == 0 )
 		return;
 
 	m_bIterating = true;
 
-	if (bucket1 != bucket2)
+	if( bucket1 != bucket2 )
 	{
 		ObjectVector* Vec1 = &m_tObjects[bucket1];
 		ObjectVector* Vec2 = &m_tObjects[bucket2];
 
-		if (Vec2->size() < Vec1->size())
+		if( Vec2->size() < Vec1->size() )
 		{
 			ObjectVector* temp = Vec1;
 			Vec1 = Vec2;
@@ -163,20 +163,20 @@ void ObjectManager::CheckCollisions(unsigned int bucket1, unsigned int bucket2)
 		ObjectVector& vec1 = *Vec1;
 		ObjectVector& vec2 = *Vec2;
 
-		for (unsigned int i = 0; i < vec1.size(); i++)
+		for( unsigned int i = 0; i < vec1.size(); i++ )
 		{
-			for (unsigned int j = 0; j < vec2.size(); j++)
+			for( unsigned int j = 0; j < vec2.size(); j++ )
 			{
-				if (vec1[i] == vec2[j])
+				if( vec1[i] == vec2[j] )
 					continue;
 
 				SGD::Rectangle object1 = vec1[i]->GetRect();
 				SGD::Rectangle object2 = vec2[j]->GetRect();
 
-				if (object1.IsIntersecting(object2) == true)
+				if( object1.IsIntersecting( object2 ) == true )
 				{
-					vec1[i]->HandleCollision(vec2[j]);
-					vec2[j]->HandleCollision(vec1[i]);
+					vec1[i]->HandleCollision( vec2[j] );
+					vec2[j]->HandleCollision( vec1[i] );
 				}
 			}
 		}
@@ -185,23 +185,37 @@ void ObjectManager::CheckCollisions(unsigned int bucket1, unsigned int bucket2)
 	{
 		ObjectVector& vec = m_tObjects[bucket1];
 
-		for (unsigned int i = 0; i < vec.size()-1; i++)
+		for( unsigned int i = 0; i < vec.size() - 1; i++ )
 		{
-			for (unsigned int j = 0; j < vec.size(); j++)
+			for( unsigned int j = 0; j < vec.size(); j++ )
 			{
-				if (vec[i] == vec[j])
+				if( vec[i] == vec[j] )
 					continue;
 
 				SGD::Rectangle object1 = vec[i]->GetRect();
 				SGD::Rectangle object2 = vec[j]->GetRect();
 
-				if (object1.IsIntersecting(object2) == true)
+				if( object1.IsIntersecting( object2 ) == true )
 				{
-					vec[i]->HandleCollision(vec[j]);
-					vec[j]->HandleCollision(vec[i]);
+					vec[i]->HandleCollision( vec[j] );
+					vec[j]->HandleCollision( vec[i] );
 				}
 			}
 		}
 	}
 	m_bIterating = false;
+}
+
+unsigned int ObjectManager::GetNumObjects()
+{
+
+	unsigned int numBuckets = m_tObjects.size();
+	int numObjects = 0;
+
+	for( size_t i = 0; i < numBuckets; i++ )
+	{
+		numObjects += m_tObjects[i].size();
+	}
+
+	return numObjects;
 }
