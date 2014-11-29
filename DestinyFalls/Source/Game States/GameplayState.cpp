@@ -52,15 +52,13 @@ void GameplayState::Enter()
 
 
 
-	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
-	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+	SetNewLevel();
 	//	m_particle.ReadXML( "resource/XML/Test2.xml" );
 
 }
@@ -118,12 +116,18 @@ bool GameplayState::Input()
 	// - Toggle DebugMode with F2
 	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
 		m_bDebug = !m_bDebug;
-
+	if( pInput->IsKeyPressed( SGD::Key::F5 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 	return true;
 }
 
 void GameplayState::Update( float elapsedTime )
 {
+	if( m_bChangeLevels )
+		SetNewLevel();
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
 	if( m_fFPSTime >= 1.0f )
@@ -164,7 +168,7 @@ void GameplayState::Render()
 	{
 		SGD::OStringStream numEnt;
 		numEnt << "Objects: " << GameplayState::GetInstance()->GetObjManager()->GetNumObjects();
-		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point(10,30), { 0, 255, 0 } );
+		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point( 10, 30 ), { 0, 255, 0 } );
 
 		SGD::OStringStream fps;
 		fps << "FPS: " << m_nFPS;
@@ -188,8 +192,8 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos )
 	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 32, 32 ) );
-	m_pMap->NextWaypoint(temp);
-	temp->SetWaypointID(1);
+	m_pMap->NextWaypoint( temp );
+	temp->SetWaypointID( 1 );
 	return temp;
 }
 
@@ -249,4 +253,56 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 	return temp;
 
 
+}
+
+// - Helper
+void GameplayState::UnloadAndCreate()
+{
+
+	m_pObjects->RemoveAll();
+	delete m_pObjects;
+	m_pObjects = new ObjectManager;
+
+	if( m_pPlayer != nullptr )
+	{
+		m_pPlayer->Release();
+		m_pPlayer = nullptr;
+	}
+
+	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
+	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
+
+
+	delete m_pMap;
+	m_pMap = new TileManager;
+
+}
+void GameplayState::SetNewLevel()
+{
+	switch( m_nCurrentLevel )
+	{
+	case GameplayState::TUTORIAL_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+		break;
+	case GameplayState::EARTH_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
+		break;
+	case GameplayState::WATER_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
+		break;
+		//case GameplayState::AIR_LEVEL:
+		//	break;
+		//case GameplayState::FIRE_LEVEL:
+		//	break;
+		//case GameplayState::BOSS_LEVEL:
+		//	break;
+		//default:
+		//	break;
+	}
+
+
+	m_bChangeLevels = false;
 }

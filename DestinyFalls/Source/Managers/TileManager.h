@@ -23,6 +23,8 @@ struct Tile
 	bool EndSlide;
 	bool CheckPoint;
 	bool BoulderSpawn;
+	bool NextLevel;
+	bool PrevLevel;
 	
 	SGD::Rectangle CollisionRect;
 
