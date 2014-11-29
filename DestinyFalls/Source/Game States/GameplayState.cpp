@@ -43,6 +43,9 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
 	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirBoss2AttackXML.xml" );
+
 
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );

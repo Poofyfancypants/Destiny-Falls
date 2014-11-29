@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="AirElementalAttack" numFrames="6" looping="0" hTexture="Airelemental1.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="5" dTop="661" dRight="97" dBottom="786" cLeft="5" cTop="663" cRight="88" cBottom="783" x="49" y="116" />
+      <frame duration="0.25" damage="0" event="none" dLeft="97" dTop="644" dRight="203" dBottom="781" cLeft="97" cTop="644" cRight="202" cBottom="780" x="61" y="132" />
+      <frame duration="0.25" damage="0" event="none" dLeft="224" dTop="655" dRight="354" dBottom="782" cLeft="224" cTop="656" cRight="352" cBottom="781" x="34" y="119" />
+      <frame duration="0.25" damage="0" event="none" dLeft="355" dTop="660" dRight="471" dBottom="786" cLeft="355" cTop="661" cRight="465" cBottom="785" x="18" y="115" />
+      <frame duration="0.25" damage="0" event="none" dLeft="470" dTop="656" dRight="581" dBottom="788" cLeft="469" cTop="659" cRight="577" cBottom="781" x="20" y="117" />
+      <frame duration="0.25" damage="0" event="none" dLeft="582" dTop="654" dRight="663" dBottom="787" cLeft="583" cTop="656" cRight="660" cBottom="782" x="24" y="118" />
+    </animation_info>
+  </animation>
+</Root>

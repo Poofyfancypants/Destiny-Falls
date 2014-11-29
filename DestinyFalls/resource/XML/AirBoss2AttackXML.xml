@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="AirBossAttack" numFrames="14" looping="0" hTexture="AirMiniBoss.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="2" dTop="609" dRight="90" dBottom="721" cLeft="3" cTop="611" cRight="88" cBottom="719" x="29" y="102" />
+      <frame duration="0.05" damage="0" event="none" dLeft="90" dTop="599" dRight="191" dBottom="744" cLeft="91" cTop="600" cRight="189" cBottom="741" x="53" y="125" />
+      <frame duration="0.15" damage="0" event="none" dLeft="182" dTop="590" dRight="313" dBottom="759" cLeft="182" cTop="590" cRight="314" cBottom="758" x="96" y="147" />
+      <frame duration="0.05" damage="0" event="none" dLeft="309" dTop="575" dRight="453" dBottom="772" cLeft="310" cTop="576" cRight="452" cBottom="770" x="95" y="168" />
+      <frame duration="0.05" damage="0" event="none" dLeft="445" dTop="571" dRight="582" dBottom="762" cLeft="447" cTop="573" cRight="578" cBottom="758" x="65" y="171" />
+      <frame duration="0.05" damage="0" event="none" dLeft="574" dTop="575" dRight="688" dBottom="752" cLeft="574" cTop="578" cRight="689" cBottom="754" x="47" y="160" />
+      <frame duration="0.05" damage="0" event="none" dLeft="687" dTop="593" dRight="794" dBottom="742" cLeft="690" cTop="597" cRight="784" cBottom="736" x="53" y="140" />
+      <frame duration="0.05" damage="0" event="none" dLeft="800" dTop="605" dRight="906" dBottom="740" cLeft="802" cTop="606" cRight="904" cBottom="735" x="63" y="123" />
+      <frame duration="0.05" damage="0" event="none" dLeft="915" dTop="613" dRight="1015" dBottom="744" cLeft="916" cTop="617" cRight="1012" cBottom="743" x="59" y="113" />
+      <frame duration="0.05" damage="0" event="none" dLeft="1011" dTop="608" dRight="1106" dBottom="741" cLeft="1014" cTop="610" cRight="1104" cBottom="738" x="48" y="111" />
+      <frame duration="0.05" damage="0" event="none" dLeft="1112" dTop="606" dRight="1207" dBottom="740" cLeft="1113" cTop="606" cRight="1197" cBottom="734" x="39" y="111" />
+      <frame duration="0.05" damage="0" event="none" dLeft="1208" dTop="615" dRight="1289" dBottom="742" cLeft="1208" cTop="617" cRight="1283" cBottom="735" x="31" y="106" />
+      <frame duration="0.05" damage="0" event="none" dLeft="1284" dTop="611" dRight="1377" dBottom="737" cLeft="1285" cTop="615" cRight="1370" cBottom="731" x="40" y="114" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1379" dTop="610" dRight="1481" dBottom="732" cLeft="1387" cTop="617" cRight="1465" cBottom="720" x="38" y="111" />
+    </animation_info>
+  </animation>
+</Root>
