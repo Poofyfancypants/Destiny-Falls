@@ -12,7 +12,7 @@
 #include "../Game States/MainMenuState.h"
 #include "../Managers/TileManager.h"
 #include "../Bitmap Font/BitmapFont.h"
-#include "../Quick Time/QuickTime.h"
+//#include "../Quick Time/QuickTime.h"
 
 #include "../Game Objects/Trap.h"
 
@@ -121,8 +121,9 @@ void Player::Render( void )
 
 	if( m_pAnimator->GetInstance()->CheckSize() )
 	{
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), (int)( point.x + ( m_szSize.width / 2.0f ) ), (int)( point.y + ( m_szSize.height / 2.0f ) ) );
-	}
+			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , ( int ) ( point.x + ( m_szSize.width / 2.0f ) ) , ( int ) ( point.y + ( m_szSize.height / 2.0f ) ) );
+		}
+	
 
 }
 
@@ -224,7 +225,7 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_TRAP )
 	{
-		const Trap* trap = dynamic_cast<const Trap*>( pOther );
+		const Trap* trap = dynamic_cast< const Trap* >( pOther );
 
 		m_nHealth -= trap->GetDamage();
 	}
@@ -349,4 +350,20 @@ bool Player::TakeTurn( float elapsedTime )
 
 
 	return false;
+}
+
+void Player::RunQuickTime()
+{
+	m_bDoQt = true;
+	if( currentQT == nullptr )
+	{
+		currentQT = new QuickTime;
+		currentQT->SetLength( 4 );
+	}
+}
+void Player::StopQuickTime()
+{
+	m_bDoQt = false;
+	delete currentQT;
+	currentQT = nullptr;
 }
