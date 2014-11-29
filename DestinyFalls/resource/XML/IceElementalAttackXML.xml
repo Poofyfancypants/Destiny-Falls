@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="IceElementalAttack" numFrames="10" looping="0" hTexture="Iceelemental1.png">
+      <frame duration="0.15" damage="0" event="none" dLeft="67" dTop="696" dRight="203" dBottom="856" cLeft="68" cTop="697" cRight="202" cBottom="855" x="63" y="144" />
+      <frame duration="0.15" damage="0" event="none" dLeft="247" dTop="687" dRight="407" dBottom="857" cLeft="247" cTop="688" cRight="408" cBottom="855" x="73" y="153" />
+      <frame duration="0.15" damage="0" event="none" dLeft="460" dTop="683" dRight="594" dBottom="860" cLeft="463" cTop="685" cRight="580" cBottom="856" x="44" y="159" />
+      <frame duration="0.15" damage="0" event="none" dLeft="645" dTop="704" dRight="809" dBottom="858" cLeft="646" cTop="706" cRight="807" cBottom="856" x="48" y="136" />
+      <frame duration="0.15" damage="0" event="none" dLeft="822" dTop="672" dRight="962" dBottom="861" cLeft="824" cTop="673" cRight="959" cBottom="860" x="53" y="167" />
+      <frame duration="0.15" damage="0" event="none" dLeft="41" dTop="866" dRight="195" dBottom="1013" cLeft="43" cTop="868" cRight="191" cBottom="1009" x="90" y="136" />
+      <frame duration="0.15" damage="0" event="none" dLeft="212" dTop="888" dRight="380" dBottom="1012" cLeft="213" cTop="891" cRight="377" cBottom="1008" x="106" y="112" />
+      <frame duration="0.15" damage="0" event="none" dLeft="399" dTop="885" dRight="575" dBottom="1010" cLeft="400" cTop="887" cRight="574" cBottom="1009" x="105" y="117" />
+      <frame duration="0.15" damage="0" event="none" dLeft="582" dTop="882" dRight="775" dBottom="1017" cLeft="583" cTop="885" cRight="775" cBottom="1011" x="107" y="121" />
+      <frame duration="1.05" damage="0" event="none" dLeft="768" dTop="864" dRight="952" dBottom="1022" cLeft="770" cTop="867" cRight="947" cBottom="1015" x="107" y="139" />
+    </animation_info>
+  </animation>
+</Root>

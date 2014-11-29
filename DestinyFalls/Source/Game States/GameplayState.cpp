@@ -52,11 +52,12 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthEnemyAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml" );
-
-
-
-
-
+	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
+	
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
