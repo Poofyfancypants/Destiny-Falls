@@ -37,7 +37,11 @@ void GameplayState::Enter()
 
 	m_pObjects = new ObjectManager;
 	m_pMap = new TileManager;
+
+	//Set up Animation Manager
 	m_pAnimator = m_pAnimator->GetInstance();
+
+	//Load Animations
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
