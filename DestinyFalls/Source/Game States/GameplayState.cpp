@@ -40,6 +40,10 @@ void GameplayState::Enter()
 	m_pAnimator = m_pAnimator->GetInstance();
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
+	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
+	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
+
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
