@@ -19,6 +19,7 @@
 
 #include "../Messages/DestroyObjectMessage.h"
 
+
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
@@ -112,6 +113,10 @@ bool Game::Initialize( float width , float height )
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );
 
+	//Set up Animation Manager
+	m_pAnimator = m_pAnimator->GetInstance();
+
+
 	return true;	// success!
 }
 
@@ -191,6 +196,7 @@ void Game::Terminate( void )
 
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
+	m_pAnimator->DeleteInstance();
 
 	
 }
