@@ -51,11 +51,13 @@
 // Initialize
 //	- initialize the SGD wrappers
 //	- enter the Main Menu state
-bool Game::Initialize( float width , float height )
+bool Game::Initialize( float width, float height )
 {
 	// Seed First!
-	srand( ( unsigned int ) time( nullptr ) );
+	srand( (unsigned int)time( nullptr ) );
 	rand();
+
+
 
 	if( SGD::AudioManager::GetInstance()->Initialize() == false
 		|| SGD::GraphicsManager::GetInstance()->Initialize( false ) == false
@@ -67,7 +69,7 @@ bool Game::Initialize( float width , float height )
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
-	
+
 	//set the font pointer to the BitmapFontManager Instance
 	m_pFonts = m_pFonts->GetInstance();
 
@@ -75,27 +77,27 @@ bool Game::Initialize( float width , float height )
 	string fontName = "Bernardo";
 	string imageName = "resource/graphics/Fonts/newfont_0.png";
 	string xmlFile = "resource/XML/newfont.xml";
-	m_pFonts->Load( fontName , imageName , xmlFile );
+	m_pFonts->Load( fontName, imageName, xmlFile );
 	//Load the Bernardo font
 	string fontName1 = "Celtic";
 	string imageName1 = "resource/graphics/Fonts/Celticfont_0.png";
 	string xmlFile1 = "resource/XML/Celticfont.xml";
-	m_pFonts->Load(fontName1, imageName1, xmlFile1);
+	m_pFonts->Load( fontName1, imageName1, xmlFile1 );
 	//Load the other font
 	string fontName2 = "Other";
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
 	string xmlFile2 = "resource/XML/otherfont1.xml";
-	m_pFonts->Load(fontName2, imageName2, xmlFile2);
-	
+	m_pFonts->Load( fontName2, imageName2, xmlFile2 );
 
-	m_mMusic = pAudio->LoadAudio(L"resource/audio/MenuMusic.wav");
-	m_mButton = pAudio->LoadAudio(L"resource/audio/MenuButton.wav");
-	m_mMeleeButton = pAudio->LoadAudio(L"resource/audio/Melee.wav");
-	m_mMagicButton = pAudio->LoadAudio(L"resource/audio/Magic.wav");
-	potionSound = pAudio->LoadAudio(L"resource/audio/healthPotion.wav");
-	deathSound = pAudio->LoadAudio(L"resource/audio/deathSound.wav");
 
-	pAudio->PlayAudio(m_mMusic, true);
+	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
+	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
+	m_mMeleeButton = pAudio->LoadAudio( L"resource/audio/Melee.wav" );
+	m_mMagicButton = pAudio->LoadAudio( L"resource/audio/Magic.wav" );
+	potionSound = pAudio->LoadAudio( L"resource/audio/healthPotion.wav" );
+	deathSound = pAudio->LoadAudio( L"resource/audio/deathSound.wav" );
+
+	pAudio->PlayAudio( m_mMusic, true );
 
 	m_StringTable[0][1] = "Play";
 	m_StringTable[0][2] = "Load Game";
@@ -133,6 +135,7 @@ int Game::Update( void )
 
 	m_ulGameTime = now;
 
+
 	// Update the wrappers
 	if( SGD::AudioManager::GetInstance()->Update() == false
 		|| SGD::GraphicsManager::GetInstance()->Update() == false
@@ -146,19 +149,28 @@ int Game::Update( void )
 	if( elapsedTime >= 0.125f )
 		elapsedTime = 0.125f;
 
+	m_fFPSTime += elapsedTime;
+	m_nFrames++;
+	if( m_fFPSTime >= 1.0f )
+	{
+		m_nFPS = m_nFrames;
+		m_nFrames = 0;
+		m_fFPSTime = 0.0f;
+	}
+
 	int pCurrent = m_nCurrState;
 	// Let the current state handle input
-	if( m_pStateStack[ m_nCurrState ]->Input() == false )
+	if( m_pStateStack[m_nCurrState]->Input() == false )
 		return 1;	// exit success!
 
 	// Update & render the current state if it was not changed
 	if( m_nCurrState == pCurrent )
-		m_pStateStack[ m_nCurrState ]->Update( elapsedTime );
+		m_pStateStack[m_nCurrState]->Update( elapsedTime );
 
 	//for (int i = 0; i <= (int)m_pStateStack.size() - 1; i++)
 	//	m_pStateStack[i]->Render();
 
-	m_pStateStack[ m_nCurrState ]->Render();
+	m_pStateStack[m_nCurrState]->Render();
 
 	return 0;		// keep playing!
 }
@@ -174,12 +186,12 @@ void Game::Terminate( void )
 	// Terminate the core SGD wrappers
 	//MainMenuState::GetInstance()->Exit();
 
-	pAudio->UnloadAudio(m_mMusic);
-	pAudio->UnloadAudio(m_mButton);
-	pAudio->UnloadAudio(m_mMagicButton);
-	pAudio->UnloadAudio(m_mMeleeButton);
-	pAudio->UnloadAudio(potionSound);
-	pAudio->UnloadAudio(deathSound);
+	pAudio->UnloadAudio( m_mMusic );
+	pAudio->UnloadAudio( m_mButton );
+	pAudio->UnloadAudio( m_mMagicButton );
+	pAudio->UnloadAudio( m_mMeleeButton );
+	pAudio->UnloadAudio( potionSound );
+	pAudio->UnloadAudio( deathSound );
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
@@ -198,19 +210,19 @@ void Game::Terminate( void )
 	SGD::EventManager::DeleteInstance();
 	m_pAnimator->DeleteInstance();
 
-	
+
 }
 
 void Game::AddState( IGameState* pNewState )
 {
 	m_pStateStack.push_back( pNewState );
 	m_nCurrState = m_pStateStack.size() - 1;
-	m_pStateStack[ m_nCurrState ]->Enter();
+	m_pStateStack[m_nCurrState]->Enter();
 }
 
 void Game::RemoveState()
 {
-	m_pStateStack[ m_nCurrState ]->Exit();
+	m_pStateStack[m_nCurrState]->Exit();
 	m_pStateStack.pop_back();
 	m_nCurrState--;
 }
@@ -228,20 +240,20 @@ void Game::ClearStates()
 {
 	switch( pMsg->GetMessageID() )
 	{
-		case MessageID::MSG_DESTROY_OBJECT:
-		{
-			const DestroyObjectMessage* pDestroyMSG = dynamic_cast< const DestroyObjectMessage* >( pMsg );
+	case MessageID::MSG_DESTROY_OBJECT:
+	{
+										  const DestroyObjectMessage* pDestroyMSG = dynamic_cast<const DestroyObjectMessage*>( pMsg );
 
-			assert( pDestroyMSG != nullptr );
-			iObject* ptr = pDestroyMSG->GetiObject();
-			GameplayState::GetInstance()->GetObjManager()->RemoveObject( ptr );
-		}
-			break;
-		default:
-		{
-			OutputDebugStringW( L"GameplayState::MessageProc - unknown message id\n" );
-		}
-			break;
+										  assert( pDestroyMSG != nullptr );
+										  iObject* ptr = pDestroyMSG->GetiObject();
+										  GameplayState::GetInstance()->GetObjManager()->RemoveObject( ptr );
+	}
+		break;
+	default:
+	{
+			   OutputDebugStringW( L"GameplayState::MessageProc - unknown message id\n" );
+	}
+		break;
 	}
 
 }

@@ -97,7 +97,7 @@ private:
 	bool m_bDebug = false;
 	float m_fFPSTime = 0;
 	int m_nFrames = 0;
-	int m_nFPS = 60;
+	int m_nFPS = 0;
 
 	// - Level progression
 	int m_nCurrentLevel = 0;

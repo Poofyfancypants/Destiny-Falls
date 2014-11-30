@@ -42,6 +42,7 @@ private:
 	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 	
+	bool m_bDebug = false;
 
 };
 

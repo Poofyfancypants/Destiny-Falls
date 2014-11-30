@@ -57,13 +57,13 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
-	
+
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.png" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
-	m_hInvButton = pGraphics->LoadTexture(L"resource/graphics/NewInventory.png");
+	//m_hInvButton = pGraphics->LoadTexture(L"resource/graphics/NewInventory.png");
 
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
 
@@ -78,9 +78,7 @@ void GameplayState::Enter()
 
 	// - Manage The map
 	SetNewLevel();
-	//	m_particle.ReadXML( "resource/XML/Test2.xml" );
-
-
+	
 
 }
 
@@ -98,11 +96,11 @@ void GameplayState::Exit()
 	pAudio->UnloadAudio( bmusic );
 
 	//unload images
-	pGraphics->UnloadTexture(m_hplayer);
-	pGraphics->UnloadTexture(m_henemy);
-	pGraphics->UnloadTexture(m_hChest);
-	pGraphics->UnloadTexture(m_hBoulder);
-	pGraphics->UnloadTexture(m_hInvButton);
+	pGraphics->UnloadTexture( m_hplayer );
+	pGraphics->UnloadTexture( m_henemy );
+	pGraphics->UnloadTexture( m_hChest );
+	pGraphics->UnloadTexture( m_hBoulder );
+	//pGraphics->UnloadTexture(m_hInvButton);
 
 	m_particle.Exit();
 	m_pObjects->RemoveAll();
@@ -143,11 +141,11 @@ bool GameplayState::Input()
 		m_bChangeLevels = true;
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
-		if (pInput->GetCursorPosition().IsPointInRectangle(InventoryButton))
+		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
 		{
-			Game::GetInstance()->AddState(InventoryState::GetInstance()) ;
+			Game::GetInstance()->AddState( InventoryState::GetInstance() );
 		}
 	}
 
@@ -156,8 +154,11 @@ bool GameplayState::Input()
 
 void GameplayState::Update( float elapsedTime )
 {
+	// - Next Level?
 	if( m_bChangeLevels )
 		SetNewLevel();
+
+
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
 	if( m_fFPSTime >= 1.0f )
@@ -182,8 +183,8 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->RenderAll();
 
 
-	
-	
+
+
 }
 
 void GameplayState::Render()
@@ -193,11 +194,11 @@ void GameplayState::Render()
 
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 
-	InventoryButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120) }, SGD::Size{ 120, 120 });
+	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 120 ) }, SGD::Size{ 120, 120 } );
 
 
-	pGraphics->DrawRectangle(InventoryButton, SGD::Color{ 0, 0, 255, 0 });
-	pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)));
+	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
+	//pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)));
 
 	m_pObjects->RenderAll();
 	//m_particle.Render();
@@ -209,7 +210,7 @@ void GameplayState::Render()
 		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point( 10, 30 ), { 0, 255, 0 } );
 
 		SGD::OStringStream fps;
-		fps << "FPS: " << m_nFPS;
+		fps << "FPS: " << Game::GetInstance()->GetFrames();
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 }
