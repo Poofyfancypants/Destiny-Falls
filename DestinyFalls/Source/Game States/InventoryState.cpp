@@ -296,7 +296,7 @@ void InventoryState::Render()
 
 
 	pGraphics->DrawRectangle(GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 });
-	pGraphics->DrawTexture(GameplayState::GetInstance()->m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)));
+	pGraphics->DrawTexture(GameplayState::GetInstance()->m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, { 0.5f, 0.5f });
 
 
 
