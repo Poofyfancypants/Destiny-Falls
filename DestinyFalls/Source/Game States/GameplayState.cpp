@@ -156,6 +156,8 @@ bool GameplayState::Input()
 
 void GameplayState::Update( float elapsedTime )
 {
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
 	if( m_bChangeLevels )
 		SetNewLevel();
 	m_fFPSTime += elapsedTime;
@@ -181,7 +183,6 @@ void GameplayState::Update( float elapsedTime )
 
 	m_pObjects->RenderAll();
 
-
 	
 	
 }
@@ -200,6 +201,10 @@ void GameplayState::Render()
 
 	m_pObjects->RenderAll();
 	m_particle.Render();
+
+	
+
+
 
 	if( m_bDebug )
 	{
