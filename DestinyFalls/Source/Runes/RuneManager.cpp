@@ -4,9 +4,6 @@
 // combins element + element
 ComboElements RuneManager::ElementCombination(Elements x, Elements y)
 {
-	if (x == y)
-		return NotCombo;
-
 	if (((x == Fire) && (y == Water)) || ((x == Water) && (y == Fire)))
 		return Steam;
 	if (((x == Fire) && (y == Air)) || ((x == Air) && (y == Fire)))
@@ -19,6 +16,15 @@ ComboElements RuneManager::ElementCombination(Elements x, Elements y)
 		return Mud;
 	if (((x == Air) && (y == Earth)) || ((x == Earth) && (y == Air)))
 		return Dust;
+
+	if (((x == Fire) && (y == Fire)) || ((x == Fire) && (y == Fire)))
+		return Inferno;
+	if (((x == Water) && (y == Water)) || ((x == Water) && (y == Water)))
+		return Wave;
+	if (((x == Air) && (y == Air)) || ((x == Air) && (y == Air)))
+		return Whirlwind;
+	if (((x == Earth) && (y == Earth)) || ((x == Earth) && (y == Earth)))
+		return Earthquake;
 
 	return NotCombo;
 }
@@ -110,6 +116,42 @@ float RuneManager::DamageComboElement(ComboElements x, Elements y)
 		return 0.5;
 	if ((x == Steam) && (y == Earth))
 		return 1;
+
+	if ((x == Inferno) && (y == Fire))
+		return 0.25;
+	if ((x == Inferno) && (y == Water))
+		return 0.75;
+	if ((x == Inferno) && (y == Air))
+		return 2.5;
+	if ((x == Inferno) && (y == Earth))
+		return 2;
+
+	if ((x == Wave) && (y == Fire))
+		return 2.5;
+	if ((x == Wave) && (y == Water))
+		return 0.25;
+	if ((x == Wave) && (y == Air))
+		return 0.75;
+	if ((x == Wave) && (y == Earth))
+		return 2;
+
+	if ((x == Earthquake) && (y == Fire))
+		return 0.75;
+	if ((x == Earthquake) && (y == Water))
+		return 2.5;
+	if ((x == Earthquake) && (y == Air))
+		return 0.25;
+	if ((x == Earthquake) && (y == Earth))
+		return 2;
+
+	if ((x == Whirlwind) && (y == Fire))
+		return 0.75;
+	if ((x == Whirlwind) && (y == Water))
+		return 2;
+	if ((x == Whirlwind) && (y == Air))
+		return 0.25;
+	if ((x == Whirlwind) && (y == Earth))
+		return 2.5;
 
 	return 1;
 }

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="EarthMiniBossAttack" numFrames="6" looping="0" hTexture="EarthMiniBoss.png">
+      <frame duration="1.25" damage="0" event="none" dLeft="3" dTop="30" dRight="69" dBottom="105" cLeft="3" cTop="33" cRight="66" cBottom="104" x="43" y="69" />
+      <frame duration="0.25" damage="0" event="none" dLeft="80" dTop="30" dRight="144" dBottom="103" cLeft="83" cTop="40" cRight="136" cBottom="101" x="48" y="68" />
+      <frame duration="0.25" damage="0" event="none" dLeft="146" dTop="25" dRight="216" dBottom="106" cLeft="148" cTop="29" cRight="213" cBottom="103" x="58" y="73" />
+      <frame duration="1.05" damage="0" event="none" dLeft="216" dTop="40" dRight="283" dBottom="105" cLeft="217" cTop="43" cRight="281" cBottom="102" x="55" y="57" />
+      <frame duration="0.25" damage="0" event="none" dLeft="80" dTop="30" dRight="144" dBottom="103" cLeft="83" cTop="40" cRight="136" cBottom="101" x="48" y="68" />
+      <frame duration="1.25" damage="0" event="none" dLeft="3" dTop="30" dRight="69" dBottom="105" cLeft="3" cTop="33" cRight="66" cBottom="104" x="43" y="69" />
+    </animation_info>
+  </animation>
+</Root>

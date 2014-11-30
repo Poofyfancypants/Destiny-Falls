@@ -161,42 +161,6 @@ void CombatState::Render( void )
 
 	pGraphics->DrawRectangle( AbilityRect , SGD::Color { 100 , 150 , 150 , 150 } );
 
-	//for (size_t i = 0; i < m_pObjects.size(); i++)
-	//{
-	//	if (i == 0)
-	//	{
-	//		pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
-	//		pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 1)
-	//	{
-	//		pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawTexture(m_henemy, { Enemy1rect.left, Enemy1rect.top }, {}, {}, {}, { .5, .5 });
-	//		pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 2)
-	//	{
-	//		pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 3)
-	//	{
-	//		pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawRectangle(Enemy3HB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 4)
-	//	{
-	//		pGraphics->DrawRectangle(Compation1HB, SGD::Color{ 100, 150, 150, 150 });
-	//		pGraphics->DrawRectangle(Compation1rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//	}
-	//	if (i == 5)
-	//	{
-	//		pGraphics->DrawRectangle(Compation2rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawRectangle(Compation2HB, SGD::Color{ 100, 150, 150, 150 });
-	//	}
-	//}
-
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
 	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
@@ -319,6 +283,6 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 			break;
 		}
 
-		return false;
 	}
+		return false;
 }

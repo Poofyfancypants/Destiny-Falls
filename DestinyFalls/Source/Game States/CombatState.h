@@ -28,6 +28,7 @@ public:
 	Object* AddMinion();
 
 	bool GetCooldown() { return m_bCoolDown; }
+	void SetCooldown(bool x) { m_bCoolDown = x; }
 
 private:
 	CombatState() = default;

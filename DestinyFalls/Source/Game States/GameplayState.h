@@ -16,7 +16,9 @@ class GameplayState :
 {
 public:
 
-	enum BucketList { PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET, BOULDER_BUCKET };
+	// - Holds all the levels of the game.
+	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL };
+	enum BucketList { BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET };
 	static GameplayState* GetInstance( void );
 
 	virtual void Enter( void )				override;
@@ -31,12 +33,16 @@ public:
 
 	SGD::Point GetWorldCam( void ) const	{ return m_ptWorldCam; }
 
+	// - Debug A/M
+	bool GetDebugState() const { return m_bDebug; }
+	void SetDebugState( bool _state ) { m_bDebug = _state; }
+
 	Object* GetPlayer() { return m_pPlayer; }
 	TileManager* GetMap() const { return m_pMap; }
 
 	Object* CreatePlayer( SGD::Point _pos );
 	Object* CreateEnemy( SGD::Point _pos );
-	Object* CreateChest(SGD::Point _pos);
+	Object* CreateChest( SGD::Point _pos );
 	//Audio
 	SGD::HAudio bmusic = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
@@ -49,6 +55,14 @@ public:
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
 
+	// - Hepler function to create the next level.
+	void SetNewLevel();
+	void SetLevel( LevelList _level ) { m_nCurrentLevel = _level; }
+	void NextLevel() { m_nCurrentLevel++; }
+	void PrevLevel() { m_nCurrentLevel--; }
+	void ChangeLevel(bool _change) { m_bChangeLevels = _change;}
+	bool GetChangeLevel() {return m_bChangeLevels;}
+	void UnloadAndCreate();
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
@@ -79,5 +93,13 @@ private:
 
 	bool m_bPaused = false;
 
+	// - Debug Mode
+	bool m_bDebug = false;
+	float m_fFPSTime = 0;
+	int m_nFrames = 0;
+	int m_nFPS = 60;
 
+	// - Level progression
+	int m_nCurrentLevel = 0;
+	bool m_bChangeLevels = false;
 };

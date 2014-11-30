@@ -40,22 +40,19 @@ void Chest::Render(void)
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	SGD::Vector vec = { (m_ptPosition.x), (m_ptPosition.y) };
-	//SGD::Point point = { vec.x - (m_szSize.width / 2 + GameplayState::GetInstance()->GetWorldCam().x), vec.y - (m_szSize.height / 2 + GameplayState::GetInstance()->GetWorldCam().y) };
 	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x , vec.y - GameplayState::GetInstance()->GetWorldCam().y  };
 
-	SGD::Rectangle rec = GetRect();
-	rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
+	if( GameplayState::GetInstance()->GetDebugState() )
+	{
+		SGD::Rectangle rec = GetRect();
+		rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+		pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
+	}
 
-	//pGraphics->DrawRectangle(rec, SGD::Color(0, 0, 255));
-
-	pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, m_szSize.width, m_szSize.height });
+	pGraphics->DrawTexture(m_hImage, point);
 
 	if (Colliding)
 	{
-		if (Opened)
-		{
-		}
-
 		SGD::Point tempPos;
 		tempPos.x = (m_ptPosition.x - GameplayState::GetInstance()->GetWorldCam().x);
 		tempPos.y = (m_ptPosition.y - GameplayState::GetInstance()->GetWorldCam().y);

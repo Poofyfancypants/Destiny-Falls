@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="RockElementalAttack" numFrames="10" looping="0" hTexture="1005-Rock.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="53" dTop="686" dRight="195" dBottom="848" cLeft="54" cTop="687" cRight="193" cBottom="846" x="71" y="139" />
+      <frame duration="0.05" damage="0" event="none" dLeft="238" dTop="670" dRight="415" dBottom="851" cLeft="238" cTop="670" cRight="416" cBottom="851" x="87" y="157" />
+      <frame duration="0.05" damage="0" event="none" dLeft="473" dTop="666" dRight="629" dBottom="855" cLeft="474" cTop="668" cRight="629" cBottom="854" x="56" y="161" />
+      <frame duration="0.05" damage="0" event="none" dLeft="684" dTop="670" dRight="854" dBottom="867" cLeft="685" cTop="670" cRight="852" cBottom="866" x="47" y="157" />
+      <frame duration="0.05" damage="0" event="none" dLeft="883" dTop="648" dRight="1005" dBottom="842" cLeft="884" cTop="650" cRight="1005" cBottom="839" x="49" y="178" />
+      <frame duration="0.05" damage="0" event="none" dLeft="21" dTop="859" dRight="200" dBottom="1017" cLeft="21" cTop="860" cRight="186" cBottom="1013" x="102" y="141" />
+      <frame duration="0.05" damage="0" event="none" dLeft="202" dTop="893" dRight="401" dBottom="1014" cLeft="210" cTop="895" cRight="384" cBottom="1008" x="125" y="105" />
+      <frame duration="0.05" damage="0" event="none" dLeft="411" dTop="884" dRight="614" dBottom="1014" cLeft="413" cTop="887" cRight="603" cBottom="1009" x="116" y="116" />
+      <frame duration="0.05" damage="0" event="none" dLeft="615" dTop="879" dRight="801" dBottom="1017" cLeft="616" cTop="881" cRight="794" cBottom="1013" x="111" y="122" />
+      <frame duration="0.25" damage="0" event="none" dLeft="831" dTop="872" dRight="993" dBottom="1018" cLeft="832" cTop="876" cRight="987" cBottom="1011" x="103" y="131" />
+    </animation_info>
+  </animation>
+</Root>

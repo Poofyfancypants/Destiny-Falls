@@ -14,6 +14,8 @@
 #include "PauseMenuState.h"
 #include "CombatState.h"
 #include "../Messages/MessageID.h"
+#include "../../SGD Wrappers/SGD_Declarations.h"
+#include "../../SGD Wrappers/SGD_String.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -35,30 +37,48 @@ void GameplayState::Enter()
 
 	m_pObjects = new ObjectManager;
 	m_pMap = new TileManager;
+
+	//Set up Animation Manager
 	m_pAnimator = m_pAnimator->GetInstance();
+
+	//Load Animations
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
+	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
+	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthEnemyAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
+	
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
-	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
+	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.png" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
 	m_hInvButton = pGraphics->LoadTexture(L"resource/graphics/NewInventory.png");
 
-	bmusic = pAudio->LoadAudio(L"resource/audio/backgroundMusic.wav");
-	
-	pAudio->PlayAudio(bmusic, true);
-	
-	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
-	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
+	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
+
+	pAudio->PlayAudio( bmusic, true );
+
+
+
 
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
-	m_particle.ReadXML( "resource/XML/Test2.xml" );
+	SetNewLevel();
+	//	m_particle.ReadXML( "resource/XML/Test2.xml" );
 
 
 
@@ -74,8 +94,8 @@ void GameplayState::Exit()
 		m_pPlayer->Release();
 		m_pPlayer = nullptr;
 	}
-	//unload audio
-	pAudio->UnloadAudio(bmusic);
+
+	pAudio->UnloadAudio( bmusic );
 
 	//unload images
 	pGraphics->UnloadTexture(m_hplayer);
@@ -114,6 +134,14 @@ bool GameplayState::Input()
 	{
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
+	// - Toggle DebugMode with F2
+	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
+		m_bDebug = !m_bDebug;
+	if( pInput->IsKeyPressed( SGD::Key::F5 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
@@ -128,6 +156,18 @@ bool GameplayState::Input()
 
 void GameplayState::Update( float elapsedTime )
 {
+	if( m_bChangeLevels )
+		SetNewLevel();
+	m_fFPSTime += elapsedTime;
+	m_nFrames++;
+	if( m_fFPSTime >= 1.0f )
+	{
+		m_nFPS = m_nFrames;
+		m_nFrames = 0;
+		m_fFPSTime = 0.0f;
+	}
+
+
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 	m_pObjects->UpdateAll( elapsedTime );
@@ -160,8 +200,18 @@ void GameplayState::Render()
 	pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)));
 
 	m_pObjects->RenderAll();
-	// Render my particles
-	m_particle.Render();
+	//m_particle.Render();
+
+	if( m_bDebug )
+	{
+		SGD::OStringStream numEnt;
+		numEnt << "Objects: " << GameplayState::GetInstance()->GetObjManager()->GetNumObjects();
+		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point( 10, 30 ), { 0, 255, 0 } );
+
+		SGD::OStringStream fps;
+		fps << "FPS: " << m_nFPS;
+		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
+	}
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
@@ -180,6 +230,8 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos )
 	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 32, 32 ) );
+	m_pMap->NextWaypoint( temp );
+	temp->SetWaypointID( 1 );
 	return temp;
 }
 
@@ -227,15 +279,68 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id )
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
+	return 0;
 }
 
-Object* GameplayState::CreateBoulder( SGD::Point _pos)
+Object* GameplayState::CreateBoulder( SGD::Point _pos )
 {
-		Boulder* temp = new Boulder;
-		temp->SetImage(m_hBoulder);
-		temp->SetPosition( _pos );
-		temp->SetSize( SGD::Size( 32, 32 ) );
-		return temp;
-	
+	Boulder* temp = new Boulder;
+	temp->SetImage( m_hBoulder );
+	temp->SetPosition( _pos );
+	temp->SetSize( SGD::Size( 32, 32 ) );
+	return temp;
 
+
+}
+
+// - Helper
+void GameplayState::UnloadAndCreate()
+{
+
+	m_pObjects->RemoveAll();
+	delete m_pObjects;
+	m_pObjects = new ObjectManager;
+
+	if( m_pPlayer != nullptr )
+	{
+		m_pPlayer->Release();
+		m_pPlayer = nullptr;
+	}
+
+	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
+	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
+
+
+	delete m_pMap;
+	m_pMap = new TileManager;
+
+}
+void GameplayState::SetNewLevel()
+{
+	switch( m_nCurrentLevel )
+	{
+	case GameplayState::TUTORIAL_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+		break;
+	case GameplayState::EARTH_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
+		break;
+	case GameplayState::WATER_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
+		break;
+		//case GameplayState::AIR_LEVEL:
+		//	break;
+		//case GameplayState::FIRE_LEVEL:
+		//	break;
+		//case GameplayState::BOSS_LEVEL:
+		//	break;
+		//default:
+		//	break;
+	}
+
+
+	m_bChangeLevels = false;
 }
