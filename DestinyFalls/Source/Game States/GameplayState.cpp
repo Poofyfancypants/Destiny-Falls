@@ -6,7 +6,7 @@
 #include "../Game Objects/Chest.h"
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
-
+#include "../Game Objects/Player.h"
 #include "GameplayState.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
@@ -39,17 +39,15 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 
-
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.jpg" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
+	m_hInvButton = pGraphics->LoadTexture(L"resource/graphics/NewInventory.png");
 
 	bmusic = pAudio->LoadAudio(L"resource/audio/backgroundMusic.wav");
 	
 	pAudio->PlayAudio(bmusic, true);
-	
-
 	
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
@@ -61,6 +59,8 @@ void GameplayState::Enter()
 	// - Manage The map
 	m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
 	m_particle.ReadXML( "resource/XML/Test2.xml" );
+
+
 
 }
 
@@ -74,22 +74,15 @@ void GameplayState::Exit()
 		m_pPlayer->Release();
 		m_pPlayer = nullptr;
 	}
-	//audio unload
-	
+	//unload audio
 	pAudio->UnloadAudio(bmusic);
 
 	//unload images
 	pGraphics->UnloadTexture(m_hplayer);
 	pGraphics->UnloadTexture(m_henemy);
 	pGraphics->UnloadTexture(m_hChest);
-	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hplayer);
-	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_henemy);
-	//SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hChest);
-
-	//pGraphics->UnloadTexture( m_hplayer );
-	//pGraphics->UnloadTexture( m_henemy );
-	//pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture(m_hBoulder);
+	pGraphics->UnloadTexture(m_hInvButton);
 
 	m_particle.Exit();
 	m_pObjects->RemoveAll();
@@ -122,6 +115,13 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
 
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	{
+		if (pInput->GetCursorPosition().IsPointInRectangle(InventoryButton))
+		{
+			Game::GetInstance()->AddState(InventoryState::GetInstance()) ;
+		}
+	}
 
 	return true;
 }
@@ -130,17 +130,20 @@ void GameplayState::Update( float elapsedTime )
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-
 	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
 
+	m_pObjects->UpdateAll( elapsedTime );
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	m_pObjects->RenderAll();
 
+
+	
+	
 }
 
 void GameplayState::Render()
@@ -150,14 +153,20 @@ void GameplayState::Render()
 
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 
+	InventoryButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120) }, SGD::Size{ 120, 120 });
+
+
+	pGraphics->DrawRectangle(InventoryButton, SGD::Color{ 0, 0, 255, 0 });
+	pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)));
+
 	m_pObjects->RenderAll();
+	// Render my particles
 	m_particle.Render();
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
 {
 	Player* temp = new Player;
-
 	temp->SetImage( m_hplayer );
 	temp->SetSize( { 16, 16 } );
 	temp->SetPosition( _pos );
@@ -169,9 +178,6 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos )
 {
 	Enemy* temp = new Enemy;
 	temp->SetImage( m_henemy );
-	//int posx = rand() % 300 + 200;
-	//int posy = rand() % 300 + 250;
-
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 32, 32 ) );
 	return temp;

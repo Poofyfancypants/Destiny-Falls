@@ -5,6 +5,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../Bitmap Font/BitmapFont.h"
 #include "../Game Core/Game.h"
+#include "../Managers/BitmapFontManager.h"
 
 
 QuickTime::QuickTime()
@@ -60,10 +61,10 @@ void QuickTime::Render()
 
 	SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color { 255 , 100 , 100 , 100 } );
 
-	const BitmapFont* pFont = Game::GetInstance()->GetFont();
-
-	pFont->Draw( m_sOutput.c_str() , { 275 , 310 } , 1 , { 255 , 255 , 255 , 255 } );
-	pFont->Draw( m_sInput.c_str() , { 275 , 325 } , 1 , { 255 , 255 , 255 , 255 } );
+	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
+	BitmapFontManager* pFonts = pFonts->GetInstance();
+	pFonts->Render("Bernardo", m_sOutput.c_str() , { 275 , 310 } , 1 , { 255 , 255 , 255 , 255 } );
+	pFonts->Render( "Bernardo", m_sInput.c_str() , { 275 , 325 } , 1 , { 255 , 255 , 255 , 255 } );
 }
 
 void QuickTime::SetLength( unsigned int x )

@@ -46,6 +46,9 @@ public:
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
 
+	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
+	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
+
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
@@ -76,6 +79,5 @@ private:
 
 	bool m_bPaused = false;
 
-	
 
 };

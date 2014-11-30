@@ -76,7 +76,7 @@ void ParticleManager::ReadXML(const char* filepath)
 	}
 }
 
-void ParticleManager::Render(Object * rhs)
+void ParticleManager::Render(Object * rhs)// add a point and a size, to place it anywhere when calling render
 {
 	SGD::GraphicsManager * gm = SGD::GraphicsManager::GetInstance();
 	
@@ -102,8 +102,8 @@ void ParticleManager::Render(Object * rhs)
 		else
 		{
 			gm->DrawTexture(pImage,
-				SGD::Point(rand() % 100,
-				rand() % 100));
+				SGD::Point(rand() % 1000,
+				rand() % 1000), {}, {}, SGD::Color(255,255,255));
 		}
 
 	}

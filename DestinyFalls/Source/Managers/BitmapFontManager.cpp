@@ -2,6 +2,7 @@
 #include "BitmapFontManager.h"
 
 #include <iterator>
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 
 //***********************************************************************
@@ -21,16 +22,21 @@ BitmapFontManager* BitmapFontManager::GetInstance()
 
 void BitmapFontManager::DeleteInstance()
 {
+	//Create an iterator to traverse the LoadedFonts map
 	auto iter = GetInstance()->LoadedFonts.begin();
 
+	//Kill off all the memory leaks
 	for( ; iter != GetInstance()->LoadedFonts.end(); ++iter )
 	{
-		//SGD::GraphicsManager::GetInstance()->UnloadTexture( GetInstance()->Loaded[ iter->first ]->GetImage() );
+		GetInstance()->LoadedFonts[ iter->first ]->Terminate();
+		//Delete Font Images
+		SGD::GraphicsManager::GetInstance()->UnloadTexture( GetInstance()->LoadedFonts[ iter->first ]->GetImage());
 
-		// Do some stuff
+		// Delete fonts
 		delete GetInstance()->LoadedFonts[ iter->first ];
 	}
 
+	//Delete the singleton and set it to null
 	delete s_pInstance;
 	s_pInstance = nullptr;
 }
@@ -40,14 +46,18 @@ void BitmapFontManager::Render( string fontName, const char* output , SGD::Point
 	LoadedFonts[ fontName ]->Draw( output , position , scale , color );
 }
 
-void BitmapFontManager::Load( string fontName, string fileName )
+void BitmapFontManager::Load( string fontName ,  string imageName , string fileName )
 {
 	BitmapFont* newFont = new BitmapFont;
+
 	newFont->SetFontName( fontName );
+	newFont->Initialize( imageName );
 	newFont->LoadFontFile( fileName );
 	AddToBitmapFontMap( newFont );
 
 }
+
+
 
 void BitmapFontManager::AddToBitmapFontMap( BitmapFont* font )
 {

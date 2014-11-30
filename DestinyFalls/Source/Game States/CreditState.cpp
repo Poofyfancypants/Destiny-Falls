@@ -20,6 +20,7 @@ void CreditState::Enter()
 	//m_htBackground = SGD::AudioManager::GetInstance()->LoadAudio(L"");
 	//SGD::AudioManager::GetInstance()->PlayAudio(m_haBackground);
 
+	m_particle.ReadXML("resource/XML/Test2.xml");
 
 }
 
@@ -32,7 +33,7 @@ void CreditState::Exit()
 bool CreditState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if (pInput->IsKeyPressed(SGD::Key::Escape) || Timer <= 0.0f)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
 
 		Game::GetInstance()->RemoveState();
@@ -56,5 +57,7 @@ void CreditState::Render()
 
 	SGD::GraphicsManager::GetInstance()->DrawString("John OLeske\n\nSean Hathaway\n\nCaris Frazier\n\n Gregory Bey\n\n", { 100, 100 }, { 255, 255, 255 });
 	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 690, 575 }, { 255, 255, 255 });
+
+	m_particle.Render();
 
 }
