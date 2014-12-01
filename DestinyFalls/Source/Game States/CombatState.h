@@ -69,6 +69,9 @@ private:
 
 	bool m_bCoolDown = false;
 
+	bool m_bHealthWarning = false;
+	float m_fFlash = 0.0f;
+
 	//Soon to be vectors of CombatEntities
 	std::vector<Object*> m_pObjects; //Holds all combat entities
 	//Sorts based off initiative

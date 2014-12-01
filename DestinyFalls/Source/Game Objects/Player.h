@@ -43,6 +43,12 @@ public:
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
+
+	//RunQuickTime
+	//		Turns on QuickTime
+	void RunQuickTime( );
+	void StopQuickTime();
+
 private:
 
 
@@ -50,6 +56,9 @@ private:
 	bool m_bSliding = false;
 	bool m_bMoving = false;
 	bool m_bCollision = false;
+	bool m_bLowHealthWarning = false;
+	float m_fHealthFlash = 0.0f;
+
 	SGD::Vector velocity = SGD::Vector();
 	SGD::Point m_ptCheckpoint;
 	int m_nHealth = 100;
@@ -67,7 +76,9 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	QuickTime* currentQT = nullptr;
-	bool m_bdoqt = false;
+	bool m_bDoQt = false;
+
+	
 
 	
 

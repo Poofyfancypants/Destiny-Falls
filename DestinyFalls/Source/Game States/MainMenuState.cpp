@@ -177,7 +177,7 @@ void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
-	//pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
+	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
 	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager * pFonts = pFonts->GetInstance();

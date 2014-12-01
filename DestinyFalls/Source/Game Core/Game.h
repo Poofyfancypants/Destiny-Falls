@@ -6,6 +6,7 @@
 #include "../../SGD Wrappers/SGD_Handle.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../Managers/BitmapFontManager.h"
+#include "../Managers/AnimationManager.h"
 
 /**************************************************************/
 // Forward class declaration
@@ -99,6 +100,7 @@ private:
 	std::string m_StringTable[2][10];
 
 	std::vector<IGameState*> m_pStateStack;
+	AnimationManager* m_pAnimator;
 
 
 	/**********************************************************/

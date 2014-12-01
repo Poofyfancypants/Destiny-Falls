@@ -97,6 +97,8 @@ void CombatState::Update( float elapsedTime )
 {
 
 	int numEnemies = 0;
+	m_fFlash += elapsedTime;
+
 	for (size_t i = 0; i < m_pEnemies.size(); i++)
 	{
 		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
@@ -117,7 +119,18 @@ void CombatState::Update( float elapsedTime )
 	}
 
 	if (((Player*)m_pObjects[0])->GetHealth() > 0)
+	{
 		PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
+
+		if (((Player*)m_pObjects[0])->GetHealth() < 25 && m_fFlash > 2)
+		{
+			m_bHealthWarning = true;
+			m_fFlash = 0;
+		}
+		else
+			m_bHealthWarning = false;
+		
+	}
 	else
 	{
 		((Player*)m_pObjects[0])->SetCombat(false);
@@ -152,6 +165,8 @@ void CombatState::Update( float elapsedTime )
 				break;
 		}
 	}
+
+
 	CurrentTurn = 0;
 }
 
@@ -161,45 +176,14 @@ void CombatState::Render( void )
 
 	pGraphics->DrawRectangle( AbilityRect , SGD::Color { 100 , 150 , 150 , 150 } );
 
-	//for (size_t i = 0; i < m_pObjects.size(); i++)
-	//{
-	//	if (i == 0)
-	//	{
-	//		pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
-	//		pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 1)
-	//	{
-	//		pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawTexture(m_henemy, { Enemy1rect.left, Enemy1rect.top }, {}, {}, {}, { .5, .5 });
-	//		pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 2)
-	//	{
-	//		pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 3)
-	//	{
-	//		pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawRectangle(Enemy3HB, SGD::Color{ 100, 0, 255, 0 });
-	//	}
-	//	if (i == 4)
-	//	{
-	//		pGraphics->DrawRectangle(Compation1HB, SGD::Color{ 100, 150, 150, 150 });
-	//		pGraphics->DrawRectangle(Compation1rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//	}
-	//	if (i == 5)
-	//	{
-	//		pGraphics->DrawRectangle(Compation2rect, SGD::Color{ 100, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	//		pGraphics->DrawRectangle(Compation2HB, SGD::Color{ 100, 150, 150, 150 });
-	//	}
-	//}
-
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
-	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
+	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 255, 0, 255, 0 });
+	if (m_bHealthWarning)
+	{
+		pGraphics->DrawRectangle(SGD::Rectangle(0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), { 100, 255, 0, 0 });
+
+	}
 
 	for (size_t j = 0; j < m_pEnemies.size(); j++)
 	{

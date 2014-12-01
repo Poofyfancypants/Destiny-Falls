@@ -264,6 +264,14 @@ bool InventoryState::Input()
 			m_ptSelectedRune->SetElement(Earth);
 			m_ptSelectedRune->SetTier(3);
 		}
+
+		//leave inventory
+		if (pInput->GetCursorPosition().IsPointInRectangle(GameplayState::GetInstance()->InventoryButton))
+		{
+			Game::GetInstance()->RemoveState();		
+		}
+		
+
 	}
 #pragma endregion
 
@@ -285,6 +293,13 @@ void InventoryState::Render()
 	GameplayState::GetInstance()->Render();
 
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
+
+	pGraphics->DrawRectangle(GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 });
+	pGraphics->DrawTexture(GameplayState::GetInstance()->m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, { 0.5f, 0.5f });
+
+
+
 
 	pGraphics->DrawRectangle(rect, SGD::Color{ 200, 100, 100, 100 }, SGD::Color{ 255, 255, 255, 255 });
 
@@ -681,6 +696,8 @@ void InventoryState::Render()
 
 	pGraphics->DrawRectangle(IventoryRect12, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hFiret3, { 500, 434 }, {}, {}, {}, { 0.5f, 0.25f });
+
+	
 
 }
 

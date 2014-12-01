@@ -1,6 +1,7 @@
 #pragma once
 #include "IGameState.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
+#include "../Managers/ParticleManager.h"
 
 class CreditState :
 	public IGameState
@@ -26,5 +27,7 @@ private:
 	SGD::HTexture m_htBackground;
 
 	float Timer = 20.0f;
+	ParticleManager m_particle;
+
 };
 

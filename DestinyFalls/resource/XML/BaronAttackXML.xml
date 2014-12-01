@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="BaronAttack" numFrames="9" looping="0" hTexture="Baronsheet.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="0" dTop="402" dRight="54" dBottom="479" cLeft="3" cTop="409" cRight="51" cBottom="473" x="42" y="71" />
+      <frame duration="0.05" damage="0" event="none" dLeft="55" dTop="396" dRight="111" dBottom="483" cLeft="56" cTop="397" cRight="107" cBottom="481" x="25" y="80" />
+      <frame duration="0.15" damage="0" event="none" dLeft="110" dTop="405" dRight="164" dBottom="478" cLeft="110" cTop="406" cRight="162" cBottom="478" x="15" y="70" />
+      <frame duration="0.15" damage="0" event="none" dLeft="165" dTop="408" dRight="218" dBottom="479" cLeft="163" cTop="408" cRight="217" cBottom="482" x="10" y="72" />
+      <frame duration="0.15" damage="0" event="none" dLeft="219" dTop="408" dRight="275" dBottom="486" cLeft="219" cTop="407" cRight="275" cBottom="486" x="13" y="69" />
+      <frame duration="0.05" damage="0" event="none" dLeft="276" dTop="407" dRight="329" dBottom="485" cLeft="276" cTop="407" cRight="327" cBottom="483" x="21" y="69" />
+      <frame duration="0.05" damage="0" event="none" dLeft="328" dTop="401" dRight="381" dBottom="491" cLeft="329" cTop="403" cRight="380" cBottom="491" x="34" y="78" />
+      <frame duration="0.15" damage="0" event="none" dLeft="382" dTop="407" dRight="434" dBottom="493" cLeft="383" cTop="409" cRight="434" cBottom="494" x="10" y="75" />
+      <frame duration="1.25" damage="0" event="none" dLeft="435" dTop="399" dRight="504" dBottom="489" cLeft="435" cTop="400" cRight="502" cBottom="487" x="12" y="80" />
+    </animation_info>
+  </animation>
+</Root>

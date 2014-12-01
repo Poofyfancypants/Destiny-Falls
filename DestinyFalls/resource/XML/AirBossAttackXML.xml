@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="AirBossAttack" numFrames="10" looping="0" hTexture="AirBoss .png">
+      <frame duration="0.15" damage="0" event="none" dLeft="0" dTop="344" dRight="159" dBottom="515" cLeft="0" cTop="350" cRight="157" cBottom="515" x="87" y="153" />
+      <frame duration="0.15" damage="0" event="none" dLeft="150" dTop="346" dRight="350" dBottom="516" cLeft="150" cTop="346" cRight="356" cBottom="517" x="124" y="154" />
+      <frame duration="0.15" damage="0" event="none" dLeft="341" dTop="327" dRight="502" dBottom="514" cLeft="348" cTop="330" cRight="488" cBottom="508" x="69" y="172" />
+      <frame duration="0.15" damage="0" event="none" dLeft="514" dTop="371" dRight="700" dBottom="514" cLeft="514" cTop="373" cRight="700" cBottom="513" x="44" y="127" />
+      <frame duration="0.15" damage="0" event="none" dLeft="693" dTop="380" dRight="807" dBottom="507" cLeft="694" cTop="382" cRight="808" cBottom="506" x="39" y="119" />
+      <frame duration="0.15" damage="0" event="none" dLeft="800" dTop="386" dRight="975" dBottom="518" cLeft="803" cTop="391" cRight="970" cBottom="515" x="33" y="112" />
+      <frame duration="0.15" damage="0" event="none" dLeft="20" dTop="517" dRight="197" dBottom="663" cLeft="22" cTop="520" cRight="194" cBottom="658" x="55" y="126" />     
+    </animation_info>
+  </animation>
+</Root>

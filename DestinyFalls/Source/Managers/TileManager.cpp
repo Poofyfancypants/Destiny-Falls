@@ -38,7 +38,7 @@ bool TileManager::LoadLevel( const char* _file )
 
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
-	int startSlide, endSlide, checkPoint, boulderSpawn, QTevent;
+	int startSlide, endSlide, checkPoint, boulderSpawn, QTevent, nextLevel, prevLevel;
 	tilePath = "resource/graphics/TileSets/";
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
@@ -56,6 +56,8 @@ bool TileManager::LoadLevel( const char* _file )
 
 	while( pTile != nullptr )
 	{
+		pTile->Attribute( "PrevLevel", &prevLevel );
+		pTile->Attribute( "NextLevel", &nextLevel );
 		pTile->Attribute( "sourceX", &readTile.nX );
 		pTile->Attribute( "sourceY", &readTile.nY );
 		pTile->Attribute( "enemyID", &readTile.m_nEnemyID );
@@ -83,6 +85,8 @@ bool TileManager::LoadLevel( const char* _file )
 		readTile.CheckPoint = (bool)checkPoint;
 		readTile.BoulderSpawn = (bool)boulderSpawn;
 		readTile.QTEvent = (bool)QTevent;
+		readTile.NextLevel = (bool)nextLevel;
+		readTile.PrevLevel = (bool)prevLevel;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
@@ -191,6 +195,22 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 				{
 					// QT Event;
 				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].NextLevel )
+				{
+					if (GameplayState::GetInstance()->GetChangeLevel() == false)
+					{
+					GameplayState::GetInstance()->NextLevel();
+					GameplayState::GetInstance()->ChangeLevel(true);
+					}
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].PrevLevel )
+				{
+					if (GameplayState::GetInstance()->GetChangeLevel() == false)
+					{
+					GameplayState::GetInstance()->PrevLevel();
+					GameplayState::GetInstance()->ChangeLevel(true);
+					}
+				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
 					return true;
 			}
@@ -217,13 +237,15 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 	}
 	return false;
 }
+
 void TileManager::SpawnObjects()
 {
 	for( size_t row = 0; row < m_TileMap.size(); row++ )
 	{
 		for( size_t col = 0; col < m_TileMap[0].size(); col++ )
 		{
-			SGD::Point dest = { (float)( ( row*m_szGridSize.width ) - GameplayState::GetInstance()->GetWorldCam().x ), (float)( ( col*m_szGridSize.height ) - GameplayState::GetInstance()->GetWorldCam().y ) };
+			SGD::Point dest = { (float)(row*m_szGridSize.width), (float)( col*m_szGridSize.height ) };
+			//SGD::Point dest = { (float)( ( row*m_szGridSize.width ) - GameplayState::GetInstance()->GetWorldCam().x ), (float)( ( col*m_szGridSize.height ) - GameplayState::GetInstance()->GetWorldCam().y ) };
 			if( m_TileMap[row][col].m_nEnemyID != 0 )
 			{
 				// - MOER SPESIFIC WHEN WE HAVE MORE ENEMY TYPES

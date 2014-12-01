@@ -21,6 +21,7 @@ void CreditState::Enter()
 	//m_htBackground = SGD::AudioManager::GetInstance()->LoadAudio(L"");
 	//SGD::AudioManager::GetInstance()->PlayAudio(m_haBackground);
 
+	m_particle.ReadXML("resource/XML/Test2.xml");
 
 }
 
@@ -33,7 +34,7 @@ void CreditState::Exit()
 bool CreditState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if (pInput->IsKeyPressed(SGD::Key::Escape) || Timer <= 0.0f)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
 
 		Game::GetInstance()->RemoveState();
@@ -79,5 +80,7 @@ void CreditState::Render()
 	pFonts->Render("Bernardo", "Spencer Slaton",	{ 125, 450 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Bernardo", "Dave Olack",		{ 125, 500 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Bernardo", "esc to Exit",		{ 680, 550 }, 1, { 255, 255, 255, 255 });
+
+	m_particle.Render();
 
 }
