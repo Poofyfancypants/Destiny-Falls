@@ -43,7 +43,7 @@ void BitmapFontManager::DeleteInstance()
 
 void BitmapFontManager::Render( string fontName, const char* output , SGD::Point position , float scale , SGD::Color color )
 {
-	LoadedFonts[ fontName ]->Draw( output , position , scale , color );
+	LoadedFonts[fontName]->Draw(fontName, output, position, scale, color);
 }
 
 void BitmapFontManager::Load( string fontName ,  string imageName , string fileName )

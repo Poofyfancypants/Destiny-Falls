@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="PlantAttack" numFrames="9" looping="0" hTexture="dt_plants_003.png">
+      <frame duration="0.15" damage="0" event="none" dLeft="0" dTop="294" dRight="113" dBottom="447" cLeft="2" cTop="295" cRight="112" cBottom="446" x="58" y="141" />
+      <frame duration="0.15" damage="0" event="none" dLeft="117" dTop="294" dRight="261" dBottom="439" cLeft="115" cTop="293" cRight="262" cBottom="440" x="73" y="140" />
+      <frame duration="0.15" damage="0" event="none" dLeft="256" dTop="295" dRight="386" dBottom="442" cLeft="257" cTop="296" cRight="385" cBottom="443" x="66" y="139" />
+      <frame duration="0.15" damage="0" event="none" dLeft="385" dTop="297" dRight="525" dBottom="444" cLeft="385" cTop="297" cRight="524" cBottom="443" x="83" y="138" />
+      <frame duration="1.25" damage="0" event="none" dLeft="528" dTop="295" dRight="648" dBottom="438" cLeft="528" cTop="296" cRight="647" cBottom="437" x="62" y="138" />
+      <frame duration="0.15" damage="0" event="none" dLeft="385" dTop="297" dRight="525" dBottom="444" cLeft="385" cTop="297" cRight="524" cBottom="443" x="83" y="138" />
+      <frame duration="0.15" damage="0" event="none" dLeft="256" dTop="295" dRight="386" dBottom="442" cLeft="257" cTop="296" cRight="385" cBottom="443" x="66" y="139" />
+      <frame duration="0.15" damage="0" event="none" dLeft="117" dTop="294" dRight="261" dBottom="439" cLeft="115" cTop="293" cRight="262" cBottom="440" x="73" y="140" />
+      <frame duration="0.15" damage="0" event="none" dLeft="0" dTop="294" dRight="113" dBottom="447" cLeft="2" cTop="295" cRight="112" cBottom="446" x="58" y="141" />
+    </animation_info>
+  </animation>
+</Root>

@@ -80,6 +80,12 @@ public:
 	SGD::HTexture m_hFinal3 = SGD::INVALID_HANDLE;
 
 	int GetFrames() {return m_nFPS;}
+	// Menu backgrounds
+	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
+
+
 private:
 	/**********************************************************/
 	// Singleton Object:

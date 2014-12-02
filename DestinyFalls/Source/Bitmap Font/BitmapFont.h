@@ -18,7 +18,7 @@ public:
 	void Initialize(string path);
 	void Terminate(void);
 
-	void Draw(const char* output, SGD::Point position,
+	void Draw(string fontName, const char* output, SGD::Point position,
 		float scale, SGD::Color color) const;
 
 	bool LoadFontFile(string path);

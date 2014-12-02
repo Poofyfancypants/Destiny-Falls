@@ -18,6 +18,9 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
+	//Textures
+	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
+
 private:
 	MainMenuState() = default;
 	virtual ~MainMenuState() = default;
@@ -38,8 +41,6 @@ private:
 	SGD::Rectangle Credit = { 0, 0, 0, 0 };
 	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
 
-	//Textures
-	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 	
 	bool m_bDebug = false;

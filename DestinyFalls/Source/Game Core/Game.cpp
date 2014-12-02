@@ -113,6 +113,9 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[1][1] = "Rock Elemental";
 	m_StringTable[1][2] = "Plant Monster";
 
+	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/main.png");
+	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;
+
 	m_hEarth1	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest1.png");
 	m_hEarth2	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest2.png");
 	m_hEarth3	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest3.png");
@@ -139,7 +142,7 @@ bool Game::Initialize( float width, float height )
 	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth2);
 	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth3);
 	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth4);
-
+	
 	CombatState::GetInstance()->AddBackgroundsIce(m_hIce1);
 	CombatState::GetInstance()->AddBackgroundsIce(m_hIce2);
 	CombatState::GetInstance()->AddBackgroundsIce(m_hIce3);
@@ -147,17 +150,17 @@ bool Game::Initialize( float width, float height )
 	CombatState::GetInstance()->AddBackgroundsIce(m_hIce4);
 	CombatState::GetInstance()->AddBackgroundsIce(m_hIce5);
 	CombatState::GetInstance()->AddBackgroundsIce(m_hIce6);
-
+	
 	CombatState::GetInstance()->AddBackgroundsAir(m_hAir1);
 	CombatState::GetInstance()->AddBackgroundsAir(m_hAir2);
 	CombatState::GetInstance()->AddBackgroundsAir(m_hAir3);
 	CombatState::GetInstance()->AddBackgroundsAir(m_hAir4);
-
+	
 	CombatState::GetInstance()->AddBackgroundsFire(m_hFire1);
 	CombatState::GetInstance()->AddBackgroundsFire(m_hFire2);
 	CombatState::GetInstance()->AddBackgroundsFire(m_hFire3);
 	CombatState::GetInstance()->AddBackgroundsFire(m_hFire4);
-
+	
 	CombatState::GetInstance()->AddBackgroundsFinal(m_hFinal1);
 	CombatState::GetInstance()->AddBackgroundsFinal(m_hFinal2);
 	CombatState::GetInstance()->AddBackgroundsFinal(m_hFinal3);
@@ -269,6 +272,7 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture(m_hFinal2);
 	pGraphics->UnloadTexture(m_hFinal3);
 
+	pGraphics->UnloadTexture(m_hMainMenu);
 
 	pAudio->UnloadAudio(m_mMusic);
 	pAudio->UnloadAudio(m_mButton);

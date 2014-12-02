@@ -29,7 +29,6 @@ void MainMenuState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 
-	m_hBackground = pGraphics->LoadTexture(L"resource/graphics/MenuBackgrounds/main.png");
 	
 
 

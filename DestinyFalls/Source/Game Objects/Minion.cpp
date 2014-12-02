@@ -11,7 +11,6 @@ Minion::Minion()
 
 Minion::~Minion()
 {
-
 }
 
 void Minion::Update(float elapsedTime)
