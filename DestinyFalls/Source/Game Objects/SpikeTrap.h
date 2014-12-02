@@ -3,12 +3,15 @@
 class SpikeTrap :
 	public Trap
 {
-	int m_nDamage = 10;
+	int m_nDamage = 3;
+	float m_fTimer = 0;
+	bool m_bStartTimer = false;
+
 public:
 	SpikeTrap();
 	~SpikeTrap();
 
-	int GetDamage() {return m_nDamage;}
+	virtual int GetDamage() const {return m_nDamage;}
 
 	virtual void Update( float elapsedTime ) override;
 	virtual void Render( void ) override;

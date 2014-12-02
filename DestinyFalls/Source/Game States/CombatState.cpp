@@ -9,7 +9,7 @@
 #include "../Game Core/Game.h"
 #include "../Game Objects/Minion.h"
 #include "../Game Objects/Player.h"
-#include "../Game Objects/Enemy.h"
+#include "../Game Objects/Companion.h"
 #include "../Runes/RuneManager.h"
 #include "../Runes/Runes.h"
 #include "../Quick Time/QuickTime.h"
@@ -38,7 +38,9 @@ void CombatState::Enter(void)
 	m_pHeroes.push_back(player);
 
 	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/ShadowKnight.png");
-	m_henemy = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
+	m_hMinion = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/enemy1.png");
+	m_hRockGolem = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
+	m_hPlantMonster = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Plant.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
 
 	//play combat music
@@ -87,7 +89,9 @@ void CombatState::Exit(void)
 	m_pHeroes.clear();
 
 	pGraphics->UnloadTexture(m_hplayer);
-	pGraphics->UnloadTexture(m_henemy);
+	pGraphics->UnloadTexture(m_hMinion);
+	pGraphics->UnloadTexture(m_hRockGolem);
+	pGraphics->UnloadTexture(m_hPlantMonster);
 
 	pAudio->UnloadAudio(cMusic);
 
@@ -103,11 +107,6 @@ bool CombatState::Input(void)
 	{
 		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
 		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
-	}
-
-	if (pInput->IsKeyPressed(SGD::Key::Escape))
-	{
-		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
 		Game::GetInstance()->RemoveState();
 	}
 
@@ -116,59 +115,81 @@ bool CombatState::Input(void)
 
 void CombatState::Update(float elapsedTime)
 {
-
-	int numEnemies = 0;
-	for (size_t i = 0; i < m_pEnemies.size(); i++)
+	//test
+	/*if (ActionTimer == 3.0f)
 	{
-		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+	int hell = 4;
+	}*/
+
+
+	ActionTimer -= elapsedTime;
+	if (ActionTimer <= 0.0f)
+		ActionTimer = 0.0f;
+
+	if (ActionTimer <= 0.0f)
+	{
+		int numEnemies = 0;
+		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
-			numEnemies++;
-			((Minion*)m_pEnemies[i])->Update(elapsedTime);
+			if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+			{
+				numEnemies++;
+				((Minion*)m_pEnemies[i])->Update(elapsedTime);
+			}
 		}
-	}
-	if (numEnemies <= 0) //Win
-	{
-		((Player*)m_pHeroes[0])->SetCombat(false);
-		((Player*)m_pHeroes[0])->m_nPotions += numPots;
-
-		Game::GetInstance()->RemoveState();
-		return;
-	}
-
-	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
-		PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
-	else
-	{
-		((Player*)m_pHeroes[0])->SetCombat(false);
-		Game::GetInstance()->RemoveState();
-		return;
-	}
-	for (size_t i = 0; i < m_pObjects.size(); i++)
-	{
-		switch (m_pObjects[i]->GetType())
+		if (numEnemies <= 0) //Win
 		{
-		case Object::ObjectType::OBJ_PLAYER:
-			if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-			{
-				if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
-				{
-					CurrentTurn++;
-				}
-			}
-			break;
-		case Object::ObjectType::OBJ_MINION:
-			if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-			{
-				if (((Minion*)m_pObjects[i])->TakeTurn())
-				{
-					CurrentTurn++;
-				}
-			}
-			break;
+			((Player*)m_pHeroes[0])->SetCombat(false);
+			((Player*)m_pHeroes[0])->m_nPotions += numPots;
+
+			Game::GetInstance()->RemoveState();
+			return;
 		}
+
+		if (((Player*)m_pHeroes[0])->GetHealth() > 0)
+			PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
+		else
+		{
+			((Player*)m_pHeroes[0])->SetCombat(false);
+			Game::GetInstance()->RemoveState();
+			return;
+		}
+
+		for (size_t i = 0; i < m_pObjects.size(); i++)
+		{
+			switch (m_pObjects[i]->GetType())
+			{
+			case Object::ObjectType::OBJ_PLAYER:
+				if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+				{
+					if (ActionTimer <= 0)
+					if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
+						CurrentTurn++;
+				}
+				break;
+			case Object::ObjectType::OBJ_COMPANION:
+				if (((Companion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+				{
+					if (ActionTimer <= 0)
+					if (((Companion*)m_pObjects[i])->TakeTurn())
+						CurrentTurn++;
+				}
+				break;
+			case Object::ObjectType::OBJ_MINION:
+				if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+				{
+					if (ActionTimer <= 0)
+					if (((Minion*)m_pObjects[i])->TakeTurn())
+						CurrentTurn++;
+				}
+				break;
+			}
+		}
+
+		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
+			CurrentTurn = 0;
 	}
-	if (CurrentTurn == m_pObjects.size())
-		CurrentTurn = 0;
+
 }
 
 void CombatState::Render(void)
@@ -176,6 +197,8 @@ void CombatState::Render(void)
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
 
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
@@ -189,30 +212,124 @@ void CombatState::Render(void)
 		}
 	}
 
-	for (size_t i = 1; i < m_pHeroes.size(); i++)
+	for (size_t j = 1; j < m_pHeroes.size(); j++)
 	{
-
+		if (((Companion*)m_pEnemies[j])->GetHealth() > 0)
+		{
+			((Companion*)m_pEnemies[j])->Render(j);
+		}
 	}
 }
 
-Object* CombatState::AddMinion()
+Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 {
 	Minion* temp = new Minion;
-	temp->SetCombatImage(m_henemy);
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	temp->SetInit(rand() % 20);
-	temp->SetAffinity(Earth);
-	temp->SetString(1);
-	temp->SetAIType(Minion::AI_Type::Minion_AI);
+
+	int randAI = rand() % 3;
+
+	switch (randAI)
+	{
+	case 0:
+
+		switch (_region)
+		{
+		case 0:
+			temp->SetAffinity(Earth);
+			temp->SetAIType(Minion::AI_Type::Minion_AI);
+			temp->SetCombatImage(m_hMinion);
+			temp->SetString(1);
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+		break;
+	case 1:
+
+		switch (_region)
+		{
+		case 0:
+			temp->SetAffinity(Earth);
+			temp->SetCombatImage(m_hPlantMonster);
+			temp->SetAIType(Minion::AI_Type::Off_AI);
+			temp->SetString(2);
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+		break;
+	case 2:
+
+		switch (_region)
+		{
+		case 0:
+			temp->SetAffinity(Earth);
+			temp->SetCombatImage(m_hRockGolem);
+			temp->SetAIType(Minion::AI_Type::Def_AI);
+			temp->SetString(3);
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+		break;
+	case 3:
+		switch (_region)
+		{
+		case 0:
+			temp->SetAffinity(Earth);
+
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+		break;
+	case 4:
+		switch (_region)
+		{
+		case 0:
+			temp->SetAffinity(Earth);
+
+			break;
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			break;
+		}
+		break;
+	default:
+		break;
+	}
 	return temp;
 }
 
 
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
+//I'm thinking about the order of actions here
+//Possibly get the target or attacker's type before damage type, we'll see what's most repetative
+//Companions are going to possibly cause some problems
 {
 	RuneManager mag;
-
+	Game* pGame = Game::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	//Game::GetInstance()->AddState(InventoryState::GetInstance());
 
@@ -227,26 +344,62 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 
 											((Minion*)m_pEnemies[_target])->SetHealth(((Minion*)m_pEnemies[_target])->GetHealth() -
 												(mag.DamageComboElement(d1, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+
+											SetActionTimer(GetActionTimer() + 3);
+											string message = "You Slash the ";
+											message += pGame->GetString(1, ((Minion*)m_pEnemies[_target])->GetName()).c_str();
+											SetAction(message);
 										}
-										if (_this->GetType() == iObject::OBJ_MINION)
+										else if (_this->GetType() == iObject::OBJ_MINION)
 										{
-											((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 5);
+
+											SetActionTimer(GetActionTimer() + 3);
+											switch (((Minion*)_this)->GetAIType())
+											{
+											case 0: //Minion
+											{	((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 5);
+											string message = "The ";
+											message += (pGame->GetString(1, ((Minion*)_this)->GetName()).c_str());
+											SetAction(message += " Attacks!");
+											}
+												break;
+											case 1: //Offensive
+											{((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 10);
+											string message = "The ";
+											message += (pGame->GetString(1, ((Minion*)_this)->GetName()).c_str());
+											SetAction(message += " Attacks!");
+											}
+												break;
+											case 2: //Defensive
+											{((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 3);
+											string message = "The ";
+											message += (pGame->GetString(1, ((Minion*)_this)->GetName()).c_str());
+											SetAction(message += " Attacks!");
+											}
+												break;
+											default:
+												break;
+											}
+
 										}
 	}
 		break;
 	case CombatState::DamType::Magic:
 	{
 										m_bCoolDown = true;
-										if (m_pObjects[_target]->GetType() == iObject::OBJ_PLAYER)
-										{
-											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
-										}
-										if (m_pObjects[_target]->GetType() == iObject::OBJ_MINION)
+										if (_this->GetType() == iObject::OBJ_PLAYER)
 										{
 											pAudio->PlayAudio(Game::GetInstance()->m_mMagicButton);
 											ComboElements d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
 											((Minion*)m_pObjects[_target])->SetHealth(((Minion*)m_pObjects[_target])->GetHealth() -
 												(mag.DamageComboElement(d2, ((Minion*)m_pObjects[_target])->GetAffinity()) * 10));
+											SetActionTimer(GetActionTimer() + 3);
+											string stuff = "You Magify the ";
+											SetAction(stuff += Game::GetInstance()->GetString(1, ((Minion*)m_pEnemies[_target])->GetName()).c_str());
+										}
+										if (_this->GetType() == iObject::OBJ_MINION)
+										{
+											((Player*)m_pObjects[_target])->SetHealth(((Player*)m_pObjects[_target])->GetHealth() - 20);
 										}
 	}
 		break;

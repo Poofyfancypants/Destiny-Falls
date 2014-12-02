@@ -10,3 +10,8 @@ LevelBoss::LevelBoss()
 LevelBoss::~LevelBoss()
 {
 }
+
+bool LevelBoss::TakeTurn()
+{
+	return true;
+}

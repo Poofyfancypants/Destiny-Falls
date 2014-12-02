@@ -8,7 +8,7 @@ class Minion :
 {
 public:
 
-	enum AI_Type {Minion_AI, Off_AI, Def_AI, Heal_AI, AOE_AI};
+	enum AI_Type {Minion_AI, Off_AI, Def_AI, Heal_AI, AOE_AI, Mini_Boss, Level_Boss, Final_Boss,};
 	//enum Monster_Type {}; Could use both enums to determine the string used
 
 	//virtual int GetCMBType(void) const { return CMB_MINION_1; }
@@ -17,7 +17,7 @@ public:
 	virtual void Render(int _posIndex);
 	void SetCombatImage(SGD::HTexture _texture) { m_hMinion = _texture; }
 	virtual int GetType(void) const { return OBJ_MINION; }
-	int GetAIType(void) const { return Minion_AI; }
+	int GetAIType(void) const { return m_AIType; }
 
 	void SetAIType(AI_Type _AIType) { m_AIType = _AIType; }
 
@@ -29,6 +29,7 @@ public:
 	void SetAffinity(Elements x) { m_rAffinity = x; }
 
 	void SetString(int _type) { TypeString = _type; }
+	int GetName() const { return TypeString; }
 
 	Minion();
 	~Minion();
