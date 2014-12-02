@@ -41,9 +41,10 @@ public:
 	int GetDirection() const { return m_nDirection; }
 	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
-	int m_nPotions = 0;
 	int GetNumPotions() const { return m_nPotions; }
+	int m_nPotions = 0;
 
+	void RunQuickTime();
 	void StopQuickTime();
 
 private:

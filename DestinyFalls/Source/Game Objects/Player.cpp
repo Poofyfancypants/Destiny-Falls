@@ -313,10 +313,10 @@ bool Player::TakeTurn(float elapsedTime)
 	if (selected == false) //Pick an action (melee magic or armor)
 	{
 		pCombat->SetAction("Choose Action");
-		if( pInput->IsKeyPressed( SGD::Key::Up ) )
+		if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed(SGD::Key::W))
 			m_nCursor--;
 
-		if( pInput->IsKeyPressed( SGD::Key::Down ) )
+		if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed(SGD::Key::S))
 			m_nCursor++;
 
 		if (m_nCursor < 0)
@@ -346,11 +346,11 @@ bool Player::TakeTurn(float elapsedTime)
 	else //Action selected, now pick target
 	{
 		pCombat->SetAction("Choose Target");
-		if( pInput->IsKeyPressed( SGD::Key::Up ) )
+		if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed(SGD::Key::W)) 
 		{
 			m_nCursor--;
-		}
-		if (pInput->IsKeyPressed(SGD::Key::Down))
+		}										
+		if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
 		{
 			m_nCursor++;
 		}
