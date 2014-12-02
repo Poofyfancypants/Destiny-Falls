@@ -65,8 +65,9 @@ bool PauseMenuState::Input(void)
 			Game::GetInstance()->AddState(OptionsState::GetInstance());
 			break;
 		case PauseSelections::exit:
-			Game::GetInstance()->RemoveState();
-			Game::GetInstance()->RemoveState();
+	/*		Game::GetInstance()->RemoveState();
+			Game::GetInstance()->RemoveState();*/
+			Game::GetInstance()->ClearStates();
 			Game::GetInstance()->AddState(MainMenuState::GetInstance());
 			break;
 		default:

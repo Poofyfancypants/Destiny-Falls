@@ -57,7 +57,7 @@ public:
 
 	// - Hepler function to create the next level.
 	void SetNewLevel();
-	void SetLevel( LevelList _level ) { m_nCurrentLevel = _level; }
+	void SetLevel( int _level ) { m_nCurrentLevel = _level; }
 	void NextLevel() { m_nCurrentLevel++; }
 	void PrevLevel() { m_nCurrentLevel--; }
 	void ChangeLevel(bool _change) { m_bChangeLevels = _change;}
