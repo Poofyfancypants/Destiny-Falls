@@ -45,19 +45,29 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
-	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirElementalAttack2XML.xml" );
 	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/BehemothAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/BombAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthEnemyAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GolemAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
-	
+	m_pAnimator->Load( "resource/XML/OrcElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/OrcSkeletonAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/PlantAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/WaterElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/WaterEnemyAttackXML.xml" );
+
+
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );

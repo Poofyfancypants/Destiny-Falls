@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "../Managers/AnimationManager.h"
 #include "../Runes/Runes.h"
 #include "../Runes/RuneManager.h"
 
@@ -53,6 +54,9 @@ private:
 	SGD::Rectangle Enemy1rect = { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect = { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect = { 561, 290, 625, 354 };
+
+	AnimationManager* m_pAnimator = nullptr;
+
 
 };
 

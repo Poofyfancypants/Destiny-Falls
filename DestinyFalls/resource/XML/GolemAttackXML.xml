@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="GolemAttack" numFrames="9" looping="0" hTexture="Golem1.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="2" dTop="423" dRight="83" dBottom="542" cLeft="2" cTop="424" cRight="82" cBottom="541" x="39" y="96" />
+      <frame duration="0.25" damage="0" event="none" dLeft="89" dTop="422" dRight="184" dBottom="546" cLeft="88" cTop="425" cRight="181" cBottom="543" x="44" y="97" />
+      <frame duration="0.25" damage="0" event="none" dLeft="181" dTop="418" dRight="280" dBottom="551" cLeft="181" cTop="419" cRight="279" cBottom="551" x="47" y="104" />
+      <frame duration="0.25" damage="0" event="none" dLeft="275" dTop="425" dRight="386" dBottom="558" cLeft="276" cTop="428" cRight="384" cBottom="557" x="59" y="84" />
+      <frame duration="1.25" damage="0" event="none" dLeft="398" dTop="420" dRight="503" dBottom="560" cLeft="397" cTop="422" cRight="499" cBottom="553" x="51" y="86" />
+      <frame duration="0.25" damage="0" event="none" dLeft="275" dTop="425" dRight="386" dBottom="558" cLeft="276" cTop="428" cRight="384" cBottom="557" x="59" y="84" />
+      <frame duration="0.25" damage="0" event="none" dLeft="181" dTop="418" dRight="280" dBottom="551" cLeft="181" cTop="419" cRight="279" cBottom="551" x="47" y="104" />
+      <frame duration="0.25" damage="0" event="none" dLeft="89" dTop="422" dRight="184" dBottom="546" cLeft="88" cTop="425" cRight="181" cBottom="543" x="44" y="97" />
+      <frame duration="0.25" damage="0" event="none" dLeft="2" dTop="423" dRight="83" dBottom="542" cLeft="2" cTop="424" cRight="82" cBottom="541" x="39" y="96" />
+    </animation_info>
+  </animation>
+</Root>
