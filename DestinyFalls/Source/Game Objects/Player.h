@@ -43,6 +43,9 @@ public:
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	int m_nPotions = 0;
 
+	void RunQuickTime();
+	void StopQuickTime();
+
 private:
 
 	int m_nDirection;
@@ -64,8 +67,8 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	QuickTime* currentQT = nullptr;
-	bool m_bdoqt = false;
-
-	
+	bool m_bDoQt = false;
+	bool m_bLowHealthWarning = false;
+	float m_fHealthFlash = 0.0f;
 
 };

@@ -283,7 +283,6 @@ bool Player::TakeTurn(float elapsedTime)
 
 	SGD::Rectangle PlayerSelection{ posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
 
-
 	if (m_nHealth < 0)
 	{
 		return false;
@@ -349,8 +348,8 @@ bool Player::TakeTurn(float elapsedTime)
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetNumEnemies() - 1)
-			m_nCursor = pCombat->GetNumEnemies() - 1;
+		if (m_nCursor > pCombat->GetNumEnemies()-1)
+			m_nCursor = pCombat->GetNumEnemies()-1;
 
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
