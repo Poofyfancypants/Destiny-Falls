@@ -37,6 +37,8 @@ public:
 
 	Elements m_rAffinity;
 
+	void SetMinionAnimation( int region , int minionType );
+
 private:
 	int * m_CurrentTurn;
 	int m_nHealth = 20;
