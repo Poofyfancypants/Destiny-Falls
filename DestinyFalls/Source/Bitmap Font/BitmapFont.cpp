@@ -61,7 +61,9 @@ void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD:
 		}
 
 		// Calculate the tile ID for this character
+
 		int id = ch - 30;
+		
 
 		// Calculate the source rect for that glyph
 		SGD::Rectangle cell;

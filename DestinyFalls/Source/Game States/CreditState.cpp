@@ -61,7 +61,7 @@ void CreditState::Render()
 	//SGD::GraphicsManager::GetInstance()->DrawString("John OLeske\n\nSean Hathaway\n\nCaris Frazier\n\n Gregory Bey\n\n", { 100, 100 }, { 255, 255, 255 });
 	//SGD::GraphicsManager::GetInstance()->DrawString(, { 690, 575 }, { 255, 255, 255 });
 
-	pFonts->Render("Bernardo", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
+	pFonts->Render("Celtic", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
 
 	pFonts->Render("Bernardo", "Teacher:",			{ 100, 100 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Bernardo", "John OLeske",		{ 125, 125 }, 1, { 255, 255, 255, 255 });
