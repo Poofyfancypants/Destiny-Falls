@@ -1,10 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
   <animation>
-    <animation_info name="OrcAttack" numFrames="3" looping="0" hTexture="Orc.png">
+    <animation_info name="OrcAttack1" numFrames="3" looping="0" hTexture="Orc.png">
       <frame duration="0.25" damage="0" event="none" dLeft="120" dTop="135" dRight="188" dBottom="231" cLeft="121" cTop="136" cRight="187" cBottom="230" x="33" y="83" />
       <frame duration="0.25" damage="0" event="none" dLeft="180" dTop="116" dRight="252" dBottom="234" cLeft="180" cTop="118" cRight="250" cBottom="232" x="38" y="104" />
       <frame duration="1.25" damage="0" event="none" dLeft="253" dTop="119" dRight="318" dBottom="229" cLeft="253" cTop="120" cRight="317" cBottom="228" x="26" y="90" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="OrcAttack2" numFrames="3" looping="0" hTexture="Orc.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="126" dTop="18" dRight="185" dBottom="113" cLeft="125" cTop="19" cRight="184" cBottom="113" x="29" y="87" />
+      <frame duration="0.25" damage="0" event="none" dLeft="191" dTop="2" dRight="253" dBottom="113" cLeft="193" cTop="3" cRight="252" cBottom="113" x="29" y="103" />
+      <frame duration="1.25" damage="0" event="none" dLeft="254" dTop="5" dRight="320" dBottom="120" cLeft="254" cTop="6" cRight="319" cBottom="120" x="27" y="90" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="OrcAttack3" numFrames="3" looping="0" hTexture="Orc.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="638" dTop="19" dRight="704" dBottom="113" cLeft="638" cTop="20" cRight="703" cBottom="112" x="33" y="86" />
+      <frame duration="0.25" damage="0" event="none" dLeft="703" dTop="4" dRight="770" dBottom="114" cLeft="703" cTop="5" cRight="769" cBottom="112" x="31" y="101" />
+      <frame duration="0.25" damage="0" event="none" dLeft="768" dTop="3" dRight="838" dBottom="116" cLeft="767" cTop="5" cRight="840" cBottom="116" x="27" y="92" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="OrcAttack4" numFrames="3" looping="0" hTexture="Orc.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="639" dTop="130" dRight="701" dBottom="234" cLeft="637" cTop="128" cRight="701" cBottom="233" x="31" y="90" />
+      <frame duration="0.25" damage="0" event="none" dLeft="703" dTop="115" dRight="767" dBottom="227" cLeft="703" cTop="115" cRight="766" cBottom="227" x="30" y="105" />
+      <frame duration="0.25" damage="0" event="none" dLeft="773" dTop="117" dRight="836" dBottom="238" cLeft="773" cTop="118" cRight="835" cBottom="236" x="22" y="93" />
     </animation_info>
   </animation>
 </Root>
