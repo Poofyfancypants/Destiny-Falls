@@ -30,7 +30,6 @@ void MainMenuState::Enter()
 
 	pAudio->PlayAudio(Game::GetInstance()->m_mMusic, true);
 
-	m_hBackground = pGraphics->LoadTexture(L"resource/graphics/MenuBackgrounds/main.png");
 
 
 	PlayGame = { 50, 50, 100, 80 };

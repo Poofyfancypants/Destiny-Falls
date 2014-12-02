@@ -79,6 +79,11 @@ public:
 	SGD::HTexture m_hFinal2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFinal3 = SGD::INVALID_HANDLE;
 
+	// Menu backgrounds
+	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
+
 
 private:
 	/**********************************************************/

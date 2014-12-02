@@ -111,6 +111,9 @@ bool Game::Initialize( float width , float height )
 	m_StringTable[1][1] = "Rock Elemental";
 	m_StringTable[1][2] = "Plant Monster";
 
+	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/main.png");
+	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;
+
 	m_hEarth1	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest1.png");
 	m_hEarth2	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest2.png");
 	m_hEarth3	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest3.png");
@@ -257,6 +260,7 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture(m_hFinal2);
 	pGraphics->UnloadTexture(m_hFinal3);
 
+	pGraphics->UnloadTexture(m_hMainMenu);
 
 	pAudio->UnloadAudio(m_mMusic);
 	pAudio->UnloadAudio(m_mButton);
