@@ -6,7 +6,7 @@
 #include "../Game Objects/Chest.h"
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
-
+#include "../Game Objects/Player.h"
 #include "GameplayState.h"
 #include "MainMenuState.h"
 #include "InventoryState.h"
@@ -37,14 +37,33 @@ void GameplayState::Enter()
 
 	m_pObjects = new ObjectManager;
 	m_pMap = new TileManager;
+
+	//Set up Animation Manager
 	m_pAnimator = m_pAnimator->GetInstance();
+
+	//Load Animations
 	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
+	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
+	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthEnemyAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
+
 
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.png" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
+	m_hInvButton = pGraphics->LoadTexture( L"resource/graphics/NewInventory.png" );
 
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
 
@@ -52,16 +71,14 @@ void GameplayState::Enter()
 
 
 
-	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
-	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
-	//	m_particle.ReadXML( "resource/XML/Test2.xml" );
+	SetNewLevel();
+
 
 }
 
@@ -75,7 +92,6 @@ void GameplayState::Exit()
 		m_pPlayer->Release();
 		m_pPlayer = nullptr;
 	}
-	//audio unload
 
 	pAudio->UnloadAudio( bmusic );
 
@@ -84,8 +100,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture( m_hBoulder );
+	pGraphics->UnloadTexture( m_hInvButton );
 
-	//m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;
@@ -118,12 +134,32 @@ bool GameplayState::Input()
 	// - Toggle DebugMode with F2
 	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
 		m_bDebug = !m_bDebug;
+	if( pInput->IsKeyPressed( SGD::Key::F5 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
+	// Toggle Inventory
+	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	{
+		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
+		{
+			Game::GetInstance()->AddState( InventoryState::GetInstance() );
+		}
+	}
 
 	return true;
 }
 
 void GameplayState::Update( float elapsedTime )
 {
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	// - Next Level?
+
+	if( m_bChangeLevels )
+		SetNewLevel();
+
+
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
 	if( m_fFPSTime >= 1.0f )
@@ -136,7 +172,6 @@ void GameplayState::Update( float elapsedTime )
 
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-
 	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
@@ -146,8 +181,6 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->UpdateAll( elapsedTime );
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
-	m_pObjects->RenderAll();
-
 }
 
 void GameplayState::Render()
@@ -156,18 +189,23 @@ void GameplayState::Render()
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
 
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
+	// Invisible inventory selection button behind inventory image.
+	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
+	// Inventory Image/Scaling
+	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
+	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.5f, 0.5f } );
 
 	m_pObjects->RenderAll();
-	//m_particle.Render();
+
 
 	if( m_bDebug )
 	{
 		SGD::OStringStream numEnt;
 		numEnt << "Objects: " << GameplayState::GetInstance()->GetObjManager()->GetNumObjects();
-		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point(10,30), { 0, 255, 0 } );
+		SGD::GraphicsManager::GetInstance()->DrawString( numEnt.str().c_str(), SGD::Point( 10, 30 ), { 0, 255, 0 } );
 
 		SGD::OStringStream fps;
-		fps << "FPS: " << m_nFPS;
+		fps << "FPS: " << Game::GetInstance()->GetFrames();
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 }
@@ -188,8 +226,8 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos )
 	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 32, 32 ) );
-	m_pMap->NextWaypoint(temp);
-	temp->SetWaypointID(1);
+	m_pMap->NextWaypoint( temp );
+	temp->SetWaypointID( 1 );
 	return temp;
 }
 
@@ -250,3 +288,63 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 
 
 }
+
+// - Helper
+void GameplayState::UnloadAndCreate()
+{
+	int playerHealth;
+	if( m_pPlayer != nullptr )
+		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
+	else
+		playerHealth = 100;
+
+	m_pObjects->RemoveAll();
+	delete m_pObjects;
+	m_pObjects = new ObjectManager;
+
+	if( m_pPlayer != nullptr )
+	{
+		m_pPlayer->Release();
+		m_pPlayer = nullptr;
+	}
+
+	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
+	( (Player*)m_pPlayer )->SetHealth( playerHealth );
+	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
+
+
+	delete m_pMap;
+	m_pMap = new TileManager;
+
+}
+void GameplayState::SetNewLevel()
+{
+	switch( m_nCurrentLevel )
+	{
+	case GameplayState::TUTORIAL_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+		break;
+	case GameplayState::EARTH_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
+		break;
+	case GameplayState::WATER_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
+		break;
+		//case GameplayState::AIR_LEVEL:
+		//	break;
+		//case GameplayState::FIRE_LEVEL:
+		//	break;
+		//case GameplayState::BOSS_LEVEL:
+		//	break;
+		//default:
+		//	break;
+	}
+
+
+	m_bChangeLevels = false;
+}
+
+

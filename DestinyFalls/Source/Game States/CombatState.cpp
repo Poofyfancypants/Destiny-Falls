@@ -127,6 +127,10 @@ void CombatState::Update(float elapsedTime)
 		ActionTimer = 0.0f;
 
 	if (ActionTimer <= 0.0f)
+	int numEnemies = 0;
+	m_fFlash += elapsedTime;
+
+	for (size_t i = 0; i < m_pEnemies.size(); i++)
 	{
 		int numEnemies = 0;
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
@@ -146,14 +150,25 @@ void CombatState::Update(float elapsedTime)
 			return;
 		}
 
-		if (((Player*)m_pHeroes[0])->GetHealth() > 0)
-			PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
-		else
+	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
+	{
+		PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
+
+		if (((Player*)m_pObjects[0])->GetHealth() < 25 && m_fFlash > 2)
 		{
-			((Player*)m_pHeroes[0])->SetCombat(false);
-			Game::GetInstance()->RemoveState();
-			return;
+			m_bHealthWarning = true;
+			m_fFlash = 0;
 		}
+		else
+			m_bHealthWarning = false;
+		
+	}
+	else
+	{
+		((Player*)m_pObjects[0])->SetCombat(false);
+		Game::GetInstance()->RemoveState();
+		return;
+	}
 
 		for (size_t i = 0; i < m_pObjects.size(); i++)
 		{
@@ -202,7 +217,12 @@ void CombatState::Render(void)
 
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
-	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 100, 0, 255, 0 });
+	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 255, 0, 255, 0 });
+	if (m_bHealthWarning)
+	{
+		pGraphics->DrawRectangle(SGD::Rectangle(0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), { 100, 255, 0, 0 });
+
+	}
 
 	for (size_t j = 0; j < m_pEnemies.size(); j++)
 	{
@@ -321,7 +341,6 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 	}
 	return temp;
 }
-
 
 bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 //I'm thinking about the order of actions here

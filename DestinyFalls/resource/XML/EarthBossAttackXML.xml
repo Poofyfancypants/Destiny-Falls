@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="EarthBossAttack" numFrames="13" looping="0" hTexture="EarthBoss.png">
+      <frame duration="1.05" damage="0" event="none" dLeft="13" dTop="367" dRight="135" dBottom="496" cLeft="15" cTop="368" cRight="133" cBottom="495" x="4" y="121" />
+      <frame duration="0.25" damage="0" event="none" dLeft="148" dTop="355" dRight="274" dBottom="497" cLeft="149" cTop="356" cRight="273" cBottom="496" x="16" y="137" />
+      <frame duration="0.25" damage="0" event="none" dLeft="300" dTop="351" dRight="428" dBottom="494" cLeft="301" cTop="351" cRight="426" cBottom="492" x="9" y="136" />
+      <frame duration="0.25" damage="0" event="none" dLeft="425" dTop="357" dRight="554" dBottom="496" cLeft="425" cTop="358" cRight="554" cBottom="494" x="15" y="126" />
+      <frame duration="0.25" damage="0" event="none" dLeft="563" dTop="346" dRight="685" dBottom="495" cLeft="563" cTop="347" cRight="684" cBottom="494" x="6" y="140" />
+      <frame duration="0.25" damage="0" event="none" dLeft="686" dTop="354" dRight="817" dBottom="494" cLeft="687" cTop="356" cRight="816" cBottom="492" x="10" y="129" />
+      <frame duration="0.25" damage="0" event="none" dLeft="812" dTop="330" dRight="943" dBottom="493" cLeft="815" cTop="333" cRight="941" cBottom="488" x="21" y="152" />
+      <frame duration="0.25" damage="0" event="none" dLeft="686" dTop="354" dRight="817" dBottom="494" cLeft="687" cTop="356" cRight="816" cBottom="492" x="10" y="129" />
+      <frame duration="0.25" damage="0" event="none" dLeft="563" dTop="346" dRight="685" dBottom="495" cLeft="563" cTop="347" cRight="684" cBottom="494" x="6" y="140" />
+      <frame duration="0.25" damage="0" event="none" dLeft="425" dTop="357" dRight="554" dBottom="496" cLeft="425" cTop="358" cRight="554" cBottom="494" x="15" y="126" />
+      <frame duration="0.25" damage="0" event="none" dLeft="300" dTop="351" dRight="428" dBottom="494" cLeft="301" cTop="351" cRight="426" cBottom="492" x="9" y="136" />
+      <frame duration="0.25" damage="0" event="none" dLeft="148" dTop="355" dRight="274" dBottom="497" cLeft="149" cTop="356" cRight="273" cBottom="496" x="16" y="137" />
+      <frame duration="1.05" damage="0" event="none" dLeft="13" dTop="367" dRight="135" dBottom="496" cLeft="15" cTop="368" cRight="133" cBottom="495" x="4" y="121" />
+    </animation_info>
+  </animation>
+</Root>

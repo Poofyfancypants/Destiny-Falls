@@ -21,6 +21,7 @@ void CreditState::Enter()
 	//m_htBackground = SGD::AudioManager::GetInstance()->LoadAudio(L"");
 	//SGD::AudioManager::GetInstance()->PlayAudio(m_haBackground);
 
+	m_particle.ReadXML("resource/XML/Test2.xml");
 
 }
 
@@ -33,7 +34,7 @@ void CreditState::Exit()
 bool CreditState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if (pInput->IsKeyPressed(SGD::Key::Escape) || Timer <= 0.0f)
+	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
 
 		Game::GetInstance()->RemoveState();
@@ -60,24 +61,26 @@ void CreditState::Render()
 	//SGD::GraphicsManager::GetInstance()->DrawString("John OLeske\n\nSean Hathaway\n\nCaris Frazier\n\n Gregory Bey\n\n", { 100, 100 }, { 255, 255, 255 });
 	//SGD::GraphicsManager::GetInstance()->DrawString(, { 690, 575 }, { 255, 255, 255 });
 
-	pFonts->Render("Bernardo", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
+	pFonts->Render("Celtic", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
 
-	pFonts->Render("Bernardo", "Teacher:",			{ 100, 100 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "John OLeske",		{ 125, 125 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "AP:",				{ 100, 150 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Sean Hathaway",		{ 125, 175 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Artist",			{ 100, 200 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Caris Frazier",		{ 125, 225 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Gregory Bey",		{ 125, 250 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Devs:",				{ 100, 275 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Bobby Criswell",	{ 125, 300 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Yvonne Neuland",	{ 125, 325 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Numi  Stefansson",	{ 125, 350 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Jeff Lamas",		{ 125, 375 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Evan Doyle",		{ 125, 400 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Thanks To",			{ 100, 425 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Spencer Slaton",	{ 125, 450 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "Dave Olack",		{ 125, 500 }, 1, { 255, 255, 255, 255 });
-	pFonts->Render("Bernardo", "esc to Exit",		{ 680, 550 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Teacher:", { 100, 100 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "John OLeske", { 125, 125 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "AP:", { 100, 150 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Sean Hathaway", { 125, 175 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Artist", { 100, 200 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Caris Frazier", { 125, 225 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Gregory Bey", { 125, 250 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Devs:", { 100, 275 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Bobby Criswell", { 125, 300 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Yvonne Neuland", { 125, 325 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Numi  Stefansson", { 125, 350 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Jeff Lamas", { 125, 375 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Evan Doyle", { 125, 400 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Thanks To", { 100, 425 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Spencer Slaton", { 125, 450 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Dave Olack", { 125, 475 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "esc to Exit", { 680, 550 }, 1, { 255, 255, 255, 255 });
+
+	m_particle.Render();
 
 }

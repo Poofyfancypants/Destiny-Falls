@@ -22,6 +22,18 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
+	void AddBackgroundsEarth	(SGD::HTexture x)	{ m_vBackgroundsEarth.push_back(x); }
+	void AddBackgroundsIce		(SGD::HTexture x)	{ m_vBackgroundsIce.push_back(x); }
+	void AddBackgroundsAir		(SGD::HTexture x)	{ m_vBackgroundsAir.push_back(x); }
+	void AddBackgroundsFire		(SGD::HTexture x)	{ m_vBackgroundsFire.push_back(x); }
+	void AddBackgroundsFinal	(SGD::HTexture x)	{ m_vBackgroundsFinal.push_back(x); }
+
+	void ClearEarth()	{ m_vBackgroundsEarth.clear(); }
+	void ClearIce()		{ m_vBackgroundsIce.clear(); }
+	void ClearAir()		{ m_vBackgroundsAir.clear(); }
+	void ClearFire()	{ m_vBackgroundsFire.clear(); }
+	void ClearFinal()	{ m_vBackgroundsFinal.clear(); }
+
 	bool DealDamage(int _DamType, Object* _this, int _target);
 	int GetNumEnemies() const { return m_pEnemies.size(); }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
@@ -72,6 +84,9 @@ private:
 	bool EnemyTurn = false;
 
 
+	bool m_bHealthWarning = false;
+	float m_fFlash = 0.0f;
+
 	//Soon to be vectors of CombatEntities
 	std::vector<Object*> m_pObjects; //Holds all combat entities
 	//Sorts based off initiative
@@ -97,5 +112,11 @@ private:
 
 	int numPots;
 	int numRunes;
+	vector<SGD::HTexture> m_vBackgroundsEarth;
+	vector<SGD::HTexture> m_vBackgroundsIce;
+	vector<SGD::HTexture> m_vBackgroundsAir;
+	vector<SGD::HTexture> m_vBackgroundsFire;
+	vector<SGD::HTexture> m_vBackgroundsFinal;
+
 };
 

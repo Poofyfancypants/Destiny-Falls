@@ -5,6 +5,7 @@ class Boulder :
 	public StaticObject
 {
 
+
 	int m_nDirection = 0;
 
 public:

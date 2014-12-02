@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="IceBossAttack" numFrames="4" looping="0" hTexture="IceBoss.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="191" dTop="566" dRight="343" dBottom="711" cLeft="191" cTop="566" cRight="342" cBottom="711" x="97" y="136" />
+      <frame duration="0.25" damage="0" event="none" dLeft="344" dTop="566" dRight="419" dBottom="728" cLeft="345" cTop="567" cRight="420" cBottom="727" x="27" y="157" />
+      <frame duration="0.25" damage="0" event="none" dLeft="420" dTop="559" dRight="502" dBottom="713" cLeft="420" cTop="559" cRight="500" cBottom="713" x="22" y="148" />
+      <frame duration="0.25" damage="0" event="none" dLeft="502" dTop="559" dRight="590" dBottom="726" cLeft="501" cTop="559" cRight="589" cBottom="726" x="48" y="122" />
+    </animation_info>
+  </animation>
+</Root>

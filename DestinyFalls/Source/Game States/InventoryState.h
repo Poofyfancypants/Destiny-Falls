@@ -69,6 +69,9 @@ public:
 	std::vector<Runes> m_vRing;
 	std::vector<Runes> m_vArmor;
 	std::vector<Runes> m_vRunes;
+	
+
+
 private:
 	InventoryState() = default;
 	virtual ~InventoryState() = default;
@@ -102,7 +105,6 @@ private:
 	SGD::Rectangle ringslot2		= { 525, 125, 575, 175 };
 	SGD::Rectangle ringslot3		= { 575, 125, 625, 175 };
 
-
 	SGD::Rectangle IventoryRect1	= { 50, 200, 200, 317 };
 	SGD::Rectangle IventoryRect2	= { 50, 317, 200, 434 };
 	SGD::Rectangle IventoryRect3	= { 50, 434, 200, 550 };
@@ -135,7 +137,6 @@ protected:
 	SGD::HTexture m_hAirt1		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hAirt2		= SGD::INVALID_HANDLE;
 	SGD::HTexture m_hAirt3		= SGD::INVALID_HANDLE;
-
 };
 
 

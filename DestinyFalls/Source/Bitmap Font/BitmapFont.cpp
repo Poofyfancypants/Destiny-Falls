@@ -23,7 +23,7 @@ void BitmapFont::Terminate(void)
 	Letters.clear();
 }
 
-void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD::Color color) const
+void BitmapFont::Draw(string fontName, const char* output, SGD::Point position, float scale, SGD::Color color) const
 {
 	// Validate the image
 	assert(m_hImage != SGD::INVALID_HANDLE && "BitmapFont::Draw - image was not loaded");
@@ -61,7 +61,34 @@ void BitmapFont::Draw(const char* output, SGD::Point position, float scale, SGD:
 		}
 
 		// Calculate the tile ID for this character
-		int id = ch - 30;
+		int id = 0;
+
+		if (fontName == "Celtic")
+		{
+			if (ch >= 65 && ch <= 90)
+			{
+				id = ch - 36;
+			}
+			if (ch >= 97 && ch <= 122)
+			{
+				id = ch - 40;
+			}
+		}
+		if (fontName == "Other")
+		{
+			if (ch >= 65 && ch <= 90)
+			{
+				id = ch - 35;
+			}
+			if (ch >= 97 && ch <= 122)
+			{
+				id = ch - 40;
+			}
+		}
+
+		if (fontName == "Bernardo")
+			id = ch - 30;
+
 
 		// Calculate the source rect for that glyph
 		SGD::Rectangle cell;
