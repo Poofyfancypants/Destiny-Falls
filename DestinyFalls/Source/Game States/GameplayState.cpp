@@ -102,7 +102,6 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hBoulder );
 	pGraphics->UnloadTexture( m_hInvButton );
 
-	m_particle.Exit();
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;
@@ -182,10 +181,6 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->UpdateAll( elapsedTime );
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
-	m_pObjects->RenderAll();
-
-
-
 }
 
 void GameplayState::Render()
@@ -201,10 +196,6 @@ void GameplayState::Render()
 	pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, {0.5f, 0.5f});
 
 	m_pObjects->RenderAll();
-	m_particle.Render();
-
-	
-
 
 
 	if( m_bDebug )
