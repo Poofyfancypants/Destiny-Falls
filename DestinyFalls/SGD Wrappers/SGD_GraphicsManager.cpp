@@ -1092,7 +1092,6 @@ namespace SGD
 			if( m_eStatus != E_INITIALIZED )
 				return false;
 
-
 			// Is the rectangle inverted?
 			assert( rect.IsEmpty() == false && "GraphicsManager::DrawRectangle - rectangle is empty" );
 			if( rect.IsEmpty() == true )

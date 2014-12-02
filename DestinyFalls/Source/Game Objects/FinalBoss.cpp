@@ -10,3 +10,8 @@ FinalBoss::FinalBoss()
 FinalBoss::~FinalBoss()
 {
 }
+
+bool FinalBoss::TakeTurn()
+{
+	return true;
+}

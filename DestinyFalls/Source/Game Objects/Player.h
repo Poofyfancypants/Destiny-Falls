@@ -41,32 +41,23 @@ public:
 	int GetDirection() const {return m_nDirection;}
 	bool GetCombat() const { return m_bCombat; }
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
-	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
-	int GetTurnPos() const { return m_nTurnPos; }
+	int m_nPotions = 0;
 
-	//RunQuickTime
-	//		Turns on QuickTime
-	void RunQuickTime( );
+	void RunQuickTime();
 	void StopQuickTime();
 
 private:
-
 
 	int m_nDirection;
 	bool m_bSliding = false;
 	bool m_bMoving = false;
 	bool m_bCollision = false;
-	bool m_bLowHealthWarning = false;
-	float m_fHealthFlash = 0.0f;
-
 	SGD::Vector velocity = SGD::Vector();
 	SGD::Point m_ptCheckpoint;
 	int m_nHealth = 100;
 	int m_nMaxHealth = 100;
-	int m_nPotions = 0;
 
 	bool m_bCombat = false;
-	int m_nTurnPos;
 
 	int ActionSelected = 0;
 	bool selected = false;
@@ -77,6 +68,8 @@ private:
 
 	QuickTime* currentQT = nullptr;
 	bool m_bDoQt = false;
+	bool m_bLowHealthWarning = false;
+	float m_fHealthFlash = 0.0f;
 
 	bool m_bUpdateAnimation = true;
 
