@@ -42,7 +42,7 @@ void GameplayState::Enter()
 	m_pAnimator = m_pAnimator->GetInstance();
 
 	//Load Animations
-	m_pAnimator->Load( "resource/XML/HeroWalkingXML.xml" );
+	m_pAnimator->Load( "resource/XML/HeroWalking2XML.xml" );
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
 	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );

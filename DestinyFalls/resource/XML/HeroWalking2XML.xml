@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="WalkingDown" numFrames="12" looping="1" hTexture="LinkWalking.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="2" dTop="71" dRight="23" dBottom="98" cLeft="2" cTop="71" cRight="23" cBottom="97" x="10" y="24" />
+      <frame duration="0.05" damage="0" event="none" dLeft="23" dTop="69" dRight="48" dBottom="99" cLeft="23" cTop="69" cRight="47" cBottom="99" x="13" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="47" dTop="69" dRight="73" dBottom="100" cLeft="46" cTop="69" cRight="72" cBottom="100" x="13" y="25" />
+      <frame duration="0.05" damage="0" event="none" dLeft="73" dTop="67" dRight="95" dBottom="97" cLeft="74" cTop="67" cRight="94" cBottom="96" x="11" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="96" dTop="67" dRight="120" dBottom="100" cLeft="96" cTop="68" cRight="120" cBottom="100" x="11" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="120" dTop="68" dRight="144" dBottom="98" cLeft="120" cTop="69" cRight="143" cBottom="97" x="12" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="144" dTop="67" dRight="166" dBottom="97" cLeft="144" cTop="68" cRight="165" cBottom="96" x="11" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="168" dTop="67" dRight="191" dBottom="97" cLeft="167" cTop="68" cRight="191" cBottom="97" x="12" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="193" dTop="67" dRight="216" dBottom="100" cLeft="193" cTop="68" cRight="216" cBottom="100" x="11" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="216" dTop="68" dRight="240" dBottom="98" cLeft="215" cTop="69" cRight="240" cBottom="97" x="12" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="241" dTop="67" dRight="263" dBottom="97" cLeft="240" cTop="68" cRight="263" cBottom="97" x="10" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="264" dTop="67" dRight="290" dBottom="100" cLeft="264" cTop="67" cRight="290" cBottom="100" x="12" y="28" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="WalkingRight" numFrames="12" looping="1" hTexture="LinkWalking.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="0" dTop="37" dRight="22" dBottom="68" cLeft="1" cTop="37" cRight="21" cBottom="68" x="11" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="23" dTop="37" dRight="45" dBottom="66" cLeft="23" cTop="37" cRight="46" cBottom="66" x="13" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="47" dTop="35" dRight="70" dBottom="66" cLeft="47" cTop="36" cRight="71" cBottom="66" x="12" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="71" dTop="38" dRight="94" dBottom="63" cLeft="70" cTop="39" cRight="95" cBottom="64" x="13" y="25" />
+      <frame duration="0.05" damage="0" event="none" dLeft="96" dTop="34" dRight="120" dBottom="66" cLeft="96" cTop="34" cRight="120" cBottom="66" x="11" y="29" />
+      <frame duration="0.05" damage="0" event="none" dLeft="120" dTop="36" dRight="142" dBottom="65" cLeft="120" cTop="37" cRight="144" cBottom="64" x="12" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="145" dTop="35" dRight="168" dBottom="66" cLeft="145" cTop="36" cRight="167" cBottom="65" x="11" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="170" dTop="35" dRight="193" dBottom="66" cLeft="170" cTop="36" cRight="192" cBottom="65" x="9" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="193" dTop="34" dRight="216" dBottom="65" cLeft="193" cTop="34" cRight="217" cBottom="65" x="11" y="29" />
+      <frame duration="0.05" damage="0" event="none" dLeft="217" dTop="37" dRight="239" dBottom="64" cLeft="217" cTop="37" cRight="240" cBottom="65" x="11" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="241" dTop="35" dRight="264" dBottom="65" cLeft="241" cTop="36" cRight="263" cBottom="64" x="11" y="29" />
+      <frame duration="0.05" damage="0" event="none" dLeft="265" dTop="34" dRight="288" dBottom="66" cLeft="264" cTop="34" cRight="287" cBottom="66" x="11" y="29" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="WalkingLeft" numFrames="12" looping="1" hTexture="LinkWalking.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="1" dTop="101" dRight="25" dBottom="130" cLeft="1" cTop="101" cRight="25" cBottom="130" x="10" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="26" dTop="99" dRight="49" dBottom="129" cLeft="0" cTop="0" cRight="0" cBottom="0" x="10" y="29" />
+      <frame duration="0.05" damage="0" event="none" dLeft="50" dTop="99" dRight="73" dBottom="130" cLeft="50" cTop="99" cRight="73" cBottom="130" x="10" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="74" dTop="101" dRight="98" dBottom="127" cLeft="74" cTop="101" cRight="96" cBottom="129" x="10" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="97" dTop="100" dRight="121" dBottom="130" cLeft="98" cTop="101" cRight="121" cBottom="129" x="10" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="121" dTop="100" dRight="144" dBottom="130" cLeft="121" cTop="100" cRight="143" cBottom="130" x="11" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="144" dTop="101" dRight="167" dBottom="130" cLeft="144" cTop="101" cRight="167" cBottom="130" x="11" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="168" dTop="98" dRight="191" dBottom="130" cLeft="167" cTop="98" cRight="190" cBottom="129" x="12" y="28" />
+      <frame duration="0.25" damage="0" event="none" dLeft="192" dTop="100" dRight="215" dBottom="130" cLeft="192" cTop="100" cRight="215" cBottom="130" x="11" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="216" dTop="98" dRight="239" dBottom="129" cLeft="216" cTop="100" cRight="239" cBottom="129" x="12" y="29" />
+      <frame duration="0.05" damage="0" event="none" dLeft="241" dTop="100" dRight="263" dBottom="128" cLeft="241" cTop="101" cRight="264" cBottom="127" x="10" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="264" dTop="98" dRight="290" dBottom="129" cLeft="264" cTop="99" cRight="289" cBottom="129" x="12" y="29" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="WalkingUp" numFrames="12" looping="1" hTexture="LinkWalking.png">
+      <frame duration="0.05" damage="0" event="none" dLeft="2" dTop="3" dRight="23" dBottom="34" cLeft="2" cTop="3" cRight="23" cBottom="34" x="9" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="23" dTop="4" dRight="47" dBottom="33" cLeft="22" cTop="4" cRight="48" cBottom="33" x="12" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="47" dTop="3" dRight="71" dBottom="34" cLeft="48" cTop="4" cRight="72" cBottom="34" x="12" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="72" dTop="5" dRight="96" dBottom="34" cLeft="72" cTop="6" cRight="96" cBottom="34" x="11" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="96" dTop="5" dRight="120" dBottom="33" cLeft="97" cTop="5" cRight="120" cBottom="32" x="12" y="26" />
+      <frame duration="0.05" damage="0" event="none" dLeft="96" dTop="4" dRight="119" dBottom="34" cLeft="96" cTop="4" cRight="119" cBottom="34" x="12" y="28" />
+      <frame duration="0.05" damage="0" event="none" dLeft="121" dTop="4" dRight="144" dBottom="33" cLeft="121" cTop="4" cRight="144" cBottom="33" x="10" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="144" dTop="2" dRight="165" dBottom="34" cLeft="144" cTop="3" cRight="164" cBottom="33" x="12" y="31" />
+      <frame duration="0.05" damage="0" event="none" dLeft="191" dTop="4" dRight="216" dBottom="35" cLeft="191" cTop="4" cRight="216" cBottom="35" x="12" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="215" dTop="4" dRight="240" dBottom="34" cLeft="214" cTop="4" cRight="240" cBottom="34" x="12" y="27" />
+      <frame duration="0.05" damage="0" event="none" dLeft="241" dTop="2" dRight="263" dBottom="35" cLeft="241" cTop="2" cRight="263" cBottom="35" x="11" y="29" />
+      <frame duration="0.05" damage="0" event="none" dLeft="263" dTop="2" dRight="290" dBottom="35" cLeft="263" cTop="2" cRight="290" cBottom="35" x="13" y="29" />
+    </animation_info>
+  </animation>
+</Root>
