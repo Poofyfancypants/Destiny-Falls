@@ -63,6 +63,8 @@ public:
 	void ChangeLevel(bool _change) { m_bChangeLevels = _change;}
 	bool GetChangeLevel() {return m_bChangeLevels;}
 	void UnloadAndCreate();
+
+
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
@@ -97,7 +99,7 @@ private:
 	bool m_bDebug = false;
 	float m_fFPSTime = 0;
 	int m_nFrames = 0;
-	int m_nFPS = 60;
+	int m_nFPS = 0;
 
 	// - Level progression
 	int m_nCurrentLevel = 0;
