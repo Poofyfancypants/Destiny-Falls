@@ -190,10 +190,10 @@ void GameplayState::Render()
 
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 	// Invisible inventory selection button behind inventory image.
-	InventoryButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60) }, SGD::Size{ 120, 120 });
+	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
 	// Inventory Image/Scaling
-	pGraphics->DrawRectangle(InventoryButton, SGD::Color{ 0, 0, 255, 0 });
-	pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, {0.5f, 0.5f});
+	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
+	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.5f, 0.5f } );
 
 	m_pObjects->RenderAll();
 
@@ -292,6 +292,11 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 // - Helper
 void GameplayState::UnloadAndCreate()
 {
+	int playerHealth;
+	if( m_pPlayer != nullptr )
+		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
+	else
+		playerHealth = 100;
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -304,6 +309,7 @@ void GameplayState::UnloadAndCreate()
 	}
 
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
+	( (Player*)m_pPlayer )->SetHealth( playerHealth );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
 
