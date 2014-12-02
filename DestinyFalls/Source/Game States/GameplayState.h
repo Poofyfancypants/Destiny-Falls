@@ -52,6 +52,9 @@ public:
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
 
+	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
+	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
+
 	// - Hepler function to create the next level.
 	void SetNewLevel();
 	void SetLevel( LevelList _level ) { m_nCurrentLevel = _level; }

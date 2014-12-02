@@ -56,6 +56,9 @@ private:
 	bool m_bSliding = false;
 	bool m_bMoving = false;
 	bool m_bCollision = false;
+	bool m_bLowHealthWarning = false;
+	float m_fHealthFlash = 0.0f;
+
 	SGD::Vector velocity = SGD::Vector();
 	SGD::Point m_ptCheckpoint;
 	int m_nHealth = 100;
