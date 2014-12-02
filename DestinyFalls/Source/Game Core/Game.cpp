@@ -5,14 +5,15 @@
 #include <cstdlib>
 #include <cassert>
 
+#include "../Messages/MessageID.h"
 #include "../Game States/IGameState.h"
+#include "../Game States/CombatState.h"
 #include "../Game States/GameplayState.h"
 #include "../Game States/MainMenuState.h"
 #include "../Game States/SplashScreenState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
-#include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
 #include "../../SGD Wrappers/SGD_Message.h"
 #include "../../SGD Wrappers/SGD_EventManager.h"
@@ -112,6 +113,58 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[1][1] = "Rock Elemental";
 	m_StringTable[1][2] = "Plant Monster";
 
+	m_hEarth1	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest1.png");
+	m_hEarth2	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest2.png");
+	m_hEarth3	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest3.png");
+	m_hEarth4	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Forest4.png");
+	m_hIce1		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Ice1.png");
+	m_hIce2		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Ice2.png");
+	m_hIce3		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Ice3.png");
+	m_hIce4		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Ice4.png");
+	m_hIce5		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Ice5.png");
+	m_hIce6		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Ice6.png");
+	m_hAir1		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Air1.png");
+	m_hAir2		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Air2.png");
+	m_hAir3		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Air3.png");
+	m_hAir4		= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Air4.png");
+	m_hFire1	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Fire1.png");
+	m_hFire2	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Fire2.png");
+	m_hFire3	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Fire3.png");
+	m_hFire4	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Fire4.png");
+	m_hFinal1	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Final1.png");
+	m_hFinal2	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Final2.png");
+	m_hFinal3	= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/CombatBackgrounds/Final3.png");
+
+	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth1);
+	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth2);
+	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth3);
+	CombatState::GetInstance()->AddBackgroundsEarth(m_hEarth4);
+
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce1);
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce2);
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce3);
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce4);
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce4);
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce5);
+	CombatState::GetInstance()->AddBackgroundsIce(m_hIce6);
+
+	CombatState::GetInstance()->AddBackgroundsAir(m_hAir1);
+	CombatState::GetInstance()->AddBackgroundsAir(m_hAir2);
+	CombatState::GetInstance()->AddBackgroundsAir(m_hAir3);
+	CombatState::GetInstance()->AddBackgroundsAir(m_hAir4);
+
+	CombatState::GetInstance()->AddBackgroundsFire(m_hFire1);
+	CombatState::GetInstance()->AddBackgroundsFire(m_hFire2);
+	CombatState::GetInstance()->AddBackgroundsFire(m_hFire3);
+	CombatState::GetInstance()->AddBackgroundsFire(m_hFire4);
+
+	CombatState::GetInstance()->AddBackgroundsFinal(m_hFinal1);
+	CombatState::GetInstance()->AddBackgroundsFinal(m_hFinal2);
+	CombatState::GetInstance()->AddBackgroundsFinal(m_hFinal3);
+
+
+
+
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );
 
@@ -186,12 +239,43 @@ void Game::Terminate( void )
 	// Terminate the core SGD wrappers
 	//MainMenuState::GetInstance()->Exit();
 
-	pAudio->UnloadAudio( m_mMusic );
-	pAudio->UnloadAudio( m_mButton );
-	pAudio->UnloadAudio( m_mMagicButton );
-	pAudio->UnloadAudio( m_mMeleeButton );
-	pAudio->UnloadAudio( potionSound );
-	pAudio->UnloadAudio( deathSound );
+	CombatState::GetInstance()->ClearEarth();
+	CombatState::GetInstance()->ClearIce();
+	CombatState::GetInstance()->ClearAir();
+	CombatState::GetInstance()->ClearFire();
+	CombatState::GetInstance()->ClearFinal();
+
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
+	pGraphics->UnloadTexture(m_hEarth1);
+	pGraphics->UnloadTexture(m_hEarth2);
+	pGraphics->UnloadTexture(m_hEarth3);
+	pGraphics->UnloadTexture(m_hEarth4);
+	pGraphics->UnloadTexture(m_hIce1);
+	pGraphics->UnloadTexture(m_hIce2);
+	pGraphics->UnloadTexture(m_hIce3);
+	pGraphics->UnloadTexture(m_hIce4);
+	pGraphics->UnloadTexture(m_hIce5);
+	pGraphics->UnloadTexture(m_hIce6);
+	pGraphics->UnloadTexture(m_hAir1);
+	pGraphics->UnloadTexture(m_hAir2);
+	pGraphics->UnloadTexture(m_hAir3);
+	pGraphics->UnloadTexture(m_hAir4);
+	pGraphics->UnloadTexture(m_hFire1);
+	pGraphics->UnloadTexture(m_hFire2);
+	pGraphics->UnloadTexture(m_hFire3);
+	pGraphics->UnloadTexture(m_hFire4);
+	pGraphics->UnloadTexture(m_hFinal1);
+	pGraphics->UnloadTexture(m_hFinal2);
+	pGraphics->UnloadTexture(m_hFinal3);
+
+
+	pAudio->UnloadAudio(m_mMusic);
+	pAudio->UnloadAudio(m_mButton);
+	pAudio->UnloadAudio(m_mMagicButton);
+	pAudio->UnloadAudio(m_mMeleeButton);
+	pAudio->UnloadAudio(potionSound);
+	pAudio->UnloadAudio(deathSound);
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();

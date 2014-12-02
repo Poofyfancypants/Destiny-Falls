@@ -29,7 +29,8 @@ void MainMenuState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 
-	pAudio->PlayAudio( Game::GetInstance()->m_mMusic, true );
+	m_hBackground = pGraphics->LoadTexture(L"resource/graphics/MenuBackgrounds/main.png");
+	
 
 
 	PlayGame = { 50, 50, 100, 80 };
@@ -192,16 +193,12 @@ void MainMenuState::Render()
 
 
 	pGraphics->SetClearColor();
-	pGraphics->DrawRectangle( TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 } );
+	
+	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, {0.3f, 0.3f});
+	
+	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
-	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager * pFonts = pFonts->GetInstance();
-	//pGraphics->DrawRectangle(PlayGame, SGD::Color{ 255, 255, 0, 255 });
-	//pGraphics->DrawRectangle(Options, SGD::Color{ 255, 255, 0, 255 });
-	//pGraphics->DrawRectangle(LoadGame, SGD::Color{ 255, 255, 0, 255 });
-	//pGraphics->DrawRectangle(HowToPlay, SGD::Color{ 255, 255, 0, 255 });
-	//pGraphics->DrawRectangle(Credit, SGD::Color{ 255, 255, 0, 255 });
-	//pGraphics->DrawRectangle(ExitGame, SGD::Color{ 255, 255, 0, 255 });
 
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 2 ).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 } );

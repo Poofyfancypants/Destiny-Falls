@@ -140,7 +140,7 @@ bool GameplayState::Input()
 		NextLevel();
 		m_bChangeLevels = true;
 	}
-
+	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
@@ -154,7 +154,9 @@ bool GameplayState::Input()
 
 void GameplayState::Update( float elapsedTime )
 {
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	// - Next Level?
+
 	if( m_bChangeLevels )
 		SetNewLevel();
 
@@ -184,7 +186,6 @@ void GameplayState::Update( float elapsedTime )
 
 
 
-
 }
 
 void GameplayState::Render()
@@ -193,15 +194,18 @@ void GameplayState::Render()
 	SGD::Rectangle rect = { 100, 100, 150, 150 };
 
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
-
-	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 120 ) }, SGD::Size{ 120, 120 } );
-
-
-	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
-	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 120 ) ) );
+	// Invisible inventory selection button behind inventory image.
+	InventoryButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60) }, SGD::Size{ 120, 120 });
+	// Inventory Image/Scaling
+	pGraphics->DrawRectangle(InventoryButton, SGD::Color{ 0, 0, 255, 0 });
+	pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 60), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, {0.5f, 0.5f});
 
 	m_pObjects->RenderAll();
-	//m_particle.Render();
+	m_particle.Render();
+
+	
+
+
 
 	if( m_bDebug )
 	{
