@@ -20,6 +20,7 @@ TileManager::TileManager()
 
 TileManager::~TileManager()
 {
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( tileSet );
 
 }
 
@@ -107,30 +108,33 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 	// - Load the tile set image
 	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
 
-	tileSet = pGraphics->LoadTexture( tilePath.c_str() );
+	if( tileSet == SGD::INVALID_HANDLE )
+		tileSet = pGraphics->LoadTexture( tilePath.c_str() );
 
-	float height = Game::GetInstance()->GetScreenHeight() / 2;
-	float width = Game::GetInstance()->GetScreenWidth() / 2;
 
-	for( size_t i = 0; i < m_TileMap.size(); i++ )
+	int top = ( _offset.y / 2 - _playerPos.y ) / m_szGridSize.height;
+	int height = (( Game::GetInstance()->GetScreenHeight() / 2 + _playerPos.y ) / m_szGridSize.height) +1;
+	int left = ( _offset.x / 2 - _playerPos.x ) / m_szGridSize.width;
+	int width = (( Game::GetInstance()->GetScreenWidth() / 2 + _playerPos.x ) / m_szGridSize.width) +1;
+
+	if( top < 0 )
+		top = 0;
+	if( left < 0 )
+		left = 0;
+	if( width > m_szMapSize.width )
+		width = m_szMapSize.width;
+	if( height > m_szMapSize.height )
+		height = m_szMapSize.height;
+
+	for( size_t i = left; i < width; i++ )
 	{
-		for( size_t j = 0; j < m_TileMap[0].size(); j++ )
+		for( size_t j = top; j < height; j++ )
 		{
 			SGD::Point dest = { (float)( ( i*m_szGridSize.width ) - _offset.x ), (float)( ( j*m_szGridSize.height ) - _offset.y ) };
 			SGD::Rectangle source = { (float)( m_TileMap[i][j].nX*m_szGridSize.width ),
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height ),
 				(float)( m_TileMap[i][j].nX*m_szGridSize.width + m_szGridSize.width ),
 				(float)( m_TileMap[i][j].nY*m_szGridSize.height + m_szGridSize.height ) };
-
-			// - Tile culling
-			if( m_TileMap[i][j].CollisionRect.left > _playerPos.x + width )
-				continue;
-			else if( m_TileMap[i][j].CollisionRect.bottom < _playerPos.y - height )
-				continue;
-			else if( m_TileMap[i][j].CollisionRect.right < _playerPos.x - width )
-				continue;
-			else if( m_TileMap[i][j].CollisionRect.top > _playerPos.y + height )
-				continue;
 
 			pGraphics->DrawTextureSection(
 				tileSet,
@@ -141,23 +145,22 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 			if( GameplayState::GetInstance()->GetDebugState() )
 			{
 				if( m_TileMap[i][j].collisionTile )
-				{ 
+				{
 					SGD::Rectangle rect = m_TileMap[i][j].CollisionRect;
 					rect.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
-					pGraphics->DrawRectangle(rect, SGD::Color(255,0,0));
+					pGraphics->DrawRectangle( rect, SGD::Color( 255, 0, 0 ) );
 				}
 				else if( m_TileMap[i][j].EndSlide || m_TileMap[i][j].StartSlide )
 				{
 					SGD::Rectangle rect = m_TileMap[i][j].CollisionRect;
 					rect.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
-					pGraphics->DrawRectangle(rect, SGD::Color(0,255,0));
+					pGraphics->DrawRectangle( rect, SGD::Color( 0, 255, 0 ) );
 
 				}
 			}
 		}
 	}
 
-	pGraphics->UnloadTexture( tileSet );
 	return true;
 
 }
@@ -171,9 +174,23 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 		Player* player = dynamic_cast<Player*>( _player );
 		SGD::Rectangle PlayerCollision = SGD::Rectangle( _futurePos, player->GetSize() );
 
-		for( size_t i = 0; i < m_TileMap.size(); i++ )
+		int top = ( GameplayState::GetInstance()->GetWorldCam().y / 2 - GameplayState::GetInstance()->GetPlayer()->GetPosition().y ) / m_szGridSize.height;
+		int height = ( Game::GetInstance()->GetScreenHeight() / 2 + GameplayState::GetInstance()->GetPlayer()->GetPosition().y ) / m_szGridSize.height;
+		int left = ( GameplayState::GetInstance()->GetWorldCam().x / 2 - GameplayState::GetInstance()->GetPlayer()->GetPosition().x ) / m_szGridSize.width;
+		int width = ( Game::GetInstance()->GetScreenWidth() / 2 + GameplayState::GetInstance()->GetPlayer()->GetPosition().x ) / m_szGridSize.width;
+
+		if( top < 0 )
+			top = 0;
+		if( left < 0 )
+			left = 0;
+		if( width > m_szMapSize.width )
+			width = m_szMapSize.width;
+		if( height > m_szMapSize.height )
+			height = m_szMapSize.height;
+
+		for( size_t i = left; i < width; i++ )
 		{
-			for( size_t j = 0; j < m_TileMap[0].size(); j++ )
+			for( size_t j = top; j < height; j++ )
 			{
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].CheckPoint )
 				{
@@ -197,18 +214,18 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].NextLevel )
 				{
-					if (GameplayState::GetInstance()->GetChangeLevel() == false)
+					if( GameplayState::GetInstance()->GetChangeLevel() == false )
 					{
-					GameplayState::GetInstance()->NextLevel();
-					GameplayState::GetInstance()->ChangeLevel(true);
+						GameplayState::GetInstance()->NextLevel();
+						GameplayState::GetInstance()->ChangeLevel( true );
 					}
 				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].PrevLevel )
 				{
-					if (GameplayState::GetInstance()->GetChangeLevel() == false)
+					if( GameplayState::GetInstance()->GetChangeLevel() == false )
 					{
-					GameplayState::GetInstance()->PrevLevel();
-					GameplayState::GetInstance()->ChangeLevel(true);
+						GameplayState::GetInstance()->PrevLevel();
+						GameplayState::GetInstance()->ChangeLevel( true );
 					}
 				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
@@ -244,7 +261,7 @@ void TileManager::SpawnObjects()
 	{
 		for( size_t col = 0; col < m_TileMap[0].size(); col++ )
 		{
-			SGD::Point dest = { (float)(row*m_szGridSize.width), (float)( col*m_szGridSize.height ) };
+			SGD::Point dest = { (float)( row*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
 			//SGD::Point dest = { (float)( ( row*m_szGridSize.width ) - GameplayState::GetInstance()->GetWorldCam().x ), (float)( ( col*m_szGridSize.height ) - GameplayState::GetInstance()->GetWorldCam().y ) };
 			if( m_TileMap[row][col].m_nEnemyID != 0 )
 			{
@@ -295,21 +312,21 @@ void TileManager::NextWaypoint( Enemy* _enemy )
 		int id = _enemy->GetWaypointID();
 		SGD::Point next = _enemy->GetNextWaypoint();
 		SGD::Point currPos = _enemy->GetPosition();
-		SGD::Point range = {400,400};
+		SGD::Point range = { 200, 200 };
 		for( size_t row = 0; row < m_TileMap.size(); row++ )
 		{
 			for( size_t col = 0; col < m_TileMap[0].size(); col++ )
 			{
-				SGD::Point dest = { (float) ( row*m_szGridSize.width ), (float) ( col*m_szGridSize.height ) };
+				SGD::Point dest = { (float)( row*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
 				int temp = m_TileMap[row][col].m_nWaypointID;
 				// - Is it the next waypoint? ID == WP being chased
 				if( id == m_TileMap[row][col].m_nWaypointID )
 				{
 					// - Is waypoint within the range?
-					if( (abs(dest.x - currPos.x) <= range.x && abs(dest.y - currPos.y) <= range.y) )
+					if( ( abs( dest.x - currPos.x ) <= range.x && abs( dest.y - currPos.y ) <= range.y ) )
 					{
-						_enemy->SetNextWaypoint(dest);
-						_enemy->SetPath(dest - currPos);
+						_enemy->SetNextWaypoint( dest );
+						_enemy->SetPath( dest - currPos );
 						return;
 					}
 				}

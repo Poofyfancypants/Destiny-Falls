@@ -43,6 +43,7 @@ private:
 
 
 	
+	bool m_bDebug = false;
 
 };
 
