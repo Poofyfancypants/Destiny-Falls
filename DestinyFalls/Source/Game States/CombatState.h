@@ -37,10 +37,15 @@ public:
 	bool DealDamage(int _DamType, Object* _this, int _target);
 	int GetNumEnemies() const { return m_pEnemies.size(); }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
-	Object* AddMinion();
+	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
 
 	bool GetCooldown() { return m_bCoolDown; }
 	void SetCooldown(bool x) { m_bCoolDown = x; }
+	void SetActionTimer(float _time) { ActionTimer = _time; }
+	float GetActionTimer() const { return ActionTimer; }
+
+	void SetAction(string _Action) { ActionMessage = _Action; } //Display information to the user
+	string GetAction() const { return ActionMessage; }
 
 private:
 	CombatState() = default;
@@ -50,6 +55,7 @@ private:
 	CombatState& operator=(const CombatState&) = delete;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
+	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
 
 	SGD::Rectangle Compation1HB	= { 50, 110, 175, 140 };
 	SGD::Rectangle PlayerHB		= { 75, 200, 200, 230 };
@@ -66,8 +72,17 @@ private:
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
 
 	int CurrentTurn;
-
 	bool m_bCoolDown = false;
+
+	string ActionMessage;
+	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
+
+	float PlayerTimer = 0.0f;
+	float EnemyTimer = 0.0f;
+
+	bool PlayerTurn = false;
+	bool EnemyTurn = false;
+
 
 	bool m_bHealthWarning = false;
 	float m_fFlash = 0.0f;
@@ -80,15 +95,23 @@ private:
 	std::vector<Object*> m_pEnemies; //Holds all enemies
 	//When an enemy dies, this list sorts to move the dead enemy into the last position, then pops
 	int EnemyIndex;					 //Use the size of this list to check win condition
+	//int NumEnemies;					 //Might add this back in
 
 	std::vector<Object*> m_pHeroes;	 //Holds player and companions
 	int HeroIndex;					 //Player is always sub zero in this list
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
-	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
-	SGD::HTexture m_henemy2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hRockGolem = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hPlantMonster = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
 
+	int numPots;
+	int numRunes;
 	vector<SGD::HTexture> m_vBackgroundsEarth;
 	vector<SGD::HTexture> m_vBackgroundsIce;
 	vector<SGD::HTexture> m_vBackgroundsAir;

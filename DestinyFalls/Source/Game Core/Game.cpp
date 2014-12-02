@@ -110,8 +110,9 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[0][8] = "Save";
 	m_StringTable[0][9] = "You Died";
 
-	m_StringTable[1][1] = "Rock Elemental";
+	m_StringTable[1][1] = "Minion";
 	m_StringTable[1][2] = "Plant Monster";
+	m_StringTable[1][3] = "Rock Elemental";
 
 	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/main.png");
 	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;

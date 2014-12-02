@@ -24,7 +24,6 @@ Player::Player() : Listener(this)
 	this->GetTimeStamp()->SetCurrentFrame(0);
 	this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 
-
 }
 Player::~Player()
 {
@@ -88,7 +87,11 @@ void Player::Update(float elapsedTime)
 	}
 
 	m_bCollision = false;
-	m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
+	if( m_bUpdateAnimation )
+	{
+		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+
+	}
 
 	// Sub 25% health indicator
 
@@ -150,6 +153,7 @@ void Player::TakeInput()
 
 	if (m_bMoving)
 	{
+		m_bUpdateAnimation = false;
 		return;
 	}
 	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W))
@@ -162,8 +166,6 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 		}
-
-
 
 	}
 	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S))
@@ -210,6 +212,9 @@ void Player::TakeInput()
 		m_nPotions--;
 	}
 
+	m_bUpdateAnimation = pInput->IsAnyKeyDown();
+
+
 }
 
 SGD::Rectangle Player::GetRect(void) const
@@ -234,6 +239,7 @@ void Player::HandleCollision(const iObject* pOther)
 			if (((Chest*)pOther)->IsTrapped())
 			{
 				Game::GetInstance()->AddState(CombatState::GetInstance());
+				((Chest*)pOther)->SetTrapped();
 			}
 			m_nPotions += ((Chest*)pOther)->GetNumPots();
 			((Chest*)pOther)->RemoveItems();
@@ -285,14 +291,14 @@ bool Player::TakeTurn(float elapsedTime)
 
 	SGD::Rectangle PlayerSelection{ posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
 
-
 	if (m_nHealth < 0)
 	{
 		return false;
 	}
 
-	pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
-	if (CombatState::GetInstance()->GetCooldown())
+
+	pGraphics->DrawString( "Melee", SGD::Point{ 250, 420 }, SGD::Color( 255, 255, 255, 255 ) );
+	if( CombatState::GetInstance()->GetCooldown() )
 	{
 		pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
 	}
@@ -306,14 +312,13 @@ bool Player::TakeTurn(float elapsedTime)
 
 	if (selected == false) //Pick an action (melee magic or armor)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Up))
-		{
-			m_nCursor++;
-		}
-		if (pInput->IsKeyPressed(SGD::Key::Down))
-		{
+		pCombat->SetAction("Choose Action");
+		if( pInput->IsKeyPressed( SGD::Key::Up ) )
 			m_nCursor--;
-		}
+
+		if( pInput->IsKeyPressed( SGD::Key::Down ) )
+			m_nCursor++;
+
 		if (m_nCursor < 0)
 			m_nCursor = 0;
 		if (m_nCursor > 1)
@@ -340,7 +345,8 @@ bool Player::TakeTurn(float elapsedTime)
 	}
 	else //Action selected, now pick target
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Up))
+		pCombat->SetAction("Choose Target");
+		if( pInput->IsKeyPressed( SGD::Key::Up ) )
 		{
 			m_nCursor--;
 		}
@@ -350,14 +356,14 @@ bool Player::TakeTurn(float elapsedTime)
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetNumEnemies() - 1)
-			m_nCursor = pCombat->GetNumEnemies() - 1;
+		if (m_nCursor > pCombat->GetNumEnemies()-1)
+			m_nCursor = pCombat->GetNumEnemies()-1;
 
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
 			selected = false;
-			pCombat->DealDamage(ActionSelected, this, m_nCursor + 1);
+			pCombat->DealDamage(ActionSelected, this, m_nCursor);
 			m_nCursor = 0;
 			return true;
 		}
