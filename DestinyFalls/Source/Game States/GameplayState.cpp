@@ -64,7 +64,7 @@ void GameplayState::Enter()
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.png" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
 	m_hInvButton = pGraphics->LoadTexture( L"resource/graphics/NewInventory.png" );
-
+	m_hHero = pGraphics->LoadTexture(L"resource/graphics/testhero.png");
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
 
 	pAudio->PlayAudio( bmusic, true );
@@ -77,7 +77,7 @@ void GameplayState::Enter()
 	m_fWorldHeight = 600;
 
 	// - Manage The map
-	SetNewLevel();
+	LoadNewLevel();
 
 
 }
@@ -101,6 +101,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture( m_hBoulder );
 	pGraphics->UnloadTexture( m_hInvButton );
+	pGraphics->UnloadTexture(m_hHero);
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -154,10 +155,10 @@ bool GameplayState::Input()
 void GameplayState::Update( float elapsedTime )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	// - Next Level?
 
+	// - Next Level?
 	if( m_bChangeLevels )
-		SetNewLevel();
+		LoadNewLevel();
 
 
 	m_fFPSTime += elapsedTime;
@@ -185,10 +186,20 @@ void GameplayState::Update( float elapsedTime )
 
 void GameplayState::Render()
 {
+
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	SGD::Rectangle rect = { 100, 100, 150, 150 };
 
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
+	// - Draw Tutorial Test 
+
+	SGD::Point dest = { (float)( ( 3 * 32 ) - m_ptWorldCam.x ), (float)( ( 8 * 32 ) - m_ptWorldCam.y ) };
+
+
+	//pGraphics->DrawTexture( m_hHero, dest, SGD::Color( 255, 255, 0 ) );
+	pGraphics->DrawRectangle(SGD::Rectangle(dest, SGD::Size(32,32)), SGD::Color(155,155,0));
+
+
+
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
 	// Inventory Image/Scaling
@@ -292,11 +303,19 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 // - Helper
 void GameplayState::UnloadAndCreate()
 {
-	int playerHealth;
+
+	int playerHealth, numPotions;
 	if( m_pPlayer != nullptr )
+	{
 		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
+		numPotions = ((Player*)(m_pPlayer))->GetNumPotions();
+	}
 	else
+	{
 		playerHealth = 100;
+		numPotions = 0;
+	}
+
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -310,29 +329,46 @@ void GameplayState::UnloadAndCreate()
 
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	( (Player*)m_pPlayer )->SetHealth( playerHealth );
+	( (Player*)m_pPlayer )->SetPotions( numPotions );
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
 
 	delete m_pMap;
 	m_pMap = new TileManager;
 
+	if( m_nCurrentLevel == 0 )
+	{
+		SGD::Point dest = { (float)( ( 3 * 32 ) - m_ptWorldCam.x ), (float)( ( 8 * 32 ) - m_ptWorldCam.y ) };
+
+		Object* temp = new Object;
+		temp->SetPosition( dest );
+		temp->SetImage(m_hHero);
+		m_pObjects->AddObject(temp, TUTORIAL_HERO_BUCKET);
+		temp->Release();
+	}
 }
-void GameplayState::SetNewLevel()
+void GameplayState::LoadNewLevel()
 {
 	switch( m_nCurrentLevel )
 	{
 	case GameplayState::TUTORIAL_LEVEL:
+	{
 		UnloadAndCreate();
 		m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
 		break;
+	}
 	case GameplayState::EARTH_LEVEL:
+	{
 		UnloadAndCreate();
 		m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
 		break;
+	}
 	case GameplayState::WATER_LEVEL:
+	{
 		UnloadAndCreate();
 		m_pMap->LoadLevel( "resource/XML/testMap1.xml" );
 		break;
+	}
 		//case GameplayState::AIR_LEVEL:
 		//	break;
 		//case GameplayState::FIRE_LEVEL:
