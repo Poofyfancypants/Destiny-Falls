@@ -239,8 +239,8 @@ LRESULT CALLBACK WindowProc( HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam )
 		else									//	losing focus (pause)
 		{
 
-			if (Game::GetInstance()->GetCurrentState() == GameplayState::GetInstance())
-				Game::GetInstance()->AddState(PauseMenuState::GetInstance());
+		/*	if (Game::GetInstance()->GetCurrentState() == GameplayState::GetInstance())
+				Game::GetInstance()->AddState(PauseMenuState::GetInstance());*/
 
 		}
 		break;

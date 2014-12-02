@@ -295,7 +295,7 @@ void TileManager::NextWaypoint( Enemy* _enemy )
 		int id = _enemy->GetWaypointID();
 		SGD::Point next = _enemy->GetNextWaypoint();
 		SGD::Point currPos = _enemy->GetPosition();
-		SGD::Point range = {400,400};
+		SGD::Point range = {200,200};
 		for( size_t row = 0; row < m_TileMap.size(); row++ )
 		{
 			for( size_t col = 0; col < m_TileMap[0].size(); col++ )

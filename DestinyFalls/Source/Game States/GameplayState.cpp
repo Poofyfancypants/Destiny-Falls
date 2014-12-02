@@ -63,7 +63,7 @@ void GameplayState::Enter()
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
 	m_hChest = pGraphics->LoadTexture( L"resource/graphics/chest.png" );
 	m_hBoulder = pGraphics->LoadTexture( L"resource/graphics/boulder.png" );
-	//m_hInvButton = pGraphics->LoadTexture(L"resource/graphics/NewInventory.png");
+	m_hInvButton = pGraphics->LoadTexture( L"resource/graphics/NewInventory.png" );
 
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
 
@@ -78,7 +78,7 @@ void GameplayState::Enter()
 
 	// - Manage The map
 	SetNewLevel();
-	
+
 
 }
 
@@ -100,7 +100,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
 	pGraphics->UnloadTexture( m_hBoulder );
-	//pGraphics->UnloadTexture(m_hInvButton);
+	pGraphics->UnloadTexture( m_hInvButton );
 
 	m_particle.Exit();
 	m_pObjects->RemoveAll();
@@ -198,7 +198,7 @@ void GameplayState::Render()
 
 
 	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
-	//pGraphics->DrawTexture(m_hInvButton, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)));
+	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 120 ) ) );
 
 	m_pObjects->RenderAll();
 	//m_particle.Render();
@@ -345,3 +345,5 @@ void GameplayState::SetNewLevel()
 
 	m_bChangeLevels = false;
 }
+
+

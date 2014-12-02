@@ -63,6 +63,8 @@ public:
 	void ChangeLevel(bool _change) { m_bChangeLevels = _change;}
 	bool GetChangeLevel() {return m_bChangeLevels;}
 	void UnloadAndCreate();
+
+
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
