@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="WaterElementalAttack" numFrames="6" looping="0" hTexture="WaterElemental 2.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="2" dTop="394" dRight="61" dBottom="482" cLeft="3" cTop="396" cRight="60" cBottom="481" x="10" y="80" />
+      <frame duration="0.25" damage="0" event="none" dLeft="88" dTop="388" dRight="153" dBottom="481" cLeft="89" cTop="388" cRight="152" cBottom="481" x="11" y="86" />
+      <frame duration="0.25" damage="0" event="none" dLeft="165" dTop="381" dRight="252" dBottom="482" cLeft="166" cTop="382" cRight="251" cBottom="481" x="21" y="93" />
+      <frame duration="0.25" damage="0" event="none" dLeft="254" dTop="388" dRight="341" dBottom="487" cLeft="254" cTop="388" cRight="341" cBottom="487" x="19" y="86" />
+      <frame duration="0.25" damage="0" event="none" dLeft="353" dTop="389" dRight="423" dBottom="487" cLeft="353" cTop="389" cRight="423" cBottom="487" x="6" y="84" />
+      <frame duration="0.25" damage="0" event="none" dLeft="437" dTop="393" dRight="512" dBottom="486" cLeft="437" cTop="393" cRight="512" cBottom="486" x="10" y="81" />
+    </animation_info>
+  </animation>
+</Root>
