@@ -87,7 +87,11 @@ void Player::Update(float elapsedTime)
 	}
 
 	m_bCollision = false;
-	m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
+	if( m_bUpdateAnimation )
+	{
+		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+
+	}
 
 	// Sub 25% health indicator
 
@@ -149,6 +153,7 @@ void Player::TakeInput()
 
 	if (m_bMoving)
 	{
+		m_bUpdateAnimation = false;
 		return;
 	}
 	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W))
@@ -206,6 +211,9 @@ void Player::TakeInput()
 		}
 		m_nPotions--;
 	}
+
+	m_bUpdateAnimation = pInput->IsAnyKeyDown();
+
 
 }
 

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="BehemothAttack1" numFrames="7" looping="0" hTexture="Behemoth.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="276" dTop="10" dRight="333" dBottom="66" cLeft="276" cTop="10" cRight="333" cBottom="65" x="42" y="46" />
+      <frame duration="0.25" damage="0" event="none" dLeft="336" dTop="12" dRight="387" dBottom="67" cLeft="336" cTop="13" cRight="386" cBottom="66" x="37" y="44" />
+      <frame duration="0.25" damage="0" event="none" dLeft="387" dTop="11" dRight="441" dBottom="66" cLeft="387" cTop="11" cRight="439" cBottom="68" x="40" y="46" />
+      <frame duration="0.5" damage="0" event="none" dLeft="442" dTop="11" dRight="501" dBottom="66" cLeft="442" cTop="12" cRight="501" cBottom="66" x="41" y="46" />
+      <frame duration="0.25" damage="0" event="none" dLeft="274" dTop="72" dRight="330" dBottom="124" cLeft="274" cTop="73" cRight="331" cBottom="124" x="42" y="41" />
+      <frame duration="0.25" damage="0" event="none" dLeft="336" dTop="71" dRight="386" dBottom="123" cLeft="336" cTop="71" cRight="385" cBottom="122" x="38" y="41" />
+      <frame duration="1.25" damage="0" event="none" dLeft="389" dTop="67" dRight="444" dBottom="123" cLeft="389" cTop="67" cRight="443" cBottom="122" x="41" y="45" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="BehemothAttack2" numFrames="7" looping="0" hTexture="Behemoth.png">
+      <frame duration="1.25" damage="0" event="none" dLeft="274" dTop="245" dRight="333" dBottom="302" cLeft="274" cTop="246" cRight="332" cBottom="303" x="44" y="47" />
+      <frame duration="0.25" damage="0" event="none" dLeft="332" dTop="249" dRight="386" dBottom="304" cLeft="332" cTop="250" cRight="385" cBottom="304" x="41" y="42" />
+      <frame duration="0.25" damage="0" event="none" dLeft="387" dTop="245" dRight="448" dBottom="303" cLeft="387" cTop="245" cRight="448" cBottom="301" x="40" y="46" />
+      <frame duration="0.5" damage="0" event="none" dLeft="444" dTop="246" dRight="499" dBottom="300" cLeft="444" cTop="246" cRight="498" cBottom="300" x="40" y="47" />
+      <frame duration="0.25" damage="0" event="none" dLeft="270" dTop="304" dRight="329" dBottom="356" cLeft="271" cTop="305" cRight="330" cBottom="355" x="47" y="45" />
+      <frame duration="0.25" damage="0" event="none" dLeft="335" dTop="304" dRight="391" dBottom="358" cLeft="336" cTop="305" cRight="389" cBottom="355" x="39" y="42" />
+      <frame duration="1.25" damage="0" event="none" dLeft="393" dTop="306" dRight="442" dBottom="358" cLeft="392" cTop="306" cRight="443" cBottom="359" x="38" y="41" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="BehemothAttack3" numFrames="7" looping="0" hTexture="Behemoth.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="275" dTop="494" dRight="333" dBottom="547" cLeft="275" cTop="495" cRight="332" cBottom="547" x="39" y="48" />
+      <frame duration="0.25" damage="0" event="none" dLeft="330" dTop="496" dRight="385" dBottom="550" cLeft="330" cTop="497" cRight="384" cBottom="549" x="38" y="47" />
+      <frame duration="0.25" damage="0" event="none" dLeft="384" dTop="494" dRight="438" dBottom="551" cLeft="384" cTop="494" cRight="438" cBottom="551" x="40" y="50" />
+      <frame duration="0.5" damage="0" event="none" dLeft="436" dTop="491" dRight="494" dBottom="554" cLeft="436" cTop="492" cRight="494" cBottom="553" x="43" y="53" />
+      <frame duration="0.25" damage="0" event="none" dLeft="273" dTop="555" dRight="326" dBottom="609" cLeft="273" cTop="557" cRight="326" cBottom="608" x="40" y="44" />
+      <frame duration="0.25" damage="0" event="none" dLeft="333" dTop="553" dRight="381" dBottom="607" cLeft="333" cTop="554" cRight="381" cBottom="606" x="38" y="45" />
+      <frame duration="1.25" damage="0" event="none" dLeft="386" dTop="553" dRight="442" dBottom="611" cLeft="386" cTop="553" cRight="441" cBottom="610" x="40" y="46" />
+    </animation_info>
+  </animation>
+</Root>
