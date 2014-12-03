@@ -105,3 +105,104 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 
 	return true;
 }
+
+void Minion::SetMinionAnimation( int region , int minionType )
+{
+	m_pAnimator = m_pAnimator->GetInstance();
+	
+	switch( region )
+	{
+		case 0://earth minions
+		{
+			switch( minionType )
+			{
+				case 0:
+					this->GetTimeStamp()->SetCurrentAnimation( "RockElementalAttack" );
+					break;
+				case 1:
+					this->GetTimeStamp()->SetCurrentAnimation( "BehemothAttack2" );
+					break;
+				case 2:
+					this->GetTimeStamp()->SetCurrentAnimation( "GolemAttack" );
+					break;
+				case 3:
+					this->GetTimeStamp()->SetCurrentAnimation( "PlantAttack" );
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		case 1://air minions
+		{
+			switch( minionType )
+			{
+				case 0:
+					this->GetTimeStamp()->SetCurrentAnimation( "AirElementalAttack" );
+					break;
+				case 1:
+					this->GetTimeStamp()->SetCurrentAnimation( "BombAttack3" );
+					break;
+				case 2:
+					this->GetTimeStamp()->SetCurrentAnimation( "OrcElementalAttack2" );
+					break;
+				case 3:
+					this->GetTimeStamp()->SetCurrentAnimation( "AirElementalAttack2" );
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		case 2://fire minions
+		{
+			switch( minionType )
+			{
+				case 0:
+					this->GetTimeStamp()->SetCurrentAnimation( "BaronAttack" );
+					break;
+				case 1:
+					this->GetTimeStamp()->SetCurrentAnimation( "BehemothAttack1" );
+					break;
+				case 2:
+					this->GetTimeStamp()->SetCurrentAnimation( "BombAttack1" );
+					break;
+				case 3:
+					this->GetTimeStamp()->SetCurrentAnimation( "EarthEnemyAttack" );
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		case 3://water minions
+		{
+			switch( minionType )
+			{
+				case 0:
+					this->GetTimeStamp()->SetCurrentAnimation( "BehemothAttack3" );
+					break;
+				case 1:
+					this->GetTimeStamp()->SetCurrentAnimation( "BombAttack2" );
+					break;
+				case 2:
+					this->GetTimeStamp()->SetCurrentAnimation( "IceElementalAttack" );
+					break;
+				case 3:
+					this->GetTimeStamp()->SetCurrentAnimation( "WaterEnemyAttack" );
+					break;
+				default:
+					break;
+			}
+		}
+			break;
+		default:
+			break;
+	}
+
+
+	this->GetTimeStamp()->SetCurrentFrame( 0 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+
+
+}

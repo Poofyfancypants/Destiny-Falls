@@ -264,12 +264,20 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 			temp->SetAIType(Minion::AI_Type::Minion_AI);
 			temp->SetCombatImage(m_hMinion);
 			temp->SetString(1);
+			temp->SetMinionAnimation( _region , randAI );
+			
 			break;
 		case 1:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 2:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 3:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		}
 		break;
@@ -282,12 +290,20 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 			temp->SetCombatImage(m_hPlantMonster);
 			temp->SetAIType(Minion::AI_Type::Off_AI);
 			temp->SetString(2);
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 1:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 2:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 3:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		}
 		break;
@@ -300,12 +316,20 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 			temp->SetCombatImage(m_hRockGolem);
 			temp->SetAIType(Minion::AI_Type::Def_AI);
 			temp->SetString(3);
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 1:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 2:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 3:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		}
 		break;
@@ -314,13 +338,20 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 		{
 		case 0:
 			temp->SetAffinity(Earth);
+			temp->SetMinionAnimation( _region , randAI );
 
 			break;
 		case 1:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 2:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 3:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		}
 		break;
@@ -328,14 +359,21 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 		switch (_region)
 		{
 		case 0:
-			temp->SetAffinity(Earth);
+			temp->SetAffinity( Earth );			
+			temp->SetMinionAnimation( _region , randAI );
 
 			break;
 		case 1:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 2:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		case 3:
+			temp->SetMinionAnimation( _region , randAI );
+
 			break;
 		}
 		break;

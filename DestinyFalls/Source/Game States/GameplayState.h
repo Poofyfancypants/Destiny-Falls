@@ -18,7 +18,11 @@ public:
 
 	// - Holds all the levels of the game.
 	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL };
-	enum BucketList { BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET, CHEST_BUCKET, TRAP_BUCKET };
+	enum BucketList {
+		BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET,
+		CHEST_BUCKET, TRAP_BUCKET, TUTORIAL_HERO_BUCKET,
+		TUTORIAL_BOSS_BUCKET
+	};
 	static GameplayState* GetInstance( void );
 
 	virtual void Enter( void )				override;
@@ -59,15 +63,18 @@ public:
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
 
 	// - Hepler function to create the next level.
-	void SetNewLevel();
-	void SetLevel( LevelList _level ) { m_nCurrentLevel = _level; }
+	void LoadNewLevel();
+	void SetLevel( int _level ) { m_nCurrentLevel = _level; }
 	void NextLevel() { m_nCurrentLevel++; }
 	void PrevLevel() { m_nCurrentLevel--; }
-	void ChangeLevel(bool _change) { m_bChangeLevels = _change;}
-	bool GetChangeLevel() {return m_bChangeLevels;}
+	void ChangeLevel( bool _change ) { m_bChangeLevels = _change; }
+	bool GetChangeLevel() const { return m_bChangeLevels; }
+	int GetCurrentLevel() const { return m_nCurrentLevel; }
 	void UnloadAndCreate();
 
-
+	// - Helper functions for the Tutorial
+	void HandleTutorial();
+	void RenderDialog();
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
@@ -107,4 +114,15 @@ private:
 	// - Level progression
 	int m_nCurrentLevel = 0;
 	bool m_bChangeLevels = false;
+
+	// - Tutorial Level
+	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hBoss = SGD::INVALID_HANDLE;
+	bool m_bFirstDialog = false;
+	bool m_bPuzzleDialog = false;
+	bool m_bBoulderDialog = false;
+	bool m_bTrapDialog = false;
+	bool m_bMainDialog = false;
+	bool m_bChestDialog = false;
+	bool m_bSigmundDialog = false;
 };
