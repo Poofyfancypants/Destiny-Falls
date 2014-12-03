@@ -150,6 +150,11 @@ bool GameplayState::Input()
 		NextLevel();
 		m_bChangeLevels = true;
 	}
+	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
