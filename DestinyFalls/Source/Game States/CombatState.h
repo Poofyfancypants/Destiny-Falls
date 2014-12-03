@@ -84,6 +84,11 @@ private:
 	bool EnemyTurn = false;
 
 	SGD::Vector m_vOffset = { 0, 0 };
+	SGD::Point m_CombatPos1 = { 0, 0 };
+	SGD::Point m_CombatPos2 = { 0, 0 };
+
+	int Attacker1 = -1;
+	int Attacker2 = -1;
 
 	bool m_bHealthWarning = false;
 	float m_fFlash = 0.0f;

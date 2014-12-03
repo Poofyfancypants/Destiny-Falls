@@ -363,6 +363,8 @@ bool Player::TakeTurn(float elapsedTime)
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
 			selected = false;
+			SetAttacking(true);
+			pCombat->SetActionTimer(pCombat->GetActionTimer() + 3);
 			pCombat->DealDamage(ActionSelected, this, m_nCursor);
 			m_nCursor = 0;
 			return true;

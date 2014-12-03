@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../Managers/AnimationManager.h"
 #include "../Runes/Runes.h"
 #include "../Runes/RuneManager.h"
@@ -41,13 +42,14 @@ public:
 
 private:
 	int * m_CurrentTurn;
-	int m_nHealth = 20;
+	int m_nHealth = 60;
 	
 	AI_Type m_AIType;
 	int TypeString = 0;
 
 	SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
 
+	SGD::Color m_HealthColor = {0,0,0,0};
 	SGD::Rectangle Enemy1HB = { 650, 110, 775, 140 };
 	SGD::Rectangle Enemy2HB = { 625, 200, 750, 230 };
 	SGD::Rectangle Enemy3HB = { 650, 290, 775, 320 };
@@ -58,7 +60,6 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	bool m_bUpdateAnimation = false;
-
 
 };
 

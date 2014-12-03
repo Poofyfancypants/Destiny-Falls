@@ -75,6 +75,12 @@ void CombatState::Enter(void)
 	PlayerHB.right = PlayerHB.left + ((Player*)m_pObjects[0])->GetHealth();
 	SetActionTimer(2);
 	SetAction("Combat Ensues!");
+
+	m_CombatPos1.x = (Game::GetInstance()->GetScreenWidth() / 2 - 35);
+	m_CombatPos1.y = (Game::GetInstance()->GetScreenHeight() / 2);
+
+	m_CombatPos2.x = (Game::GetInstance()->GetScreenWidth() / 2 + 35);
+	m_CombatPos2.y = (Game::GetInstance()->GetScreenHeight() / 2);
 }
 
 void CombatState::Exit(void)
@@ -125,6 +131,14 @@ void CombatState::Update(float elapsedTime)
 
 	if (ActionTimer <= 0.0f)
 	{
+		if (Attacker1 != -1)
+		{
+			m_pHeroes[Attacker1]->SetAttacking(false); //After the time is up
+		}
+		if (Attacker2 != -1)
+		{
+
+		}
 
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
@@ -174,8 +188,14 @@ void CombatState::Update(float elapsedTime)
 				if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
 				{
 					if (ActionTimer <= 0)
-					if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
-						CurrentTurn++;
+					{
+						//Attacker1 = 0; If we can make this work it might be cool
+						//Not sure why I wanted it other than that
+						if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
+						{
+							CurrentTurn++;
+						}
+					}
 				}
 				break;
 			case Object::ObjectType::OBJ_COMPANION:
@@ -199,15 +219,26 @@ void CombatState::Update(float elapsedTime)
 
 		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
 			CurrentTurn = 0;
-		m_pHeroes[0]->GetRect().Offset(m_vOffset);
 
 	}
 	else
 	{
-		for( size_t i = 0; i < m_pEnemies.size(); i++ )
+		if (Attacker1 != -1)
 		{
-			( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
-			( ( Minion* ) m_pEnemies[ i ] )->Render(i);
+			if (m_pHeroes[Attacker1]->GetAttacking())
+			{
+				m_vOffset.x = ((m_pHeroes[Attacker1]->GetPosition().x + m_CombatPos1.x) );
+				m_vOffset.y = ((m_pHeroes[Attacker1]->GetPosition().y + m_CombatPos1.y) );
+				m_vOffset.Normalize();
+				(Playerrect.Offset(m_vOffset/3));
+			}
+		}
+
+
+		for (size_t i = 0; i < m_pEnemies.size(); i++)
+		{
+			((Minion*)m_pEnemies[i])->Update(elapsedTime);
+			((Minion*)m_pEnemies[i])->Render(i);
 
 		}
 	}
@@ -240,7 +271,7 @@ void CombatState::Render(void)
 
 	for (size_t j = 0; j < m_pEnemies.size(); j++)
 	{
-		if (((Minion*)m_pEnemies[j])->GetHealth() > 0)
+		if (((Minion*)m_pEnemies[j])->GetHealth() >= 0)
 		{
 			((Minion*)m_pEnemies[j])->Render(j);
 		}
@@ -248,9 +279,9 @@ void CombatState::Render(void)
 
 	for (size_t j = 1; j < m_pHeroes.size(); j++)
 	{
-		if (((Companion*)m_pEnemies[j])->GetHealth() > 0)
+		if (((Companion*)m_pHeroes[j])->GetHealth() > 0)
 		{
-			((Companion*)m_pEnemies[j])->Render(j);
+			((Companion*)m_pHeroes[j])->Render(j);
 		}
 	}
 }
@@ -275,19 +306,19 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 			temp->SetAIType(Minion::AI_Type::Minion_AI);
 			temp->SetCombatImage(m_hMinion);
 			temp->SetString(1);
-			temp->SetMinionAnimation( _region , randAI );
-			
+			temp->SetMinionAnimation(_region, randAI);
+
 			break;
 		case 1:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 2:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 3:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		}
@@ -301,19 +332,19 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 			temp->SetCombatImage(m_hPlantMonster);
 			temp->SetAIType(Minion::AI_Type::Off_AI);
 			temp->SetString(2);
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 1:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 2:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 3:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		}
@@ -327,19 +358,19 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 			temp->SetCombatImage(m_hRockGolem);
 			temp->SetAIType(Minion::AI_Type::Def_AI);
 			temp->SetString(3);
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 1:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 2:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 3:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		}
@@ -349,19 +380,19 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 		{
 		case 0:
 			temp->SetAffinity(Earth);
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 1:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 2:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 3:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		}
@@ -370,20 +401,20 @@ Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 		switch (_region)
 		{
 		case 0:
-			temp->SetAffinity( Earth );			
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetAffinity(Earth);
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 1:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 2:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 3:
-			temp->SetMinionAnimation( _region , randAI );
+			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		}
@@ -414,9 +445,9 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 											ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
 											((Minion*)m_pEnemies[_target])->SetHealth(((Minion*)m_pEnemies[_target])->GetHealth() -
-												(mag.DamageComboElement(d1, ((Minion*)m_pEnemies[_target])->GetAffinity()) * 10));
+												(mag.DamageComboElement(d1, ((Minion*)m_pEnemies[_target])->GetAffinity()) * 80));
 
-											SetActionTimer(GetActionTimer() + 3);
+											//SetActionTimer(GetActionTimer() + 3);
 											string message = "You Slash the ";
 											message += pGame->GetString(1, ((Minion*)m_pEnemies[_target])->GetName()).c_str();
 											SetAction(message);
