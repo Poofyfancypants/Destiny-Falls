@@ -42,16 +42,6 @@ void QuickTime::Update( float elapsedTime )
 	//add the elapsed time to the number of seconds that have passed 
 	m_fSeconds += elapsedTime;
 
-
-	/*SGD::Key guess = pInput->GetAnyKeyDown();
-	SGD::Key p = pInput->GetAnyKeyPressed();
-	bool down = pInput->IsAnyKeyDown();
-	bool pressed = pInput->IsAnyKeyPressed();
-
-	SGD::Key guess2 = SGD::InputManager::GetInstance()->GetAnyKeyDown();
-	bool down2 = SGD::InputManager::GetInstance()->IsAnyKeyDown();
-	bool pressed2 = SGD::InputManager::GetInstance()->IsAnyKeyPressed();*/
-
 	if( m_bShowAlert )
 	{
 		if( m_fAlertTimer >= 0.0f )
@@ -107,12 +97,12 @@ void QuickTime::Render()
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 	if( m_bShowAlert )
 	{
-		pFonts->Render( "Bernardo" , m_sAlert.c_str() , { 275 , 310 } , 1 , { 255 , 255 , 255 , 255 } );
+		pFonts->Render( "Other" , m_sAlert.c_str() , { 275 , 310 } , 1 , { 255 , 255 , 255 , 255 } );
 	}
 	else
 	{
-		pFonts->Render( "Bernardo" , m_sOutput.c_str() , { 275 , 310 } , 1 , { 255 , 255 , 255 , 255 } );
-		pFonts->Render( "Bernardo" , m_sInput.c_str() , { 275 , 325 } , 1 , { 255 , 255 , 255 , 255 } );
+		pFonts->Render( "Other" , m_sOutput.c_str() , { 275 , 310 } , 2 , { 255 , 255 , 255 , 255 } );
+		pFonts->Render( "Other" , m_sInput.c_str() , { 275 , 325 } , 2 , { 255 , 255 , 255 , 255 } );
 	}
 	
 }
