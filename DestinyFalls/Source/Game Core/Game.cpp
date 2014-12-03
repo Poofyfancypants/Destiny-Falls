@@ -97,6 +97,18 @@ bool Game::Initialize( float width, float height )
 	m_mMagicButton = pAudio->LoadAudio( L"resource/audio/Magic.wav" );
 	potionSound = pAudio->LoadAudio( L"resource/audio/healthPotion.wav" );
 	deathSound = pAudio->LoadAudio( L"resource/audio/deathSound.wav" );
+	m_mChime1 = pAudio->LoadAudio( L"resource/audio/chime-1.wav" );
+	m_mChime2 = pAudio->LoadAudio( L"resource/audio/chime-2.wav" );
+	m_mChime3 = pAudio->LoadAudio( L"resource/audio/chime-3.wav" );
+	m_mChime4 = pAudio->LoadAudio( L"resource/audio/chime-4.wav" );
+	m_mChime5 = pAudio->LoadAudio( L"resource/audio/chime-5.wav" );
+	m_mChime6 = pAudio->LoadAudio( L"resource/audio/chime-6.wav" );
+	m_mChime7 = pAudio->LoadAudio( L"resource/audio/chime-7.wav" );
+	m_mChime8 = pAudio->LoadAudio( L"resource/audio/chime-8.wav" );
+	m_mChime9 = pAudio->LoadAudio( L"resource/audio/chime-9.wav" );
+	m_mChime10 = pAudio->LoadAudio( L"resource/audio/chime-10.wav" );
+	m_mChime11 = pAudio->LoadAudio( L"resource/audio/chime-11.wav" );
+	m_mChime12 = pAudio->LoadAudio( L"resource/audio/chime-12.wav" );
 
 	pAudio->PlayAudio( m_mMusic, true );
 
@@ -301,6 +313,19 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mMeleeButton );
 	pAudio->UnloadAudio( potionSound );
 	pAudio->UnloadAudio( deathSound );
+	pAudio->UnloadAudio( m_mChime1 );
+	pAudio->UnloadAudio( m_mChime2 );
+	pAudio->UnloadAudio( m_mChime3 );
+	pAudio->UnloadAudio( m_mChime4 );
+	pAudio->UnloadAudio( m_mChime5 );
+	pAudio->UnloadAudio( m_mChime6 );
+	pAudio->UnloadAudio( m_mChime7 );
+	pAudio->UnloadAudio( m_mChime8 );
+	pAudio->UnloadAudio( m_mChime9 );
+	pAudio->UnloadAudio( m_mChime10 );
+	pAudio->UnloadAudio( m_mChime11 );
+	pAudio->UnloadAudio( m_mChime12 );
+
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();

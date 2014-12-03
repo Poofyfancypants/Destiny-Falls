@@ -25,6 +25,8 @@ private:
 	bool m_bqtOver = false;
 	bool m_bShowAlert = true;
 
+	unsigned int m_unLastPlayed = 0;
+
 	
 
 public:
