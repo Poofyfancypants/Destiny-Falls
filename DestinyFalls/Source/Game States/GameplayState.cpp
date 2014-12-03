@@ -4,6 +4,7 @@
 #include "../Game Objects/Boulder.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Objects/Chest.h"
+#include "../Game Objects/Forge.h"
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
 #include "../Game Objects/Player.h"
@@ -265,6 +266,13 @@ Object* GameplayState::CreateChest( SGD::Point _pos, int _id )
 		int numRunes = rand() % 2;
 	}
 	temp->SetPosition( _pos );
+	return temp;
+}
+
+Object* GameplayState::CreateForge(SGD::Point _pos)
+{
+	Forge* temp = new Forge;
+	//temp->SetImage(m_hForge);
 	return temp;
 }
 

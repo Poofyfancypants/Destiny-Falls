@@ -210,9 +210,17 @@ void CombatState::Render(void)
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
 	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
 
+	SGD::Color pHcolor;
+	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
+		pHcolor = { 255, 0, 255, 0 };
+	else if (((Player*)m_pHeroes[0])->GetHealth() > 20)
+		pHcolor = { 255, 255, 255, 0 };
+	else
+		pHcolor = { 255, 255, 0, 0 };
+
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
-	pGraphics->DrawRectangle(PlayerHB, SGD::Color{ 255, 0, 255, 0 });
+	pGraphics->DrawRectangle(PlayerHB, pHcolor);
 
 	if (m_bHealthWarning)
 	{
