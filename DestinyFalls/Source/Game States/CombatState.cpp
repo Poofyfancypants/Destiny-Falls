@@ -202,6 +202,15 @@ void CombatState::Update(float elapsedTime)
 		m_pHeroes[0]->GetRect().Offset(m_vOffset);
 
 	}
+	else
+	{
+		for( size_t i = 0; i < m_pEnemies.size(); i++ )
+		{
+			( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
+			( ( Minion* ) m_pEnemies[ i ] )->Render(i);
+
+		}
+	}
 }
 
 void CombatState::Render(void)
