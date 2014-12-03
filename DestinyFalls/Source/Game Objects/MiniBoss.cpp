@@ -10,3 +10,8 @@ MiniBoss::MiniBoss()
 MiniBoss::~MiniBoss()
 {
 }
+
+bool MiniBoss::TakeTurn()
+{
+	return true;
+}

@@ -25,6 +25,8 @@ public:
 	int GetNumRunes() const { return numRunes; }
 	void RemoveItems() { numPots = 0; numRunes = 0; }
 	bool IsTrapped() const { return trappedChest; }
+	void SetTrapped() { trappedChest = false; }
+
 	bool Opened = false;
 	bool Colliding = false;
 
