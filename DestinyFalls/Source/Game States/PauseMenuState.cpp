@@ -133,7 +133,7 @@ void PauseMenuState::Render( void )
 	}
 
 	string cursor = ">>";
-		pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 7 ).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 } );
+	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 7 ).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 8 ).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 } );

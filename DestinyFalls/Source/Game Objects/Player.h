@@ -37,6 +37,7 @@ public:
 	int GetHealth() const { return m_nHealth; }
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
+	bool GetMoving() const {return m_bMoving;}
 	SGD::Point GetCheckpoint() { return m_ptCheckpoint; }
 	int GetDirection() const { return m_nDirection; }
 	bool GetCombat() const { return m_bCombat; }
