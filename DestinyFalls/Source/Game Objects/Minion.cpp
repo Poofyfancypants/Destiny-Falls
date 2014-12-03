@@ -30,6 +30,11 @@ void Minion::Update(float elapsedTime)
 	else
 		Enemy3HB.right = Enemy3HB.left + 1; // Minion is Dead
 
+	if( m_bUpdateAnimation )
+	{
+		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+	}
+
 
 
 }
@@ -43,19 +48,31 @@ void Minion::Render(int _posIndex)
 	{
 	case 0: //Top
 		pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
-		pGraphics->DrawTexture(m_hMinion, { Enemy1rect.left, Enemy1rect.top }, {}, {}, {}, { .5, .5 });
+		//pGraphics->DrawTexture(m_hMinion, { Enemy1rect.left, Enemy1rect.top }, {}, {}, {}, { .5, .5 });
+		if( m_pAnimator->GetInstance()->CheckSize() )
+		{
+			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy1rect.right, Enemy1rect.bottom );
+		}
 		pGraphics->DrawRectangle(Enemy1HB, SGD::Color{ 100, 0, 255, 0 });
 		pFont->Render("Bernardo", Game::GetInstance()->GetString(1, TypeString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
 		break;
 	case 1: //Middle
 		pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
-		pGraphics->DrawTexture(m_hMinion, { Enemy2rect.left, Enemy2rect.top }, {}, {}, {}, { .5, .5 });
+		//pGraphics->DrawTexture(m_hMinion, { Enemy2rect.left, Enemy2rect.top }, {}, {}, {}, { .5, .5 });
+		if( m_pAnimator->GetInstance()->CheckSize() )
+		{
+			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy2rect.right , Enemy2rect.bottom );
+		}
 		pGraphics->DrawRectangle(Enemy2HB, SGD::Color{ 100, 0, 255, 0 });
 		pFont->Render("Bernardo", Game::GetInstance()->GetString(1, TypeString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
 		break;
 	case 2: //Bottom
 		pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
-		pGraphics->DrawTexture(m_hMinion, { Enemy3rect.left, Enemy3rect.top }, {}, {}, {}, { .5, .5 });
+		//pGraphics->DrawTexture(m_hMinion, { Enemy3rect.left, Enemy3rect.top }, {}, {}, {}, { .5, .5 });
+		if( m_pAnimator->GetInstance()->CheckSize() )
+		{
+			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy3rect.right , Enemy3rect.bottom );
+		}
 		pGraphics->DrawRectangle(Enemy3HB, SGD::Color{ 100, 0, 255, 0 });
 		pFont->Render("Bernardo", Game::GetInstance()->GetString(1, TypeString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
 		break;
@@ -74,23 +91,33 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 	case Minion_AI:
 		if (m_nHealth > 0)
 		{
+			pCombat->SetActionTimer( 1 );
 			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
-			pCombat->SetActionTimer(3);
+			m_bUpdateAnimation = true;
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 		break;
 	case Off_AI:
 		if (m_nHealth > 0)
 		{
+			pCombat->SetActionTimer( 1 );
 			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
-			pCombat->SetActionTimer(3);
+			m_bUpdateAnimation = true;
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+			
 
 		}
 		break;
 	case Def_AI:
 		if (m_nHealth > 0)
 		{
+			pCombat->SetActionTimer( 1 );
 			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
-			pCombat->SetActionTimer(3);
+			m_bUpdateAnimation = true;
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 
 		}
 		break;
@@ -102,6 +129,9 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		break;
 	}
 
+
+
+	
 
 	return true;
 }

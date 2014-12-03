@@ -57,6 +57,8 @@ private:
 	SGD::Rectangle Enemy3rect = { 561, 290, 625, 354 };
 	AnimationManager* m_pAnimator = nullptr;
 
+	bool m_bUpdateAnimation = false;
+
 
 };
 

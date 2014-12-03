@@ -200,6 +200,15 @@ void CombatState::Update(float elapsedTime)
 		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
 			CurrentTurn = 0;
 	}
+	else
+	{
+		for( size_t i = 0; i < m_pEnemies.size(); i++ )
+		{
+			( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
+			( ( Minion* ) m_pEnemies[ i ] )->Render(i);
+
+		}
+	}
 }
 
 void CombatState::Render(void)
