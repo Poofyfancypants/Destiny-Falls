@@ -192,13 +192,13 @@ void SaveandLoadState::Load2()
 	fin.open("resource/Save/Save2.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
-		int health, currlevel;
+		int health, currLevel;
 		float posx, posy;
 
 		fin.read((char*)&health, sizeof(int));
 		fin.read((char*)&posx, sizeof(float));
 		fin.read((char*)&posy, sizeof(float));
-		fin.read((char*)&currlevel, sizeof(int));
+		fin.read((char*)&currLevel, sizeof(int));
 
 		Game::GetInstance()->RemoveState();
 		Game::GetInstance()->AddState(GameplayState::GetInstance());
@@ -220,13 +220,13 @@ void SaveandLoadState::Load3()
 	fin.open("resource/Save/Save3.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
-		int health, currlevel;
+		int health, currLevel;
 		float posx, posy;
 
 		fin.read((char*)&health, sizeof(int));
 		fin.read((char*)&posx, sizeof(float));
 		fin.read((char*)&posy, sizeof(float));
-		fin.read((char*)&currlevel, sizeof(int));
+		fin.read((char*)&currLevel, sizeof(int));
 
 		Game::GetInstance()->RemoveState();
 		Game::GetInstance()->AddState(GameplayState::GetInstance());

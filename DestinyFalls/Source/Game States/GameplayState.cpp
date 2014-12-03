@@ -13,6 +13,7 @@
 #include "MainMenuState.h"
 #include "PauseMenuState.h"
 #include "CombatState.h"
+#include "WinState.h"
 #include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_String.h"
@@ -387,8 +388,10 @@ void GameplayState::LoadNewLevel()
 		UnloadAndCreate();
 		m_pMap->LoadLevel( "resource/XML/waterLevel.xml" );
 		break;
-		//case GameplayState::AIR_LEVEL:
-		//	break;
+		case GameplayState::AIR_LEVEL:
+			UnloadAndCreate();
+			m_pMap->LoadLevel("resource/XML/FireLevelT1.xml");
+			break;
 		//case GameplayState::FIRE_LEVEL:
 		//	break;
 		//case GameplayState::BOSS_LEVEL:

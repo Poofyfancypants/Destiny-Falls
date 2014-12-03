@@ -1,9 +1,9 @@
 #pragma once
 
 #include "IGameState.h"
+#include "InventoryState.h"
 #include "../Managers/ObjectManager.h"
 #include "../Game Objects/Object.h"
-#include "InventoryState.h"
 #include "../../SGD Wrappers/SGD_Handle.h"		
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
