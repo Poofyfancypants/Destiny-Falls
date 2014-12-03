@@ -55,6 +55,20 @@ public:
 	SGD::HAudio m_mMeleeButton = SGD::INVALID_HANDLE;
 	SGD::HAudio potionSound = SGD::INVALID_HANDLE;
 	SGD::HAudio deathSound = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime1 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime2 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime3 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime4 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime5 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime6 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime7 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime8 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime9 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime10 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime11 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mChime12 = SGD::INVALID_HANDLE;
+
+
 
 	// Combat backgrounds
 	SGD::HTexture m_hEarth1 = SGD::INVALID_HANDLE;
