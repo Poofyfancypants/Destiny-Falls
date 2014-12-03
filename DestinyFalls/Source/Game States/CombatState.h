@@ -83,6 +83,7 @@ private:
 	bool PlayerTurn = false;
 	bool EnemyTurn = false;
 
+	SGD::Vector m_vOffset = { 0, 0 };
 
 	bool m_bHealthWarning = false;
 	float m_fFlash = 0.0f;

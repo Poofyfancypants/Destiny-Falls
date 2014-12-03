@@ -199,6 +199,8 @@ void CombatState::Update(float elapsedTime)
 
 		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
 			CurrentTurn = 0;
+		m_pHeroes[0]->GetRect().Offset(m_vOffset);
+
 	}
 }
 
