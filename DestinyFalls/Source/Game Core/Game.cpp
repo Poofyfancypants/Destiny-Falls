@@ -114,6 +114,26 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[1][2] = "Plant Monster";
 	m_StringTable[1][3] = "Rock Elemental";
 
+	// - Tutorial Strings
+	m_StringTable[2][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
+	m_StringTable[2][2] = "This might be our only chance to stop him!";
+	m_StringTable[2][3] = "Careful though, he has laid puzzles to slow us down. ";
+	m_StringTable[2][4] = "Solve them by sliding between walls! I'll see you on the other side.";
+	m_StringTable[2][5] = "These Boulders can be useful to solve puzzles! Press R to throw them around!";
+	m_StringTable[2][6] = "Thouse are dangerous traps that you should do your best to avoid!";
+	m_StringTable[2][7] = "And remember the fountain will help you recover from defeat.";
+	m_StringTable[2][8] = "Watch out! Another Trap. Try not to step on it. Also..";
+	m_StringTable[2][9] = "This puzzle has two different exits, You could find a Chest!";
+
+	m_StringTable[3][1] = "See you found a chest! Press Q to open it! Did you find a rune?";
+	m_StringTable[3][2] = "Runes you can equip through your Inventory by pressing E";
+	m_StringTable[3][3] = "Look, There he is! Get behind me!";
+	m_StringTable[3][4] = "If you are low on health already, chests can drop health potions,";
+	m_StringTable[3][5] = "that will restore your health once aquiered by pressing P";
+	m_StringTable[3][6] = "Press E to Continue";
+
+
+
 	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/main.png" );
 	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;
 
