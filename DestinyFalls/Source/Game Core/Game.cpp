@@ -301,6 +301,8 @@ void Game::Terminate( void )
 
 	// Terminate the core SGD wrappers
 	//MainMenuState::GetInstance()->Exit();
+	ClearStates();
+	RemoveState();
 
 	CombatState::GetInstance()->ClearEarth();
 	CombatState::GetInstance()->ClearIce();
@@ -392,14 +394,14 @@ void Game::RemoveState()
 
 void Game::ClearStates()
 {
-	//unsigned int stackSize = m_pStateStack.size() - 1;
+	unsigned int stackSize = m_pStateStack.size() ;
 	//for( unsigned int i = 0; i < stackSize; i++ )
 	//{
 	//	RemoveState();
 	//	m_nCurrState--;
 	//}
 
-	for( size_t i = 0; i < m_pStateStack.size(); i++ )
+	for( size_t i = 0; i < stackSize; i++ )
 	{
 		m_pStateStack.back()->Exit();
 		m_pStateStack.pop_back();
