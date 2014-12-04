@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="NagaAttack" numFrames="5" looping="0" hTexture="Naga.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="1030" dTop="294" dRight="1233" dBottom="409" cLeft="1030" cTop="294" cRight="1233" cBottom="409" x="113" y="110" />
+      <frame duration="0.25" damage="0" event="none" dLeft="796" dTop="255" dRight="1026" dBottom="415" cLeft="795" cTop="256" cRight="1028" cBottom="414" x="132" y="150" />
+      <frame duration="1.25" damage="0" event="none" dLeft="575" dTop="255" dRight="797" dBottom="413" cLeft="575" cTop="254" cRight="797" cBottom="414" x="108" y="150" />
+      <frame duration="0.25" damage="0" event="none" dLeft="796" dTop="255" dRight="1026" dBottom="415" cLeft="795" cTop="256" cRight="1028" cBottom="414" x="132" y="150" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1030" dTop="294" dRight="1233" dBottom="409" cLeft="1030" cTop="294" cRight="1233" cBottom="409" x="113" y="110" />
+    </animation_info>
+  </animation>
+</Root>
