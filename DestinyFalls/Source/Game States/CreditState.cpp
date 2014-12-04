@@ -36,8 +36,7 @@ bool CreditState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
-
-		Game::GetInstance()->RemoveState();
+		Game::GetInstance()->ClearStates();
 	}
 	return true;
 }
