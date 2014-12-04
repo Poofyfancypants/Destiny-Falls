@@ -12,7 +12,7 @@ class CombatState :
 	public IGameState
 {
 public:
-	enum DamType{Melee, Magic, Armor, AOE, };
+	enum ActionType{Melee, Magic, Armor, AOE, Heal};
 
 	static CombatState* GetInstance();
 
@@ -34,7 +34,7 @@ public:
 	void ClearFire()	{ m_vBackgroundsFire.clear(); }
 	void ClearFinal()	{ m_vBackgroundsFinal.clear(); }
 
-	bool DealDamage(int _DamType, Object* _this, int _target);
+	bool TakeAction(int _DamType, Object* _this, int _target);
 	int GetNumEnemies() const { return m_pEnemies.size(); }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire

@@ -113,7 +113,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -123,7 +123,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -133,7 +133,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -143,7 +143,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -152,9 +152,13 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 	case AOE_AI:
 		if (m_nHealth > 0)
 		{
-			pCombat->SetActionTimer(1);
-			pCombat->DealDamage(CombatState::DamType::Melee, this, 0);
-			m_bUpdateAnimation = true;
+			int AI = rand() % 100;
+			if (AI <= 30) //AOE attack
+				pCombat->TakeAction(CombatState::ActionType::AOE, this, 0);
+			else
+				pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+
+				m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 		}

@@ -369,8 +369,7 @@ bool Player::TakeTurn(float elapsedTime)
 		{
 			selected = false;
 			SetAttacking(true);
-			pCombat->SetActionTimer(pCombat->GetActionTimer() + 3);
-			pCombat->DealDamage(ActionSelected, this, m_nCursor);
+			pCombat->TakeAction(ActionSelected, this, m_nCursor);
 			m_nCursor = 0;
 			return true;
 		}

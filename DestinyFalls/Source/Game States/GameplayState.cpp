@@ -49,7 +49,6 @@ void GameplayState::Enter()
 	m_pAnimator->Load("resource/XML/HeroSwordSwingXML.xml");
 	m_pAnimator->Load("resource/XML/AirBossAttackXML.xml");
 	m_pAnimator->Load("resource/XML/AirElementalAttackXML.xml");
-	m_pAnimator->Load("resource/XML/AirElementalAttack2XML.xml");
 	m_pAnimator->Load("resource/XML/AirMiniBossAttackXML.xml");
 	m_pAnimator->Load("resource/XML/BaronAttackXML.xml");
 	m_pAnimator->Load("resource/XML/BehemothAttackXML.xml");
@@ -57,7 +56,8 @@ void GameplayState::Enter()
 	m_pAnimator->Load("resource/XML/EarthEnemyAttackXML.xml");
 	m_pAnimator->Load("resource/XML/EarthMiniBossAttackXML.xml");
 	m_pAnimator->Load("resource/XML/EarthBossAttackXML.xml");
-	m_pAnimator->Load("resource/XML/GolemAttackXML.xml");
+	m_pAnimator->Load( "resource/XML/GenieAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GolemAttackXML.xml" );
 	m_pAnimator->Load("resource/XML/GreenGoblinAttackXML.xml");
 	m_pAnimator->Load("resource/XML/IceBossAttackXML.xml");
 	m_pAnimator->Load("resource/XML/IceElementalAttackXML.xml");
