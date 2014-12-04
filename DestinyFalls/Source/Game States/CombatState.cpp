@@ -22,6 +22,7 @@ CombatState* CombatState::GetInstance()
 
 void CombatState::Enter(void)
 {
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CurrentTurn = 0;
 	TurnIndex = 0;
 
@@ -29,7 +30,6 @@ void CombatState::Enter(void)
 	numRunes = rand() % 2;
 
 	Player* player = (Player*)GameplayState::GetInstance()->GetPlayer();
-	player->SetCombat(true);
 	player->CurrentTurn(&CurrentTurn);
 	player->SetInit(rand() % 10 + 10);
 
@@ -37,10 +37,7 @@ void CombatState::Enter(void)
 	m_pObjects.push_back(player);
 	m_pHeroes.push_back(player);
 
-	m_hplayer = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/ShadowKnight.png");
-	m_hMinion = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/enemy1.png");
-	m_hRockGolem = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Rock.png");
-	m_hPlantMonster = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/Plant.png");
+	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
 
 	//play combat music
@@ -48,7 +45,26 @@ void CombatState::Enter(void)
 
 	for (unsigned int i = 0; i < rand() % 3 + 1; i++)
 	{
-		Object* temp = AddMinion();
+		Object* temp;
+		switch (GameplayState::GetInstance()->GetCurrentLevel())
+		{
+		case 1:
+			temp = AddMinion(0);
+			break;
+		case 2:
+			temp = AddMinion(1);
+			break;
+		case 3:
+			temp = AddMinion(2);
+			break;
+		case 4:
+			temp = AddMinion(3);
+			break;
+		default:
+			temp = AddMinion(rand()%4);
+
+			break;
+		}
 		m_pObjects.push_back(temp);
 		m_pEnemies.push_back(temp);
 	}
@@ -96,9 +112,9 @@ void CombatState::Exit(void)
 	m_pHeroes.clear();
 
 	pGraphics->UnloadTexture(m_hplayer);
-	pGraphics->UnloadTexture(m_hMinion);
-	pGraphics->UnloadTexture(m_hRockGolem);
-	pGraphics->UnloadTexture(m_hPlantMonster);
+	//pGraphics->UnloadTexture(m_hMinion);
+	//pGraphics->UnloadTexture(m_hRockGolem);
+	//pGraphics->UnloadTexture(m_hPlantMonster);
 
 	pAudio->UnloadAudio(cMusic);
 
@@ -129,9 +145,29 @@ void CombatState::Update(float elapsedTime)
 
 	m_fFlash += elapsedTime;
 
+	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
+	{
+		PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
+
+		if (((Player*)m_pHeroes[0])->GetHealth() < 25 && m_fFlash > 2)
+		{
+			m_bHealthWarning = true;
+			m_fFlash = 0;
+		}
+		else
+			m_bHealthWarning = false;
+
+	}
+	else
+	{
+		((Player*)m_pHeroes[0])->SetCombat(false);
+		Game::GetInstance()->RemoveState();
+		return;
+	}
+
 	if (ActionTimer <= 0.0f)
 	{
-		if (Attacker1 != -1)
+		if (Attacker1 != -1) //System on hold
 		{
 			m_pHeroes[Attacker1]->SetAttacking(false); //After the time is up
 		}
@@ -160,25 +196,7 @@ void CombatState::Update(float elapsedTime)
 				return;
 			}
 		}
-		if (((Player*)m_pHeroes[0])->GetHealth() > 0)
-		{
-			PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
 
-			if (((Player*)m_pHeroes[0])->GetHealth() < 25 && m_fFlash > 2)
-			{
-				m_bHealthWarning = true;
-				m_fFlash = 0;
-			}
-			else
-				m_bHealthWarning = false;
-
-		}
-		else
-		{
-			((Player*)m_pHeroes[0])->SetCombat(false);
-			Game::GetInstance()->RemoveState();
-			return;
-		}
 
 		for (size_t i = 0; i < m_pObjects.size(); i++)
 		{
@@ -227,10 +245,10 @@ void CombatState::Update(float elapsedTime)
 		{
 			if (m_pHeroes[Attacker1]->GetAttacking())
 			{
-				m_vOffset.x = ((m_pHeroes[Attacker1]->GetPosition().x + m_CombatPos1.x) );
-				m_vOffset.y = ((m_pHeroes[Attacker1]->GetPosition().y + m_CombatPos1.y) );
+				m_vOffset.x = ((m_pHeroes[Attacker1]->GetPosition().x + m_CombatPos1.x));
+				m_vOffset.y = ((m_pHeroes[Attacker1]->GetPosition().y + m_CombatPos1.y));
 				m_vOffset.Normalize();
-				(Playerrect.Offset(m_vOffset/3));
+				(Playerrect.Offset(m_vOffset / 3));
 			}
 		}
 
@@ -262,7 +280,9 @@ void CombatState::Render(void)
 
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 	pGraphics->DrawTexture(m_hplayer, { Playerrect.left - 20, Playerrect.top - 10 }, {}, {}, {}, { .5, .5 });
-	pGraphics->DrawRectangle(PlayerHB, pHcolor);
+
+	if (PlayerHB.right > PlayerHB.left)
+		pGraphics->DrawRectangle(PlayerHB, pHcolor);
 
 	if (m_bHealthWarning)
 	{
@@ -288,140 +308,168 @@ void CombatState::Render(void)
 
 Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
 {
+	//_region = rand() % 4;
 	Minion* temp = new Minion;
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	temp->SetInit(rand() % 20);
+	temp->SetAffinity((Elements)_region);
 
-	int randAI = rand() % 3;
+	int randAI = rand() % 5;
+	int randHealth = 0;
 
 	switch (randAI)
 	{
-	case 0:
+	case 0: // Minion
+		randHealth = rand() % 40 + 40;
 
 		switch (_region)
 		{
 		case 0:
-			temp->SetAffinity(Earth);
+			temp->SetString(_region, randAI);
 			temp->SetAIType(Minion::AI_Type::Minion_AI);
-			temp->SetCombatImage(m_hMinion);
-			temp->SetString(1);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 1:
 			temp->SetMinionAnimation(_region, randAI);
-
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Minion_AI);
 			break;
 		case 2:
 			temp->SetMinionAnimation(_region, randAI);
-
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Minion_AI);
 			break;
 		case 3:
 			temp->SetMinionAnimation(_region, randAI);
-
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Minion_AI);
 			break;
 		}
 		break;
-	case 1:
+	case 1: // Offensive
+		randHealth = rand() % 20 + 40;
 
 		switch (_region)
 		{
+
 		case 0:
-			temp->SetAffinity(Earth);
-			temp->SetCombatImage(m_hPlantMonster);
+			temp->SetString(_region, randAI);
 			temp->SetAIType(Minion::AI_Type::Off_AI);
-			temp->SetString(2);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 1:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Off_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 2:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Off_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 3:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Off_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		}
 		break;
-	case 2:
+	case 2: // Defensive
+		randHealth = rand() % 20 + 80;
 
 		switch (_region)
 		{
+
 		case 0:
-			temp->SetAffinity(Earth);
-			temp->SetCombatImage(m_hRockGolem);
+			temp->SetString(_region, randAI);
 			temp->SetAIType(Minion::AI_Type::Def_AI);
-			temp->SetString(3);
 			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 1:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Def_AI);
 			temp->SetMinionAnimation(_region, randAI);
+
 
 			break;
 		case 2:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Def_AI);
 			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 3:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Def_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		}
 		break;
-	case 3:
+	case 3: // Healing
+
+		randHealth = rand() % 35 + 55;
+
 		switch (_region)
 		{
+
 		case 0:
-			temp->SetAffinity(Earth);
+
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Heal_AI);
 			temp->SetMinionAnimation(_region, randAI);
 
 			break;
 		case 1:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Heal_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 2:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Heal_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 3:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::Heal_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		}
 		break;
-	case 4:
+	case 4: // AOE
+		randHealth = rand() % 40 + 60;
 		switch (_region)
 		{
 		case 0:
-			temp->SetAffinity(Earth);
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::AOE_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 1:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::AOE_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 2:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::AOE_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		case 3:
+			temp->SetString(_region, randAI);
+			temp->SetAIType(Minion::AI_Type::AOE_AI);
 			temp->SetMinionAnimation(_region, randAI);
-
 			break;
 		}
 		break;
 	default:
 		break;
 	}
+
+
+	temp->SetHealth(randHealth);
 	return temp;
 }
 
@@ -445,11 +493,11 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 											ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
 											((Minion*)m_pEnemies[_target])->SetHealth(((Minion*)m_pEnemies[_target])->GetHealth() -
-												(mag.DamageComboElement(d1, ((Minion*)m_pEnemies[_target])->GetAffinity()) * 80));
+												(mag.DamageComboElement(d1, ((Minion*)m_pEnemies[_target])->GetAffinity()) * 60));
 
 											//SetActionTimer(GetActionTimer() + 3);
 											string message = "You Slash the ";
-											message += pGame->GetString(1, ((Minion*)m_pEnemies[_target])->GetName()).c_str();
+											message += (pGame->GetString(((Minion*)m_pEnemies[_target])->GetName(0), ((Minion*)m_pEnemies[_target])->GetName(1)).c_str());
 											SetAction(message);
 										}
 										else if (_this->GetType() == iObject::OBJ_MINION)
@@ -459,24 +507,43 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 											switch (((Minion*)_this)->GetAIType())
 											{
 											case 0: //Minion
-											{	((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 5);
-											string message = "The ";
-											message += (pGame->GetString(1, ((Minion*)_this)->GetName()).c_str());
-											SetAction(message += " Attacks!");
+											{
+														((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 5);
+														string message = "The ";
+														message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+														SetAction(message += " Attacks!");
 											}
 												break;
 											case 1: //Offensive
-											{((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 10);
-											string message = "The ";
-											message += (pGame->GetString(1, ((Minion*)_this)->GetName()).c_str());
-											SetAction(message += " Attacks!");
+											{
+														((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 10);
+														string message = "The ";
+														message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+														SetAction(message += " Attacks!");
 											}
 												break;
 											case 2: //Defensive
-											{((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 3);
-											string message = "The ";
-											message += (pGame->GetString(1, ((Minion*)_this)->GetName()).c_str());
-											SetAction(message += " Attacks!");
+											{
+														((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 3);
+														string message = "The ";
+														message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+														SetAction(message += " Attacks!");
+											}
+												break;
+											case 3: //Healing
+											{
+														((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 3);
+														string message = "The ";
+														message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+														SetAction(message += " Attacks!");
+											}
+												break;
+											case 4: //AOE
+											{
+														((Player*)m_pHeroes[_target])->SetHealth(((Player*)m_pHeroes[_target])->GetHealth() - 3);
+														string message = "The ";
+														message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+														SetAction(message += " Attacks!");
 											}
 												break;
 											default:
