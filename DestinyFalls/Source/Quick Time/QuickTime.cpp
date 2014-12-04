@@ -102,7 +102,6 @@ void QuickTime::Update( float elapsedTime )
 		else
 		{
 			SGD::AudioManager::GetInstance()->PlayAudio( Game::GetInstance()->m_mCheer );
-
 		}
 
 		//Set num correct to the counter
