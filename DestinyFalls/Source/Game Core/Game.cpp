@@ -140,7 +140,7 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[2][5] = "Heavy Golem";
 
 	//Air
-	m_StringTable[2][1] = "Minion";
+	m_StringTable[3][1] = "Minion";
 	m_StringTable[3][2] = "Behemoth";
 	m_StringTable[3][3] = "Air Elemental";
 	m_StringTable[3][4] = "White Sage";

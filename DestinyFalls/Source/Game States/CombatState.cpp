@@ -495,7 +495,6 @@ bool CombatState::DealDamage(int _DamType, Object* _this, int _target)
 											((Minion*)m_pEnemies[_target])->SetHealth(((Minion*)m_pEnemies[_target])->GetHealth() -
 												(mag.DamageComboElement(d1, ((Minion*)m_pEnemies[_target])->GetAffinity()) * 60));
 
-											//SetActionTimer(GetActionTimer() + 3);
 											string message = "You Slash the ";
 											message += (pGame->GetString(((Minion*)m_pEnemies[_target])->GetName(0), ((Minion*)m_pEnemies[_target])->GetName(1)).c_str());
 											SetAction(message);
