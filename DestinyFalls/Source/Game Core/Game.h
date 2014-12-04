@@ -67,6 +67,8 @@ public:
 	SGD::HAudio m_mChime10 = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mChime11 = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mChime12 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mBoo = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mCheer = SGD::INVALID_HANDLE;
 
 
 

@@ -36,8 +36,7 @@ bool CreditState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
-
-		Game::GetInstance()->RemoveState();
+		Game::GetInstance()->ClearStates();
 	}
 	return true;
 }
@@ -63,7 +62,7 @@ void CreditState::Render()
 
 	pFonts->Render("Celtic", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
 
-	pFonts->Render("Other", "Teacher:", { 100, 100 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "EP:", { 100, 100 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "John OLeske", { 125, 125 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "AP:", { 100, 150 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "Sean Hathaway", { 125, 175 }, 1, { 255, 255, 255, 255 });

@@ -81,7 +81,7 @@ void AnimationTestState::RunQuickTime()
 	if( currentQT == nullptr )
 	{
 		currentQT = new QuickTime;
-		currentQT->SetLength( 4 );
+		currentQT->SetLength( 12 );
 	}
 }
 void AnimationTestState::StopQuickTime()

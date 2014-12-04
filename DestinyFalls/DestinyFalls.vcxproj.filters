@@ -238,6 +238,7 @@
     <ClInclude Include="Source\Managers\BitmapFontManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game States\WinState.h">
     <ClInclude Include="Source\Game Objects\Forge.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
@@ -416,7 +417,8 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game Objects\Forge.cpp">
-      <Filter>Game Objects</Filter>
+    <ClCompile Include="Source\Game States\WinState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

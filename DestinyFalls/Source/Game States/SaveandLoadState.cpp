@@ -127,11 +127,12 @@ void SaveandLoadState::Save2()
 		int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
 		float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
 		float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
+		int currlevel = GameplayState::GetInstance()->GetChangeLevel();
 
 		fout.write((char*)&health, sizeof(int));
 		fout.write((char*)&posx, sizeof(float));
 		fout.write((char*)&posy, sizeof(float));
-
+		fout.write((char*)&currlevel, sizeof(int));
 
 		fout.close();
 	}
@@ -146,11 +147,12 @@ void SaveandLoadState::Save3()
 		int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
 		float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
 		float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
+		int currlevel = GameplayState::GetInstance()->GetChangeLevel();
 
 		fout.write((char*)&health, sizeof(int));
 		fout.write((char*)&posx, sizeof(float));
 		fout.write((char*)&posy, sizeof(float));
-
+		fout.write((char*)&currlevel, sizeof(int));
 
 		fout.close();
 	}
@@ -173,7 +175,6 @@ void SaveandLoadState::Load()
 
 		Game::GetInstance()->RemoveState();
 		Game::GetInstance()->AddState(GameplayState::GetInstance());
-		
 
 		GameplayState::GetInstance()->SetLevel(currLevel);
 		GameplayState::GetInstance()->LoadNewLevel();
@@ -191,12 +192,20 @@ void SaveandLoadState::Load2()
 	fin.open("resource/Save/Save2.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
-		int health;
+		int health, currLevel;
 		float posx, posy;
 
 		fin.read((char*)&health, sizeof(int));
 		fin.read((char*)&posx, sizeof(float));
 		fin.read((char*)&posy, sizeof(float));
+		fin.read((char*)&currLevel, sizeof(int));
+
+		Game::GetInstance()->RemoveState();
+		Game::GetInstance()->AddState(GameplayState::GetInstance());
+
+
+		GameplayState::GetInstance()->SetLevel(currLevel);
+		GameplayState::GetInstance()->LoadNewLevel();
 
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ posx, posy });
@@ -211,12 +220,20 @@ void SaveandLoadState::Load3()
 	fin.open("resource/Save/Save3.txt", ios_base::in | ios_base::binary);
 	if (fin.is_open())
 	{
-		int health;
+		int health, currLevel;
 		float posx, posy;
 
 		fin.read((char*)&health, sizeof(int));
 		fin.read((char*)&posx, sizeof(float));
 		fin.read((char*)&posy, sizeof(float));
+		fin.read((char*)&currLevel, sizeof(int));
+
+		Game::GetInstance()->RemoveState();
+		Game::GetInstance()->AddState(GameplayState::GetInstance());
+
+
+		GameplayState::GetInstance()->SetLevel(currLevel);
+		GameplayState::GetInstance()->LoadNewLevel();
 
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
 		((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ posx, posy });

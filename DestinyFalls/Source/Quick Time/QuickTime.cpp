@@ -41,8 +41,19 @@ void QuickTime::Update( float elapsedTime )
 	//create a pointer to the input manager
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	//add the elapsed time to the number of seconds that have passed 
-	m_fSeconds += elapsedTime;
+	if( !m_bShowAlert )
+	{
+		//add the elapsed time to the number of seconds that have passed 
+		m_fSeconds += elapsedTime;
+
+	}
+	
+	if( m_sRenderInput.size() == 9 && m_uncounter < m_unlength && m_bShowAlert == false )
+	{
+		m_unCurrentSet++;
+		ChangeRenderSet( m_unCurrentSet );
+
+	}	
 
 	if( m_bShowAlert )
 	{
@@ -56,7 +67,7 @@ void QuickTime::Update( float elapsedTime )
 		}
 	}
 	//if the number of seconds passed is less than 2 and the number of guessed letters is less than the number of letters in the qt event
-	else if( m_fSeconds < 200.0f && m_uncounter < m_unlength && m_bShowAlert == false)
+	else if( m_fSeconds < 2.0f && m_uncounter < m_unlength && m_bShowAlert == false)
 	{//if the user presses a button that is the same as the letter to be guessed
 		SGD::Key output = m_vOutput[ m_uncounter ];
 
@@ -74,6 +85,8 @@ void QuickTime::Update( float elapsedTime )
 		{
 			//Add the wrong guess to the string
 			AddGuess(  m_kLastKeyPressed  );
+			//Boo the player
+			SGD::AudioManager::GetInstance()->PlayAudio( Game::GetInstance()->m_mBoo );
 			//Set num correct to the counter
 			m_unNumCorrect = m_uncounter;
 			//set the event over bool to true
@@ -82,6 +95,16 @@ void QuickTime::Update( float elapsedTime )
 	}
 	else
 	{	
+		if( m_uncounter < m_unlength )
+		{
+			SGD::AudioManager::GetInstance()->PlayAudio( Game::GetInstance()->m_mBoo );
+		}
+		else
+		{
+			SGD::AudioManager::GetInstance()->PlayAudio( Game::GetInstance()->m_mCheer );
+
+		}
+
 		//Set num correct to the counter
 		m_unNumCorrect = m_uncounter;
 		//set the event over bool to true
@@ -135,6 +158,8 @@ void QuickTime::Update( float elapsedTime )
 		}
 		m_unLastPlayed++;
 	}
+
+	
 }
 
 void QuickTime::Render()
@@ -151,20 +176,32 @@ void QuickTime::Render()
 	}
 	else
 	{
-		pFonts->Render( "Other" , m_sOutput.c_str() , { 275 , 310 } , 2 , { 255 , 255 , 255 , 0 } );
-		pFonts->Render( "Other" , m_sInput.c_str() , { 275 , 325 } , 2 , { 255 , 51 , 51 , 255 } );
+		pFonts->Render( "Other" , m_sRenderOutput.c_str() , { 275 , 310 } , 2 , { 255 , 255 , 255 , 0 } );
+		pFonts->Render( "Other" , m_sRenderInput.c_str() , { 275 , 325 } , 2 , { 255 , 51 , 51 , 255 } );
 	}
 	
 }
 
 void QuickTime::SetLength( unsigned int x )
 {
-	m_unlength = x;
+	m_unlength = x;	
 
 	for( unsigned int i = 0; i < m_unlength; i++ )
 	{
 		GenerateRandomLetter();
 	}
+	
+	string temp = "";
+
+	for( size_t i = 0; i < 3; i++ )
+	{
+		temp = m_sOutput[ i ];
+		m_sRenderOutput += " ";
+		m_sRenderOutput += temp;
+		m_sRenderOutput += " ";
+
+	}
+
 }
 
 void QuickTime::GenerateRandomLetter()
@@ -183,32 +220,32 @@ void QuickTime::GenerateRandomLetter()
 	{
 		case SGD::Key::Q:
 		{
-			m_sOutput += " Q ";
+			m_sOutput += "Q";
 		}
 			break;
 		case SGD::Key::W:
 		{
-			m_sOutput += " W ";
+			m_sOutput += "W";
 		}
 			break;
 		case SGD::Key::E:
 		{
-			m_sOutput += " E ";
+			m_sOutput += "E";
 		}
 			break;
 		case SGD::Key::A:
 		{
-			m_sOutput += " A ";
+			m_sOutput += "A";
 		}
 			break;
 		case SGD::Key::S:
 		{
-			m_sOutput += " S ";
+			m_sOutput += "S";
 		}
 			break;
 		case SGD::Key::D:
 		{
-			m_sOutput += " D ";
+			m_sOutput += "D";
 		}
 			break;
 		default:
@@ -224,35 +261,57 @@ void QuickTime::AddGuess( SGD::Key x )
 	{
 		case SGD::Key::Q:
 		{
-			m_sInput += " Q ";
+			m_sInput += "Q";
+			m_sRenderInput += " Q ";
+
 		}
 			break;
 		case SGD::Key::W:
 		{
-			m_sInput += " W ";
+			m_sInput += "W";
+			m_sRenderInput += " W ";
 		}
 			break;
 		case SGD::Key::E:
 		{
-			m_sInput += " E ";
+			m_sInput += "E";
+			m_sRenderInput += " E ";
 		}
 			break;
 		case SGD::Key::A:
 		{
-			m_sInput += " A ";
+			m_sInput += "A";
+			m_sRenderInput += " A ";
 		}
 			break;
 		case SGD::Key::S:
 		{
-			m_sInput += " S ";
+			m_sInput += "S";
+			m_sRenderInput += " S ";
 		}
 			break;
 		case SGD::Key::D:
 		{
-			m_sInput += " D ";
+			m_sInput += "D";
+			m_sRenderInput += " D ";
 		}
 			break;
 		default:
 			break;
+	}
+}
+
+void QuickTime::ChangeRenderSet( int set )
+{
+	m_sRenderInput.clear();
+	m_sRenderOutput.clear();
+
+	
+	for( unsigned int i = ( set * 3 ); i < (( set * 3 )+3); i++ )
+	{
+		m_sRenderOutput += " ";
+		m_sRenderOutput += m_sOutput[ i ];
+		m_sRenderOutput += " ";
+
 	}
 }
