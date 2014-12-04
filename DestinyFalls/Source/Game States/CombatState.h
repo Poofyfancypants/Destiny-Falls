@@ -12,7 +12,7 @@ class CombatState :
 	public IGameState
 {
 public:
-	enum DamType{Melee, Magic, Armor, AOE, };
+	enum ActionType{Melee, Magic, Armor, AOE, Heal};
 
 	static CombatState* GetInstance();
 
@@ -34,7 +34,7 @@ public:
 	void ClearFire()	{ m_vBackgroundsFire.clear(); }
 	void ClearFinal()	{ m_vBackgroundsFinal.clear(); }
 
-	bool DealDamage(int _DamType, Object* _this, int _target);
+	bool TakeAction(int _DamType, Object* _this, int _target);
 	int GetNumEnemies() const { return m_pEnemies.size(); }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
@@ -83,6 +83,12 @@ private:
 	bool PlayerTurn = false;
 	bool EnemyTurn = false;
 
+	SGD::Vector m_vOffset = { 0, 0 };
+	SGD::Point m_CombatPos1 = { 0, 0 };
+	SGD::Point m_CombatPos2 = { 0, 0 };
+
+	int Attacker1 = -1;
+	int Attacker2 = -1;
 
 	bool m_bHealthWarning = false;
 	float m_fFlash = 0.0f;
@@ -101,12 +107,11 @@ private:
 	int HeroIndex;					 //Player is always sub zero in this list
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hRockGolem = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hPlantMonster = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_hBehemoth = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_hRockElemental = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_hPlantMonster = SGD::INVALID_HANDLE;
+	//SGD::HTexture m_hHeavyGolem = SGD::INVALID_HANDLE;
 
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
 

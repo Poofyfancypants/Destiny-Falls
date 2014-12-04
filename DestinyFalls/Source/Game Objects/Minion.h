@@ -1,5 +1,6 @@
 #pragma once
 #include "Enemy.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../Managers/AnimationManager.h"
 #include "../Runes/Runes.h"
 #include "../Runes/RuneManager.h"
@@ -10,13 +11,59 @@ class Minion :
 public:
 
 	enum AI_Type {Minion_AI, Off_AI, Def_AI, Heal_AI, AOE_AI, Mini_Boss, Level_Boss, Final_Boss,};
-	//enum Monster_Type {}; Could use both enums to determine the string used
 
-	//virtual int GetCMBType(void) const { return CMB_MINION_1; }
+	/*
+	Minion 
+	Medium health 0-40 +40
+	Med Atk speed
+	Medium damage
+	No resistances
+	No elemental damage
+
+	Offensive - Behemoth
+	Low health 0-20 + 40
+	High Atk speed
+	High damage
+	Tier 1 resistances
+	Tier 2-3 elemental damage
+	Counter - Low (15-25%) chance on all melee attacks
+
+	Defensive - Rock elemental
+	High health 0-20 +80
+	Low Atk speed
+	Low damage
+	Tier 2-3 resistances
+	Tier 1-2 elemental damage
+	Block - used on a low (20-30%) random chance
+		  - intercepts any attacks at a reduced resistance level
+
+	Healer - Plant
+	Medium health 0-35 +55
+	Med Atk speed
+	Low damage
+	Tier 2-3 resistances
+	Tier 1 elemental damage
+	Heal spell - allies/self
+			   - Checks entire enemy list
+			   - Offensive/Minion/Defensive/AOE Dam/Self
+			   - 20-30     20-40  10-30     30-40   10-20
+
+	AOE - Heavy Golem
+	High health 0-35 +65
+	High Atk speed
+	Medium damage
+	Tier 1-2 resistances
+	Tier 2-3 elemental damage
+	AOE attack 30% chance of use at all times
+			   - Picks a target
+			   - Hits that target for 10-20
+			   - Hits adjacents heroes for 10-15
+			   - If there is only one enemy, hits self for 10-15
+	*/
+
 	virtual bool TakeTurn();
 	virtual void Update(float elapsedTime);
 	virtual void Render(int _posIndex);
-	void SetCombatImage(SGD::HTexture _texture) { m_hMinion = _texture; }
 	virtual int GetType(void) const { return OBJ_MINION; }
 	int GetAIType(void) const { return m_AIType; }
 
@@ -29,8 +76,8 @@ public:
 	Elements GetAffinity() { return m_rAffinity; }
 	void SetAffinity(Elements x) { m_rAffinity = x; }
 
-	void SetString(int _type) { TypeString = _type; }
-	int GetName() const { return TypeString; }
+	void SetString(int _region, int _AI);
+	int GetName(int _index = 1);
 
 	Minion();
 	~Minion();
@@ -41,13 +88,13 @@ public:
 
 private:
 	int * m_CurrentTurn;
-	int m_nHealth = 20;
+	int m_nHealth = 0;
 	
 	AI_Type m_AIType;
-	int TypeString = 0;
+	int AIString = 0;
+	int RegionString = 0;
 
-	SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
-
+	SGD::Color m_HealthColor = {0,0,0,0};
 	SGD::Rectangle Enemy1HB = { 650, 110, 775, 140 };
 	SGD::Rectangle Enemy2HB = { 625, 200, 750, 230 };
 	SGD::Rectangle Enemy3HB = { 650, 290, 775, 320 };
@@ -58,7 +105,6 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	bool m_bUpdateAnimation = false;
-
 
 };
 

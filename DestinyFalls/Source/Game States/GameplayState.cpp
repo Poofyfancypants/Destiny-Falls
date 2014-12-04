@@ -4,6 +4,7 @@
 #include "../Game Objects/Boulder.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Objects/Chest.h"
+#include "../Game Objects/Forge.h"
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
 #include "../Game Objects/Player.h"
@@ -294,8 +295,14 @@ Object* GameplayState::CreateChest(SGD::Point _pos, int _id)
 	return temp;
 }
 
-Object* GameplayState::CreateTrap(SGD::Point _pos, int _id)
+Object* GameplayState::CreateForge(SGD::Point _pos)
 {
+	Forge* temp = new Forge;
+	//temp->SetImage(m_hForge);
+	return temp;
+}
+
+Object* GameplayState::CreateTrap( SGD::Point _pos, int _id ){
 	// 1 == fire trap || 2 == spike trap
 	if (_id == 1)
 	{
@@ -511,9 +518,9 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 1).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 1 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
 		// - Draw String Two.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 2).c_str(), TextPositionTwo, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 2 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
 	}
 	else if (m_bPuzzleDialog)
 	{
@@ -522,9 +529,9 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 3).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 3 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
 		// - Draw String Two.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 4).c_str(), TextPositionTwo, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 4 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
 	}
 	else if (m_bBoulderDialog)
 	{
@@ -533,7 +540,7 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 5).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 5 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
 	}
 	else if (m_bTrapDialog)
 	{
@@ -542,8 +549,8 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 6).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 7).c_str(), TextPositionTwo, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 6 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 7 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
 
 	}
 	else if (m_bMainDialog)
@@ -553,8 +560,8 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 8).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(2, 9).c_str(), TextPositionTwo, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 8 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 7, 9 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
 	}
 	else if (m_bChestDialog)
 	{
@@ -563,8 +570,8 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(3, 1).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(3, 2).c_str(), TextPositionTwo, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 8, 1 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 8, 2 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
 	}
 	else if (m_bSigmundDialog)
 	{
@@ -573,7 +580,7 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(200, 200, 200), SGD::Color(0, 0, 0));
 		// - Draw string One.
-		pFont->Render("Bernardo", Game::GetInstance()->GetString(3, 3).c_str(), TextPositionOne, 1, SGD::Color(0, 0, 255));
+		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 8, 3 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
 	}
 }
 

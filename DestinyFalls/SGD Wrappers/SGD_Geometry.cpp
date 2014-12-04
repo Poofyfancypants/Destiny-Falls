@@ -201,7 +201,6 @@ namespace SGD
 		bottom	+=	size.height;
 	}
 
-
 	// Operators
 	bool Rectangle::operator== ( const Rectangle& other ) const
 	{
