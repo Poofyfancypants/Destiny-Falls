@@ -374,13 +374,13 @@ bool Player::TakeTurn(float elapsedTime)
 	return false;
 }
 
-void Player::RunQuickTime()
+void Player::RunQuickTime(int length)
 {
 	m_bDoQt = true;
 	if (currentQT == nullptr)
 	{
 		currentQT = new QuickTime;
-		currentQT->SetLength(4);
+		currentQT->SetLength(length);
 	}
 }
 void Player::StopQuickTime()
