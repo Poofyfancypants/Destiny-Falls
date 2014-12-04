@@ -393,11 +393,14 @@ void GameplayState::LoadNewLevel()
 		m_pMap->LoadLevel("resource/XML/FireLevelT1.xml");
 		break;
 	case GameplayState::FIRE_LEVEL:
+		UnloadAndCreate();
+		m_pMap->LoadLevel("resource/XML/FireLevelT1.xml");
+		break;
+	case GameplayState::BOSS_LEVEL:
+		
 		Game::GetInstance()->AddState(WinState::GetInstance());
 		m_nCurrentLevel = 1;
 		break;
-		//case GameplayState::BOSS_LEVEL:
-		//	break;
 		//default:
 		//	break;
 	}
