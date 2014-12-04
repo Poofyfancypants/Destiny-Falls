@@ -6,6 +6,8 @@
 #include "../Bitmap Font/BitmapFont.h"
 #include "../Game Core/Game.h"
 #include "../Managers/BitmapFontManager.h"
+#include "../../SGD Wrappers/SGD_AudioManager.h"
+
 
 
 QuickTime::QuickTime()
@@ -85,6 +87,54 @@ void QuickTime::Update( float elapsedTime )
 		//set the event over bool to true
 		m_bqtOver = true;
 	}
+
+	if( m_unLastPlayed < m_uncounter )
+	{
+		SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+		switch( m_uncounter )
+		{
+			case 1:				
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime1 );
+				break;
+			case 2:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime2 );
+				break;
+			case 3:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime3 );
+				break;
+			case 4:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime4 );
+				break;
+			case 5:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime5 );
+				break;
+			case 6:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime6 );
+				break;
+			case 7:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime7 );
+				break;
+			case 8:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime8 );
+				break;
+			case 9:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime9 );
+				break;
+			case 10:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime10 );
+				break;
+			case 11:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime11 );
+				break;
+			case 12:
+				pAudio->PlayAudio( Game::GetInstance()->m_mChime12 );
+				break;
+			default:
+				break;
+		}
+		m_unLastPlayed++;
+	}
 }
 
 void QuickTime::Render()
@@ -101,8 +151,8 @@ void QuickTime::Render()
 	}
 	else
 	{
-		pFonts->Render( "Other" , m_sOutput.c_str() , { 275 , 310 } , 2 , { 255 , 255 , 255 , 255 } );
-		pFonts->Render( "Other" , m_sInput.c_str() , { 275 , 325 } , 2 , { 255 , 255 , 255 , 255 } );
+		pFonts->Render( "Other" , m_sOutput.c_str() , { 275 , 310 } , 2 , { 255 , 255 , 255 , 0 } );
+		pFonts->Render( "Other" , m_sInput.c_str() , { 275 , 325 } , 2 , { 255 , 51 , 51 , 255 } );
 	}
 	
 }
