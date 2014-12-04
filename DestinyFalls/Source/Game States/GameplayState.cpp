@@ -394,10 +394,9 @@ void GameplayState::LoadNewLevel()
 		break;
 	case GameplayState::FIRE_LEVEL:
 		UnloadAndCreate();
-		m_pMap->LoadLevel("resource/XML/FireLevelT1.xml");
+		m_pMap->LoadLevel("resource/XML/FinalLevel.xml");
 		break;
 	case GameplayState::BOSS_LEVEL:
-		
 		Game::GetInstance()->AddState(WinState::GetInstance());
 		m_nCurrentLevel = 1;
 		break;
