@@ -50,8 +50,8 @@ void WinState::Render()
 
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 
-	float x = Game::GetInstance()->GetScreenWidth() / 1024;
-	float y = Game::GetInstance()->GetScreenHeight() / 512;
+	float x = 250 ;
+	float y = 250 ;
 	//pGraphics->DrawTexture(m_htBackground, { 0, 0 }, {}, {}, {}, { x, y });
 
 	pFonts->Render("Celtic", "You Win", {x, y}, 2, { 255, 255, 255, 255 });
