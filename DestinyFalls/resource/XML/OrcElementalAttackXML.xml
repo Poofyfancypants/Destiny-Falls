@@ -1,24 +1,30 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
   <animation>
-    <animation_info name="OrcElementalAttack1" numFrames="3" looping="0" hTexture="Orc3Element.png">
+    <animation_info name="OrcElementalAttack1" numFrames="5" looping="0" hTexture="Orc3Element.png">
       <frame duration="0.15" damage="0" event="none" dLeft="2" dTop="86" dRight="108" dBottom="152" cLeft="2" cTop="88" cRight="107" cBottom="147" x="52" y="58" />
       <frame duration="0.15" damage="0" event="none" dLeft="104" dTop="80" dRight="176" dBottom="154" cLeft="104" cTop="81" cRight="175" cBottom="153" x="52" y="65" />
       <frame duration="1.25" damage="0" event="none" dLeft="175" dTop="84" dRight="288" dBottom="152" cLeft="175" cTop="85" cRight="288" cBottom="152" x="88" y="61" />
+      <frame duration="0.15" damage="0" event="none" dLeft="104" dTop="80" dRight="176" dBottom="154" cLeft="104" cTop="81" cRight="175" cBottom="153" x="52" y="65" />
+      <frame duration="0.15" damage="0" event="none" dLeft="2" dTop="86" dRight="108" dBottom="152" cLeft="2" cTop="88" cRight="107" cBottom="147" x="52" y="58" />
     </animation_info>
   </animation>
   <animation>
-    <animation_info name="OrcElementalAttack2" numFrames="3" looping="0" hTexture="Orc3Element.png">
+    <animation_info name="OrcElementalAttack2" numFrames="5" looping="0" hTexture="Orc3Element.png">
       <frame duration="0.15" damage="0" event="none" dLeft="8" dTop="325" dRight="111" dBottom="396" cLeft="8" cTop="326" cRight="110" cBottom="395" x="54" y="60" />
       <frame duration="0.15" damage="0" event="none" dLeft="113" dTop="322" dRight="184" dBottom="394" cLeft="113" cTop="324" cRight="182" cBottom="392" x="50" y="62" />
       <frame duration="1.25" damage="0" event="none" dLeft="183" dTop="322" dRight="301" dBottom="393" cLeft="183" cTop="325" cRight="299" cBottom="390" x="89" y="63" />
+      <frame duration="0.15" damage="0" event="none" dLeft="113" dTop="322" dRight="184" dBottom="394" cLeft="113" cTop="324" cRight="182" cBottom="392" x="50" y="62" />
+      <frame duration="0.15" damage="0" event="none" dLeft="8" dTop="325" dRight="111" dBottom="396" cLeft="8" cTop="326" cRight="110" cBottom="395" x="54" y="60" />
     </animation_info>
   </animation>
   <animation>
-    <animation_info name="OrcElementalAttack3" numFrames="3" looping="0" hTexture="Orc3Element.png">
+    <animation_info name="OrcElementalAttack3" numFrames="5" looping="0" hTexture="Orc3Element.png">
       <frame duration="0.15" damage="0" event="none" dLeft="9" dTop="574" dRight="111" dBottom="642" cLeft="9" cTop="575" cRight="110" cBottom="640" x="53" y="59" />
       <frame duration="0.15" damage="0" event="none" dLeft="113" dTop="573" dRight="185" dBottom="643" cLeft="113" cTop="574" cRight="184" cBottom="642" x="50" y="59" />
       <frame duration="1.25" damage="0" event="none" dLeft="186" dTop="570" dRight="299" dBottom="648" cLeft="187" cTop="571" cRight="298" cBottom="647" x="85" y="63" />
+      <frame duration="0.15" damage="0" event="none" dLeft="113" dTop="573" dRight="185" dBottom="643" cLeft="113" cTop="574" cRight="184" cBottom="642" x="50" y="59" />
+      <frame duration="0.15" damage="0" event="none" dLeft="9" dTop="574" dRight="111" dBottom="642" cLeft="9" cTop="575" cRight="110" cBottom="640" x="53" y="59" />
     </animation_info>
   </animation>
 </Root>

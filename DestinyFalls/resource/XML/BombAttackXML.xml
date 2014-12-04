@@ -1,27 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
   <animation>
-    <animation_info name="BombAttack1" numFrames="4" looping="0" hTexture="Bomb.png">
+    <animation_info name="BombAttack1" numFrames="7" looping="0" hTexture="Bomb.png">
       <frame duration="0.25" damage="0" event="none" dLeft="14" dTop="264" dRight="68" dBottom="311" cLeft="14" cTop="264" cRight="67" cBottom="311" x="21" y="33" />
       <frame duration="0.25" damage="0" event="none" dLeft="67" dTop="258" dRight="122" dBottom="308" cLeft="67" cTop="260" cRight="122" cBottom="308" x="23" y="40" />
       <frame duration="0.25" damage="0" event="none" dLeft="125" dTop="258" dRight="175" dBottom="306" cLeft="126" cTop="257" cRight="174" cBottom="306" x="20" y="38" />
       <frame duration="1.25" damage="0" event="none" dLeft="173" dTop="250" dRight="239" dBottom="307" cLeft="173" cTop="252" cRight="238" cBottom="307" x="27" y="47" />
+      <frame duration="0.25" damage="0" event="none" dLeft="125" dTop="258" dRight="175" dBottom="306" cLeft="126" cTop="257" cRight="174" cBottom="306" x="20" y="38" />
+      <frame duration="0.25" damage="0" event="none" dLeft="67" dTop="258" dRight="122" dBottom="308" cLeft="67" cTop="260" cRight="122" cBottom="308" x="23" y="40" />
+      <frame duration="0.25" damage="0" event="none" dLeft="14" dTop="264" dRight="68" dBottom="311" cLeft="14" cTop="264" cRight="67" cBottom="311" x="21" y="33" />
     </animation_info>
   </animation>
   <animation>
-    <animation_info name="BombAttack2" numFrames="4" looping="0" hTexture="Bomb.png">
+    <animation_info name="BombAttack2" numFrames="7" looping="0" hTexture="Bomb.png">
       <frame duration="0.25" damage="0" event="none" dLeft="261" dTop="258" dRight="316" dBottom="306" cLeft="260" cTop="257" cRight="315" cBottom="307" x="30" y="36" />
       <frame duration="0.25" damage="0" event="none" dLeft="326" dTop="254" dRight="375" dBottom="303" cLeft="326" cTop="255" cRight="375" cBottom="302" x="17" y="39" />
       <frame duration="0.25" damage="0" event="none" dLeft="374" dTop="255" dRight="429" dBottom="298" cLeft="374" cTop="256" cRight="429" cBottom="297" x="26" y="36" />
       <frame duration="1.25" damage="0" event="none" dLeft="432" dTop="246" dRight="487" dBottom="301" cLeft="432" cTop="247" cRight="486" cBottom="300" x="23" y="47" />
+      <frame duration="0.25" damage="0" event="none" dLeft="374" dTop="255" dRight="429" dBottom="298" cLeft="374" cTop="256" cRight="429" cBottom="297" x="26" y="36" />
+      <frame duration="0.25" damage="0" event="none" dLeft="326" dTop="254" dRight="375" dBottom="303" cLeft="326" cTop="255" cRight="375" cBottom="302" x="17" y="39" />
+      <frame duration="0.25" damage="0" event="none" dLeft="261" dTop="258" dRight="316" dBottom="306" cLeft="260" cTop="257" cRight="315" cBottom="307" x="30" y="36" />
     </animation_info>
   </animation>
   <animation>
-    <animation_info name="BombAttack3" numFrames="4" looping="0" hTexture="Bomb.png">
+    <animation_info name="BombAttack3" numFrames="7" looping="0" hTexture="Bomb.png">
       <frame duration="0.25" damage="0" event="none" dLeft="515" dTop="255" dRight="575" dBottom="296" cLeft="517" cTop="256" cRight="570" cBottom="294" x="27" y="32" />
       <frame duration="0.25" damage="0" event="none" dLeft="573" dTop="250" dRight="624" dBottom="298" cLeft="572" cTop="251" cRight="624" cBottom="297" x="21" y="38" />
       <frame duration="0.25" damage="0" event="none" dLeft="631" dTop="252" dRight="682" dBottom="298" cLeft="631" cTop="252" cRight="682" cBottom="298" x="17" y="35" />
       <frame duration="1.25" damage="0" event="none" dLeft="682" dTop="243" dRight="742" dBottom="298" cLeft="682" cTop="244" cRight="742" cBottom="297" x="23" y="44" />
+      <frame duration="0.25" damage="0" event="none" dLeft="631" dTop="252" dRight="682" dBottom="298" cLeft="631" cTop="252" cRight="682" cBottom="298" x="17" y="35" />
+      <frame duration="0.25" damage="0" event="none" dLeft="573" dTop="250" dRight="624" dBottom="298" cLeft="572" cTop="251" cRight="624" cBottom="297" x="21" y="38" />
+      <frame duration="0.25" damage="0" event="none" dLeft="515" dTop="255" dRight="575" dBottom="296" cLeft="517" cTop="256" cRight="570" cBottom="294" x="27" y="32" />
     </animation_info>
   </animation>
 </Root>
