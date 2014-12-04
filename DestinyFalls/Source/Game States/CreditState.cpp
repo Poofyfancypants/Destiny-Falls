@@ -29,6 +29,7 @@ void CreditState::Exit()
 {
 	SGD::AudioManager::GetInstance()->UnloadAudio(m_haBackground);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_htBackground);
+	m_particle.Exit();
 }
 
 bool CreditState::Input()
