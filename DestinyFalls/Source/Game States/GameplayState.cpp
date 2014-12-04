@@ -482,15 +482,16 @@ void GameplayState::RenderDialog()
 
 	// - Location of the Dialog Box at the bottom of the screen.
 	SGD::Rectangle DialogBoxOne;
-	DialogBoxOne.left = 0;
-	DialogBoxOne.top = Game::GetInstance()->GetScreenHeight() - 100;
-	DialogBoxOne.right = Game::GetInstance()->GetScreenWidth();
-	DialogBoxOne.bottom = Game::GetInstance()->GetScreenHeight();
+	DialogBoxOne.left = 25;
+	DialogBoxOne.top = Game::GetInstance()->GetScreenHeight() - 125;
+	DialogBoxOne.right = Game::GetInstance()->GetScreenWidth() - 25;
+	DialogBoxOne.bottom = Game::GetInstance()->GetScreenHeight() - 25;
 
 	// - Location to print the strings within the dialog Box
 	SGD::Point TextPositionOne;
 	SGD::Point TextPositionTwo;
-	TextPositionOne.x = DialogBoxOne.left + 20;
+
+	TextPositionOne.x = DialogBoxOne.left + 40;
 	TextPositionOne.y = DialogBoxOne.top + 20;
 	TextPositionTwo.x = DialogBoxOne.left + 20;
 	TextPositionTwo.y = DialogBoxOne.top + 50;
@@ -499,74 +500,93 @@ void GameplayState::RenderDialog()
 
 	if( m_bFirstDialog )
 	{
-		heroPosition = { (float)( ( 3 * 32 ) - m_ptWorldCam.x ), (float)( ( 8 * 32 ) - m_ptWorldCam.y ) };
-		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
+		TextPositionOne.x = DialogBoxOne.left + 50;
+		TextPositionTwo.x = DialogBoxOne.left + 200;
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+
+		heroPosition = { (float)( ( 3 * 32 ) - m_ptWorldCam.x ), (float)( ( 8 * 32 ) - m_ptWorldCam.y ) };
+		//pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
+		pGraphics->DrawTexture(m_hHero, heroPosition);
+
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 1 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 1 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
 		// - Draw String Two.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 2 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 2 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
 	}
 	else if( m_bPuzzleDialog )
 	{
+		TextPositionOne.x = DialogBoxOne.left + 160;
+		TextPositionTwo.x = DialogBoxOne.left + 100;
+
 		heroPosition = { (float)( ( 7 * 32 ) - m_ptWorldCam.x ), (float)( ( 14 * 32 ) - m_ptWorldCam.y ) };
 		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 3 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 3 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
 		// - Draw String Two.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 4 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 4 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
 	}
 	else if( m_bBoulderDialog )
 	{
 		heroPosition = { (float)( ( 12 * 32 ) - m_ptWorldCam.x ), (float)( ( 0 * 32 ) - m_ptWorldCam.y ) };
 		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+		TextPositionOne.y = DialogBoxOne.top + 25;
+
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 5 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 5 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
 	}
 	else if( m_bTrapDialog )
 	{
+
 		heroPosition = { (float)( ( 26 * 32 ) - m_ptWorldCam.x ), (float)( ( 2 * 32 ) - m_ptWorldCam.y ) };
 		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
+		
+		TextPositionOne.x = DialogBoxOne.left + 90;
+		TextPositionTwo.x = DialogBoxOne.left + 110;
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 6 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 7 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 6 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 7 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
 
 	}
 	else if( m_bMainDialog )
 	{
-		heroPosition = { (float)( ( 26 * 32 ) - m_ptWorldCam.x ), (float)( ( 2 * 32 ) - m_ptWorldCam.y ) };
+		heroPosition = { (float)( ( 24 * 32 ) - m_ptWorldCam.x ), (float)( ( 16 * 32 ) - m_ptWorldCam.y ) };
 		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+		TextPositionOne.x = DialogBoxOne.left + 150;
+		TextPositionTwo.x = DialogBoxOne.left + 120;
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 8 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 9 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 8 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 9 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
 	}
 	else if( m_bChestDialog )
 	{
-		heroPosition = { (float)( ( 26 * 32 ) - m_ptWorldCam.x ), (float)( ( 2 * 32 ) - m_ptWorldCam.y ) };
+		heroPosition = { (float)( ( 20 * 32 ) - m_ptWorldCam.x ), (float)( ( 7 * 32 ) - m_ptWorldCam.y ) };
 		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+		TextPositionOne.x = DialogBoxOne.left + 110;
+		TextPositionTwo.x = DialogBoxOne.left + 120;
+
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 3, 1 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 3, 2 ).c_str(), TextPositionTwo, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 3, 1 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 3, 2 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
 	}
 	else if( m_bSigmundDialog )
 	{
-		heroPosition = { (float)( ( 26 * 32 ) - m_ptWorldCam.x ), (float)( ( 2 * 32 ) - m_ptWorldCam.y ) };
+		heroPosition = { (float)( ( 16 * 32 ) - m_ptWorldCam.x ), (float)( ( 19 * 32 ) - m_ptWorldCam.y ) };
 		pGraphics->DrawRectangle( SGD::Rectangle( heroPosition, SGD::Size( 32, 32 ) ), SGD::Color( 155, 155, 0 ) );
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 3, 3 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 3, 3 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
 	}
 }
 

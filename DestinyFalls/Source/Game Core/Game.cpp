@@ -89,7 +89,11 @@ bool Game::Initialize( float width, float height )
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
 	string xmlFile2 = "resource/XML/otherfont1.xml";
 	m_pFonts->Load( fontName2, imageName2, xmlFile2 );
-
+	//Load the dialog font
+	string fontName3 = "Dialog";
+	string imageName3 = "resource/graphics/Fonts/dialog.png";
+	string xmlFile3 = "resource/XML/newDialog.xml";
+	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
