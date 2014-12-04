@@ -177,7 +177,7 @@ void Minion::SetMinionAnimation( int region , int minionType )
 					this->GetTimeStamp()->SetCurrentAnimation( "OrcElementalAttack2" );
 					break;
 				case 3:
-					this->GetTimeStamp()->SetCurrentAnimation( "AirElementalAttack2" );
+					this->GetTimeStamp()->SetCurrentAnimation( "GenieAttack" );
 					break;
 				default:
 					break;
