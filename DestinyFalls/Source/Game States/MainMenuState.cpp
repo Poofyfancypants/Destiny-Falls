@@ -132,7 +132,7 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
 			break;
 		case MenuSelections::howToPlay:
-			Game::GetInstance()->AddState( GameplayState::GetInstance() );
+			Game::GetInstance()->AddState( HowToPlayState::GetInstance() );
 			m_bTutorial = true;
 			break;
 		case MenuSelections::credits:
