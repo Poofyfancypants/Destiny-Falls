@@ -337,6 +337,12 @@ bool InventoryState::Input()
 			m_ptSelectedRune.SetElement(Earth);
 			m_ptSelectedRune.SetTier(3);
 		}
+
+		//leave inventory
+		if (pInput->GetCursorPosition().IsPointInRectangle(GameplayState::GetInstance()->InventoryButton))
+		{
+			Game::GetInstance()->RemoveState();
+		}
 	}
 	// remove runes from the equipped slot
 	if (pInput->IsKeyPressed(SGD::Key::MouseRight))
@@ -565,12 +571,7 @@ bool InventoryState::Input()
 		}
 #pragma endregion 
 	}
-	//leave inventory
-	if (pInput->GetCursorPosition().IsPointInRectangle(GameplayState::GetInstance()->InventoryButton))
-	{
-
-		Game::GetInstance()->RemoveState();
-	}
+	
 
 
 #pragma endregion

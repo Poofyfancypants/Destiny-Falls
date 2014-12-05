@@ -99,12 +99,12 @@ void Player::Update( float elapsedTime )
 	}
 
 	// Sub 25% health indicator
-
+	
 	m_fHealthFlash += elapsedTime;
-	if( m_fHealthFlash > 2 && this->GetHealth() < 25 )
+	if( m_fHealthFlash >= 2.0f && GetHealth() <= 25 )
 	{
-		m_bLowHealthWarning = true;
-		m_fHealthFlash = 0;
+		m_bLowHealthWarning = !m_bLowHealthWarning;
+		m_fHealthFlash = 0.0f;
 	}
 	else
 		m_bLowHealthWarning = false;
@@ -144,7 +144,10 @@ void Player::Render( void )
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), (int)( point.x + ( m_szSize.width / 2.0f ) ), (int)( point.y + ( m_szSize.height / 2.0f ) ) );
 	}
 	// Low Health warning!
-
+	if (m_bLowHealthWarning)
+	{
+		pGraphics->DrawRectangle(SGD::Rectangle(0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), SGD::Color(100, 255, 0, 0));
+	}
 
 
 }

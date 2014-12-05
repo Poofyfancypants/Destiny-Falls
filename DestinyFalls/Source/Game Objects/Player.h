@@ -75,6 +75,5 @@ private:
 	bool m_bDoQt = false;
 	bool m_bLowHealthWarning = false;
 	float m_fHealthFlash = 0.0f;
-
 	bool m_bUpdateAnimation = true;
 };
