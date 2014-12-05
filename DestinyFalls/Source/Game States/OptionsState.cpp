@@ -150,6 +150,7 @@ void OptionsState::Render()
 {
 	SGD::AudioManager *pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	pGraphics->DrawTexture(m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f });
 

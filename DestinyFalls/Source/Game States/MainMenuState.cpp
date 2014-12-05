@@ -196,11 +196,11 @@ void MainMenuState::Render()
 	}
 
 
-	pGraphics->SetClearColor();
+	pGraphics->SetClearColor({148,99,50});
 	
 	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, {0.3f, 0.3f});
 	
-
+	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
 	pFonts->Render( "Dialog", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );

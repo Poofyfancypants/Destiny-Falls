@@ -125,6 +125,7 @@ void PauseMenuState::Update( float elapsedTime )
 void PauseMenuState::Render( void )
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
