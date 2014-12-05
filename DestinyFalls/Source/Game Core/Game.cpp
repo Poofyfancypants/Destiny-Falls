@@ -250,8 +250,8 @@ int Game::Update( void )
 {
 	unsigned long now = GetTickCount();					// current time in milliseconds
 	float elapsedTime = ( now - m_ulGameTime ) / 1000.0f;	// convert to fraction of a second
-	//if( elapsedTime == 0.0f )
-	//	return 0;
+	if( elapsedTime == 0.0f )
+		return 0;
 
 	m_ulGameTime = now;
 

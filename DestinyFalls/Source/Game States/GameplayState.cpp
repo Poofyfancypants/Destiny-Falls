@@ -82,7 +82,8 @@ void GameplayState::Enter()
 	pAudio->PlayAudio( bmusic, true );
 
 
-
+	// Invisible inventory selection button behind inventory image.
+	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
 
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
@@ -209,17 +210,7 @@ void GameplayState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
-	// - Draw Tutorial Test 
 
-
-
-	//pGraphics->DrawTexture( m_hHero, dest, SGD::Color( 255, 255, 0 ) );
-
-
-
-
-	// Invisible inventory selection button behind inventory image.
-	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
 
 	// Inventory Image/Scaling
 	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
