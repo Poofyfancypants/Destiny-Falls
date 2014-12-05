@@ -21,6 +21,15 @@ Boulder::~Boulder()
 
 void Boulder::Update( float elapsedTime )
 {
+	if( m_bButtonIndicator )
+		m_fCounter += elapsedTime;
+
+	if( m_fCounter >= 3 )
+	{
+		m_bButtonIndicator = false;
+		m_fCounter = 0;
+	}
+
 	float speed = 500 * elapsedTime;
 	SGD::Vector velocity;
 	switch( m_nDirection )
@@ -61,21 +70,21 @@ void Boulder::Render( void )
 	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
 	pGraphics->DrawTexture( m_hImage, point );
 
-	if( dynamic_cast<Player*>( GameplayState::GetInstance()->GetPlayer())->GetBoulderCollision() )
+	if( m_bButtonIndicator )
 	{
 		SGD::Point pos = dynamic_cast<const Player*>( GameplayState::GetInstance()->GetPlayer() )->GetPosition();
 		pos.x -= GameplayState::GetInstance()->GetWorldCam().x;
 		pos.y -= GameplayState::GetInstance()->GetWorldCam().y;
 
-		BitmapFontManager::GetInstance()->Render("Dialog", "R", point,1,SGD::Color(255,0,0));
+		BitmapFontManager::GetInstance()->Render( "Dialog", "R", point, 1, SGD::Color( 255, 0, 0 ) );
 	}
 
 	if( GameplayState::GetInstance()->GetDebugState() )
 	{
 
-	SGD::Rectangle rec = GetRect();
-	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
-	pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 0 ) );
+		SGD::Rectangle rec = GetRect();
+		rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+		pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 0 ) );
 	}
 
 
@@ -92,6 +101,8 @@ void Boulder::HandleCollision( const iObject* pOther )
 
 	if( pOther->GetType() == OBJ_PLAYER )
 	{
+		m_bButtonIndicator = true;
+
 		SGD::Point pos = dynamic_cast<const Player*>( pOther )->GetPosition();
 		pos.x -= GameplayState::GetInstance()->GetWorldCam().x;
 		pos.y -= GameplayState::GetInstance()->GetWorldCam().y;

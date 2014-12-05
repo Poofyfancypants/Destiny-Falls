@@ -22,6 +22,7 @@ public:
 	//Textures
 	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
+	bool GetTutorial() const {return m_bTutorial;}
 private:
 	MainMenuState() = default;
 	virtual ~MainMenuState() = default;
@@ -35,6 +36,7 @@ private:
 	//GameState Selection Rectangles
 	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
 	SGD::Rectangle TestAnimationSystem = { 0 , 0 , 0 , 0 };
+
 
 	SGD::Rectangle Options = { 0, 0, 0, 0 };
 	SGD::Rectangle LoadGame = { 0, 0, 0, 0 };
@@ -54,6 +56,6 @@ private:
 
 	
 	bool m_bDebug = false;
-
+	bool m_bTutorial = false;
 };
 
