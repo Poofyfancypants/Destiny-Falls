@@ -71,6 +71,7 @@ void GameplayState::Enter()
 
 
 
+	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	m_henemy = pGraphics->LoadTexture( L"resource/graphics/enemy1.png" );
@@ -85,6 +86,7 @@ void GameplayState::Enter()
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
+	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
@@ -118,6 +120,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hInvButton );
 	pGraphics->UnloadTexture( m_hHero );
 	pGraphics->UnloadTexture( m_hDialogImg );
+	pGraphics->UnloadTexture( m_hHealthPot );
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -213,9 +216,7 @@ void GameplayState::Render()
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 
 
-	// Inventory Image/Scaling
-	pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
-	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.5f, 0.5f } );
+
 
 	m_pObjects->RenderAll();
 
@@ -236,6 +237,23 @@ void GameplayState::Render()
 		RenderDialog();
 	}
 
+	// Inventory Image/Scaling
+	//pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
+	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.5f, 0.5f } );
+
+	pGraphics->DrawRectangle( SGD::Rectangle(
+		HealthPotionPosition.left - 3,
+		HealthPotionPosition.top - 3,
+		HealthPotionPosition.right + 20,
+		HealthPotionPosition.top + 50 ),
+		SGD::Color( 100, 50, 50, 50 ) );
+
+
+	pGraphics->DrawTexture( m_hHealthPot, SGD::Point( HealthPotionPosition.left, HealthPotionPosition.top ), {}, {}, {}, { 0.7f, 0.7f } );
+	pFont->Render( "Bernardo",
+		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
+		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
+		2, SGD::Color( 255, 0, 0 ) );
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
