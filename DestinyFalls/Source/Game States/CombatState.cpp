@@ -96,7 +96,9 @@ void CombatState::Enter( void )
 	m_CombatPos1.y = ( Game::GetInstance()->GetScreenHeight() / 2 );
 
 	m_CombatPos2.x = ( Game::GetInstance()->GetScreenWidth() / 2 + 35 );
-	m_CombatPos2.y = ( Game::GetInstance()->GetScreenHeight() / 2 );
+	m_CombatPos2.y = ( Game::GetInstance()->GetScreenHeight() / 2 ); 
+
+	( ( Player* ) m_pHeroes[ 0 ] )->StartCombat();
 }
 
 void CombatState::Exit( void )
@@ -104,6 +106,7 @@ void CombatState::Exit( void )
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
+	( ( Player* ) m_pHeroes[ 0 ] )->StopCombat();
 	for( size_t i = 0; i < m_pObjects.size(); i++ )
 		m_pObjects[ i ]->Release();
 
@@ -145,7 +148,7 @@ void CombatState::Update( float elapsedTime )
 	if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() > 0 )
 	{
 		PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth();
-
+		( ( Player* ) m_pHeroes[ 0 ] )->Update( elapsedTime );
 		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() < 25 && m_fFlash > 2 )
 		{
 			m_bHealthWarning = true;
@@ -276,7 +279,9 @@ void CombatState::Render( void )
 		pHcolor = { 255 , 255 , 0 , 0 };
 
 	pGraphics->DrawRectangle( Playerrect , SGD::Color { 100 , 0 , 0 , 150 } , SGD::Color { 255 , 255 , 255 , 255 } );
-	pGraphics->DrawTexture( m_hplayer , { Playerrect.left - 20 , Playerrect.top - 10 } , { } , { } , { } , { .5 , .5 } );
+	/*pGraphics->DrawTexture( m_hplayer , { Playerrect.left - 20 , Playerrect.top - 10 } , { } , { } , { } , { .5 , .5 } );*/
+	( ( Player* ) m_pHeroes[ 0 ] )->Render();
+
 
 	if( PlayerHB.right > PlayerHB.left )
 		pGraphics->DrawRectangle( PlayerHB , pHcolor );
@@ -515,7 +520,7 @@ bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //
 
 					( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 						( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
-
+					( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();
 					string message = "You Slash the ";
 					message += ( pGame->GetString( ( ( Minion* ) m_pEnemies[ _target ] )->GetName( 0 ) , ( ( Minion* ) m_pEnemies[ _target ] )->GetName( 1 ) ).c_str() );
 					SetAction( message );
@@ -641,6 +646,7 @@ int CombatState::DealMeleeDamage( Object* _From , Object* _To )
 	int Total;
 	if( _From->GetType() == iObject::OBJ_PLAYER )
 	{
+		( ( Player* ) _From )->ResetAnimation();
 	}
 	else
 	{

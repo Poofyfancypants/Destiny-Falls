@@ -50,6 +50,11 @@ public:
 
 	int GetPrevDirection() const {return m_nPrevDirection;}
 	bool GetBoulderCollision() const {return m_bCollision;}
+
+	void ResetAnimation();
+	void StartCombat();
+	void StopCombat();
+
 private:
 
 	int m_nDirection;
@@ -79,5 +84,9 @@ private:
 	bool m_bUpdateAnimation = true;
 
 	SGD::HTexture m_hPortrait = SGD::INVALID_HANDLE;
+
+	bool m_bPlayCombatAnimation = false;
+
+	string m_szLastAnimation;
 
 };

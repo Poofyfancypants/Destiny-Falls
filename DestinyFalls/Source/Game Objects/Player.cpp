@@ -36,76 +36,82 @@ Player::~Player()
 void Player::Update(float elapsedTime)
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-	if (m_nHealth <= 0)
+	if( m_bPlayCombatAnimation )
 	{
-		pAudio->PlayAudio(Game::GetInstance()->deathSound, false);
-		m_nHealth = 0;
-		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
-
-		m_ptPosition = GetCheckpoint();
-		//m_nHealth = 100;
-	}
-	if (!m_bSliding)
-		m_nDirection = 0;
-
-	TakeInput();
-	float speed;
-	if (m_bSliding)
-		speed = 500 * elapsedTime;
-	else
-		speed = 250 * elapsedTime;
-
-	switch (m_nDirection)
-	{
-	case 1:
-		velocity = SGD::Vector(0, -speed);
-		break;
-	case 2:
-		velocity = SGD::Vector(0, speed);
-		break;
-	case 3:
-		velocity = SGD::Vector(-speed, 0);
-		break;
-	case 4:
-		velocity = SGD::Vector(speed, 0);
-		break;
-	default:
-		velocity = SGD::Vector();
-		break;
-	}
-
-	SGD::Point futurePos = m_ptPosition + velocity;
-	if (!GameplayState::GetInstance()->GetMap()->TileCollision(this, futurePos) && !m_bCollision)
-	{
-		m_ptPosition = futurePos;
-
-		if (m_bSliding && m_nDirection != 0)
-			m_bMoving = true;
-	}
-	else if (m_bSliding)
-	{
-		m_bMoving = false;
-		m_nDirection = 0;
-	}
-
-	m_bCollision = false;
-	if (m_bUpdateAnimation)
-	{
-		m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
-
-	}
-
-	// Sub 25% health indicator
-
-	m_fHealthFlash += elapsedTime;
-	if (m_fHealthFlash > 2 && this->GetHealth() < 25)
-	{
-		m_bLowHealthWarning = true;
-		m_fHealthFlash = 0;
+		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
 	}
 	else
-		m_bLowHealthWarning = false;
+	{
+		if( m_nHealth <= 0 )
+		{
+			pAudio->PlayAudio( Game::GetInstance()->deathSound , false );
+			m_nHealth = 0;
+			Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 
+			m_ptPosition = GetCheckpoint();
+			//m_nHealth = 100;
+		}
+		if( !m_bSliding )
+			m_nDirection = 0;
+
+		TakeInput();
+		float speed;
+		if( m_bSliding )
+			speed = 500 * elapsedTime;
+		else
+			speed = 250 * elapsedTime;
+
+		switch( m_nDirection )
+		{
+			case 1:
+				velocity = SGD::Vector( 0 , -speed );
+				break;
+			case 2:
+				velocity = SGD::Vector( 0 , speed );
+				break;
+			case 3:
+				velocity = SGD::Vector( -speed , 0 );
+				break;
+			case 4:
+				velocity = SGD::Vector( speed , 0 );
+				break;
+			default:
+				velocity = SGD::Vector();
+				break;
+		}
+
+		SGD::Point futurePos = m_ptPosition + velocity;
+		if( !GameplayState::GetInstance()->GetMap()->TileCollision( this , futurePos ) && !m_bCollision )
+		{
+			m_ptPosition = futurePos;
+
+			if( m_bSliding && m_nDirection != 0 )
+				m_bMoving = true;
+		}
+		else if( m_bSliding )
+		{
+			m_bMoving = false;
+			m_nDirection = 0;
+		}
+
+		m_bCollision = false;
+		if( m_bUpdateAnimation )
+		{
+			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+
+		}
+
+		// Sub 25% health indicator
+
+		m_fHealthFlash += elapsedTime;
+		if( m_fHealthFlash > 2 && this->GetHealth() < 25 )
+		{
+			m_bLowHealthWarning = true;
+			m_fHealthFlash = 0;
+		}
+		else
+			m_bLowHealthWarning = false;
+	}
 
 
 }
@@ -113,40 +119,45 @@ void Player::Update(float elapsedTime)
 void Player::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-
-	SGD::Vector vec = { (m_ptPosition.x), (m_ptPosition.y) };
-	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
-	if (GameplayState::GetInstance()->GetDebugState())
+	if( m_bPlayCombatAnimation )
 	{
-		SGD::Rectangle rec = GetRect();
-		rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
-		pGraphics->DrawRectangle(rec, SGD::Color(0, 0, 255));
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , 289 , 264 );
 	}
-
-
-	SGD::Point currentHealthHUD = { 0, 0 };
-	// Red Health Bar
-	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() / 10) };
-	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U);
-	// Green Health Bar
-	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() / 10) };
-	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U);
-	pGraphics->DrawTexture(m_hPortrait, SGD::Point(currentHealthHUD.x-70, currentHealthHUD.y-30), {}, {}, {}, {.5f,.5f});
-
-	std::string potString = std::to_string(m_nPotions);
-	potString += " Potions";
-	pGraphics->DrawString(potString.c_str(), { (Game::GetInstance()->GetScreenWidth() - 100), (Game::GetInstance()->GetScreenHeight() - 80) }, SGD::Color(255, 255, 0, 0));
-
-	if (m_pAnimator->GetInstance()->CheckSize())
+	else
 	{
-		m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)(point.x + (m_szSize.width / 2.0f)), (int)(point.y + (m_szSize.height / 2.0f)));
+		SGD::Vector vec = { ( m_ptPosition.x ) , ( m_ptPosition.y ) };
+		SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x , vec.y - GameplayState::GetInstance()->GetWorldCam().y };
+		if( GameplayState::GetInstance()->GetDebugState() )
+		{
+			SGD::Rectangle rec = GetRect();
+			rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x , -GameplayState::GetInstance()->GetWorldCam().y );
+			pGraphics->DrawRectangle( rec , SGD::Color( 0 , 0 , 255 ) );
+		}
+
+
+		SGD::Point currentHealthHUD = { 0 , 0 };
+		// Red Health Bar
+		currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75 , ( Game::GetInstance()->GetScreenHeight() / 10 ) };
+		pGraphics->DrawLine( currentHealthHUD , SGD::Point { currentHealthHUD.x + this->GetMaxHealth() , currentHealthHUD.y } , { 255 , 0 , 0 } , 17U );
+		// Green Health Bar
+		currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75 , ( Game::GetInstance()->GetScreenHeight() / 10 ) };
+		pGraphics->DrawLine( currentHealthHUD , SGD::Point { currentHealthHUD.x + this->GetHealth() , currentHealthHUD.y } , { 0 , 255 , 0 } , 17U );
+		pGraphics->DrawTexture( m_hPortrait , SGD::Point( currentHealthHUD.x - 70 , currentHealthHUD.y - 30 ) , { } , { } , { } , { .5f , .5f } );
+
+		std::string potString = std::to_string( m_nPotions );
+		potString += " Potions";
+		pGraphics->DrawString( potString.c_str() , { ( Game::GetInstance()->GetScreenWidth() - 100 ) , ( Game::GetInstance()->GetScreenHeight() - 80 ) } , SGD::Color( 255 , 255 , 0 , 0 ) );
+
+		if( m_pAnimator->GetInstance()->CheckSize() )
+		{
+			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , ( int ) ( point.x + ( m_szSize.width / 2.0f ) ) , ( int ) ( point.y + ( m_szSize.height / 2.0f ) ) );
+		}
+		// Low Health warning!
+
+		if( m_bLowHealthWarning )
+			pGraphics->DrawRectangle( SGD::Rectangle( 0 , 0 , Game::GetInstance()->GetScreenWidth() , Game::GetInstance()->GetScreenHeight() ) , { 100 , 255 , 0 , 0 } );
+
 	}
-	// Low Health warning!
-
-	if (m_bLowHealthWarning)
-		pGraphics->DrawRectangle(SGD::Rectangle(0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight()), { 100, 255, 0, 0 });
-
-
 }
 
 void Player::TakeInput()
@@ -290,7 +301,7 @@ bool Player::TakeTurn(float elapsedTime)
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
-
+	
 	float posX = 200.0f;
 	if (selected)
 	{
@@ -377,7 +388,8 @@ bool Player::TakeTurn(float elapsedTime)
 			m_nCursor = 0;
 			return true;
 		}
-
+		this->GetTimeStamp()->SetCurrentFrame( 0 );
+		this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 	}
 
 
@@ -398,4 +410,27 @@ void Player::StopQuickTime()
 	m_bDoQt = false;
 	delete currentQT;
 	currentQT = nullptr;
+}
+
+void Player::StartCombat()
+{
+	m_bPlayCombatAnimation = true;
+
+	m_szLastAnimation = this->GetTimeStamp()->GetCurrentAnimation();
+	this->GetTimeStamp()->SetCurrentAnimation( "HeroSwordSwing" );
+	this->GetTimeStamp()->SetCurrentFrame( 4 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+}
+
+void Player::StopCombat()
+{
+	m_bPlayCombatAnimation = false;
+	this->GetTimeStamp()->SetCurrentAnimation( m_szLastAnimation );
+	this->GetTimeStamp()->SetCurrentFrame( 0 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+}
+void Player::ResetAnimation()
+{
+	this->GetTimeStamp()->SetCurrentFrame( 0 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 }
