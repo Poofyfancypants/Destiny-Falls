@@ -107,12 +107,6 @@ private:
 	int HeroIndex;					 //Player is always sub zero in this list
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hBehemoth = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hRockElemental = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hPlantMonster = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hHeavyGolem = SGD::INVALID_HANDLE;
-
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
 
 	int numPots;

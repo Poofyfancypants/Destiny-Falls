@@ -137,6 +137,7 @@ private:
 	SGD::Rectangle IventoryRect4 = { 260, 240, 290, 280 };
 	SGD::Rectangle IventoryRect7 = { 210, 320, 240, 360 };
 	SGD::Rectangle IventoryRect10 = { 260, 320, 290, 360 };
+	
 	//t2
 	SGD::Rectangle IventoryRect2 = { 310, 240, 340, 280 };
 	SGD::Rectangle IventoryRect5 = { 360, 240, 390, 280 };

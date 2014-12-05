@@ -18,10 +18,6 @@ CreditState* CreditState::GetInstance()
 
 void CreditState::Enter()
 {
-	//m_hMusic = SGD::AudioManager::GetInstance()->LoadAudio(L"");
-	//m_htBackground = SGD::AudioManager::GetInstance()->LoadAudio(L"");
-	//SGD::AudioManager::GetInstance()->PlayAudio(m_haBackground);
-
 	m_particle.ReadXML("resource/XML/Test2.xml");
 
 }
@@ -51,7 +47,6 @@ bool CreditState::Input()
 
 void CreditState::Update(float elapsedTime)
 {
-	//varHeight += 50.0f * elapsedTime;
 	Timer -= 1 * elapsedTime;
 }
 
@@ -63,10 +58,6 @@ void CreditState::Render()
 
 	float x = Game::GetInstance()->GetScreenWidth() / 1024;
 	float y = Game::GetInstance()->GetScreenHeight() / 512;
-	//pGraphics->DrawTexture(m_htBackground, { 0, 0 }, {}, {}, {}, { x, y });
-
-	//SGD::GraphicsManager::GetInstance()->DrawString("John OLeske\n\nSean Hathaway\n\nCaris Frazier\n\n Gregory Bey\n\n", { 100, 100 }, { 255, 255, 255 });
-	//SGD::GraphicsManager::GetInstance()->DrawString(, { 690, 575 }, { 255, 255, 255 });
 
 	pFonts->Render("Celtic", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
 
