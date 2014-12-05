@@ -112,23 +112,23 @@ bool TileManager::DrawLevel( SGD::Point _offset, SGD::Point _playerPos )
 		tileSet = pGraphics->LoadTexture( tilePath.c_str() );
 
 
-	int top = ( _offset.y / 2 - _playerPos.y ) / m_szGridSize.height;
-	int height = (( Game::GetInstance()->GetScreenHeight() / 2 + _playerPos.y ) / m_szGridSize.height) +1;
-	int left = ( _offset.x / 2 - _playerPos.x ) / m_szGridSize.width;
-	int width = (( Game::GetInstance()->GetScreenWidth() / 2 + _playerPos.x ) / m_szGridSize.width) +1;
+	int top = (int)(( _offset.y / 2 - _playerPos.y ) / m_szGridSize.height);
+	int height = (int)((( Game::GetInstance()->GetScreenHeight() / 2 + _playerPos.y ) / m_szGridSize.height) +1);
+	int left = (int)(( _offset.x / 2 - _playerPos.x ) / m_szGridSize.width);
+	int width = (int)((( Game::GetInstance()->GetScreenWidth() / 2 + _playerPos.x ) / m_szGridSize.width) +1);
 
 	if( top < 0 )
 		top = 0;
 	if( left < 0 )
 		left = 0;
-	if( width > m_szMapSize.width )
-		width = m_szMapSize.width;
-	if( height > m_szMapSize.height )
-		height = m_szMapSize.height;
+	if( width > (int)(m_szMapSize.width) )
+		width = (int)(m_szMapSize.width);
+	if( height > (int)(m_szMapSize.height ))
+		height = (int)(m_szMapSize.height);
 
-	for( size_t i = left; i < width; i++ )
+	for( int i = left; i < width; i++ )
 	{
-		for( size_t j = top; j < height; j++ )
+		for( int j = top; j < height; j++ )
 		{
 			SGD::Point dest = { (float)( ( i*m_szGridSize.width ) - _offset.x ), (float)( ( j*m_szGridSize.height ) - _offset.y ) };
 			SGD::Rectangle source = { (float)( m_TileMap[i][j].nX*m_szGridSize.width ),
@@ -174,23 +174,23 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 		Player* player = dynamic_cast<Player*>( _player );
 		SGD::Rectangle PlayerCollision = SGD::Rectangle( _futurePos, player->GetSize() );
 
-		int top = ( GameplayState::GetInstance()->GetWorldCam().y / 2 - GameplayState::GetInstance()->GetPlayer()->GetPosition().y ) / m_szGridSize.height;
-		int height = ( Game::GetInstance()->GetScreenHeight() / 2 + GameplayState::GetInstance()->GetPlayer()->GetPosition().y ) / m_szGridSize.height;
-		int left = ( GameplayState::GetInstance()->GetWorldCam().x / 2 - GameplayState::GetInstance()->GetPlayer()->GetPosition().x ) / m_szGridSize.width;
-		int width = ( Game::GetInstance()->GetScreenWidth() / 2 + GameplayState::GetInstance()->GetPlayer()->GetPosition().x ) / m_szGridSize.width;
+		int top = (int)(( GameplayState::GetInstance()->GetWorldCam().y / 2 - GameplayState::GetInstance()->GetPlayer()->GetPosition().y ) / m_szGridSize.height);
+		int height = (int)(( Game::GetInstance()->GetScreenHeight() / 2 + GameplayState::GetInstance()->GetPlayer()->GetPosition().y ) / m_szGridSize.height);
+		int left = (int)(( GameplayState::GetInstance()->GetWorldCam().x / 2 - GameplayState::GetInstance()->GetPlayer()->GetPosition().x ) / m_szGridSize.width);
+		int width = (int)(( Game::GetInstance()->GetScreenWidth() / 2 + GameplayState::GetInstance()->GetPlayer()->GetPosition().x ) / m_szGridSize.width);
 
 		if( top < 0 )
 			top = 0;
 		if( left < 0 )
 			left = 0;
-		if( width > m_szMapSize.width )
-			width = m_szMapSize.width;
-		if( height > m_szMapSize.height )
-			height = m_szMapSize.height;
+		if( width > (int)(m_szMapSize.width) )
+			width = (int)(m_szMapSize.width);
+		if( height > (int)( m_szMapSize.height) )
+			height = (int)(m_szMapSize.height);
 
-		for( size_t i = left; i < width; i++ )
+		for( int i = left; i < width; i++ )
 		{
-			for( size_t j = top; j < height; j++ )
+			for( int j = top; j < height; j++ )
 			{
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].CheckPoint )
 				{

@@ -217,7 +217,6 @@ void GameplayState::Render()
 
 
 	pGraphics->SetClearColor();
-
 	m_pObjects->RenderAll();
 
 
@@ -538,8 +537,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 1 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 2 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 1 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 2 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
 
 	else if( m_bPuzzleDialog )
@@ -552,8 +551,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 3 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 4 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 3 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 4 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
 
 	else if( m_bBoulderDialog )
@@ -566,8 +565,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 5 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 6 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 5 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 6 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 
 	}
 
@@ -581,8 +580,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );		// - Draw string One.
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 6 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 7 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 6 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 7 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 
 	}
 
@@ -596,8 +595,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 8 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 9 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 8 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 9 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
 
 	else if( m_bChestDialog )
@@ -610,8 +609,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 1 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 2 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 1 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 2 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
 
 	else if( m_bSigmundDialog )
@@ -623,7 +622,7 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 3 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 3 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
 
 	}
 }
