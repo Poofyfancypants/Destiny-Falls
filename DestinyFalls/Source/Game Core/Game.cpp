@@ -118,6 +118,7 @@ bool Game::Initialize( float width, float height )
 	m_mChime12 = pAudio->LoadAudio( L"resource/audio/chime-12.wav" );
 	m_mBoo = pAudio->LoadAudio( L"resource/audio/Boo.wav" );
 	m_mCheer = pAudio->LoadAudio( L"resource/audio/Cheer.wav" );
+	m_mWinMusic = pAudio->LoadAudio(L"resource/audio/WinMusic.wav");
 
 
 	pAudio->PlayAudio( m_mMusic, true );
@@ -212,6 +213,7 @@ bool Game::Initialize( float width, float height )
 	m_hFinal1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final1.png" );
 	m_hFinal2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final2.png" );
 	m_hFinal3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final3.png" );
+
 
 	CombatState::GetInstance()->AddBackgroundsEarth( m_hEarth1 );
 	CombatState::GetInstance()->AddBackgroundsEarth( m_hEarth2 );
@@ -374,7 +376,9 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mChime12 );
 	pAudio->UnloadAudio( m_mBoo );
 	pAudio->UnloadAudio( m_mCheer );
+	pAudio->UnloadAudio(m_mWinMusic);
 
+	
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
