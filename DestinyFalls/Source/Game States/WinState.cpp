@@ -3,6 +3,7 @@
 #include "CreditState.h"
 #include "../Game Core/Game.h"
 #include "../Game Objects/Player.h"
+#include "GameplayState.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
@@ -20,6 +21,10 @@ void WinState::Enter()
 	//m_hMusic = SGD::AudioManager::GetInstance()->LoadAudio(L"");
 	//m_htBackground = SGD::AudioManager::GetInstance()->LoadAudio(L"");
 	//SGD::AudioManager::GetInstance()->PlayAudio(m_haBackground);
+
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+	pAudio->StopAudio(GameplayState::GetInstance()->bmusic);
+	pAudio->PlayAudio(Game::GetInstance()->m_mWinMusic, false);
 }
 
 void WinState::Exit()
@@ -31,7 +36,7 @@ void WinState::Exit()
 bool WinState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if (pInput->IsAnyKeyPressed() )
+	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::Escape))
 	{
 		Game::GetInstance()->ClearStates();
 		Game::GetInstance()->AddState(CreditState::GetInstance());

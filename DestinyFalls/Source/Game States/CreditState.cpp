@@ -2,13 +2,14 @@
 #include "CreditState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Core/Game.h"
+#include "../Game States/MainMenuState.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_String.h"
 #include "../Managers/BitmapFontManager.h"
-
+#include "GameplayState.h"
 CreditState* CreditState::GetInstance()
 {
 	static CreditState s_Instance;
@@ -35,9 +36,15 @@ void CreditState::Exit()
 bool CreditState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
+
 	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
 		Game::GetInstance()->ClearStates();
+		pAudio->StopAudio(Game::GetInstance()->m_mWinMusic);
+		Game::GetInstance()->AddState(MainMenuState::GetInstance());
+		pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
+
 	}
 	return true;
 }

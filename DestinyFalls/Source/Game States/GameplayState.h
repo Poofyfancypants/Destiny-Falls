@@ -61,6 +61,7 @@ public:
 
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
+	SGD::Rectangle HealthPotionPosition = { 0, 0, 100, 100 };
 
 	// - Hepler function to create the next level.
 	void LoadNewLevel();
@@ -75,6 +76,8 @@ public:
 	// - Helper functions for the Tutorial
 	void HandleTutorial();
 	void RenderDialog();
+	SGD::HTexture GetPortrait() const {return m_hDialogImg;}
+
 private:
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
@@ -95,6 +98,7 @@ private:
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoulder = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hHealthPot = SGD::INVALID_HANDLE;
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
@@ -118,6 +122,7 @@ private:
 	// - Tutorial Level
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoss = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg = SGD::INVALID_HANDLE;
 	bool m_bFirstDialog = false;
 	bool m_bPuzzleDialog = false;
 	bool m_bBoulderDialog = false;

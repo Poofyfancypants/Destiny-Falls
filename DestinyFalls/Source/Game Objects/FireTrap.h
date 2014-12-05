@@ -4,7 +4,7 @@ class FireTrap :
 	public Trap
 {
 
-	int m_nDamage = 5;
+	int m_nDamage = 1;
 	float m_fTimer = 0;
 	bool m_bStartTimer = false;
 public:

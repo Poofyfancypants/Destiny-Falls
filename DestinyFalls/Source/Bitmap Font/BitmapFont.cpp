@@ -89,6 +89,9 @@ void BitmapFont::Draw(string fontName, const char* output, SGD::Point position, 
 		if (fontName == "Bernardo")
 			id = ch - 30;
 
+		if( fontName == "Dialog" )
+			id = ch - 32;
+
 
 		// Calculate the source rect for that glyph
 		SGD::Rectangle cell;

@@ -22,6 +22,7 @@ public:
 	//Textures
 	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
+	bool GetTutorial() const {return m_bTutorial;}
 private:
 	MainMenuState() = default;
 	virtual ~MainMenuState() = default;
@@ -36,24 +37,14 @@ private:
 	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
 	SGD::Rectangle TestAnimationSystem = { 0 , 0 , 0 , 0 };
 
+
 	SGD::Rectangle Options = { 0, 0, 0, 0 };
 	SGD::Rectangle LoadGame = { 0, 0, 0, 0 };
 	SGD::Rectangle HowToPlay = { 0, 0, 0, 0 };
 	SGD::Rectangle Credit = { 0, 0, 0, 0 };
 	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
-
-	Runes* temp;
-	Runes* temp1;
-	Runes* temp2;
-	Runes* temp3;
-	Runes* temp4;
-	Runes* temp5;
-	Runes* temp6;
-	Runes* temp7;
-	Runes* temp8;
-
 	
 	bool m_bDebug = false;
-
+	bool m_bTutorial = false;
 };
 

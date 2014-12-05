@@ -36,6 +36,10 @@ void HowToPlayState::Update(float elapsedTime)
 
 void HowToPlayState::Render()
 {
-	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 690, 575 }, { 255, 255, 255 });
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
+	pGraphics->DrawTexture(m_hBackground, { 0,0 }, 0, {}, {}, { 1.6f, 1.2f });
+
+	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 690, 575 }, { 255, 0, 0 });
 
 }

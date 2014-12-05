@@ -10,6 +10,9 @@
 #include "../Game States/CombatState.h"
 #include "../Game States/GameplayState.h"
 #include "../Game States/MainMenuState.h"
+#include "../Game States/OptionsState.h"
+#include "../Game States/SaveandLoadState.h"
+#include "../Game States/HowToPlayState.h"
 #include "../Game States/SplashScreenState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -89,7 +92,11 @@ bool Game::Initialize( float width, float height )
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
 	string xmlFile2 = "resource/XML/otherfont1.xml";
 	m_pFonts->Load( fontName2, imageName2, xmlFile2 );
-
+	//Load the dialog font
+	string fontName3 = "Dialog";
+	string imageName3 = "resource/graphics/Fonts/dialog.png";
+	string xmlFile3 = "resource/XML/newDialog.xml";
+	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -111,6 +118,7 @@ bool Game::Initialize( float width, float height )
 	m_mChime12 = pAudio->LoadAudio( L"resource/audio/chime-12.wav" );
 	m_mBoo = pAudio->LoadAudio( L"resource/audio/Boo.wav" );
 	m_mCheer = pAudio->LoadAudio( L"resource/audio/Cheer.wav" );
+	m_mWinMusic = pAudio->LoadAudio(L"resource/audio/WinMusic.wav");
 
 
 	pAudio->PlayAudio( m_mMusic, true );
@@ -154,6 +162,7 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[4][5] = "Fire Baron";
 
 	// - Tutorial Strings
+
 	m_StringTable[7][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
 	m_StringTable[7][2] = "This might be our only chance to stop him!";
 	m_StringTable[7][3] = "Careful though, he has laid puzzles to slow us down. ";
@@ -163,18 +172,25 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[7][7] = "And remember the fountain will help you recover from defeat.";
 	m_StringTable[7][8] = "Watch out! Another Trap. Try not to step on it. Also..";
 	m_StringTable[7][9] = "This puzzle has two different exits, You could find a Chest!";
-
 	m_StringTable[8][1] = "See you found a chest! Press Q to open it! Did you find a rune?";
 	m_StringTable[8][2] = "Runes you can equip through your Inventory by pressing E";
 	m_StringTable[8][3] = "Look, There he is! Get behind me!";
 	m_StringTable[8][4] = "If you are low on health already, chests can drop health potions,";
 	m_StringTable[8][5] = "that will restore your health once aquiered by pressing P";
-	m_StringTable[8][6] = "Press E to Continue";
+	m_StringTable[8][6] = "*Run into the boulders and press R repeatedly until it moves*";
 
 
 
 	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/main.png" );
-	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;
+	m_hOptions = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/Options.png");
+	m_hHTP = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/4Elements.png");
+	m_hSaveLoad = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/Tree_Elements.png");
+
+
+	SaveandLoadState::GetInstance()->m_hBackground = m_hSaveLoad;
+	HowToPlayState::GetInstance()->m_hBackground =   m_hHTP;
+	OptionsState::GetInstance()->m_hBackground =     m_hOptions;
+	MainMenuState::GetInstance()->m_hBackground =    m_hMainMenu;
 
 	m_hEarth1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Forest1.png" );
 	m_hEarth2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Forest2.png" );
@@ -197,6 +213,7 @@ bool Game::Initialize( float width, float height )
 	m_hFinal1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final1.png" );
 	m_hFinal2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final2.png" );
 	m_hFinal3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final3.png" );
+
 
 	CombatState::GetInstance()->AddBackgroundsEarth( m_hEarth1 );
 	CombatState::GetInstance()->AddBackgroundsEarth( m_hEarth2 );
@@ -246,8 +263,8 @@ int Game::Update( void )
 {
 	unsigned long now = GetTickCount();					// current time in milliseconds
 	float elapsedTime = ( now - m_ulGameTime ) / 1000.0f;	// convert to fraction of a second
-	//if( elapsedTime == 0.0f )
-	//	return 0;
+	if( elapsedTime == 0.0f )
+		return 0;
 
 	m_ulGameTime = now;
 
@@ -302,7 +319,6 @@ void Game::Terminate( void )
 	// Terminate the core SGD wrappers
 	//MainMenuState::GetInstance()->Exit();
 	ClearStates();
-	RemoveState();
 
 	CombatState::GetInstance()->ClearEarth();
 	CombatState::GetInstance()->ClearIce();
@@ -335,6 +351,10 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hFinal3 );
 
 	pGraphics->UnloadTexture( m_hMainMenu );
+	pGraphics->UnloadTexture(m_hSaveLoad);
+	pGraphics->UnloadTexture(m_hHTP);
+	pGraphics->UnloadTexture(m_hOptions);
+
 
 	pAudio->UnloadAudio( m_mMusic );
 	pAudio->UnloadAudio( m_mButton );
@@ -356,7 +376,9 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mChime12 );
 	pAudio->UnloadAudio( m_mBoo );
 	pAudio->UnloadAudio( m_mCheer );
+	pAudio->UnloadAudio(m_mWinMusic);
 
+	
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
@@ -394,20 +416,13 @@ void Game::RemoveState()
 
 void Game::ClearStates()
 {
-	unsigned int stackSize = m_pStateStack.size() ;
-	//for( unsigned int i = 0; i < stackSize; i++ )
-	//{
-	//	RemoveState();
-	//	m_nCurrState--;
-	//}
 
+	unsigned int stackSize = m_pStateStack.size();
 	for( size_t i = 0; i < stackSize; i++ )
 	{
 		m_pStateStack.back()->Exit();
 		m_pStateStack.pop_back();
 	}
-
-	AddState( MainMenuState::GetInstance() );
 }
 
 /*static*/ void Game::MessageProc( const SGD::Message* pMsg )
