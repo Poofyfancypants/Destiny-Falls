@@ -96,7 +96,6 @@ namespace SGD
 		void		Inflate				( float width, float height );		// expands all 4 sides
 		void		Inflate				( const Size& size			);
 
-		
 		bool		operator==			( const Rectangle& other )	const;	// comparison
 		bool		operator!=			( const Rectangle& other )	const;
 

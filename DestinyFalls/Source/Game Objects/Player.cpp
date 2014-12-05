@@ -91,12 +91,11 @@ void Player::Update( float elapsedTime )
 	}
 
 	//if( SGD::InputManager::GetInstance()->IsAnyKeyPressed() )
-		m_bCollision = false;
+	m_bCollision = false;
 
 	if( m_bUpdateAnimation )
 	{
 		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp(), elapsedTime );
-
 	}
 
 	// Sub 25% health indicator
@@ -146,8 +145,6 @@ void Player::Render( void )
 	}
 	// Low Health warning!
 
-	if( m_bLowHealthWarning )
-		pGraphics->DrawRectangle( SGD::Rectangle( 0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() ), { 100, 255, 0, 0 } );
 
 
 }
@@ -233,8 +230,12 @@ void Player::HandleCollision( const iObject* pOther )
 
 	if( pOther->GetType() == OBJ_ENEMY )
 	{
-		pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
-		Game::GetInstance()->AddState( CombatState::GetInstance() );
+		if( !m_bCombat )
+		{
+			pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
+			Game::GetInstance()->AddState( CombatState::GetInstance() );
+		}
+
 	}
 	if( pOther->GetType() == OBJ_CHEST )
 	{
@@ -243,6 +244,7 @@ void Player::HandleCollision( const iObject* pOther )
 			if( ( (Chest*)pOther )->IsTrapped() )
 			{
 				Game::GetInstance()->AddState( CombatState::GetInstance() );
+				m_bCombat = true;
 				( (Chest*)pOther )->SetTrapped();
 			}
 			m_nPotions += ( (Chest*)pOther )->GetNumPots();
@@ -316,12 +318,9 @@ bool Player::TakeTurn( float elapsedTime )
 
 	if( selected == false ) //Pick an action (melee magic or armor)
 	{
-		pCombat->SetAction( "Choose Action" );
-		if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )
-			m_nCursor--;
+		if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )			m_nCursor--;
 
-		if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
-			m_nCursor++;
+		if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )			m_nCursor++;
 
 		if( m_nCursor < 0 )
 			m_nCursor = 0;
@@ -349,44 +348,41 @@ bool Player::TakeTurn( float elapsedTime )
 	}
 	else //Action selected, now pick target
 	{
-		pCombat->SetAction( "Choose Target" );
-		if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )
 		{
 			m_nCursor--;
-		}
-		if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
-		{
-			m_nCursor++;
-		}
-		if( m_nCursor < 0 )
-			m_nCursor = 0;
-		if( m_nCursor > pCombat->GetNumEnemies() - 1 )
-			m_nCursor = pCombat->GetNumEnemies() - 1;
+			{
+				m_nCursor++;
+			}
+			if( m_nCursor < 0 )
+				m_nCursor = 0;
 
 
-		if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //Second Selection >> Target
-		{
-			selected = false;
-			pCombat->DealDamage( ActionSelected, this, m_nCursor );
-			m_nCursor = 0;
-			return true;
+			if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //Second Selection >> Target
+			{
+				selected = false;
+				SetAttacking( true );
+				pCombat->TakeAction( ActionSelected, this, m_nCursor );
+				m_nCursor = 0;
+				return true;
+			}
+
 		}
 
+
+		return false;
 	}
-
-
-	return false;
 }
 
-void Player::RunQuickTime()
+void Player::RunQuickTime( int length )
 {
 	m_bDoQt = true;
 	if( currentQT == nullptr )
 	{
 		currentQT = new QuickTime;
-		currentQT->SetLength( 4 );
+		currentQT->SetLength( length );
 	}
 }
+
 void Player::StopQuickTime()
 {
 	m_bDoQt = false;

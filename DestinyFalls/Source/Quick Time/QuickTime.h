@@ -15,6 +15,9 @@ private:
 
 	string m_sInput = "";
 	string m_sOutput = "";
+	
+	string m_sRenderInput = "";
+	string m_sRenderOutput = "";
 
 	string m_sAlert = "Prepare for QuickTime!";
 	unsigned int m_unlength = 0;
@@ -25,7 +28,9 @@ private:
 	bool m_bqtOver = false;
 	bool m_bShowAlert = true;
 
-	unsigned int m_unLastPlayed = 0;
+	unsigned int m_unLastPlayed = 0;	
+	unsigned int m_unCurrentSet = 0;
+	int m_nLastSet = 0;
 
 	
 
@@ -45,7 +50,7 @@ public:
 
 	void GenerateRandomLetter();
 	void AddGuess(SGD::Key x);
-
+	void ChangeRenderSet( int set );
 	void Update( float elapsedTime );
 	void Render();
 

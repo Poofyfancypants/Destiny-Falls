@@ -67,6 +67,8 @@ public:
 	SGD::HAudio m_mChime10 = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mChime11 = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mChime12 = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mBoo = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mCheer = SGD::INVALID_HANDLE;
 
 
 
@@ -117,7 +119,7 @@ private:
 	unsigned long m_ulGameTime = 0;
 
 	int m_nCurrState = 0;
-	std::string m_StringTable[4][10];
+	std::string m_StringTable[10][10];
 
 	std::vector<IGameState*> m_pStateStack;
 	AnimationManager* m_pAnimator;

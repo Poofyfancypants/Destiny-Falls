@@ -20,7 +20,7 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
-	void AddRunesToInventoryfromWorld(Runes* _addrune);
+	void AddRunesToInventoryfromWorld(Runes _addrune);
 	void AddRunesToSword0fromInventory(Runes _addrune);
 	void AddRunesToSword1fromInventory(Runes _addrune);
 	void AddRunesToSword2fromInventory(Runes _addrune);
@@ -56,7 +56,7 @@ public:
 	void SetArmorSlot1(Elements x, int t)  { m_vArmor[0].SetElement(x); m_vArmor[0].SetTier(t); }
 	void SetArmorSlot2(Elements x, int t)  { m_vArmor[1].SetElement(x); m_vArmor[1].SetTier(t); }
 	void SetArmorSlot3(Elements x, int t)  { m_vArmor[2].SetElement(x); m_vArmor[2].SetTier(t); }
-	
+
 	Elements GetRingSlot1()  { return m_vRing[0].GetElement(); }
 	Elements GetRingSlot2()  { return m_vRing[1].GetElement(); }
 	Elements GetRingSlot3()  { return m_vRing[2].GetElement(); }
@@ -69,9 +69,9 @@ public:
 	std::vector<Runes> m_vRing;
 	std::vector<Runes> m_vArmor;
 	std::vector<Runes> m_vRunes;
-	
 
 
+	void ClearInventory();
 private:
 	InventoryState() = default;
 	virtual ~InventoryState() = default;
@@ -86,59 +86,103 @@ private:
 	bool m_bRingSelect = false;
 	bool m_bfirstEnter = true;
 
-	Runes* m_ptSelectedRune;
+	bool m_bArmorTab = false;
+	bool m_bWeaponsTab = false;
+	bool m_bCompanionsTab = false;
+	bool m_bRunesTab = false;
 
-	SGD::Rectangle rect				= { 50, 50, 650, 550 };
+	bool m_bShowToolTip1 = false;
+	bool m_bShowToolTip2 = false;
+	bool m_bShowToolTip3 = false;
+	bool m_bShowToolTip4 = false;
+	bool m_bShowToolTip5 = false;
+	bool m_bShowToolTip6 = false;
+	bool m_bShowToolTip7 = false;
+	bool m_bShowToolTip8 = false;
+	bool m_bShowToolTip9 = false;
+	bool m_bShowToolTip10 = false;
+	bool m_bShowToolTip11 = false;
+	bool m_bShowToolTip12 = false;
 
-	SGD::Rectangle rect1			= { 50, 50, 250, 200 };
-	SGD::Rectangle swordslot1		= { 75,  125, 125, 175 };
-	SGD::Rectangle swordslot2		= { 125, 125, 175, 175 };
-	SGD::Rectangle swordslot3		= { 175, 125, 225, 175 };
 
-	SGD::Rectangle rect2			= { 250, 50, 450, 200 };
-	SGD::Rectangle armorslot1		= { 275, 125, 325, 175 };
-	SGD::Rectangle armorslot2		= { 325, 125, 375, 175 };
-	SGD::Rectangle armorslot3		= { 375, 125, 425, 175 };
+	Runes m_ptSelectedRune;
+	//full inventory rectangle
+	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };
 
-	SGD::Rectangle rect3			= { 450, 50, 650, 200 };
-	SGD::Rectangle ringslot1		= { 475, 125, 525, 175 };
-	SGD::Rectangle ringslot2		= { 525, 125, 575, 175 };
-	SGD::Rectangle ringslot3		= { 575, 125, 625, 175 };
+	SGD::Rectangle RuneToolRect = { 500, 50, 700, 170 };
+	// left side of inventory displaying images
+	SGD::Rectangle ImageRect = { 50, 50, 200, 400 };
 
-	SGD::Rectangle IventoryRect1	= { 50, 200, 200, 317 };
-	SGD::Rectangle IventoryRect2	= { 50, 317, 200, 434 };
-	SGD::Rectangle IventoryRect3	= { 50, 434, 200, 550 };
-	SGD::Rectangle IventoryRect4	= { 200, 200, 350, 317 };
-	SGD::Rectangle IventoryRect5	= { 200, 317, 350, 434 };
-	SGD::Rectangle IventoryRect6	= { 200, 434, 350, 550 };
-	SGD::Rectangle IventoryRect7	= { 350, 200, 500, 317 };
-	SGD::Rectangle IventoryRect8	= { 350, 317, 500, 434 };
-	SGD::Rectangle IventoryRect9	= { 350, 434, 500, 550 };
-	SGD::Rectangle IventoryRect10	= { 500, 200, 650, 317 };
-	SGD::Rectangle IventoryRect11	= { 500, 317, 650, 434 };
-	SGD::Rectangle IventoryRect12	= { 500, 434, 650, 550 };
+	//tabs
+	SGD::Rectangle tabArmor = { 50, 0, 162, 50 };
+	SGD::Rectangle TabWeapons = { 162, 0, 274, 50 };
+	SGD::Rectangle TabRunes = { 274, 0, 386, 50 };
+	SGD::Rectangle TabCompanions = { 386, 0, 500, 50 };
+	//line dividers in inventory
+	SGD::Rectangle RuneSet1 = { 200, 170, 300, 200 };
+	SGD::Rectangle RuneSet2 = { 300, 170, 400, 200 };
+	SGD::Rectangle RuneSet3 = { 400, 170, 500, 200 };
+	//rune equip slots
+	SGD::Rectangle rect1 = { 200, 50, 300, 170 };
+	SGD::Rectangle rect2 = { 300, 50, 400, 170 };
+	SGD::Rectangle rect3 = { 400, 50, 500, 170 };
+
+	SGD::Rectangle rect4 = { 200, 200, 300, 400 };
+	SGD::Rectangle rect5 = { 300, 200, 400, 400 };
+	SGD::Rectangle rect6 = { 400, 200, 500, 400 };
+
+	//Rune Images
+	//t1
+	SGD::Rectangle IventoryRect1 = { 210, 240, 240, 280 };
+	SGD::Rectangle IventoryRect4 = { 260, 240, 290, 280 };
+	SGD::Rectangle IventoryRect7 = { 210, 320, 240, 360 };
+	SGD::Rectangle IventoryRect10 = { 260, 320, 290, 360 };
+	//t2
+	SGD::Rectangle IventoryRect2 = { 310, 240, 340, 280 };
+	SGD::Rectangle IventoryRect5 = { 360, 240, 390, 280 };
+	SGD::Rectangle IventoryRect8 = { 310, 320, 340, 360 };
+	SGD::Rectangle IventoryRect11 = { 360, 320, 390, 360 };
+	//t3
+	SGD::Rectangle IventoryRect3 = { 410, 240, 440, 280 };
+	SGD::Rectangle IventoryRect6 = { 460, 240, 490, 280 };
+	SGD::Rectangle IventoryRect9 = { 410, 320, 440, 360 };
+	SGD::Rectangle IventoryRect12 = { 460, 320, 490, 360 };
+
+	//Rune Rect Sized images for sword
+	SGD::Rectangle Equip1 = { 220, 70, 280, 150 };
+	SGD::Rectangle Equip2 = { 320, 70, 380, 150 };
+	SGD::Rectangle Equip3 = { 420, 70, 480, 150 };
+	//Rune Rect Sized images for Armor
+	SGD::Rectangle EquipA1 = { 220, 70, 280, 150 };
+	SGD::Rectangle EquipA2 = { 320, 70, 380, 150 };
+	SGD::Rectangle EquipA3 = { 420, 70, 480, 150 };
+	//Rune Rect Sized images for Gauntlet
+	SGD::Rectangle EquipG1 = { 220, 70, 280, 150 };
+	SGD::Rectangle EquipG2 = { 320, 70, 380, 150 };
+	SGD::Rectangle EquipG3 = { 420, 70, 480, 150 };
+
 
 
 protected:
 
 
-	SGD::HTexture m_hSword		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hRing		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hArmor		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFiret1		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFiret2		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFiret3		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hWatert1	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hWatert2	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hWatert3	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hEartht1	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hEartht2	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hEartht3	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAirt1		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAirt2		= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAirt3		= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hSword = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hGauntlet = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hArmor = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFiret1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFiret2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFiret3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hWatert1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hWatert2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hWatert3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEartht1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEartht2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEartht3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAirt1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAirt2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAirt3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
 };
-
 
 
 

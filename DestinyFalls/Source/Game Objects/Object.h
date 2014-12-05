@@ -36,6 +36,8 @@ public:
 	void SetInit(int _init) { Initiative = _init; }
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
+	virtual bool GetAttacking() const { return isAttacking; }
+	virtual void SetAttacking(bool _false = false) { isAttacking = _false; }
 
 protected:
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
@@ -48,5 +50,6 @@ private:
 	int m_nTurnPos;
 
 	unsigned int m_unRefCount = 1;
+	bool isAttacking = false;
 };
 

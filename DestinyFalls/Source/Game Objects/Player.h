@@ -45,7 +45,7 @@ public:
 	int GetNumPotions() const { return m_nPotions; }
 	int m_nPotions = 0;
 
-	void RunQuickTime();
+	void RunQuickTime(int length);
 	void StopQuickTime();
 
 	int GetPrevDirection() const {return m_nPrevDirection;}
@@ -77,10 +77,4 @@ private:
 	float m_fHealthFlash = 0.0f;
 
 	bool m_bUpdateAnimation = true;
-
-	
-
-
-
-
 };
