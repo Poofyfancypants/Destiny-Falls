@@ -1,17 +1,18 @@
 #include "stdafx.h"
 #include "Player.h"
-#include "../Game Core/Game.h"
-#include "../Game States/CombatState.h"
-#include "../Game States/PauseMenuState.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Event.h"
-#include "Chest.h"
+#include "../Game States/CombatState.h"
+#include "../Game States/PauseMenuState.h"
+#include "../Game States/DeathState.h"
 #include "../Game States/GameplayState.h"
-#include "../Managers/ParticleManager.h"
 #include "../Game States/MainMenuState.h"
-#include "../Managers/TileManager.h"
+#include "../Managers/ParticleManager.h"
 #include "../Bitmap Font/BitmapFont.h"
+#include "../Managers/TileManager.h"
+#include "../Game Core/Game.h"
+#include "Chest.h"
 //#include "../Quick Time/QuickTime.h"
 
 #include "../Game Objects/Trap.h"
@@ -39,7 +40,7 @@ void Player::Update( float elapsedTime )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->deathSound, false );
 		m_nHealth = 0;
-		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
+		Game::GetInstance()->AddState( DeathState::GetInstance() );
 
 		m_ptPosition = GetCheckpoint();
 		m_nHealth = 100;

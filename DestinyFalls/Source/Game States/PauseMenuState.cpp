@@ -91,7 +91,7 @@ bool PauseMenuState::Input( void )
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( rSaveRect ) )
 		{
-			SaveGame();
+			Game::GetInstance()->AddState(SaveandLoadState::GetInstance());
 		}
 		//Clicked on Resume State button
 		if( pInput->GetCursorPosition().IsPointInRectangle( rResumeRect ) )
@@ -126,11 +126,6 @@ void PauseMenuState::Render( void )
 
 	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
-
-	if( ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth() <= 0 )
-	{
-		pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 9 ).c_str(), { 100, 50 }, 4, { 255, 255, 0, 0 } );
-	}
 
 	string cursor = ">>";
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 7 ).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 } );

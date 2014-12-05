@@ -124,6 +124,7 @@
     <ClInclude Include="Source\Game States\AnimationTestState.h" />
     <ClInclude Include="Source\Game States\CombatState.h" />
     <ClInclude Include="Source\Game States\CreditState.h" />
+    <ClInclude Include="Source\Game States\DeathState.h" />
     <ClInclude Include="Source\Game States\GameplayState.h" />
     <ClInclude Include="Source\Game States\HowToPlayState.h" />
     <ClInclude Include="Source\Game States\IGameState.h" />
@@ -187,6 +188,7 @@
     <ClCompile Include="Source\Game States\AnimationTestState.cpp" />
     <ClCompile Include="Source\Game States\CombatState.cpp" />
     <ClCompile Include="Source\Game States\CreditState.cpp" />
+    <ClCompile Include="Source\Game States\DeathState.cpp" />
     <ClCompile Include="Source\Game States\GameplayState.cpp" />
     <ClCompile Include="Source\Game States\HowToPlayState.cpp" />
     <ClCompile Include="Source\Game States\InventoryState.cpp" />
