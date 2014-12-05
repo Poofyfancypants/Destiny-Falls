@@ -23,17 +23,17 @@ Player::Player() : Listener( this )
 	this->GetTimeStamp()->SetCurrentAnimation( "WalkingDown" );
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+	m_hPortrait = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/PlayerIcon.jpg");
 
 }
 Player::~Player()
 {
-
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hPortrait);
 
 }
 
 void Player::Update( float elapsedTime )
 {
-	m_nPotions = 5;
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	if( m_nHealth <= 0 )
 	{
@@ -42,7 +42,7 @@ void Player::Update( float elapsedTime )
 		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 
 		m_ptPosition = GetCheckpoint();
-		m_nHealth = 100;
+		//m_nHealth = 100;
 	}
 	if( !m_bSliding )
 	{
@@ -91,7 +91,6 @@ void Player::Update( float elapsedTime )
 		m_nDirection = 0;
 	}
 
-	//if( SGD::InputManager::GetInstance()->IsAnyKeyPressed() )
 	m_bCollision = false;
 
 	if( m_bUpdateAnimation )
@@ -135,6 +134,7 @@ void Player::Render( void )
 	// Green Health Bar
 	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() / 10 ) };
 	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
+	pGraphics->DrawTexture(m_hPortrait, SGD::Point(currentHealthHUD.x-70, currentHealthHUD.y-30), {}, {}, {}, {.5f,.5f});
 
 	if( m_pAnimator->GetInstance()->CheckSize() )
 	{

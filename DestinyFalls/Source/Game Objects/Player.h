@@ -79,4 +79,6 @@ private:
 
 	bool m_bUpdateAnimation = true;
 
+	SGD::HTexture m_hPortrait = SGD::INVALID_HANDLE;
+
 };

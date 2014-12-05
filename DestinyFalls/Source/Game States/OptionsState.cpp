@@ -149,6 +149,7 @@ void OptionsState::Render()
 {
 	SGD::AudioManager *pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	SGD::OStringStream volumes;
 	volumes << pAudio->GetMasterVolume(SGD::AudioGroup::Music) / 10 << "\n\n\n"
