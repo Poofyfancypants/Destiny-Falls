@@ -5,10 +5,11 @@
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_String.h"
-#include "../Game Core/Game.h"
-#include "GameplayState.h"
+#include "../Managers/BitmapFontManager.h"
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
+#include "../Game Core/Game.h"
+#include "GameplayState.h"
 #include <fstream>
 #include <ostream>
 
@@ -150,6 +151,8 @@ void OptionsState::Render()
 {
 	SGD::AudioManager *pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
+	BitmapFontManager* pFonts = pFonts->GetInstance();
 
 	pGraphics->DrawTexture(m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f });
 
@@ -158,18 +161,20 @@ void OptionsState::Render()
 		<< pAudio->GetMasterVolume(SGD::AudioGroup::SoundEffects) / 10 << "\n\n\n"
 		<< (m_bWindowed ? "Windowed" : "Fullscreen");
 
-	//pFont->Draw(volumes.str().c_str(), { (width - (4 * 32)), 300 }, 1.0f, { 255, 255, 255, 255 });
-	pGraphics->DrawString(volumes.str().c_str(), { (9 * 32) - 2, 302 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString(volumes.str().c_str(), { (9 * 32), 300 }, {255,0,0});
+	pFonts->Render("Other", (char*)(volumes.str().c_str()), { (9 * 32) - 2, 302 }, 1, { 255, 0, 0, 0 });
+	pFonts->Render("Other", (char*)(volumes.str().c_str()), { (9 * 32), 300 }, 1, { 255, 0, 0 });
 
-	pGraphics->DrawString("Music Vol", { ((7 * 32) / 2) - 2, 302 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("Music Vol", { (7 * 32) / 2, 300 }, {255,0,0});
 
-	pGraphics->DrawString("SFX Vol", { ((7 * 32) / 2) - 2, 366 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("SFX Vol", { (7 * 32) / 2, 364 }, {255,0,0});
+	pFonts->Render("Other", "Music Vol", { ((7 * 32) / 2) - 2, 302 }, 1, { 255, 0, 0, 0 });
+	pFonts->Render("Other", "Music Vol", { (7 * 32) / 2, 300 }, 1, { 255, 0, 0 });
 
-	pGraphics->DrawString("Fullscreen", { ((7 * 32) / 2) - 2, 430 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("Fullscreen", { (7 * 32) / 2, 428 }, {255,0,0});
+
+	pFonts->Render("Other", "SFX Vol", { ((7 * 32) / 2) - 2, 366 }, 1, { 255, 0, 0, 0 });
+	pFonts->Render("Other", "SFX Vol", { (7 * 32) / 2, 364 }, 1, { 255, 0, 0 });
+
+
+	pFonts->Render("Other", "Fullscreen", { ((7 * 32) / 2) - 2, 430 }, 1, { 255, 0, 0, 0 });
+	pFonts->Render("Other", "Fullscreen", { (7 * 32) / 2, 428 }, 1, { 255, 0, 0 });
 
 
 	int offset;
@@ -178,13 +183,16 @@ void OptionsState::Render()
 	else
 		offset = 200;
 
-	pGraphics->DrawString("			=", { (4 * 32) / 2.0f + offset - 2, (300.0f + 64 * m_nCursor) + 2 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("			=", { (4 * 32) / 2.0f + offset, 300.0f + 64 * m_nCursor }, {255,0,0});
+
+	pFonts->Render("Other", "			=", { (4 * 32) / 2.0f + offset - 2, (300.0f + 64 * m_nCursor) + 2 }, 1, { 255, 0, 0, 0 });
+	pFonts->Render("Other", "			=", { (4 * 32) / 2.0f + offset, 300.0f + 64 * m_nCursor }, 1, { 255, 0, 0 });
 
 	//How to Exit
-	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 670, 520 }, { 255, 0, 0 });
+
+	pFonts->Render("Other", "esc to Exit", { 670, 520 }, 1, { 255, 0, 0 });
 
 	//How to Select
-	SGD::GraphicsManager::GetInstance()->DrawString("ENTER to select", { 30, 520 }, { 255, 0, 0 });
+
+	pFonts->Render("Other", "ENTER to select", { 30, 520 }, 1, { 255, 0, 0 });
 
 }

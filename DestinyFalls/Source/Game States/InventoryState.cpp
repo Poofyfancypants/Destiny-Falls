@@ -24,45 +24,6 @@ void InventoryState::Enter()
 	m_hGauntlet = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Gauntlet.jpg");
 	m_hArmor = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Armor.png");
 
-	/*if (m_bfirstEnter)
-	{
-
-
-
-	m_vArmor.resize(3);
-	m_vArmor[0].SetElement(None);
-	m_vArmor[0].SetTier(0);
-	m_vArmor[1].SetElement(None);
-	m_vArmor[1].SetTier(0);
-	m_vArmor[2].SetElement(None);
-	m_vArmor[2].SetTier(0);
-	m_vRing.resize(3);
-
-	m_vRing[0].SetElement(None);
-	m_vRing[0].SetTier(0);
-	m_vRing[1].SetElement(None);
-	m_vRing[1].SetTier(0);
-	m_vRing[2].SetElement(None);
-	m_vRing[2].SetTier(0);
-
-
-	Game::GetInstance()->RemoveState();
-	}
-
-	m_bfirstEnter = false;*/
-
-
-
-	/*delete temp;
-	delete temp1;
-	delete temp2;
-	delete temp3;
-	delete temp4;
-	delete temp5;
-	delete temp6;
-	delete temp7;
-	delete temp8;*/
-
 	m_vSword.resize(3);
 	m_vRing.resize(3);
 	m_vArmor.resize(3);
@@ -76,10 +37,7 @@ void InventoryState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hHero);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hSword);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hGauntlet);
-
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hArmor);
-
-
 
 }
 
@@ -597,7 +555,9 @@ void InventoryState::Render()
 {
 	GameplayState::GetInstance()->Render();
 
+
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	//Inventory button bottom right of screen
 	pGraphics->DrawRectangle(GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 });
