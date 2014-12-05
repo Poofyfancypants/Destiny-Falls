@@ -35,7 +35,17 @@ public:
 	void ClearFinal()	{ m_vBackgroundsFinal.clear(); }
 
 	bool TakeAction(int _DamType, Object* _this, int _target);
-	int GetNumEnemies() const { return m_pEnemies.size(); }
+
+	//Helpers which take entities with runes and elemental resistances/affinities for health transactions
+	//Functions will figure out who is who
+	int DealMeleeDamage(Object* _From, Object* _To);
+	int DealMagicDamage(Object* _From, Object* _To);
+	int DealCounterDamage(Object* _From, Object* _To);
+	int BlockAttack(Object* _From, Object* _To);
+	int HealAlly(Object* _From, Object* _To);
+	int DealAOEDamage(Object* _From, Object* _To);
+
+	std::vector<Object*> GetEnemies() const { return m_pEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
 

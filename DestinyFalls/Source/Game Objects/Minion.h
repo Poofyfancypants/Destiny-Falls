@@ -12,6 +12,22 @@ public:
 
 	enum AI_Type {Minion_AI, Off_AI, Def_AI, Heal_AI, AOE_AI, Mini_Boss, Level_Boss, Final_Boss,};
 
+	struct Element
+	{
+		int ElementType = 0;
+		int ElementTier = 0;
+	};
+
+	struct EnemyMods
+	{
+		int AttackSpeed = 6; //Max Turn rotation is Default
+							 //Implementing this on the side or in sprint three could be great
+
+		int DamageLevel = 10;// 0-20 scale
+		Element ElemResistance;
+		Element ElemAffinity;
+	};
+
 	/*
 	Minion 
 	Medium health 0-40 +40
@@ -32,7 +48,7 @@ public:
 	High health 0-20 +80
 	Low Atk speed
 	Low damage
-	Tier 2-3 resistances
+	Tier 3 resistances
 	Tier 1-2 elemental damage
 	Block - used on a low (20-30%) random chance
 		  - intercepts any attacks at a reduced resistance level
@@ -76,6 +92,9 @@ public:
 	Elements GetAffinity() { return m_rAffinity; }
 	void SetAffinity(Elements x) { m_rAffinity = x; }
 
+	EnemyMods GetMods() { return Modifiers; }
+	void SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int _tier2);
+
 	void SetString(int _region, int _AI);
 	int GetName(int _index = 1);
 
@@ -93,6 +112,8 @@ private:
 	AI_Type m_AIType;
 	int AIString = 0;
 	int RegionString = 0;
+
+	EnemyMods Modifiers;
 
 	SGD::Color m_HealthColor = {0,0,0,0};
 	SGD::Rectangle Enemy1HB = { 650, 110, 775, 140 };

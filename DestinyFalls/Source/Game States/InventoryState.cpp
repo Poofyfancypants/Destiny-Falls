@@ -338,6 +338,7 @@ bool InventoryState::Input()
 			m_ptSelectedRune.SetElement( Earth );
 			m_ptSelectedRune.SetTier( 3 );
 		}
+		
 	}
 	// remove runes from the equipped slot
 	if( pInput->IsKeyPressed( SGD::Key::MouseRight ) )
@@ -382,7 +383,10 @@ bool InventoryState::Input()
 			AddRunesToInventoryfromRing2();
 
 		}
-		if( pInput->GetCursorPosition().IsPointInRectangle( IventoryRect1 ) )
+#pragma endregion
+
+#pragma region tooltips
+		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
 		{
 			m_bShowToolTip1 = !m_bShowToolTip1;
 			m_bShowToolTip2 = false;
@@ -563,6 +567,7 @@ bool InventoryState::Input()
 			m_bShowToolTip10 = false;
 			m_bShowToolTip11 = false;
 		}
+#pragma endregion 
 	}
 	//leave inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
@@ -575,7 +580,6 @@ bool InventoryState::Input()
 	}
 
 
-#pragma endregion
 
 
 

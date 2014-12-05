@@ -62,43 +62,6 @@ void MainMenuState::Enter()
 	}
 
 
-	/*temp = new Runes;
-	temp->SetElement(None);
-	temp->SetTier(0);
-	InventoryState::GetInstance()->m_vSword.push_back(temp);
-	temp1 = new Runes;
-	temp1->SetElement(None);
-	temp1->SetTier(0);
-	InventoryState::GetInstance()->m_vSword.push_back(temp1);
-	temp2 = new Runes;
-	temp2->SetElement(None);
-	temp2->SetTier(0);
-	InventoryState::GetInstance()->m_vSword.push_back(temp2);
-	temp3 = new Runes;
-	temp3->SetElement(None);
-	temp3->SetTier(0);
-	InventoryState::GetInstance()->m_vArmor.push_back(temp3);
-	temp4 = new Runes;
-	temp4->SetElement(None);
-	temp4->SetTier(0);
-	InventoryState::GetInstance()->m_vRing.push_back(temp4);
-	temp5 = new Runes;
-	temp5->SetElement(None);
-	temp5->SetTier(0);
-	InventoryState::GetInstance()->m_vArmor.push_back(temp5);
-	temp6 = new Runes;
-	temp6->SetElement(None);
-	temp6->SetTier(0);
-	InventoryState::GetInstance()->m_vRing.push_back(temp6);
-	temp7 = new Runes;
-	temp7->SetElement(None);
-	temp7->SetTier(0);
-	InventoryState::GetInstance()->m_vRing.push_back(temp7);
-	temp8 = new Runes;
-	temp8->SetElement(None);
-	temp8->SetTier(0);
-	InventoryState::GetInstance()->m_vArmor.push_back(temp8);
-*/
 	
 	InventoryState::GetInstance()->m_vSword.resize( 3 );
 	InventoryState::GetInstance()->SetSwordSlot1( None, 0 );
@@ -117,24 +80,7 @@ void MainMenuState::Enter()
 
 void MainMenuState::Exit()
 {
-	delete temp;
-	delete temp1;
-	delete temp2;
-	delete temp3;
-	delete temp4;
-	delete temp5;
-	delete temp6;
-	delete temp7;
-	delete temp8;
-	temp = nullptr;
-	temp1 = nullptr;
-	temp2 = nullptr;
-	temp3 = nullptr;
-	temp4 = nullptr;
-	temp5 = nullptr;
-	temp6 = nullptr;
-	temp7 = nullptr;
-	temp8 = nullptr;
+
 
 		
 
@@ -186,7 +132,7 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
 			break;
 		case MenuSelections::howToPlay:
-			Game::GetInstance()->AddState( GameplayState::GetInstance() );
+			Game::GetInstance()->AddState( HowToPlayState::GetInstance() );
 			m_bTutorial = true;
 			break;
 		case MenuSelections::credits:
@@ -254,8 +200,7 @@ void MainMenuState::Render()
 	
 	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, {0.3f, 0.3f});
 	
-	//pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
-
+	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
 	pFonts->Render( "Dialog", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );

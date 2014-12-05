@@ -69,6 +69,7 @@ public:
 	SGD::HAudio m_mChime12 = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mBoo = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mCheer = SGD::INVALID_HANDLE;
+	SGD::HAudio m_mWinMusic = SGD::INVALID_HANDLE;
 
 
 
@@ -100,7 +101,7 @@ public:
 	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
-
+	SGD::HTexture m_hHTP = SGD::INVALID_HANDLE;
 
 private:
 	/**********************************************************/

@@ -23,6 +23,7 @@ void OptionsState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
+
 	std::ifstream load;
 	load.open("Options.txt");
 	if (load.is_open())
@@ -151,6 +152,8 @@ void OptionsState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
 
+	pGraphics->DrawTexture(m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f });
+
 	SGD::OStringStream volumes;
 	volumes << pAudio->GetMasterVolume(SGD::AudioGroup::Music) / 10 << "\n\n\n"
 		<< pAudio->GetMasterVolume(SGD::AudioGroup::SoundEffects) / 10 << "\n\n\n"
@@ -158,16 +161,16 @@ void OptionsState::Render()
 
 	//pFont->Draw(volumes.str().c_str(), { (width - (4 * 32)), 300 }, 1.0f, { 255, 255, 255, 255 });
 	pGraphics->DrawString(volumes.str().c_str(), { (9 * 32) - 2, 302 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString(volumes.str().c_str(), { (9 * 32), 300 }, {});
+	pGraphics->DrawString(volumes.str().c_str(), { (9 * 32), 300 }, {255,0,0});
 
 	pGraphics->DrawString("Music Vol", { ((7 * 32) / 2) - 2, 302 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("Music Vol", { (7 * 32) / 2, 300 }, {});
+	pGraphics->DrawString("Music Vol", { (7 * 32) / 2, 300 }, {255,0,0});
 
 	pGraphics->DrawString("SFX Vol", { ((7 * 32) / 2) - 2, 366 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("SFX Vol", { (7 * 32) / 2, 364 }, {});
+	pGraphics->DrawString("SFX Vol", { (7 * 32) / 2, 364 }, {255,0,0});
 
 	pGraphics->DrawString("Fullscreen", { ((7 * 32) / 2) - 2, 430 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("Fullscreen", { (7 * 32) / 2, 428 }, {});
+	pGraphics->DrawString("Fullscreen", { (7 * 32) / 2, 428 }, {255,0,0});
 
 
 	int offset;
@@ -177,12 +180,12 @@ void OptionsState::Render()
 		offset = 200;
 
 	pGraphics->DrawString("			=", { (4 * 32) / 2.0f + offset - 2, (300.0f + 64 * m_nCursor) + 2 }, { 255, 0, 0, 0 });
-	pGraphics->DrawString("			=", { (4 * 32) / 2.0f + offset, 300.0f + 64 * m_nCursor }, {});
+	pGraphics->DrawString("			=", { (4 * 32) / 2.0f + offset, 300.0f + 64 * m_nCursor }, {255,0,0});
 
 	//How to Exit
-	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 670, 520 }, { 255, 255, 255 });
+	SGD::GraphicsManager::GetInstance()->DrawString("esc to Exit", { 670, 520 }, { 255, 0, 0 });
 
 	//How to Select
-	SGD::GraphicsManager::GetInstance()->DrawString("ENTER to select", { 30, 520 }, { 255, 255, 255 });
+	SGD::GraphicsManager::GetInstance()->DrawString("ENTER to select", { 30, 520 }, { 255, 0, 0 });
 
 }
