@@ -241,6 +241,10 @@
     <ClInclude Include="Source\Game States\WinState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game Objects\Forge.h" />
+    <ClInclude Include="Source\Game States\DeathState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -416,6 +420,10 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game States\WinState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game Objects\Forge.cpp" />
+    <ClCompile Include="Source\Game States\DeathState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>

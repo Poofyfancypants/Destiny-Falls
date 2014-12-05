@@ -36,13 +36,13 @@ private:
 	void Load2();
 	void Load3();
 
-	SGD::Rectangle saveslot1 = {100,  50, 300, 150};
-	SGD::Rectangle saveslot2 = {100, 150, 300, 300};
-	SGD::Rectangle saveslot3 = {100, 300, 300, 450};
+	SGD::Rectangle saveslot1 = {50,  50, 300, 150};
+	SGD::Rectangle saveslot2 = {50, 200, 300, 300};
+	SGD::Rectangle saveslot3 = {50, 350, 300, 450};
 
-	SGD::Rectangle loadslot1 = {400,  50, 575, 150};
-	SGD::Rectangle loadslot2 = {400, 150, 575, 300};
-	SGD::Rectangle loadslot3 = {400, 300, 575, 450};
+	SGD::Rectangle loadslot1 = { 600,  50, 800, 150 };
+	SGD::Rectangle loadslot2 = { 600, 200, 800, 300 };
+	SGD::Rectangle loadslot3 = { 600, 350, 800, 450 };
 
 };
 
