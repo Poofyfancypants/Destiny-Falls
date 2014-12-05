@@ -89,7 +89,11 @@ bool Game::Initialize( float width, float height )
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
 	string xmlFile2 = "resource/XML/otherfont1.xml";
 	m_pFonts->Load( fontName2, imageName2, xmlFile2 );
-
+	//Load the dialog font
+	string fontName3 = "Dialog";
+	string imageName3 = "resource/graphics/Fonts/dialog.png";
+	string xmlFile3 = "resource/XML/newDialog.xml";
+	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -154,6 +158,7 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[4][5] = "Fire Baron";
 
 	// - Tutorial Strings
+
 	m_StringTable[7][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
 	m_StringTable[7][2] = "This might be our only chance to stop him!";
 	m_StringTable[7][3] = "Careful though, he has laid puzzles to slow us down. ";
@@ -163,7 +168,6 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[7][7] = "And remember the fountain will help you recover from defeat.";
 	m_StringTable[7][8] = "Watch out! Another Trap. Try not to step on it. Also..";
 	m_StringTable[7][9] = "This puzzle has two different exits, You could find a Chest!";
-
 	m_StringTable[8][1] = "See you found a chest! Press Q to open it! Did you find a rune?";
 	m_StringTable[8][2] = "Runes you can equip through your Inventory by pressing E";
 	m_StringTable[8][3] = "Look, There he is! Get behind me!";
@@ -302,7 +306,6 @@ void Game::Terminate( void )
 	// Terminate the core SGD wrappers
 	//MainMenuState::GetInstance()->Exit();
 	ClearStates();
-	RemoveState();
 
 	CombatState::GetInstance()->ClearEarth();
 	CombatState::GetInstance()->ClearIce();
@@ -394,20 +397,13 @@ void Game::RemoveState()
 
 void Game::ClearStates()
 {
-	unsigned int stackSize = m_pStateStack.size() ;
-	//for( unsigned int i = 0; i < stackSize; i++ )
-	//{
-	//	RemoveState();
-	//	m_nCurrState--;
-	//}
 
+	unsigned int stackSize = m_pStateStack.size();
 	for( size_t i = 0; i < stackSize; i++ )
 	{
 		m_pStateStack.back()->Exit();
 		m_pStateStack.pop_back();
 	}
-
-	AddState( MainMenuState::GetInstance() );
 }
 
 /*static*/ void Game::MessageProc( const SGD::Message* pMsg )

@@ -48,9 +48,12 @@ public:
 	void RunQuickTime(int length);
 	void StopQuickTime();
 
+	int GetPrevDirection() const {return m_nPrevDirection;}
+	bool GetBoulderCollision() const {return m_bCollision;}
 private:
 
 	int m_nDirection;
+	int m_nPrevDirection;
 	bool m_bSliding = false;
 	bool m_bMoving = false;
 	bool m_bCollision = false;

@@ -2,6 +2,7 @@
 #include "CreditState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Core/Game.h"
+#include "../Game States/MainMenuState.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
@@ -38,6 +39,7 @@ bool CreditState::Input()
 	if (pInput->IsKeyPressed(SGD::Key::Escape) /*|| Timer <= 0.0f*/)
 	{
 		Game::GetInstance()->ClearStates();
+		Game::GetInstance()->AddState(MainMenuState::GetInstance());
 	}
 	return true;
 }
