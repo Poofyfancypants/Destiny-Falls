@@ -31,6 +31,7 @@ void PauseMenuState::Exit( void )
 bool PauseMenuState::Input( void )
 {
 	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
@@ -67,6 +68,7 @@ bool PauseMenuState::Input( void )
 		case PauseSelections::exit:
 			Game::GetInstance()->ClearStates();
 			Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+			pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
 			break;
 		default:
 			break;
@@ -123,6 +125,7 @@ void PauseMenuState::Update( float elapsedTime )
 void PauseMenuState::Render( void )
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager* pFonts = pFonts->GetInstance();

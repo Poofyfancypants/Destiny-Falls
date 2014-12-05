@@ -151,6 +151,7 @@ void OptionsState::Render()
 {
 	SGD::AudioManager *pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 
 	pGraphics->DrawTexture(m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f });
@@ -163,11 +164,14 @@ void OptionsState::Render()
 	pFonts->Render("Other", (char*)(volumes.str().c_str()), { (9 * 32) - 2, 302 }, 1, { 255, 0, 0, 0 });
 	pFonts->Render("Other", (char*)(volumes.str().c_str()), { (9 * 32), 300 }, 1, { 255, 0, 0 });
 
+
 	pFonts->Render("Other", "Music Vol", { ((7 * 32) / 2) - 2, 302 }, 1, { 255, 0, 0, 0 });
 	pFonts->Render("Other", "Music Vol", { (7 * 32) / 2, 300 }, 1, { 255, 0, 0 });
 
+
 	pFonts->Render("Other", "SFX Vol", { ((7 * 32) / 2) - 2, 366 }, 1, { 255, 0, 0, 0 });
 	pFonts->Render("Other", "SFX Vol", { (7 * 32) / 2, 364 }, 1, { 255, 0, 0 });
+
 
 	pFonts->Render("Other", "Fullscreen", { ((7 * 32) / 2) - 2, 430 }, 1, { 255, 0, 0, 0 });
 	pFonts->Render("Other", "Fullscreen", { (7 * 32) / 2, 428 }, 1, { 255, 0, 0 });
@@ -179,13 +183,16 @@ void OptionsState::Render()
 	else
 		offset = 200;
 
+
 	pFonts->Render("Other", "			=", { (4 * 32) / 2.0f + offset - 2, (300.0f + 64 * m_nCursor) + 2 }, 1, { 255, 0, 0, 0 });
 	pFonts->Render("Other", "			=", { (4 * 32) / 2.0f + offset, 300.0f + 64 * m_nCursor }, 1, { 255, 0, 0 });
 
 	//How to Exit
+
 	pFonts->Render("Other", "esc to Exit", { 670, 520 }, 1, { 255, 0, 0 });
 
 	//How to Select
+
 	pFonts->Render("Other", "ENTER to select", { 30, 520 }, 1, { 255, 0, 0 });
 
 }
