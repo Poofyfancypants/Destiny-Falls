@@ -331,6 +331,7 @@ bool Player::TakeTurn(float elapsedTime)
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
 		{
+			//if
 			if (m_nCursor == 0)
 			{
 				ActionSelected = m_nCursor;
@@ -361,8 +362,8 @@ bool Player::TakeTurn(float elapsedTime)
 		}
 		if (m_nCursor < 0)
 			m_nCursor = 0;
-		if (m_nCursor > pCombat->GetNumEnemies() - 1)
-			m_nCursor = pCombat->GetNumEnemies() - 1;
+		if (m_nCursor > pCombat->GetEnemies().size() - 1)
+			m_nCursor = pCombat->GetEnemies().size() - 1;
 
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target

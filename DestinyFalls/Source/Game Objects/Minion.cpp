@@ -161,6 +161,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 				m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
+			
 		}
 		break;
 	default:
@@ -235,7 +236,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack2");
 				   break;
 			   case 2:
-				   this->GetTimeStamp()->SetCurrentAnimation("AirElementalAttack2");
+				   this->GetTimeStamp()->SetCurrentAnimation("GenieAttack");
 				   break;
 			   case 3:
 				   this->GetTimeStamp()->SetCurrentAnimation("AirElementalAttack");
@@ -280,4 +281,14 @@ void Minion::SetMinionAnimation(int region, int minionType)
 	this->GetTimeStamp()->SetCurrentFrame(0);
 	this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 
+}
+
+void Minion::SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int _tier2)
+{
+	Modifiers.AttackSpeed = _atkSpeed;
+	Modifiers.DamageLevel = _damageLevel;
+	Modifiers.ElemAffinity.ElementType = _type;
+	Modifiers.ElemResistance.ElementType = _type;
+	Modifiers.ElemAffinity.ElementTier = _tier1;
+	Modifiers.ElemResistance.ElementTier = _tier2;
 }
