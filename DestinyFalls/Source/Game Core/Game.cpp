@@ -173,7 +173,7 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[8][3] = "Look, There he is! Get behind me!";
 	m_StringTable[8][4] = "If you are low on health already, chests can drop health potions,";
 	m_StringTable[8][5] = "that will restore your health once aquiered by pressing P";
-	m_StringTable[8][6] = "Press E to Continue";
+	m_StringTable[8][6] = "*Run into the boulders and press R repeatedly until it moves*";
 
 
 
