@@ -216,7 +216,7 @@ void GameplayState::Render()
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 
 
-
+	pGraphics->SetClearColor();
 
 	m_pObjects->RenderAll();
 

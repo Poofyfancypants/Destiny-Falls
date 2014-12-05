@@ -595,7 +595,9 @@ void InventoryState::Render()
 {
 	GameplayState::GetInstance()->Render();
 
+
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	//Inventory button bottom right of screen
 	pGraphics->DrawRectangle( GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 } );
