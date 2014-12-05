@@ -85,16 +85,17 @@ void SaveandLoadState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	pGraphics->SetClearColor();
 
-	/*const BitmapFont* pFont = Game::GetInstance()->GetFont();*/
+	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, { 0.5f, 0.5f });
 
 	BitmapFontManager* pFonts = pFonts->GetInstance();
-	pFonts->Render("Bernardo", "Save 1", { saveslot1.left, saveslot1.top }, 1, { 255, 225, 255, 255 });
-	pFonts->Render("Bernardo", "Save 2", { saveslot2.left, saveslot2.top }, 1, { 255, 225, 255, 255 });
-	pFonts->Render("Bernardo", "Save 3", { saveslot3.left, saveslot3.top }, 1, { 255, 225, 255, 255 });		 
-	pFonts->Render("Bernardo", "Load 1", { loadslot1.left, loadslot1.top }, 1, { 255, 225, 255, 255 });
-	pFonts->Render("Bernardo", "Load 2", { loadslot2.left, loadslot2.top }, 1, { 255, 225, 255, 255 });
-	pFonts->Render("Bernardo", "Load 3", { loadslot3.left, loadslot3.top }, 1, { 255, 225, 255, 255 });
+	pFonts->Render("Bernardo", "Save 1", { saveslot1.left, saveslot1.top }, 1, { 255, 225, 0, 0 });
+	pFonts->Render("Bernardo", "Save 2", { saveslot2.left, saveslot2.top }, 1, { 255, 225, 0, 0 });
+	pFonts->Render("Bernardo", "Save 3", { saveslot3.left, saveslot3.top }, 1, { 255, 225, 0, 0 });		 
+	pFonts->Render("Bernardo", "Load 1", { loadslot1.left, loadslot1.top }, 1, { 255, 225, 0, 0 });
+	pFonts->Render("Bernardo", "Load 2", { loadslot2.left, loadslot2.top }, 1, { 255, 225, 0, 0 });
+	pFonts->Render("Bernardo", "Load 3", { loadslot3.left, loadslot3.top }, 1, { 255, 225, 0, 0 });
 	
+
 }
 
 void SaveandLoadState::Save()

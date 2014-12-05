@@ -11,6 +11,7 @@ public:
 	virtual bool Input(void)				override;
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
+	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 
 private:

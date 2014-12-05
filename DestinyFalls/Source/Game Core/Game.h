@@ -100,7 +100,7 @@ public:
 	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
-
+	SGD::HTexture m_hHTP = SGD::INVALID_HANDLE;
 
 private:
 	/**********************************************************/

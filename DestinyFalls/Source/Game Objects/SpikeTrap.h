@@ -3,7 +3,7 @@
 class SpikeTrap :
 	public Trap
 {
-	int m_nDamage = 3;
+	int m_nDamage = 1;
 	float m_fTimer = 0;
 	bool m_bStartTimer = false;
 

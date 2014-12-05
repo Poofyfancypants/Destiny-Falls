@@ -16,6 +16,7 @@ public:
 	virtual bool Input(void)				override;
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
+	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 private:
 	SaveandLoadState() = default;
@@ -43,6 +44,5 @@ private:
 	SGD::Rectangle loadslot2 = {400, 150, 575, 300};
 	SGD::Rectangle loadslot3 = {400, 300, 575, 450};
 
-	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 };
 

@@ -198,7 +198,6 @@ void MainMenuState::Render()
 	
 	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, {0.3f, 0.3f});
 	
-	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
