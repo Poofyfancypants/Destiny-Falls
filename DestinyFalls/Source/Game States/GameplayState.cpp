@@ -189,13 +189,12 @@ void GameplayState::Update(float elapsedTime)
 
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	m_pObjects->UpdateAll(elapsedTime);
+	m_pObjects->UpdateAll(elapsedTime); 
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, BOULDER_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, CHEST_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, TRAP_BUCKET);
 
-	m_pObjects->UpdateAll(elapsedTime);
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
 	if (m_nCurrentLevel == 0)
@@ -319,7 +318,7 @@ Object* GameplayState::CreateBoulder(SGD::Point _pos)
 	Boulder* temp = new Boulder;
 	temp->SetImage(m_hBoulder);
 	temp->SetPosition(_pos);
-	temp->SetSize(SGD::Size(32, 32));
+	temp->SetSize(SGD::Size(30, 30));
 	return temp;
 
 
@@ -412,8 +411,6 @@ void GameplayState::HandleTutorial()
 	// - Tutorial Update
 	if (m_nCurrentLevel == 0)
 	{
-
-
 		SGD::Rectangle heroTooltipRange;
 		heroTooltipRange.left = 0;
 		heroTooltipRange.top = 5 * 32;
@@ -474,8 +471,6 @@ void GameplayState::HandleTutorial()
 		else
 			m_bSigmundDialog = m_bChestDialog = m_bMainDialog = m_bFirstDialog = m_bTrapDialog = m_bPuzzleDialog = m_bBoulderDialog = false;
 	}
-
-
 }
 
 void GameplayState::RenderDialog()
@@ -548,7 +543,7 @@ void GameplayState::RenderDialog()
 
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.
-		pFont->Render( "Bernardo", Game::GetInstance()->GetString( 2, 5 ).c_str(), TextPositionOne, 1, SGD::Color( 0, 0, 255 ) );	}
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 5 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );	}
 
 	else if (m_bTrapDialog)
 	{
@@ -557,7 +552,7 @@ void GameplayState::RenderDialog()
 		TextPositionOne.x = DialogBoxOne.left + 90;
 		TextPositionTwo.x = DialogBoxOne.left + 110;
 
-		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 200, 200, 200 ), SGD::Color( 0, 0, 0 ) );		// - Draw string One.
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );		// - Draw string One.
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 6 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 2, 7 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
 
@@ -590,6 +585,7 @@ void GameplayState::RenderDialog()
 	else if (m_bSigmundDialog)
 	{
 
+		TextPositionOne.x = DialogBoxOne.left + 220;
 
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		// - Draw string One.

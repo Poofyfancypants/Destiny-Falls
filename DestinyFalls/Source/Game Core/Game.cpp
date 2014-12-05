@@ -135,7 +135,7 @@ bool Game::Initialize( float width, float height )
 	m_StringTable[2][2] = "This might be our only chance to stop him!";
 	m_StringTable[2][3] = "Careful though, he has laid puzzles to slow us down. ";
 	m_StringTable[2][4] = "Solve them by sliding between walls! I'll see you on the other side.";
-	m_StringTable[2][5] = "These Boulders can be useful to solve puzzles! Press R to throw them around!";
+	m_StringTable[2][5] = "These Boulders can be useful to solve puzzles! Tap R to throw them around!";
 	m_StringTable[2][6] = "Thouse are dangerous traps that you should do your best to avoid!";
 	m_StringTable[2][7] = "And remember the fountain will help you recover from defeat.";
 	m_StringTable[2][8] = "Watch out! Another Trap. Try not to step on it. Also..";
@@ -279,6 +279,8 @@ void Game::Terminate( void )
 	// Terminate the core SGD wrappers
 	//MainMenuState::GetInstance()->Exit();
 
+	ClearStates();
+
 	CombatState::GetInstance()->ClearEarth();
 	CombatState::GetInstance()->ClearIce();
 	CombatState::GetInstance()->ClearAir();
@@ -367,20 +369,12 @@ void Game::RemoveState()
 
 void Game::ClearStates()
 {
-	//unsigned int stackSize = m_pStateStack.size() - 1;
-	//for( unsigned int i = 0; i < stackSize; i++ )
-	//{
-	//	RemoveState();
-	//	m_nCurrState--;
-	//}
-
-	for( size_t i = 0; i < m_pStateStack.size(); i++ )
+	unsigned int stackSize = m_pStateStack.size();
+	for( size_t i = 0; i < stackSize; i++ )
 	{
 		m_pStateStack.back()->Exit();
 		m_pStateStack.pop_back();
 	}
-
-	AddState( MainMenuState::GetInstance() );
 }
 
 /*static*/ void Game::MessageProc( const SGD::Message* pMsg )
