@@ -381,6 +381,7 @@ bool InventoryState::Input()
 			AddRunesToInventoryfromRing2();
 
 		}
+#pragma region tooltips
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
 		{
 			m_bShowToolTip1 = !m_bShowToolTip1;
@@ -562,6 +563,7 @@ bool InventoryState::Input()
 			m_bShowToolTip10 = false;
 			m_bShowToolTip11 = false;
 		}
+#pragma endregion 
 	}
 	//leave inventory
 	if (pInput->GetCursorPosition().IsPointInRectangle(GameplayState::GetInstance()->InventoryButton))
