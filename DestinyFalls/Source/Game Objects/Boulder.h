@@ -7,7 +7,8 @@ class Boulder :
 
 
 	int m_nDirection = 0;
-
+	float m_fCounter = 0;
+	bool m_bButtonIndicator = false;
 public:
 	Boulder();
 	~Boulder();

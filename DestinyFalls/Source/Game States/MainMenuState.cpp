@@ -28,7 +28,7 @@ void MainMenuState::Enter()
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-
+	m_bTutorial = false;
 	
 
 
@@ -132,7 +132,8 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
 			break;
 		case MenuSelections::howToPlay:
-			Game::GetInstance()->AddState( HowToPlayState::GetInstance() );
+			Game::GetInstance()->AddState( GameplayState::GetInstance() );
+			m_bTutorial = true;
 			break;
 		case MenuSelections::credits:
 			Game::GetInstance()->AddState( CreditState::GetInstance() );
@@ -171,6 +172,7 @@ void MainMenuState::Update( float elapsedTime )
 
 	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
 		m_bDebug = !m_bDebug;
+
 
 	return;
 

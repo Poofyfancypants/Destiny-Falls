@@ -33,6 +33,7 @@ Player::~Player()
 
 void Player::Update( float elapsedTime )
 {
+	m_nPotions = 5;
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	if( m_nHealth <= 0 )
 	{
@@ -134,10 +135,6 @@ void Player::Render( void )
 	// Green Health Bar
 	currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() / 10 ) };
 	pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
-
-	std::string potString = std::to_string( m_nPotions );
-	potString += " Potions";
-	pGraphics->DrawString( potString.c_str(), { ( Game::GetInstance()->GetScreenWidth() - 100 ), ( Game::GetInstance()->GetScreenHeight() - 80 ) }, SGD::Color( 255, 255, 0, 0 ) );
 
 	if( m_pAnimator->GetInstance()->CheckSize() )
 	{

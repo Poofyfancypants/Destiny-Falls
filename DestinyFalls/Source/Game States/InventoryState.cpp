@@ -2,6 +2,7 @@
 #include "InventoryState.h"
 #include "MainMenuState.h"
 #include "GameplayState.h"
+#include "../Managers/BitmapFontManager.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -1244,10 +1245,39 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle( EquipG2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
 		pGraphics->DrawRectangle( EquipG3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
 
-
-
 	}
 
+
+	// - Tutorial
+	if( GameplayState::GetInstance()->GetCurrentLevel() == 0 )
+	{
+		BitmapFontManager* pFont = BitmapFontManager::GetInstance();
+
+		// - Location of the Dialog Box at the bottom of the screen.
+		SGD::Rectangle DialogBoxOne;
+		SGD::Point portraitPosition;
+
+		DialogBoxOne.left = 100;
+		DialogBoxOne.top = Game::GetInstance()->GetScreenHeight() - 125;
+		DialogBoxOne.right = Game::GetInstance()->GetScreenWidth() - 70;
+		DialogBoxOne.bottom = Game::GetInstance()->GetScreenHeight() - 25;
+		SGD::Point TextPositionOne;
+		SGD::Point TextPositionTwo;
+
+		TextPositionOne.x = DialogBoxOne.left + 60;
+		TextPositionOne.y = DialogBoxOne.top + 20;
+		TextPositionTwo.x = DialogBoxOne.left +80;
+		TextPositionTwo.y = DialogBoxOne.top + 50;
+
+		portraitPosition.x = DialogBoxOne.left - 10;
+		portraitPosition.y = DialogBoxOne.top - 30;
+
+		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
+		pGraphics->DrawTexture( GameplayState::GetInstance()->GetPortrait(), portraitPosition );
+
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 4 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 5 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+	}
 }
 
 #pragma region Add
