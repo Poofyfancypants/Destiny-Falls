@@ -273,7 +273,8 @@ void Minion::SetMinionAnimation(int region, int minionType)
 			   }
 	}
 		break;
-
+	case 4: // Higher cases will be used for bosses
+		break;
 	default:
 		break;
 	}
