@@ -40,12 +40,15 @@ void Player::Update(float elapsedTime)
 	if( m_bPlayCombatAnimation )
 	{
 		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
-		pAudio->PlayAudio(Game::GetInstance()->deathSound, false);
-		m_nHealth = 0;
-		Game::GetInstance()->AddState( DeathState::GetInstance() );
+		if( m_nHealth <= 0 )
+		{
+			pAudio->PlayAudio( Game::GetInstance()->deathSound , false );
+			m_nHealth = 0;
+			Game::GetInstance()->AddState( DeathState::GetInstance() );
 
-		m_ptPosition = GetCheckpoint();
-		m_nHealth = 100;
+			m_ptPosition = GetCheckpoint();
+			m_nHealth = 100;
+		}
 	}
 	else
 	{
