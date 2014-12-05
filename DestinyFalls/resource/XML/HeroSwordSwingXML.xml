@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
   <animation>
-    <animation_info name="HeroSwordSwing" numFrames="3" looping="0" hTexture="1009-ShadowKnight.png">
+    <animation_info name="HeroSwordSwing" numFrames="5" looping="0" hTexture="1009-ShadowKnight.png">
       <frame duration="0.05" damage="0" event="none" dLeft="4" dTop="28" dRight="150" dBottom="216" cLeft="6" cTop="30" cRight="149" cBottom="216" x="109" y="172" />
       <frame duration="0.05" damage="0" event="none" dLeft="143" dTop="6" dRight="350" dBottom="213" cLeft="145" cTop="8" cRight="347" cBottom="212" x="150" y="192" />
       <frame duration="0.25" damage="0" event="none" dLeft="363" dTop="55" dRight="662" dBottom="210" cLeft="363" cTop="57" cRight="660" cBottom="207" x="119" y="144" />
+      <frame duration="0.05" damage="0" event="none" dLeft="143" dTop="6" dRight="350" dBottom="213" cLeft="145" cTop="8" cRight="347" cBottom="212" x="150" y="192" />
+      <frame duration="0.05" damage="0" event="none" dLeft="4" dTop="28" dRight="150" dBottom="216" cLeft="6" cTop="30" cRight="149" cBottom="216" x="109" y="172" />
     </animation_info>
-  </animation> 
+  </animation>
 </Root>
