@@ -84,6 +84,11 @@ void GameplayState::Enter()
 	pAudio->PlayAudio( bmusic, true );
 
 
+	//Set up DialogManager
+	m_pDialogs = m_pDialogs->GetInstance();
+
+	m_pDialogs->Load( "resource/XML/TestDialog.xml" );
+
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
@@ -129,6 +134,7 @@ void GameplayState::Exit()
 	delete m_pMap;
 	m_pMap = nullptr;
 	m_pAnimator->DeleteInstance();
+	m_pDialogs->DeleteInstance();
 }
 
 bool GameplayState::Input()
