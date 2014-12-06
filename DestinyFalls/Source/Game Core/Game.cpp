@@ -98,7 +98,6 @@ bool Game::Initialize( float width, float height )
 	string xmlFile3 = "resource/XML/newDialog.xml";
 	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
 
-	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
 	m_mMeleeButton = pAudio->LoadAudio( L"resource/audio/Melee.wav" );
