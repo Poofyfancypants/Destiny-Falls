@@ -57,7 +57,7 @@ public:
 	void StopCombat();
 
 	void RenderDialog();
-	void UpdateDialog( float elapsedTime );
+	void UpdateDialog();
 
 private:
 
