@@ -10,6 +10,7 @@
 #include "../Managers/TileManager.h"
 #include "../Managers/AnimationManager.h"
 #include "../Managers/ParticleManager.h"
+#include "../Managers/DialogManager.h"
 
 class GameplayState :
 	public IGameState
@@ -105,6 +106,7 @@ private:
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 	AnimationManager* m_pAnimator;
+	DialogManager* m_pDialogs;
 
 	ParticleManager m_particle;
 

@@ -247,6 +247,12 @@
     <ClInclude Include="Source\Game States\ForgeState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Engines\Dialog.h">
+      <Filter>Engines</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Managers\DialogManager.h">
+      <Filter>Managers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -429,6 +435,12 @@
     </ClCompile>
     <ClCompile Include="Source\Game States\ForgeState.cpp">
       <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Engines\Dialog.cpp">
+      <Filter>Engines</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Managers\DialogManager.cpp">
+      <Filter>Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

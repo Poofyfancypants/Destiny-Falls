@@ -57,7 +57,8 @@ void CreditState::Update(float elapsedTime)
 
 void CreditState::Render()
 {
-	SGD::GraphicsManager* pInput = SGD::GraphicsManager::GetInstance();
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 

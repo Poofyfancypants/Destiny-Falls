@@ -32,6 +32,8 @@ private:
 
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 50, 200, 400 };
+	SGD::Rectangle ForgeButton = { 50, 50, 200, };
+	SGD::Rectangle ResultBox = {};
 
 	//line dividers in inventory
 	SGD::Rectangle RuneSet1 = { 200, 170, 300, 200 };
@@ -48,21 +50,20 @@ private:
 
 	//Rune Images
 	//t1
-	SGD::Rectangle IventoryRect1 = { 210, 240, 240, 280 };
-	SGD::Rectangle IventoryRect4 = { 260, 240, 290, 280 };
-	SGD::Rectangle IventoryRect7 = { 210, 320, 240, 360 };
+	SGD::Rectangle IventoryRect1 =  { 210, 240, 240, 280 };
+	SGD::Rectangle IventoryRect4 =  { 260, 240, 290, 280 };
+	SGD::Rectangle IventoryRect7 =  { 210, 320, 240, 360 };
 	SGD::Rectangle IventoryRect10 = { 260, 320, 290, 360 };
 	//t2
-	SGD::Rectangle IventoryRect2 = { 310, 240, 340, 280 };
-	SGD::Rectangle IventoryRect5 = { 360, 240, 390, 280 };
-	SGD::Rectangle IventoryRect8 = { 310, 320, 340, 360 };
+	SGD::Rectangle IventoryRect2 =  { 310, 240, 340, 280 };
+	SGD::Rectangle IventoryRect5 =  { 360, 240, 390, 280 };
+	SGD::Rectangle IventoryRect8 =  { 310, 320, 340, 360 };
 	SGD::Rectangle IventoryRect11 = { 360, 320, 390, 360 };
 
 
 	//Rune Rect Sized images for sword
 	SGD::Rectangle Equip1 = { 220, 70, 280, 150 };
-	SGD::Rectangle Equip2 = { 320, 70, 380, 150 };
-	SGD::Rectangle Equip3 = { 420, 70, 480, 150 };
+	SGD::Rectangle Equip2 = { 420, 70, 480, 150 };
 
 protected:
 

@@ -37,6 +37,7 @@ void HowToPlayState::Update(float elapsedTime)
 void HowToPlayState::Render()
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	pGraphics->DrawTexture(m_hBackground, { 0,0 }, 0, {}, {}, { 1.6f, 1.2f });
 

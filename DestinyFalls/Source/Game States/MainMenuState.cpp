@@ -132,7 +132,7 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
 			break;
 		case MenuSelections::howToPlay:
-			Game::GetInstance()->AddState( HowToPlayState::GetInstance() );
+			Game::GetInstance()->AddState( GameplayState::GetInstance() );
 			m_bTutorial = true;
 			break;
 		case MenuSelections::credits:
@@ -183,6 +183,7 @@ void MainMenuState::Update( float elapsedTime )
 void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	if( m_bDebug )
 	{

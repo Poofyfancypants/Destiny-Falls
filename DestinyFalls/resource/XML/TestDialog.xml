@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dialogue>
+  <Message>
+    <Name>Uno</Name>
+    <Portrait>boulder.png</Portrait>
+    <Words>Testing message uno.</Words>
+  </Message>
+  <Message>
+    <Name>Dos</Name>
+    <Portrait>chest.png</Portrait>
+    <Words>Testing message dos</Words>
+  </Message>
+  <Message>
+    <Name>Tres</Name>
+    <Portrait>boulder.png</Portrait>
+    <Words>Testing message tres</Words>
+  </Message>
+</Dialogue>
