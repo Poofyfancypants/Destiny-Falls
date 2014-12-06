@@ -317,6 +317,11 @@ void Player::HandleCollision( const iObject* pOther )
 		//	m_ptPosition -= velocity;
 		m_bCollision = true;
 	}
+	
+	if( pOther->GetType() == OBJ_COMPANION )
+	{
+		m_bRunDialog = true;
+	}
 }
 
 
@@ -457,4 +462,32 @@ void Player::ResetAnimation()
 {
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+}
+
+void Player::RenderDialog()
+{
+	DialogManager* pDialog = pDialog->GetInstance();
+	switch( m_nLineCounter )
+	{
+		case 1:
+			break;
+		case 2:
+			//pDialog->Render("")
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		default:
+			break;
+	}
+}
+
+void Player::UpdateDialog( float elapsedTime )
+{
+
 }

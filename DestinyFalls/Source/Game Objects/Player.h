@@ -56,7 +56,8 @@ public:
 	void StartCombat();
 	void StopCombat();
 
-
+	void RenderDialog();
+	void UpdateDialog( float elapsedTime );
 
 private:
 
@@ -91,5 +92,9 @@ private:
 	bool m_bPlayCombatAnimation = false;
 
 	string m_szLastAnimation;
+
+	bool m_bRunDialog = false;
+
+	int m_nLineCounter = 1;
 
 };
