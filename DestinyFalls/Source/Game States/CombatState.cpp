@@ -158,6 +158,15 @@ void CombatState::Update( float elapsedTime )
 	{
 		PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth();
 		( ( Player* ) m_pHeroes[ 0 ] )->Update( elapsedTime );
+
+		for( unsigned int i = 1; i < m_pHeroes.size(); i++ )
+		{
+			if( ( ( Companion* ) m_pHeroes[ i ] )->GetHealth() )
+			{
+				( ( Companion* ) m_pHeroes[ i ] )->Update( elapsedTime );
+
+			}
+		}
 		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() < 25 && m_fFlash > 2 )
 		{
 			m_bHealthWarning = true;
