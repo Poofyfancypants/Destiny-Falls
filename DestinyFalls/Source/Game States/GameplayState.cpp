@@ -69,6 +69,8 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/WaterElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/WaterEnemyAttackXML.xml" );
 
+	m_pAnimator->Load( "resource/XML/ClericAttackXML.xml" );
+
 
 
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
