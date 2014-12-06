@@ -32,8 +32,8 @@ private:
 
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 50, 200, 400 };
-	SGD::Rectangle ForgeButton = { 50, 50, 200, };
-	SGD::Rectangle ResultBox = {};
+	SGD::Rectangle ForgeButton = { 50, 50, 200, 200};
+	SGD::Rectangle ResultBox = {200, 50, 500, 200};
 
 	//line dividers in inventory
 	SGD::Rectangle RuneSet1 = { 200, 170, 300, 200 };
