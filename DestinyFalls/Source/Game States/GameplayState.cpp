@@ -70,7 +70,7 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/WaterEnemyAttackXML.xml" );
 
 
-
+	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil.png");
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -116,9 +116,10 @@ void GameplayState::Exit()
 		m_pPlayer = nullptr;
 	}
 
-	pAudio->UnloadAudio( bmusic );
+	pAudio->UnloadAudio(bmusic);
 
 	//unload images
+	pGraphics->UnloadTexture(m_hForge);
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
@@ -182,15 +183,15 @@ bool GameplayState::Input()
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
 		{
-			Game::GetInstance()->AddState( InventoryState::GetInstance() );
+			Game::GetInstance()->AddState(InventoryState::GetInstance() );
 		}
 	}
-	// Toggle Inventory
+	// Toggle Forge
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(ForgeButton))
 		{
-			Game::GetInstance()->AddState(InventoryState::GetInstance());
+			Game::GetInstance()->AddState(ForgeState::GetInstance());
 		}
 	}
 
@@ -259,6 +260,7 @@ void GameplayState::Render()
 
 	// Inventory Image/Scaling
 	//pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
+	pGraphics->DrawTexture(m_hForge, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)), {}, {}, {}, { 0.15f, 0.3f });
 	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.5f, 0.5f } );
 
 	pGraphics->DrawRectangle( SGD::Rectangle(
@@ -270,10 +272,6 @@ void GameplayState::Render()
 
 
 	pGraphics->DrawTexture( m_hHealthPot, SGD::Point( HealthPotionPosition.left, HealthPotionPosition.top ), {}, {}, {}, { 0.7f, 0.7f } );
-	pFont->Render( "Bernardo",
-		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
-		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
-		2, SGD::Color( 255, 0, 0 ) );
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )

@@ -44,6 +44,11 @@ bool ForgeState::Input()
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(GameplayState::GetInstance()->InventoryButton))
+		{
+			Game::GetInstance()->RemoveState();
+			Game::GetInstance()->AddState(InventoryState::GetInstance());
+		}
+		if (pInput->GetCursorPosition().IsPointInRectangle(GameplayState::GetInstance()->ForgeButton))
 			Game::GetInstance()->RemoveState();
 	}
 
@@ -63,37 +68,37 @@ void ForgeState::Render()
 
 	GameplayState::GetInstance()->Render();
 
-	pGraphics->DrawRectangle(GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 });
+	//pGraphics->DrawRectangle(GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 });
 	
 	pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 255, 255, 255 }, SGD::Color{ 255, 0, 0, 0 });
 	pGraphics->DrawRectangle(ImageRect, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
 
+	pGraphics->DrawTexture(m_hForge, SGD::Point{ ImageRect.left, ImageRect.top }, {}, {}, {}, { 0.3f, 0.5f });
 
-	pGraphics->DrawTexture(m_hForge, SGD::Point(55, 100), {}, {}, {}, { 0.3f, 0.5f });
 
 	pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret1, { 210, 240 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret1, { IventoryRect1.left, IventoryRect1.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect2, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret2, { 310, 240 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret2, { IventoryRect2.left, IventoryRect2.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect4, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret1, { 260, 240 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect5, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret2, { 360, 240 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect7, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret1, { 210, 320 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret1, { IventoryRect7.left, IventoryRect7.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect8, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret2, { 310, 320 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret2, { IventoryRect8.left, IventoryRect8.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect10, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret1, { 260, 320 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret1, { IventoryRect10.left, IventoryRect10.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(IventoryRect11, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-	pGraphics->DrawTexture(m_hFiret2, { 360, 320 }, {}, {}, {}, { 0.1f, 0.1f });
+	pGraphics->DrawTexture(m_hFiret2, { IventoryRect11.left, IventoryRect11.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 	pGraphics->DrawRectangle(Equip1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 0, 0, 0 });
 	pGraphics->DrawRectangle(Equip2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 0, 0, 0 });
