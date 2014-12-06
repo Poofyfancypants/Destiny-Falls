@@ -104,6 +104,7 @@ private:
 	bool m_bShowToolTip11 = false;
 	bool m_bShowToolTip12 = false;
 
+	bool equipslot1selected = false;
 
 	Runes m_ptSelectedRune;
 	//full inventory rectangle

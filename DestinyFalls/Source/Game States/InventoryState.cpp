@@ -90,6 +90,11 @@ bool InventoryState::Input()
 
 	if (m_bWeaponsTab)
 	{
+		if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+		{
+			equipslot1selected = !equipslot1selected;
+
+		}
 		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 		{
 
@@ -99,7 +104,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToSword0fromInventory(m_ptSelectedRune);
-					//m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromSword0();
@@ -111,7 +115,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToSword1fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromSword1();
@@ -123,7 +126,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToSword2fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromSword2();
@@ -133,6 +135,11 @@ bool InventoryState::Input()
 
 	if (m_bArmorTab)
 	{
+		if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+		{
+			equipslot1selected = !equipslot1selected;
+
+		}
 		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 		{
 
@@ -142,7 +149,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToArmor0fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromArmor0();
@@ -154,7 +160,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToArmor1fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromArmor1();
@@ -166,7 +171,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToArmor2fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromArmor2();
@@ -177,7 +181,11 @@ bool InventoryState::Input()
 
 	if (m_bRunesTab)
 	{
+		if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+		{
+			equipslot1selected = !equipslot1selected;
 
+		}
 
 		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 		{
@@ -188,7 +196,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToRing0fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromRing0();
@@ -200,7 +207,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToRing1fromInventory(m_ptSelectedRune);
-					//	m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromRing1();
@@ -212,7 +218,6 @@ bool InventoryState::Input()
 				{
 
 					AddRunesToRing2fromInventory(m_ptSelectedRune);
-					//m_ptSelectedRune = nullptr;
 				}
 				else
 					AddRunesToInventoryfromRing1();
@@ -222,6 +227,8 @@ bool InventoryState::Input()
 
 
 #pragma region click inventory
+
+
 
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
@@ -237,6 +244,7 @@ bool InventoryState::Input()
 		m_bShowToolTip10 = false;
 		m_bShowToolTip11 = false;
 		m_bShowToolTip12 = false;
+
 
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
 		{
@@ -346,6 +354,7 @@ bool InventoryState::Input()
 #pragma endregion
 
 #pragma region tooltips
+
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
 		{
 			m_bShowToolTip1 = !m_bShowToolTip1;
@@ -583,6 +592,8 @@ void InventoryState::Render()
 #pragma region SwordSlots
 	if (m_bWeaponsTab)
 	{
+		
+
 		m_bArmorTab = false;
 		m_bRunesTab = false;
 		//change tab color when selected
@@ -747,6 +758,11 @@ void InventoryState::Render()
 			if (m_vSword[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
+
+		if (equipslot1selected)
+		{
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
 	}
 	else
 		m_bWeaponsTab = false;
@@ -760,7 +776,10 @@ void InventoryState::Render()
 
 	if (m_bArmorTab)
 	{
-
+		if (equipslot1selected)
+		{
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 0, 200, 0));
+		}
 		m_bWeaponsTab = false;
 		m_bRunesTab = false;
 		//outline armor tab when selected
@@ -921,6 +940,10 @@ void InventoryState::Render()
 			if (m_vArmor[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
+		if (equipslot1selected)
+		{
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 0, 255, 0), SGD::Color(255, 0, 200, 0));
+		}
 	}
 	else
 		m_bArmorTab = false;
@@ -933,6 +956,10 @@ void InventoryState::Render()
 
 	if (m_bRunesTab)
 	{
+		if (equipslot1selected)
+		{
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 0, 0, 255));
+		}
 
 		m_bWeaponsTab = false;
 		m_bArmorTab = false;
@@ -1093,12 +1120,18 @@ void InventoryState::Render()
 			if (m_vRing[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
+		if (equipslot1selected)
+		{
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 0, 0, 255), SGD::Color(255, 0, 0, 180));
+		}
 	}
 	else
 		m_bRunesTab = false;
 #pragma endregion
 	if (m_bArmorTab || m_bWeaponsTab || m_bRunesTab)
 	{
+		
+
 		if (m_bShowToolTip1)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
