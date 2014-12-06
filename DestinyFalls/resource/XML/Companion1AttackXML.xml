@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="Companion1Attack" numFrames="9" looping="0" hTexture="Companion1.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="5" dTop="264" dRight="56" dBottom="334" cLeft="4" cTop="264" cRight="56" cBottom="334" x="19" y="63" />
+      <frame duration="0.25" damage="0" event="none" dLeft="106" dTop="260" dRight="154" dBottom="335" cLeft="105" cTop="260" cRight="155" cBottom="335" x="11" y="65" />
+      <frame duration="0.25" damage="0" event="none" dLeft="198" dTop="254" dRight="249" dBottom="338" cLeft="197" cTop="253" cRight="250" cBottom="338" x="12" y="70" />
+      <frame duration="0.25" damage="0" event="none" dLeft="298" dTop="259" dRight="372" dBottom="339" cLeft="296" cTop="259" cRight="373" cBottom="339" x="4" y="65" />
+      <frame duration="0.25" damage="0" event="none" dLeft="380" dTop="252" dRight="442" dBottom="344" cLeft="380" cTop="252" cRight="443" cBottom="344" x="15" y="74" />
+      <frame duration="0.25" damage="0" event="none" dLeft="484" dTop="256" dRight="539" dBottom="337" cLeft="484" cTop="256" cRight="540" cBottom="337" x="4" y="68" />
+      <frame duration="0.25" damage="0" event="none" dLeft="572" dTop="260" dRight="635" dBottom="337" cLeft="572" cTop="260" cRight="635" cBottom="338" x="9" y="64" />
+      <frame duration="0.25" damage="0" event="none" dLeft="655" dTop="258" dRight="722" dBottom="340" cLeft="653" cTop="257" cRight="724" cBottom="345" x="20" y="66" />
+      <frame duration="0.25" damage="0" event="none" dLeft="746" dTop="257" dRight="818" dBottom="336" cLeft="745" cTop="256" cRight="819" cBottom="338" x="22" y="66" />
+    </animation_info>
+  </animation>
+</Root>

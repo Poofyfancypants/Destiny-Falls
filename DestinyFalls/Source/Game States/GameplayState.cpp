@@ -61,15 +61,19 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/NagaAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcSkeletonAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/PlantAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/TitanAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/WaterElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/WaterEnemyAttackXML.xml" );
 
 	m_pAnimator->Load( "resource/XML/ClericAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/RangerAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 
 
 
