@@ -89,6 +89,9 @@ private:
 	bool m_bUpdateAnimation = true;
 
 	SGD::HTexture m_hPortrait = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg2 = SGD::INVALID_HANDLE;
+
 
 	bool m_bPlayCombatAnimation = false;
 
