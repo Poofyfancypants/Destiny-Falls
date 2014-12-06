@@ -7,6 +7,7 @@
 #include "../Quick Time/QuickTime.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 
+
 class Player :
 	public AnimatedObject,
 	public SGD::Listener
@@ -55,6 +56,10 @@ public:
 	void StartCombat();
 	void StopCombat();
 
+	void RenderDialog();
+	void UpdateDialog();
+	void PreventDialogFromRestarting( float elapsedTime );
+
 private:
 
 	int m_nDirection;
@@ -84,9 +89,17 @@ private:
 	bool m_bUpdateAnimation = true;
 
 	SGD::HTexture m_hPortrait = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg2 = SGD::INVALID_HANDLE;
+
 
 	bool m_bPlayCombatAnimation = false;
 
 	string m_szLastAnimation;
+
+	bool m_bRunDialog = false;
+	bool m_bPreventDialog = false;
+	float m_fDialogTimer = 5.0f;
+	int m_nLineCounter = 1;
 
 };

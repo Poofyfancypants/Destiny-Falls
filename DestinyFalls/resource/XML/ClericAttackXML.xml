@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="ClericAttack" numFrames="7" looping="0" hTexture="Cleric.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="58" dTop="1" dRight="101" dBottom="67" cLeft="57" cTop="1" cRight="101" cBottom="67" x="10" y="61" />
+      <frame duration="0.25" damage="0" event="none" dLeft="100" dTop="3" dRight="151" dBottom="65" cLeft="100" cTop="3" cRight="149" cBottom="65" x="20" y="59" />
+      <frame duration="0.25" damage="0" event="none" dLeft="153" dTop="2" dRight="192" dBottom="69" cLeft="152" cTop="2" cRight="193" cBottom="68" x="7" y="61" />
+      <frame duration="0.25" damage="0" event="none" dLeft="195" dTop="7" dRight="265" dBottom="69" cLeft="194" cTop="7" cRight="265" cBottom="70" x="11" y="56" />
+      <frame duration="0.25" damage="0" event="none" dLeft="153" dTop="2" dRight="192" dBottom="69" cLeft="152" cTop="2" cRight="193" cBottom="68" x="7" y="61" />
+      <frame duration="0.25" damage="0" event="none" dLeft="100" dTop="3" dRight="151" dBottom="65" cLeft="100" cTop="3" cRight="149" cBottom="65" x="20" y="59" />
+      <frame duration="0.25" damage="0" event="none" dLeft="58" dTop="1" dRight="101" dBottom="67" cLeft="57" cTop="1" cRight="101" cBottom="67" x="10" y="61" />
+    </animation_info>
+  </animation>
+</Root>

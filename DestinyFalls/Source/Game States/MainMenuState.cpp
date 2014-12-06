@@ -132,7 +132,7 @@ bool MainMenuState::Input()
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
 			break;
 		case MenuSelections::howToPlay:
-			Game::GetInstance()->AddState( HowToPlayState::GetInstance() );
+			Game::GetInstance()->AddState( GameplayState::GetInstance() );
 			m_bTutorial = true;
 			break;
 		case MenuSelections::credits:
@@ -183,6 +183,7 @@ void MainMenuState::Update( float elapsedTime )
 void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->SetClearColor();
 
 	if( m_bDebug )
 	{
@@ -202,7 +203,7 @@ void MainMenuState::Render()
 	
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
+	pFonts->Render( "Dialog", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 2 ).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 4 ).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 } );

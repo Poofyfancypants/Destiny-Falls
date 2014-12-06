@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dialogue>
+  <Message>
+    <Name>GreetingsResponse</Name>
+    <Portrait>testhero.png</Portrait>
+    <Words>Greetings, wanderer!</Words>
+  </Message>
+  <Message>
+    <Name>Agree</Name>
+    <Portrait>testhero.png</Portrait>
+    <Words>Indeed, you are most welcome to join me on my quest!</Words>
+  </Message>
+  <Message>
+    <Name>Decline</Name>
+    <Portrait>testhero.png</Portrait>
+    <Words>Not at this time, wanderer, but perhaps later.</Words>
+  </Message>
+  <Message>
+    <Name>HowFaresResponse</Name>
+    <Portrait>testhero.png</Portrait>
+    <Words>The quest proceeds well.</Words>
+  </Message>
+</Dialogue>

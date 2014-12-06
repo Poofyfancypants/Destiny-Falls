@@ -16,6 +16,7 @@ struct Tile
 	int m_nEnemyID;
 	int m_nTrapID, m_nChestID;
 	int m_nWaypointID;
+	int m_nCompanionID;
 	bool QTEvent;
 	bool collisionTile;
 	bool PlayerSpawn;

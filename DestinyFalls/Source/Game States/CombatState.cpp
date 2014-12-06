@@ -69,6 +69,15 @@ void CombatState::Enter( void )
 		m_pEnemies.push_back( temp );
 	}
 
+	//Add 2 companions
+	for( unsigned int i = 0; i < 2; i++ )
+	{
+		Object* temp = AddCompanion();
+		( ( Companion* ) temp )->SetPosIndex( i );
+		m_pObjects.push_back( temp );
+		m_pHeroes.push_back( temp );
+	}
+
 	for( size_t i = 1; i < m_pObjects.size(); i++ )
 	{
 		for( size_t j = 0; j < m_pObjects.size(); j++ )
@@ -149,6 +158,15 @@ void CombatState::Update( float elapsedTime )
 	{
 		PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth();
 		( ( Player* ) m_pHeroes[ 0 ] )->Update( elapsedTime );
+
+		for( unsigned int i = 1; i < m_pHeroes.size(); i++ )
+		{
+			if( ( ( Companion* ) m_pHeroes[ i ] )->GetHealth() )
+			{
+				( ( Companion* ) m_pHeroes[ i ] )->Update( elapsedTime );
+
+			}
+		}
 		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() < 25 && m_fFlash > 2 )
 		{
 			m_bHealthWarning = true;
@@ -220,7 +238,7 @@ void CombatState::Update( float elapsedTime )
 					if( ( ( Companion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
 					{
 						if( ActionTimer <= 0 )
-							if( ( ( Companion* ) m_pObjects[ i ] )->TakeTurn() )
+							if( ( ( Companion* ) m_pObjects[ i ] )->TakeTurn(elapsedTime) )
 								CurrentTurn++;
 					}
 					break;
@@ -303,9 +321,13 @@ void CombatState::Render( void )
 	{
 		if( ( ( Companion* ) m_pHeroes[ j ] )->GetHealth() > 0 )
 		{
-			( ( Companion* ) m_pHeroes[ j ] )->Render( j );
+			( ( Companion* ) m_pHeroes[ j ] )->CombatRender( j-1 );
 		}
 	}
+
+	pGraphics->DrawRectangle( Companion1rect , SGD::Color() , SGD::Color() );
+	pGraphics->DrawRectangle( Companion2rect , SGD::Color() , SGD::Color() );
+
 }
 
 Object* CombatState::AddMinion( int _region ) //This is gonna get big, don't care
@@ -496,6 +518,37 @@ Object* CombatState::AddMinion( int _region ) //This is gonna get big, don't car
 	return temp;
 }
 
+Object* CombatState::AddCompanion()
+{
+	Companion* temp = new Companion;
+	Companion::Companion_Type coT = (Companion::Companion_Type)( rand() % 4 + 1 );
+	switch( coT )
+	{
+		case 1:
+			temp->SetC0Type( Companion::Companion_Type::Cleric );
+			temp->SetCompanionAnimation( 1 );
+			break;
+		case 2:
+			temp->SetC0Type( Companion::Companion_Type::Mage );
+			temp->SetCompanionAnimation( 2 );
+
+			break;
+		case 3:
+			temp->SetC0Type( Companion::Companion_Type::Melee );
+			temp->SetCompanionAnimation( 3 );
+			break;
+		case 4:
+			temp->SetC0Type( Companion::Companion_Type::Tank );
+			temp->SetCompanionAnimation( 4 );
+			break;
+		default:
+			break;
+	}
+	temp->SetSize( { 64 , 64 } );
+	temp->CurrentTurn( &CurrentTurn );
+	return temp;
+}
+
 bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //Can I Add An Object* for the target
 //I'm thinking about the order of actions here
 //Possibly get the target or attacker's type before damage type, we'll see what's most repetative
@@ -550,7 +603,33 @@ bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //
 		{
 			switch( _ActionType )
 			{
-				case 0:
+				case CombatState::ActionType::Melee:
+				{
+					pAudio->PlayAudio( Game::GetInstance()->m_mMeleeButton );
+					ComboElements d1 = mag.ElementCombination( InventoryState::GetInstance()->GetSwordSlot1() , InventoryState::GetInstance()->GetSwordSlot2() );
+
+					( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
+						( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
+					( ( Companion* ) m_pObjects[ CurrentTurn ] )->ResetAnimation();
+					string message = "You Slash the ";
+					message += ( pGame->GetString( ( ( Minion* ) m_pEnemies[ _target ] )->GetName( 0 ) , ( ( Minion* ) m_pEnemies[ _target ] )->GetName( 1 ) ).c_str() );
+					SetAction( message );
+				}
+					break;
+				case CombatState::ActionType::Magic:
+				{
+					m_bCoolDown = true;
+
+					pAudio->PlayAudio( Game::GetInstance()->m_mMagicButton );
+					ComboElements d2 = mag.ElementCombination( InventoryState::GetInstance()->GetRingSlot1() , InventoryState::GetInstance()->GetRingSlot2() );
+					( ( Minion* ) m_pObjects[ _target ] )->SetHealth( ( ( Minion* ) m_pObjects[ _target ] )->GetHealth() -
+						( mag.DamageComboElement( d2 , ( ( Minion* ) m_pObjects[ _target ] )->GetAffinity() ) * 10 ) );
+					SetActionTimer( GetActionTimer() + 3 );
+					string stuff = "You Magify the ";
+					SetAction( stuff += Game::GetInstance()->GetString( 1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetName() ).c_str() );
+				}
+					break;
+				case CombatState::ActionType::Armor:
 					break;
 				default:
 					break;
