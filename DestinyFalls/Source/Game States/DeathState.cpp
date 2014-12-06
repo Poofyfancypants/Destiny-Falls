@@ -115,5 +115,5 @@ void DeathState::Render(void)
 	pFonts->Render("Bernardo", Game::GetInstance()->GetString(0, 8).c_str(), { 350, 350 }, 2, { 255, 0, 0, 255 });
 	pFonts->Render("Bernardo", Game::GetInstance()->GetString(0, 6).c_str(), { 350, 500 }, 2, { 255, 0, 0, 150 });
 
-	pFonts->Render("Bernardo", cursor.c_str(), SGD::Point(250, (m_nCursor * 150) + 200), 2, { 255, 255, 255, 0 });
+	pFonts->Render("Bernardo", cursor.c_str(), SGD::Point(250, ((float)m_nCursor * 150) + 200), 2, { 255, 255, 255, 0 });
 }

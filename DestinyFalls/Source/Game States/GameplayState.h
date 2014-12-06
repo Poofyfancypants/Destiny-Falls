@@ -101,6 +101,7 @@ private:
 	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoulder = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHealthPot = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hForge = SGD::INVALID_HANDLE;
 
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
