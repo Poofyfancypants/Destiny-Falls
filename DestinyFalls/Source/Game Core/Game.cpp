@@ -97,9 +97,7 @@ bool Game::Initialize( float width, float height )
 	string imageName3 = "resource/graphics/Fonts/dialog.png";
 	string xmlFile3 = "resource/XML/newDialog.xml";
 	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
-	string fontName4 = "Icelandic";
-	string imageName4 = "resource/graphics/Fonts/ISFont.png";
-	string xmlFile4 = "resource/XML/ISFont.xml";
+
 	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -455,10 +453,15 @@ void Game::LoadStrings()
 		m_StringTable[8][4] = "If you are low on health already, chests can drop health potions,";
 		m_StringTable[8][5] = "that will restore your health once aquiered by pressing P";
 		m_StringTable[8][6] = "*Run into the boulders and press R repeatedly until it moves*";
+
+		m_StringTable[9][1] = "Music Vol";
+		m_StringTable[9][2] = "SFX Vol";
+		m_StringTable[9][3] = "Fullscreen";
+		m_StringTable[9][4] = "Language";
 	}
 	else
 	{
-		m_StringTable[7][1] = "Þarna ertu! Sigmundur sást fyrir Nord-Austan okkur!";
+		m_StringTable[7][1] = "Tharna ertu! Sigmundur sast fyrir Nord-Austan okkur!";
 		m_StringTable[7][2] = "Thetta gaeti verid okkar eini sens til ad stodvann.";
 		m_StringTable[7][3] = "Fardu Varlega, hann hefur buid til thrautir til ad haegja a okkur";
 		m_StringTable[7][4] = "Thu getur leyst thaer med thvi ad renna ther a milli veggja";
@@ -473,11 +476,11 @@ void Game::LoadStrings()
 		m_StringTable[8][4] = "Kysstur geta gefid ther Health Potion, ef thu hefur meidst geturu ";
 		m_StringTable[8][5] = "drukkid Health Potion med tvhi ad yta a P";
 		m_StringTable[8][6] = "*Hlauptu a tha og yttu a R oft thangad til hann hreyfist*";
+
+		m_StringTable[9][1] = "Tonlist Vol";
+		m_StringTable[9][2] = "SFX Vol";
+		m_StringTable[9][3] = "Fullscreen";
+		m_StringTable[9][4] = "Tungumal";
 	}
 
-	// - Options Menu
-	m_StringTable[9][1] = "Music Vol";
-	m_StringTable[9][2] = "SFX Vol";
-	m_StringTable[9][3] = "Fullscreen";
-	m_StringTable[9][4] = "Language";
 }
