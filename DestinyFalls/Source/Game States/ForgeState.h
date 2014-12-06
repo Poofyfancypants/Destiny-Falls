@@ -40,10 +40,11 @@ private:
 	SGD::Rectangle RuneSet2 = { 300, 170, 400, 200 };
 	SGD::Rectangle RuneSet3 = { 400, 170, 500, 200 };
 	//rune equip slots
+	//top 3 recs left side
 	SGD::Rectangle rect1 = { 200, 50, 300, 170 };
 	SGD::Rectangle rect2 = { 300, 50, 400, 170 };
 	SGD::Rectangle rect3 = { 400, 50, 500, 170 };
-
+	//bottom 3 recs ledt side
 	SGD::Rectangle rect4 = { 200, 200, 300, 400 };
 	SGD::Rectangle rect5 = { 300, 200, 400, 400 };
 	SGD::Rectangle rect6 = { 400, 200, 500, 400 };
