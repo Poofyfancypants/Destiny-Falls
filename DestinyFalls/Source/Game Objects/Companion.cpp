@@ -42,13 +42,13 @@ void Companion::CombatRender( int _posIndex )
 		case 0:
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion1rect.right , Companion1rect.bottom );
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion1HB.right , Companion1HB.bottom );
 			}
 			break;
 		case 1:
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion2rect.right , Companion2rect.bottom );
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion2HB.right , Companion2HB.bottom );
 			}
 			break;
 
