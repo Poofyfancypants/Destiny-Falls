@@ -38,11 +38,11 @@ private:
 
 	SGD::HTexture m_hCompanion = SGD::INVALID_HANDLE;
 
-	SGD::Rectangle Comp1HB = { 650, 110, 775, 140 };
-	SGD::Rectangle Comp2HB = { 625, 200, 750, 230 };
-	SGD::Rectangle Comp1rect = { 561, 110, 625, 174 };
-	SGD::Rectangle Comp2rect = { 536, 200, 600, 264 };
-	int * m_CurrentTurn;
+	SGD::Rectangle Companion1rect = { 200 , 110 , 264 , 174 };
+	SGD::Rectangle Companion2rect = { 200 , 290 , 264 , 354 };
+	SGD::Rectangle Companion1HB = { 50 , 110 , 175 , 140 };
+	SGD::Rectangle Companion2HB = { 50 , 290 , 175 , 320 };
+
 	AnimationManager* m_pAnimator;
 	bool m_bUpdateAnimation = false;
 };

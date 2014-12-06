@@ -68,16 +68,16 @@ private:
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
 
-	SGD::Rectangle Compation1HB	= { 50, 110, 175, 140 };
+	SGD::Rectangle Companion1HB	= { 50, 110, 175, 140 };
+	SGD::Rectangle Companion2HB	= { 50, 290, 175, 320 };
 	SGD::Rectangle PlayerHB		= { 75, 200, 200, 230 };
-	SGD::Rectangle Compation2HB	= { 50, 290, 175, 320 };
 	SGD::Rectangle Enemy1HB		= { 650, 110, 775, 140};
 	SGD::Rectangle Enemy2HB		= { 625, 200, 750, 230};
 	SGD::Rectangle Enemy3HB		= { 650, 290, 775, 320};
 
-	SGD::Rectangle Compation1rect	= { 200, 110, 264, 174 };
+	SGD::Rectangle Companion1rect	= { 75, 110, 139, 174 };
+	SGD::Rectangle Companion2rect	= { 75, 290, 139, 354 };
 	SGD::Rectangle Playerrect		= { 225, 200, 289, 264 };
-	SGD::Rectangle Compation2rect	= { 200, 290, 264, 354 };
 	SGD::Rectangle Enemy1rect		= { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };

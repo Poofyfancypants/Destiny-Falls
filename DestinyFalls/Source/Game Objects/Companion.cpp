@@ -23,18 +23,20 @@ void Companion::Update(float elapsedTime)
 void Companion::Render(int _posIndex)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
 	switch( _posIndex )
 	{
 		case 0:
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Comp1rect.right , Comp1rect.bottom );
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion1rect.right , Companion1rect.bottom );
 			}
+			this->GetTimeStamp()->SetCurrentAnimation( "Companion1Attack" );
 			break;
 		case 1:
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Comp2rect.right , Comp2rect.bottom );
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion2rect.right , Companion2rect.bottom );
 			}
 			this->GetTimeStamp()->SetCurrentAnimation( "Companion1Attack" );
 			break;
