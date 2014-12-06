@@ -220,7 +220,7 @@ void CombatState::Update( float elapsedTime )
 					if( ( ( Companion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
 					{
 						if( ActionTimer <= 0 )
-							if( ( ( Companion* ) m_pObjects[ i ] )->TakeTurn() )
+							if( ( ( Companion* ) m_pObjects[ i ] )->TakeTurn(elapsedTime) )
 								CurrentTurn++;
 					}
 					break;
@@ -501,7 +501,7 @@ Object* CombatState::AddCompanion()
 	Companion* temp = new Companion;
 	temp->SetSize( { 64 , 64 } );
 	temp->CurrentTurn( &CurrentTurn );
-
+	return temp;
 }
 
 bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //Can I Add An Object* for the target
