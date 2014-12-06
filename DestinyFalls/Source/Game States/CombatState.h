@@ -127,6 +127,9 @@ private:
 
 	int numPots;
 	int numRunes;
+	int NumQTCorrect = 0;
+	int SpellChosen = -1;
+	
 	vector<SGD::HTexture> m_vBackgroundsEarth;
 	vector<SGD::HTexture> m_vBackgroundsIce;
 	vector<SGD::HTexture> m_vBackgroundsAir;

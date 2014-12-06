@@ -50,6 +50,10 @@ public:
 
 	int GetPrevDirection() const {return m_nPrevDirection;}
 	bool GetBoulderCollision() const {return m_bCollision;}
+
+	QuickTime* GetQT() const { return currentQT; }
+	bool m_bDoQt = false;
+
 private:
 
 	int m_nDirection;
@@ -72,7 +76,6 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	QuickTime* currentQT = nullptr;
-	bool m_bDoQt = false;
 
 	bool m_bLowHealthWarning = false;
 	float m_fHealthFlash = 0.0f;

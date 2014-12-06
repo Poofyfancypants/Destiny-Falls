@@ -131,7 +131,7 @@ void Player::Render(void)
 	// Green Health Bar
 	currentHealthHUD = { (Game::GetInstance()->GetScreenWidth() * 1 / 5) - 75, (Game::GetInstance()->GetScreenHeight() / 10) };
 	pGraphics->DrawLine(currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U);
-	pGraphics->DrawTexture(m_hPortrait, SGD::Point(currentHealthHUD.x-70, currentHealthHUD.y-30), {}, {}, {}, {.5f,.5f});
+	pGraphics->DrawTexture(m_hPortrait, SGD::Point(currentHealthHUD.x - 70, currentHealthHUD.y - 30), {}, {}, {}, { .5f, .5f });
 
 	std::string potString = std::to_string(m_nPotions);
 	potString += " Potions";
@@ -217,7 +217,6 @@ void Player::TakeInput()
 
 	m_bUpdateAnimation = pInput->IsAnyKeyDown();
 
-
 }
 
 SGD::Rectangle Player::GetRect(void) const
@@ -290,14 +289,18 @@ bool Player::TakeTurn(float elapsedTime)
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
+	SGD::Rectangle PlayerSelection{ 0, 0, 0, 0 };
 
-	float posX = 200.0f;
 	if (selected)
 	{
-		posX = 400.0f;
+		PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x + 40, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
+	}
+	else
+	{
+		float posX = 200.0f;
+		PlayerSelection = { posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
 	}
 
-	SGD::Rectangle PlayerSelection{ posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
 
 	if (m_nHealth < 0)
 	{
@@ -317,15 +320,15 @@ bool Player::TakeTurn(float elapsedTime)
 	//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
 
-
 	if (selected == false) //Pick an action (melee magic or armor)
 	{
 		pCombat->SetAction("Choose Action");
-		if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-			m_nCursor--;
 
 		if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
 			m_nCursor++;
+
+		if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+			m_nCursor--;
 
 		if (m_nCursor < 0)
 			m_nCursor = 0;
@@ -363,11 +366,19 @@ bool Player::TakeTurn(float elapsedTime)
 		{
 			m_nCursor++;
 		}
+
 		if (m_nCursor < 0)
 			m_nCursor = 0;
 		if (m_nCursor > pCombat->GetEnemies().size() - 1)
 			m_nCursor = pCombat->GetEnemies().size() - 1;
 
+		if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
+			m_nCursor++;
+
+		if (m_nCursor < 0)
+			m_nCursor = 0;
+		if (m_nCursor > pCombat->GetEnemies().size() - 1)
+			m_nCursor = pCombat->GetEnemies().size() - 1;
 
 		if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 		{
@@ -379,7 +390,6 @@ bool Player::TakeTurn(float elapsedTime)
 		}
 
 	}
-
 
 	return false;
 }
