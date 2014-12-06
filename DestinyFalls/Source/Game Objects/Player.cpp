@@ -122,6 +122,11 @@ void Player::Update( float elapsedTime )
 		}
 		else
 			m_bLowHealthWarning = false;
+
+		if( m_bPreventDialog )
+		{
+			PreventDialogFromRestarting( elapsedTime );
+		}
 	}
 
 
@@ -134,10 +139,7 @@ void Player::Render( void )
 	{
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), 289, 264 );
 	}
-	else if( m_bRunDialog )
-	{
-		RenderDialog();
-	}
+	
 	else
 	{
 		SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
@@ -172,6 +174,10 @@ void Player::Render( void )
 		if( m_bLowHealthWarning )
 			pGraphics->DrawRectangle( SGD::Rectangle( 0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() ), { 100, 255, 0, 0 } );
 
+		if( m_bRunDialog && !m_bPreventDialog )
+		{
+			RenderDialog();
+		}
 	}
 }
 
@@ -256,9 +262,9 @@ void Player::TakeInput()
 
 	m_bUpdateAnimation = pInput->IsAnyKeyDown();
 
-	if( m_bRunDialog )
+	if( m_bRunDialog && !m_bPreventDialog )
 	{
-		if( pInput->IsAnyKeyDown() )
+		if( pInput->IsAnyKeyPressed() )
 		{
 			UpdateDialog();
 		}
@@ -531,12 +537,25 @@ void Player::RenderDialog()
 
 void Player::UpdateDialog( )
 {
-	if( m_nLineCounter <= 6 )
+	if( m_nLineCounter < 6 )
 	{
 		m_nLineCounter++;
 	}
 	else
 	{
 		m_bRunDialog = false;
+		m_bPreventDialog = true;
+		m_nLineCounter = 1;
 	}
+}
+
+void Player::PreventDialogFromRestarting( float elapsedTime )
+{
+	m_fDialogTimer -= elapsedTime;
+
+	if( m_fDialogTimer <= 0.0f )
+	{
+		m_bPreventDialog = false;
+	}
+
 }

@@ -58,6 +58,7 @@ public:
 
 	void RenderDialog();
 	void UpdateDialog();
+	void PreventDialogFromRestarting( float elapsedTime );
 
 private:
 
@@ -94,7 +95,8 @@ private:
 	string m_szLastAnimation;
 
 	bool m_bRunDialog = false;
-
+	bool m_bPreventDialog = false;
+	float m_fDialogTimer = 5.0f;
 	int m_nLineCounter = 1;
 
 };
