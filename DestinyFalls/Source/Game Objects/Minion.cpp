@@ -152,8 +152,8 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 	case AOE_AI:
 		if (m_nHealth > 0)
 		{
-			int AI = rand() % 100;
-			if (AI <= 30) //AOE attack
+			int AI = rand() % 20;
+			if (AI <= 15) //AOE attack
 				pCombat->TakeAction(CombatState::ActionType::AOE, this, 0);
 			else
 				pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);

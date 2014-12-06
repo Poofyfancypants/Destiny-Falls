@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Runes.h"
+#include <string>
+using namespace std;
 
 enum ComboElements { Steam, Ice, Lightning, Magma, Dust, Mud, Inferno, Wave, Earthquake, Whirlwind, NotCombo };
 
@@ -22,8 +24,9 @@ public:
 	// element vs. element
 	float DamageReduction(Elements x, Elements y);
 
-private:
+	string ToString(ComboElements x);
 
+private:
 
 };
 

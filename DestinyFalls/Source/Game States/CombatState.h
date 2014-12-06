@@ -34,12 +34,12 @@ public:
 	void ClearFire()	{ m_vBackgroundsFire.clear(); }
 	void ClearFinal()	{ m_vBackgroundsFinal.clear(); }
 
-	bool TakeAction(int _DamType, Object* _this, int _target);
+	bool TakeAction(int _DamType, Object* _this, int _target, int _spell = 0);
 
 	//Helpers which take entities with runes and elemental resistances/affinities for health transactions
 	//Functions will figure out who is who
 	int DealMeleeDamage(Object* _From, Object* _To);
-	int DealMagicDamage(Object* _From, Object* _To);
+	int DealMagicDamage(Object* _From, Object* _To, int _spell);
 	int DealCounterDamage(Object* _From, Object* _To);
 	int BlockAttack(Object* _From, Object* _To);
 	int HealAlly(Object* _From, Object* _To);
@@ -48,6 +48,7 @@ public:
 	std::vector<Object*> GetEnemies() const { return m_pEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
+	Object* AddCompanion(); 
 
 	bool GetCooldown() { return m_bCoolDown; }
 	void SetCooldown(bool x) { m_bCoolDown = x; }
@@ -88,7 +89,6 @@ private:
 	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
 
 	float PlayerTimer = 0.0f;
-	float EnemyTimer = 0.0f;
 
 	bool PlayerTurn = false;
 	bool EnemyTurn = false;
@@ -117,18 +117,11 @@ private:
 	int HeroIndex;					 //Player is always sub zero in this list
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hMinion = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hBehemoth = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hRockElemental = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hPlantMonster = SGD::INVALID_HANDLE;
-	//SGD::HTexture m_hHeavyGolem = SGD::INVALID_HANDLE;
-
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
 
 	int numPots;
 	int numRunes;
 	int NumQTCorrect = 0;
-	int SpellChosen = -1;
 	
 	vector<SGD::HTexture> m_vBackgroundsEarth;
 	vector<SGD::HTexture> m_vBackgroundsIce;

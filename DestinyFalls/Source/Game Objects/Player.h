@@ -7,6 +7,7 @@
 #include "../Quick Time/QuickTime.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 
+
 class Player :
 	public AnimatedObject,
 	public SGD::Listener
@@ -51,8 +52,20 @@ public:
 	int GetPrevDirection() const {return m_nPrevDirection;}
 	bool GetBoulderCollision() const {return m_bCollision;}
 
+	void ResetAnimation();
+	void StartCombat();
+	void StopCombat();
+
 	QuickTime* GetQT() const { return currentQT; }
 	bool m_bDoQt = false;
+
+	bool GetSpell1Cool() const { return m_bSpell1; }
+	bool GetSpell2Cool() const { return m_bSpell2; }
+	bool GetSpell3Cool() const { return m_bSpell3; }
+
+	void SetSpell1Cool(bool _Cool) const { m_bSpell1 = _Cool; }
+	void SetSpell2Cool(bool _Cool) const { m_bSpell2 = _Cool; }
+	void SetSpell3Cool(bool _Cool) const { m_bSpell3 = _Cool; }
 
 private:
 
@@ -68,9 +81,15 @@ private:
 
 	bool m_bCombat = false;
 
+	bool m_bSpell1 = false; //False == not on cooldown
+	bool m_bSpell2 = false;
+	bool m_bSpell3 = false;
+
 	int ActionSelected = 0;
 	bool selected = false;
 	int m_nCursor = 0;
+	int spellSelect = -1;
+	int counter = 0;
 
 	int * m_CurrentTurn;
 	AnimationManager* m_pAnimator = nullptr;
@@ -82,5 +101,9 @@ private:
 	bool m_bUpdateAnimation = true;
 
 	SGD::HTexture m_hPortrait = SGD::INVALID_HANDLE;
+
+	bool m_bPlayCombatAnimation = false;
+
+	string m_szLastAnimation;
 
 };

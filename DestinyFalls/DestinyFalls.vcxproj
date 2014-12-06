@@ -99,6 +99,7 @@
     <ClInclude Include="Source\Bitmap Font\BitmapFont.h" />
     <ClInclude Include="Source\Engines\Animation.h" />
     <ClInclude Include="Source\Engines\AnimationTimeStamp.h" />
+    <ClInclude Include="Source\Engines\Dialog.h" />
     <ClInclude Include="Source\Engines\Emitter.h" />
     <ClInclude Include="Source\Engines\Frame.h" />
     <ClInclude Include="Source\Engines\Particle.h" />
@@ -110,7 +111,6 @@
     <ClInclude Include="Source\Game Objects\Enemy.h" />
     <ClInclude Include="Source\Game Objects\FinalBoss.h" />
     <ClInclude Include="Source\Game Objects\FireTrap.h" />
-    <ClInclude Include="Source\Game Objects\Forge.h" />
     <ClInclude Include="Source\Game Objects\iObject.h" />
     <ClInclude Include="Source\Game Objects\LevelBoss.h" />
     <ClInclude Include="Source\Game Objects\MiniBoss.h" />
@@ -124,6 +124,8 @@
     <ClInclude Include="Source\Game States\AnimationTestState.h" />
     <ClInclude Include="Source\Game States\CombatState.h" />
     <ClInclude Include="Source\Game States\CreditState.h" />
+    <ClInclude Include="Source\Game States\DeathState.h" />
+    <ClInclude Include="Source\Game States\ForgeState.h" />
     <ClInclude Include="Source\Game States\GameplayState.h" />
     <ClInclude Include="Source\Game States\HowToPlayState.h" />
     <ClInclude Include="Source\Game States\IGameState.h" />
@@ -136,6 +138,7 @@
     <ClInclude Include="Source\Game States\WinState.h" />
     <ClInclude Include="Source\Managers\AnimationManager.h" />
     <ClInclude Include="Source\Managers\BitmapFontManager.h" />
+    <ClInclude Include="Source\Managers\DialogManager.h" />
     <ClInclude Include="Source\Managers\ObjectManager.h" />
     <ClInclude Include="Source\Managers\ParticleManager.h" />
     <ClInclude Include="Source\Managers\TileManager.h" />
@@ -162,6 +165,7 @@
     <ClCompile Include="Source\Bitmap Font\BitmapFont.cpp" />
     <ClCompile Include="Source\Engines\Animation.cpp" />
     <ClCompile Include="Source\Engines\AnimationTimeStamp.cpp" />
+    <ClCompile Include="Source\Engines\Dialog.cpp" />
     <ClCompile Include="Source\Engines\Emitter.cpp" />
     <ClCompile Include="Source\Engines\Frame.cpp" />
     <ClCompile Include="Source\Engines\Particle.cpp" />
@@ -174,7 +178,6 @@
     <ClCompile Include="Source\Game Objects\Enemy.cpp" />
     <ClCompile Include="Source\Game Objects\FinalBoss.cpp" />
     <ClCompile Include="Source\Game Objects\FireTrap.cpp" />
-    <ClCompile Include="Source\Game Objects\Forge.cpp" />
     <ClCompile Include="Source\Game Objects\LevelBoss.cpp" />
     <ClCompile Include="Source\Game Objects\MiniBoss.cpp" />
     <ClCompile Include="Source\Game Objects\Minion.cpp" />
@@ -187,6 +190,8 @@
     <ClCompile Include="Source\Game States\AnimationTestState.cpp" />
     <ClCompile Include="Source\Game States\CombatState.cpp" />
     <ClCompile Include="Source\Game States\CreditState.cpp" />
+    <ClCompile Include="Source\Game States\DeathState.cpp" />
+    <ClCompile Include="Source\Game States\ForgeState.cpp" />
     <ClCompile Include="Source\Game States\GameplayState.cpp" />
     <ClCompile Include="Source\Game States\HowToPlayState.cpp" />
     <ClCompile Include="Source\Game States\InventoryState.cpp" />
@@ -198,6 +203,7 @@
     <ClCompile Include="Source\Game States\WinState.cpp" />
     <ClCompile Include="Source\Managers\AnimationManager.cpp" />
     <ClCompile Include="Source\Managers\BitmapFontManager.cpp" />
+    <ClCompile Include="Source\Managers\DialogManager.cpp" />
     <ClCompile Include="Source\Managers\ObjectManager.cpp" />
     <ClCompile Include="Source\Managers\ParticleManager.cpp" />
     <ClCompile Include="Source\Managers\TileManager.cpp" />

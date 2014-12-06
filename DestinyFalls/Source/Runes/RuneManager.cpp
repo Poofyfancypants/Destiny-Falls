@@ -161,3 +161,47 @@ float RuneManager::DamageReduction(Elements x, Elements y)
 {
 	return 0;
 }
+
+string RuneManager::ToString(ComboElements x)
+{
+	string combo;
+	switch (x)
+	{
+	case Steam:
+		combo = "Steam";
+		break;
+	case Ice:
+		combo = "Ice";
+		break;
+	case Lightning:
+		combo = "Lightning";
+		break;
+	case Magma:
+		combo = "Magma";
+		break;
+	case Dust:
+		combo = "Dust";
+		break;
+	case Mud:
+		combo = "Mud";
+		break;
+	case Inferno:
+		combo = "Inferno";
+		break;
+	case Wave:
+		combo = "Wave";
+		break;
+	case Earthquake:
+		combo = "Earthquake";
+		break;
+	case Whirlwind:
+		combo = "Whirlwind";
+		break;
+	case NotCombo:
+		break;
+	default:
+		break;
+	}
+
+	return combo;
+}
