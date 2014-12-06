@@ -41,14 +41,11 @@ void DialogManager::DeleteInstance()
 	s_pInstance = nullptr;
 }
 
-void DialogManager::Render()
+void DialogManager::Render( string fontName , string dialogName , SGD::Point position , float scale , SGD::Color color )
 {
+	BitmapFontManager* pBFM = pBFM->GetInstance();
 
-}
-
-void DialogManager::Update()
-{
-
+	pBFM->Render( fontName , Loaded[ dialogName ]->GetWords().c_str() , position , scale , color );
 }
 
 void DialogManager::Load( string fileName )

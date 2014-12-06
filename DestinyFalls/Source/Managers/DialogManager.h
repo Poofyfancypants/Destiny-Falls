@@ -30,7 +30,7 @@ public:
 	static DialogManager* GetInstance();
 	static void DeleteInstance();
 
-	void Render(  );
+	void Render( string fontName , string dialogName , SGD::Point position , float scale , SGD::Color color );
 	void Update(  );
 	void Load( string fileName );
 
