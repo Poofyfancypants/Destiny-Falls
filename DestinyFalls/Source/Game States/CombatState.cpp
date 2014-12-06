@@ -496,6 +496,14 @@ Object* CombatState::AddMinion( int _region ) //This is gonna get big, don't car
 	return temp;
 }
 
+Object* CombatState::AddCompanion()
+{
+	Companion* temp = new Companion;
+	temp->SetSize( { 64 , 64 } );
+	temp->CurrentTurn( &CurrentTurn );
+
+}
+
 bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //Can I Add An Object* for the target
 //I'm thinking about the order of actions here
 //Possibly get the target or attacker's type before damage type, we'll see what's most repetative

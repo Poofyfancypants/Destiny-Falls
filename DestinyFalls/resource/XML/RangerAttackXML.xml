@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="RangerAttack" numFrames="17" looping="0" hTexture="Ranger.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="2" dTop="167" dRight="56" dBottom="242" cLeft="1" cTop="167" cRight="56" cBottom="242" x="21" y="68" />
+      <frame duration="0.25" damage="0" event="none" dLeft="75" dTop="163" dRight="130" dBottom="239" cLeft="74" cTop="163" cRight="130" cBottom="239" x="24" y="72" />
+      <frame duration="0.25" damage="0" event="none" dLeft="154" dTop="165" dRight="210" dBottom="243" cLeft="153" cTop="164" cRight="210" cBottom="241" x="22" y="69" />
+      <frame duration="0.25" damage="0" event="none" dLeft="225" dTop="163" dRight="291" dBottom="242" cLeft="225" cTop="162" cRight="290" cBottom="242" x="28" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="305" dTop="162" dRight="369" dBottom="241" cLeft="304" cTop="161" cRight="369" cBottom="241" x="26" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="386" dTop="162" dRight="442" dBottom="242" cLeft="385" cTop="162" cRight="442" cBottom="242" x="22" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="462" dTop="159" dRight="524" dBottom="239" cLeft="462" cTop="159" cRight="525" cBottom="240" x="21" y="77" />
+      <frame duration="0.25" damage="0" event="none" dLeft="539" dTop="163" dRight="598" dBottom="243" cLeft="538" cTop="162" cRight="598" cBottom="241" x="22" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="617" dTop="158" dRight="684" dBottom="244" cLeft="617" cTop="159" cRight="683" cBottom="245" x="22" y="76" />
+      <frame duration="0.25" damage="0" event="none" dLeft="694" dTop="162" dRight="767" dBottom="248" cLeft="693" cTop="162" cRight="768" cBottom="249" x="24" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="776" dTop="161" dRight="836" dBottom="238" cLeft="774" cTop="160" cRight="836" cBottom="239" x="19" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="842" dTop="163" dRight="904" dBottom="241" cLeft="841" cTop="163" cRight="904" cBottom="242" x="27" y="72" />
+      <frame duration="0.25" damage="0" event="none" dLeft="922" dTop="166" dRight="991" dBottom="240" cLeft="0" cTop="0" cRight="0" cBottom="0" x="25" y="68" />
+      <frame duration="0.25" damage="0" event="none" dLeft="997" dTop="159" dRight="1065" dBottom="238" cLeft="996" cTop="159" cRight="1066" cBottom="238" x="30" y="76" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1074" dTop="161" dRight="1137" dBottom="245" cLeft="1074" cTop="161" cRight="1137" cBottom="245" x="29" y="73" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1152" dTop="163" dRight="1216" dBottom="240" cLeft="1150" cTop="163" cRight="1217" cBottom="240" x="26" y="72" />
+      <frame duration="0.25" damage="0" event="none" dLeft="2" dTop="167" dRight="56" dBottom="242" cLeft="1" cTop="167" cRight="56" cBottom="242" x="21" y="68" />
+    </animation_info>
+  </animation>
+</Root>

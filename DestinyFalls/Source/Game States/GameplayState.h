@@ -10,6 +10,7 @@
 #include "../Managers/TileManager.h"
 #include "../Managers/AnimationManager.h"
 #include "../Managers/ParticleManager.h"
+#include "../Managers/DialogManager.h"
 
 class GameplayState :
 	public IGameState
@@ -61,6 +62,7 @@ public:
 	Object* CreateCompanion(SGD::Point _pos, int _ID);
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
+	SGD::Rectangle ForgeButton = { 0, 0, 100, 100 };
 	SGD::Rectangle HealthPotionPosition = { 0, 0, 100, 100 };
 
 	// - Hepler function to create the next level.
@@ -104,6 +106,7 @@ private:
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;
 	AnimationManager* m_pAnimator;
+	DialogManager* m_pDialogs;
 
 	ParticleManager m_particle;
 

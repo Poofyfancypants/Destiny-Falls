@@ -3,21 +3,21 @@
 #include "Player.h"
 
 class Companion :
-	public AnimatedObject//, public Player
+	/*public AnimatedObject,*/ public Player
 {
 public:
-	enum Companion_Type {Guy,};
+	enum Companion_Type {Cleric = 1, Melee, Mage, Tank};
 
 	Companion();
 	~Companion();
 
-	virtual bool TakeTurn();
+	virtual bool TakeTurn( float elapsedTime ) override;
 	virtual void Update(float elapsedTime);
 	virtual void Render();
 	virtual void CombatRender(int _posIndex = 0);
 	void SetCombatImage(SGD::HTexture _texture) { m_hCompanion = _texture; }
 	virtual int GetType(void) const { return OBJ_COMPANION; }
-	int GetCoType(void) const { return Guy; }
+	int GetCoType( void ) const { return m_CoType; }
 
 	void SetC0Type(Companion_Type _CoType) { m_CoType = _CoType; }
 
@@ -27,6 +27,8 @@ public:
 	void SetHealth(int _health) { m_nHealth = _health; }
 
 	void SetString(int _type) { TypeString = _type; }
+
+	void SetCompanionAnimation( int companionType );
 
 private:
 	int * m_CurrentTurn;
@@ -41,5 +43,8 @@ private:
 	SGD::Rectangle Comp2HB = { 625, 200, 750, 230 };
 	SGD::Rectangle Comp1rect = { 561, 110, 625, 174 };
 	SGD::Rectangle Comp2rect = { 536, 200, 600, 264 };
+	int * m_CurrentTurn;
+	AnimationManager* m_pAnimator;
+	bool m_bUpdateAnimation = false;
 };
 
