@@ -49,5 +49,10 @@ private:
 
 	AnimationManager* m_pAnimator;
 	bool m_bUpdateAnimation = false;
+
+
+	int ActionSelected = 0;
+	bool selected = false;
+	int m_nCursor = 0;
 };
 

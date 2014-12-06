@@ -134,6 +134,10 @@ void Player::Render( void )
 	{
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), 289, 264 );
 	}
+	else if( m_bRunDialog )
+	{
+		RenderDialog();
+	}
 	else
 	{
 		SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
@@ -252,6 +256,14 @@ void Player::TakeInput()
 
 	m_bUpdateAnimation = pInput->IsAnyKeyDown();
 
+	if( m_bRunDialog )
+	{
+		if( pInput->IsAnyKeyDown() )
+		{
+			UpdateDialog();
+		}
+	}
+
 
 }
 
@@ -316,6 +328,11 @@ void Player::HandleCollision( const iObject* pOther )
 		}
 		//	m_ptPosition -= velocity;
 		m_bCollision = true;
+	}
+	
+	if( pOther->GetType() == OBJ_COMPANION )
+	{
+		m_bRunDialog = true;
 	}
 }
 
@@ -457,4 +474,69 @@ void Player::ResetAnimation()
 {
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+}
+
+void Player::RenderDialog()
+{
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
+	SGD::Point heroPosition;
+	SGD::Point portraitPosition;
+	// - Location of the Dialog Box at the bottom of the screen.
+	SGD::Rectangle DialogBoxOne;
+	DialogBoxOne.left = 25;
+	DialogBoxOne.top = Game::GetInstance()->GetScreenHeight() - 125;
+	DialogBoxOne.right = Game::GetInstance()->GetScreenWidth() - 25;
+	DialogBoxOne.bottom = Game::GetInstance()->GetScreenHeight() - 25;
+
+	// - Location to print the strings within the dialog Box
+	SGD::Point TextPositionOne;
+	SGD::Point TextPositionTwo;
+
+	TextPositionOne.x = DialogBoxOne.left + 40;
+	TextPositionOne.y = DialogBoxOne.top + 20;
+	TextPositionTwo.x = DialogBoxOne.left + 20;
+	TextPositionTwo.y = DialogBoxOne.top + 50;
+
+	portraitPosition.x = DialogBoxOne.left - 10;
+	portraitPosition.y = DialogBoxOne.top - 30;
+
+	pGraphics->DrawRectangle( DialogBoxOne , SGD::Color( 220 , 215 , 143 ) , SGD::Color( 0 , 0 , 0 ) );
+
+	DialogManager* pDialog = pDialog->GetInstance();
+	switch( m_nLineCounter )
+	{
+		case 1:
+			pDialog->Render( "Dialog" , "Greeting" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			break;
+		case 2:
+			pDialog->Render( "Dialog" , "GreetingsResponse" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			break;
+		case 3:
+			pDialog->Render( "Dialog" , "HowFares" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			break;
+		case 4:
+			pDialog->Render( "Dialog" , "HowFaresResponse" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			break;
+		case 5:
+			pDialog->Render( "Dialog" , "RequestToJoin" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			break;
+		case 6:
+			pDialog->Render( "Dialog" , "Agree" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			break;
+		default:
+			break;
+	}
+}
+
+void Player::UpdateDialog( )
+{
+	if( m_nLineCounter <= 6 )
+	{
+		m_nLineCounter++;
+	}
+	else
+	{
+		m_bRunDialog = false;
+	}
 }
