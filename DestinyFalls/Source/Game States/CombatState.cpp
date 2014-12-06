@@ -142,140 +142,160 @@ bool CombatState::Input( void )
 		Game::GetInstance()->RemoveState();
 	}
 
+	//if the player's quicktime pointer is not equal to nullptr, take in the quicktime input
+	if( ((Player*)m_pHeroes[0] )->GetQuickTime() != nullptr)
+	{
+		( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->m_kLastKeyPressed = pInput->GetAnyKeyPressed();
+	}
+
 	return true;
 }
 
 void CombatState::Update( float elapsedTime )
 {
-
-	ActionTimer -= elapsedTime;
-	if( ActionTimer <= 0.0f )
-		ActionTimer = 0.0f;
-
-	m_fFlash += elapsedTime;
-
-	if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() > 0 )
+	//if the player's current qt is not a null pointer, run quicktime
+	if( ( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime() != nullptr )
 	{
-		PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth();
-		( ( Player* ) m_pHeroes[ 0 ] )->Update( elapsedTime );
+		//update quicktime
+		( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->Update( elapsedTime );
 
-		for( unsigned int i = 1; i < m_pHeroes.size(); i++ )
+		//if the quicktime event is over stop quicktime (deletes the quicktime pointer and sets it back to nullptr, thereby making this if statement false)
+		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->GetIsOver() == true )
 		{
-			if( ( ( Companion* ) m_pHeroes[ i ] )->GetHealth() )
-			{
-				( ( Companion* ) m_pHeroes[ i ] )->Update( elapsedTime );
-
-			}
+			( ( Player* ) m_pHeroes[ 0 ] )->StopQuickTime();
 		}
-		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() < 25 && m_fFlash > 2 )
-		{
-			m_bHealthWarning = true;
-			m_fFlash = 0;
-		}
-		else
-			m_bHealthWarning = false;
-
 	}
-	else
+	else//otherwise run normal update loop
 	{
-		( ( Player* ) m_pHeroes[ 0 ] )->SetCombat( false );
-		Game::GetInstance()->RemoveState();
-		return;
-	}
+		ActionTimer -= elapsedTime;
+		if( ActionTimer <= 0.0f )
+			ActionTimer = 0.0f;
 
-	if( ActionTimer <= 0.0f )
-	{
-		if( Attacker1 != -1 ) //System on hold
-		{
-			m_pHeroes[ Attacker1 ]->SetAttacking( false ); //After the time is up
-		}
-		if( Attacker2 != -1 )
-		{
+		m_fFlash += elapsedTime;
 
-		}
-
-		for( size_t i = 0; i < m_pEnemies.size(); i++ )
+		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() > 0 )
 		{
-			int numEnemies = 0;
-			for( size_t i = 0; i < m_pEnemies.size(); i++ )
+			PlayerHB.right = PlayerHB.left + ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth();
+			( ( Player* ) m_pHeroes[ 0 ] )->Update( elapsedTime );
+
+			for( unsigned int i = 1; i < m_pHeroes.size(); i++ )
 			{
-				if( ( ( Minion* ) m_pEnemies[ i ] )->GetHealth() > 0 )
+				if( ( ( Companion* ) m_pHeroes[ i ] )->GetHealth() )
 				{
-					numEnemies++;
-					( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
+					( ( Companion* ) m_pHeroes[ i ] )->Update( elapsedTime );
+
 				}
 			}
-			if( numEnemies <= 0 ) //Win
+			if( ( ( Player* ) m_pHeroes[ 0 ] )->GetHealth() < 25 && m_fFlash > 2 )
 			{
-				( ( Player* ) m_pHeroes[ 0 ] )->SetCombat( false );
-				( ( Player* ) m_pHeroes[ 0 ] )->m_nPotions += numPots;
-
-				Game::GetInstance()->RemoveState();
-				return;
+				m_bHealthWarning = true;
+				m_fFlash = 0;
 			}
+			else
+				m_bHealthWarning = false;
+
+		}
+		else
+		{
+			( ( Player* ) m_pHeroes[ 0 ] )->SetCombat( false );
+			Game::GetInstance()->RemoveState();
+			return;
 		}
 
-
-		for( size_t i = 0; i < m_pObjects.size(); i++ )
+		if( ActionTimer <= 0.0f )
 		{
-			switch( m_pObjects[ i ]->GetType() )
+			if( Attacker1 != -1 ) //System on hold
 			{
-				case Object::ObjectType::OBJ_PLAYER:
-					if( ( ( Player* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
+				m_pHeroes[ Attacker1 ]->SetAttacking( false ); //After the time is up
+			}
+			if( Attacker2 != -1 )
+			{
+
+			}
+
+			for( size_t i = 0; i < m_pEnemies.size(); i++ )
+			{
+				int numEnemies = 0;
+				for( size_t i = 0; i < m_pEnemies.size(); i++ )
+				{
+					if( ( ( Minion* ) m_pEnemies[ i ] )->GetHealth() > 0 )
 					{
-						if( ActionTimer <= 0 )
+						numEnemies++;
+						( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
+					}
+				}
+				if( numEnemies <= 0 ) //Win
+				{
+					( ( Player* ) m_pHeroes[ 0 ] )->SetCombat( false );
+					( ( Player* ) m_pHeroes[ 0 ] )->m_nPotions += numPots;
+
+					Game::GetInstance()->RemoveState();
+					return;
+				}
+			}
+
+
+			for( size_t i = 0; i < m_pObjects.size(); i++ )
+			{
+				switch( m_pObjects[ i ]->GetType() )
+				{
+					case Object::ObjectType::OBJ_PLAYER:
+						if( ( ( Player* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
 						{
-							//Attacker1 = 0; If we can make this work it might be cool
-							//Not sure why I wanted it other than that
-							if( ( ( Player* ) m_pObjects[ i ] )->TakeTurn( elapsedTime ) )
+							if( ActionTimer <= 0 )
 							{
-								CurrentTurn++;
+								//Attacker1 = 0; If we can make this work it might be cool
+								//Not sure why I wanted it other than that
+								if( ( ( Player* ) m_pObjects[ i ] )->TakeTurn( elapsedTime ) )
+								{
+									CurrentTurn++;
+								}
 							}
 						}
-					}
-					break;
-				case Object::ObjectType::OBJ_COMPANION:
-					if( ( ( Companion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
-					{
-						if( ActionTimer <= 0 )
-							if( ( ( Companion* ) m_pObjects[ i ] )->TakeTurn(elapsedTime) )
-								CurrentTurn++;
-					}
-					break;
-				case Object::ObjectType::OBJ_MINION:
-					if( ( ( Minion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
-					{
-						if( ActionTimer <= 0 )
-							if( ( ( Minion* ) m_pObjects[ i ] )->TakeTurn() )
-								CurrentTurn++;
-					}
-					break;
+						break;
+					case Object::ObjectType::OBJ_COMPANION:
+						if( ( ( Companion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
+						{
+							if( ActionTimer <= 0 )
+								if( ( ( Companion* ) m_pObjects[ i ] )->TakeTurn( elapsedTime ) )
+									CurrentTurn++;
+						}
+						break;
+					case Object::ObjectType::OBJ_MINION:
+						if( ( ( Minion* ) m_pObjects[ i ] )->GetTurnPos() == CurrentTurn )
+						{
+							if( ActionTimer <= 0 )
+								if( ( ( Minion* ) m_pObjects[ i ] )->TakeTurn() )
+									CurrentTurn++;
+						}
+						break;
+				}
 			}
+
+			if( CurrentTurn == m_pObjects.size() && ActionTimer <= 0 )
+				CurrentTurn = 0;
+
 		}
-
-		if( CurrentTurn == m_pObjects.size() && ActionTimer <= 0 )
-			CurrentTurn = 0;
-
-	}
-	else
-	{
-		if( Attacker1 != -1 )
+		else
 		{
-			if( m_pHeroes[ Attacker1 ]->GetAttacking() )
+			if( Attacker1 != -1 )
 			{
-				m_vOffset.x = ( ( m_pHeroes[ Attacker1 ]->GetPosition().x + m_CombatPos1.x ) );
-				m_vOffset.y = ( ( m_pHeroes[ Attacker1 ]->GetPosition().y + m_CombatPos1.y ) );
-				m_vOffset.Normalize();
-				( Playerrect.Offset( m_vOffset / 3 ) );
+				if( m_pHeroes[ Attacker1 ]->GetAttacking() )
+				{
+					m_vOffset.x = ( ( m_pHeroes[ Attacker1 ]->GetPosition().x + m_CombatPos1.x ) );
+					m_vOffset.y = ( ( m_pHeroes[ Attacker1 ]->GetPosition().y + m_CombatPos1.y ) );
+					m_vOffset.Normalize();
+					( Playerrect.Offset( m_vOffset / 3 ) );
+				}
 			}
-		}
 
 
-		for( size_t i = 0; i < m_pEnemies.size(); i++ )
-		{
-			( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
-			( ( Minion* ) m_pEnemies[ i ] )->Render( i );
+			for( size_t i = 0; i < m_pEnemies.size(); i++ )
+			{
+				( ( Minion* ) m_pEnemies[ i ] )->Update( elapsedTime );
+				( ( Minion* ) m_pEnemies[ i ] )->Render( i );
 
+			}
 		}
 	}
 }
@@ -327,6 +347,12 @@ void CombatState::Render( void )
 
 	pGraphics->DrawRectangle( Companion1rect , SGD::Color() , SGD::Color() );
 	pGraphics->DrawRectangle( Companion2rect , SGD::Color() , SGD::Color() );
+
+	if( ( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime() != nullptr )
+	{
+		( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->Render();
+	}
+
 
 }
 

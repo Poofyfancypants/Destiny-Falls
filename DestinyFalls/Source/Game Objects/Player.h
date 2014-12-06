@@ -46,8 +46,10 @@ public:
 	int GetNumPotions() const { return m_nPotions; }
 	int m_nPotions = 0;
 
+
 	void RunQuickTime(int length);
 	void StopQuickTime();
+	QuickTime* GetQuickTime( void ){ return currentQT; }
 
 	int GetPrevDirection() const {return m_nPrevDirection;}
 	bool GetBoulderCollision() const {return m_bCollision;}
