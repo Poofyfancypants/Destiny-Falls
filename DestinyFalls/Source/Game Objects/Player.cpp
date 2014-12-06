@@ -164,9 +164,6 @@ void Player::Render( void )
 		pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
 		pGraphics->DrawTexture( m_hPortrait, SGD::Point( currentHealthHUD.x - 70, currentHealthHUD.y - 30 ), {}, {}, {}, { .5f, .5f } );
 
-		std::string potString = std::to_string( m_nPotions );
-		potString += " Potions";
-		pGraphics->DrawString( potString.c_str(), { ( Game::GetInstance()->GetScreenWidth() - 100 ), ( Game::GetInstance()->GetScreenHeight() - 80 ) }, SGD::Color( 255, 255, 0, 0 ) );
 
 		if( m_pAnimator->GetInstance()->CheckSize() )
 		{
