@@ -7,6 +7,7 @@
 #include "../Quick Time/QuickTime.h"
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 
+
 class Player :
 	public AnimatedObject,
 	public SGD::Listener
@@ -54,6 +55,8 @@ public:
 	void ResetAnimation();
 	void StartCombat();
 	void StopCombat();
+
+
 
 private:
 

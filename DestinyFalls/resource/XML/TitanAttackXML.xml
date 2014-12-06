@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="TitanAttack" numFrames="5" looping="0" hTexture="Titan.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="1172" dTop="345" dRight="1232" dBottom="454" cLeft="1171" cTop="346" cRight="1232" cBottom="453" x="42" y="101" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1052" dTop="347" dRight="1115" dBottom="453" cLeft="1051" cTop="347" cRight="1116" cBottom="453" x="49" y="99" />
+      <frame duration="0.25" damage="0" event="none" dLeft="923" dTop="347" dRight="1002" dBottom="458" cLeft="923" cTop="347" cRight="1003" cBottom="459" x="66" y="99" />
+      <frame duration="1.25" damage="0" event="none" dLeft="784" dTop="343" dRight="897" dBottom="453" cLeft="783" cTop="345" cRight="898" cBottom="452" x="93" y="102" />
+      <frame duration="0.25" damage="0" event="none" dLeft="713" dTop="348" dRight="780" dBottom="453" cLeft="711" cTop="348" cRight="782" cBottom="453" x="52" y="98" />
+    </animation_info>
+  </animation>
+</Root>

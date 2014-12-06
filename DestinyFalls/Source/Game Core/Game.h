@@ -103,6 +103,10 @@ public:
 	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHTP = SGD::INVALID_HANDLE;
 
+	// - Icelandic
+	bool GetIcelandic() const {return m_bIcelandic;}
+	void SetIcelandic(bool _that) {m_bIcelandic = _that;}
+	void LoadStrings();
 private:
 	/**********************************************************/
 	// Singleton Object:
@@ -141,6 +145,8 @@ private:
 	int m_nFrames = 0;
 	int m_nFPS = 60;
 
+	// - Icelandic
+	bool m_bIcelandic = false;
 };
 
 #endif //GAME_H

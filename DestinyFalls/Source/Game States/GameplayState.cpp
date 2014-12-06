@@ -15,7 +15,7 @@
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
 #include "../Game Objects/Player.h"
-#include "../Messages/MessageID.h"
+#include "../Game Objects/Companion.h"#include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_String.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
@@ -61,13 +61,19 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/NagaAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcSkeletonAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/PlantAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/TitanAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/WaterElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/WaterEnemyAttackXML.xml" );
+
+	m_pAnimator->Load( "resource/XML/ClericAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/RangerAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 
 
 	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil.png");
@@ -86,8 +92,10 @@ void GameplayState::Enter()
 
 	//Set up DialogManager
 	m_pDialogs = m_pDialogs->GetInstance();
+	//Load Dialogs
+	m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
+	m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 
-	m_pDialogs->Load( "resource/XML/TestDialog.xml" );
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
@@ -194,6 +202,7 @@ bool GameplayState::Input()
 			Game::GetInstance()->AddState(ForgeState::GetInstance());
 		}
 	}
+
 
 	return true;
 }
@@ -350,6 +359,15 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 	return temp;
 
 
+}
+
+Object* GameplayState::CreateCompanion( SGD::Point _pos, int _ID )
+{
+	Companion* temp = new Companion;
+	temp->SetImage( m_hBoulder );
+	temp->SetPosition( _pos );
+	temp->SetSize( SGD::Size( 30, 30 ) );
+	return temp;
 }
 
 // - Helper
