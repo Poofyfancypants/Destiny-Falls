@@ -69,6 +69,14 @@ void CombatState::Enter( void )
 		m_pEnemies.push_back( temp );
 	}
 
+	//Add 2 companions
+	for( unsigned int i = 0; i < 2; i++ )
+	{
+		Object* temp = AddCompanion();
+		m_pObjects.push_back( temp );
+		m_pHeroes.push_back( temp );
+	}
+
 	for( size_t i = 1; i < m_pObjects.size(); i++ )
 	{
 		for( size_t j = 0; j < m_pObjects.size(); j++ )
@@ -306,6 +314,10 @@ void CombatState::Render( void )
 			( ( Companion* ) m_pHeroes[ j ] )->CombatRender( j );
 		}
 	}
+
+	pGraphics->DrawRectangle( Companion1rect , SGD::Color() , SGD::Color() );
+	pGraphics->DrawRectangle( Companion2rect , SGD::Color() , SGD::Color() );
+
 }
 
 Object* CombatState::AddMinion( int _region ) //This is gonna get big, don't care
@@ -499,6 +511,29 @@ Object* CombatState::AddMinion( int _region ) //This is gonna get big, don't car
 Object* CombatState::AddCompanion()
 {
 	Companion* temp = new Companion;
+	Companion::Companion_Type coT = (Companion::Companion_Type)( rand() % 4 + 1 );
+	switch( coT )
+	{
+		case 1:
+			temp->SetC0Type( Companion::Companion_Type::Cleric );
+			temp->SetCompanionAnimation( 1 );
+			break;
+		case 2:
+			temp->SetC0Type( Companion::Companion_Type::Mage );
+			temp->SetCompanionAnimation( 2 );
+
+			break;
+		case 3:
+			temp->SetC0Type( Companion::Companion_Type::Melee );
+			temp->SetCompanionAnimation( 3 );
+			break;
+		case 4:
+			temp->SetC0Type( Companion::Companion_Type::Tank );
+			temp->SetCompanionAnimation( 4 );
+			break;
+		default:
+			break;
+	}
 	temp->SetSize( { 64 , 64 } );
 	temp->CurrentTurn( &CurrentTurn );
 	return temp;
