@@ -73,6 +73,7 @@ void CombatState::Enter( void )
 	for( unsigned int i = 0; i < 2; i++ )
 	{
 		Object* temp = AddCompanion();
+		( ( Companion* ) temp )->SetPosIndex( i );
 		m_pObjects.push_back( temp );
 		m_pHeroes.push_back( temp );
 	}
@@ -311,7 +312,7 @@ void CombatState::Render( void )
 	{
 		if( ( ( Companion* ) m_pHeroes[ j ] )->GetHealth() > 0 )
 		{
-			( ( Companion* ) m_pHeroes[ j ] )->CombatRender( j );
+			( ( Companion* ) m_pHeroes[ j ] )->CombatRender( j-1 );
 		}
 	}
 

@@ -30,11 +30,13 @@ public:
 
 
 	void SetCompanionAnimation( int companionType );
-
+	int GetPosIndex( void ){ return m_nPosIndex; }
+	void SetPosIndex( int posIndex ){ m_nPosIndex = posIndex; }
 private:
 	int * m_CurrentTurn;
 	int m_nHealth = 20;
 
+	int m_nPosIndex = 0;
 	Companion_Type m_CoType;
 	int TypeString = 0;
 
