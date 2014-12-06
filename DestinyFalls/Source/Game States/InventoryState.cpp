@@ -50,7 +50,6 @@ bool InventoryState::Input()
 
 	if (pInput->IsKeyPressed(SGD::Key::E))
 	{
-		m_bArmorTab = true;
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
 
@@ -90,11 +89,74 @@ bool InventoryState::Input()
 
 	if (m_bWeaponsTab)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+		if (pauseSelection == false)
 		{
-			equipslot1selected = !equipslot1selected;
+			equipPos = 30;
+
+
+
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
+			{
+				m_nCursor--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow))
+			{
+				m_nCursor++;
+			}
+
+			// loop check
+			if (m_nCursor < 0)
+				m_nCursor = 2;
+			else if (m_nCursor > 2)
+				m_nCursor = 0;
 
 		}
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+		{
+			pauseSelection = true;
+			return true;
+		}
+		if (pauseSelection)
+		{
+			if (equipPos == 30)
+				equipPos = 0;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow))
+			{
+				equipPos++;
+			}
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
+			{
+				equipPos--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::Enter))
+			{
+				switch (m_nCursor)
+				{
+				case 0:
+					AddRunesToSword0fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 1:
+					AddRunesToSword1fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 2:
+					AddRunesToSword2fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
 		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 		{
 
@@ -135,12 +197,79 @@ bool InventoryState::Input()
 
 	if (m_bArmorTab)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+		if (pauseSelection == false)
 		{
-			equipslot1selected = !equipslot1selected;
+			equipPos = 30;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
+			{
+				m_nCursor--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow))
+			{
+				m_nCursor++;
+			}
+
+			// loop check
+			if (m_nCursor < 0)
+				m_nCursor = 2;
+			else if (m_nCursor > 2)
+				m_nCursor = 0;
 
 		}
-		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+		{
+			pauseSelection = true;
+			return true;
+		}
+		if (pauseSelection)
+		{
+			if (equipPos == 30)
+				equipPos = 0;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow))
+			{
+				equipPos++;
+			}
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
+			{
+				equipPos--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::Enter))
+			{
+				switch (m_nCursor)
+				{
+				case 0:
+					AddRunesToArmor0fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 1:
+					AddRunesToArmor1fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 2:
+					AddRunesToArmor2fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter))
 		{
 
 			if (pInput->GetCursorPosition().IsPointInRectangle(EquipA1))
@@ -181,13 +310,79 @@ bool InventoryState::Input()
 
 	if (m_bRunesTab)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+		if (pauseSelection == false)
 		{
-			equipslot1selected = !equipslot1selected;
+			equipPos = 30;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
+			{
+				m_nCursor--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow))
+			{
+				m_nCursor++;
+			}
+
+			// loop check
+			if (m_nCursor < 0)
+				m_nCursor = 2;
+			else if (m_nCursor > 2)
+				m_nCursor = 0;
 
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+		{
+			pauseSelection = true;
+			return true;
+		}
+		if (pauseSelection)
+		{
+			if (equipPos == 30)
+				equipPos = 0;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow))
+			{
+				equipPos++;
+			}
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
+			{
+				equipPos--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::Enter))
+			{
+				switch (m_nCursor)
+				{
+				case 0:
+					AddRunesToRing0fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 1:
+					AddRunesToRing1fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 2:
+					AddRunesToRing2fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				default:
+					break;
+				}
+			}
+		}
+
+
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter))
 		{
 
 			if (pInput->GetCursorPosition().IsPointInRectangle(EquipG1))
@@ -230,7 +425,7 @@ bool InventoryState::Input()
 
 
 
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pauseSelection || pInput->IsKeyPressed(SGD::Key::Enter))
 	{
 		m_bShowToolTip1 = false;
 		m_bShowToolTip2 = false;
@@ -246,62 +441,63 @@ bool InventoryState::Input()
 		m_bShowToolTip12 = false;
 
 
-		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
+		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1) || equipPos == 0)
 		{
 			m_ptSelectedRune.SetElement(Fire);
 			m_ptSelectedRune.SetTier(1);
+
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect2))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect2) || equipPos == 4)
 		{
 			m_ptSelectedRune.SetElement(Fire);
 			m_ptSelectedRune.SetTier(2);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect3))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect3) || equipPos == 8)
 		{
 			m_ptSelectedRune.SetElement(Fire);
 			m_ptSelectedRune.SetTier(3);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect4))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect4) || equipPos == 1)
 		{
 			m_ptSelectedRune.SetElement(Water);
 			m_ptSelectedRune.SetTier(1);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect5))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect5) || equipPos == 5)
 		{
 			m_ptSelectedRune.SetElement(Water);
 			m_ptSelectedRune.SetTier(2);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect6))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect6) || equipPos == 9)
 		{
 			m_ptSelectedRune.SetElement(Water);
 			m_ptSelectedRune.SetTier(3);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect7))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect7) || equipPos == 2)
 		{
 			m_ptSelectedRune.SetElement(Air);
 			m_ptSelectedRune.SetTier(1);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect8))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect8) || equipPos == 6)
 		{
 			m_ptSelectedRune.SetElement(Air);
 			m_ptSelectedRune.SetTier(2);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect9))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect9) || equipPos == 10)
 		{
 			m_ptSelectedRune.SetElement(Air);
 			m_ptSelectedRune.SetTier(3);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect10))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect10) || equipPos == 3)
 		{
 			m_ptSelectedRune.SetElement(Earth);
 			m_ptSelectedRune.SetTier(1);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect11))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect11) || equipPos == 7)
 		{
 			m_ptSelectedRune.SetElement(Earth);
 			m_ptSelectedRune.SetTier(2);
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect12))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect12) || equipPos == 11)
 		{
 			m_ptSelectedRune.SetElement(Earth);
 			m_ptSelectedRune.SetTier(3);
@@ -549,9 +745,6 @@ bool InventoryState::Input()
 	}
 
 
-
-
-
 	return true;
 }
 
@@ -592,7 +785,7 @@ void InventoryState::Render()
 #pragma region SwordSlots
 	if (m_bWeaponsTab)
 	{
-		
+
 
 		m_bArmorTab = false;
 		m_bRunesTab = false;
@@ -759,9 +952,17 @@ void InventoryState::Render()
 				pGraphics->DrawTexture(m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
 
-		if (equipslot1selected)
+		if (m_nCursor == 0)
 		{
 			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
+		else if (m_nCursor == 1)
+		{
+			pGraphics->DrawRectangle(rect2, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
+		else if (m_nCursor == 2)
+		{
+			pGraphics->DrawRectangle(rect3, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
 		}
 	}
 	else
@@ -776,10 +977,7 @@ void InventoryState::Render()
 
 	if (m_bArmorTab)
 	{
-		if (equipslot1selected)
-		{
-			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 0, 200, 0));
-		}
+
 		m_bWeaponsTab = false;
 		m_bRunesTab = false;
 		//outline armor tab when selected
@@ -940,9 +1138,18 @@ void InventoryState::Render()
 			if (m_vArmor[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
-		if (equipslot1selected)
+
+		if (m_nCursor == 0)
 		{
-			pGraphics->DrawRectangle(rect1, SGD::Color(0, 0, 255, 0), SGD::Color(255, 0, 200, 0));
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
+		else if (m_nCursor == 1)
+		{
+			pGraphics->DrawRectangle(rect2, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
+		else if (m_nCursor == 2)
+		{
+			pGraphics->DrawRectangle(rect3, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
 		}
 	}
 	else
@@ -956,10 +1163,6 @@ void InventoryState::Render()
 
 	if (m_bRunesTab)
 	{
-		if (equipslot1selected)
-		{
-			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 0, 0, 255));
-		}
 
 		m_bWeaponsTab = false;
 		m_bArmorTab = false;
@@ -1120,9 +1323,17 @@ void InventoryState::Render()
 			if (m_vRing[2].GetTier() == 3)
 				pGraphics->DrawTexture(m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
-		if (equipslot1selected)
+		if (m_nCursor == 0)
 		{
-			pGraphics->DrawRectangle(rect1, SGD::Color(0, 0, 0, 255), SGD::Color(255, 0, 0, 180));
+			pGraphics->DrawRectangle(rect1, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
+		else if (m_nCursor == 1)
+		{
+			pGraphics->DrawRectangle(rect2, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
+		}
+		else if (m_nCursor == 2)
+		{
+			pGraphics->DrawRectangle(rect3, SGD::Color(0, 255, 0, 0), SGD::Color(255, 200, 0, 0));
 		}
 	}
 	else
@@ -1130,7 +1341,7 @@ void InventoryState::Render()
 #pragma endregion
 	if (m_bArmorTab || m_bWeaponsTab || m_bRunesTab)
 	{
-		
+
 
 		if (m_bShowToolTip1)
 		{
@@ -1145,39 +1356,48 @@ void InventoryState::Render()
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a high level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip4)
+		}
+		if (m_bShowToolTip4)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a low level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip5)
+		}
+		if (m_bShowToolTip5)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a mid level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip6)
+		}
+		if (m_bShowToolTip6)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a high level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip7)
+		}
+		if (m_bShowToolTip7)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a low level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip8)
+		}
+		if (m_bShowToolTip8)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a mid level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip9)
+		}
+		if (m_bShowToolTip9)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a high level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip10)
+		}
+		if (m_bShowToolTip10)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a low level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip11)
+		}
+		if (m_bShowToolTip11)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a mid level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip12)
+		}
+		if (m_bShowToolTip12)
 		{
 			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 			pGraphics->DrawString("Gives your weapon\n a high level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
@@ -1242,6 +1462,57 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(EquipG1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawRectangle(EquipG2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawRectangle(EquipG3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
+
+		//highlight selection
+		if (equipPos == 0)
+		{
+			pGraphics->DrawRectangle(IventoryRect1, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 4)
+		{
+			pGraphics->DrawRectangle(IventoryRect2, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 8)
+		{
+			pGraphics->DrawRectangle(IventoryRect3, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 1)
+		{
+			pGraphics->DrawRectangle(IventoryRect4, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 5)
+		{
+			pGraphics->DrawRectangle(IventoryRect5, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 9)
+		{
+			pGraphics->DrawRectangle(IventoryRect6, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 2)
+		{
+			pGraphics->DrawRectangle(IventoryRect7, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 6)
+		{
+			pGraphics->DrawRectangle(IventoryRect8, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 10)
+		{
+			pGraphics->DrawRectangle(IventoryRect9, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 3)
+		{
+			pGraphics->DrawRectangle(IventoryRect10, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 7)
+		{
+			pGraphics->DrawRectangle(IventoryRect11, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+		if (equipPos == 11)
+		{
+			pGraphics->DrawRectangle(IventoryRect12, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
+		}
+
 
 	}
 

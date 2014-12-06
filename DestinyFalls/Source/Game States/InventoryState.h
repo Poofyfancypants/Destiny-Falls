@@ -105,7 +105,12 @@ private:
 	bool m_bShowToolTip12 = false;
 
 	bool equipslot1selected = false;
+	bool equipslot2selected = false;
+	bool equipslot3selected = false;
+	bool pauseSelection = false;
+	bool inventoryslot1 = false;
 
+	int equipPos = 0;
 	Runes m_ptSelectedRune;
 	//full inventory rectangle
 	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };

@@ -50,7 +50,7 @@ void Minion::Render(int _posIndex)
 	case 0: //Top
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
+			//	pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
@@ -62,7 +62,7 @@ void Minion::Render(int _posIndex)
 	case 1: //Middle
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
+			//	pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
@@ -74,7 +74,7 @@ void Minion::Render(int _posIndex)
 	case 2: //Bottom
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
+			//pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
@@ -158,10 +158,10 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 			else
 				pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
 
-				m_bUpdateAnimation = true;
+			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-			
+
 		}
 		break;
 	default:
