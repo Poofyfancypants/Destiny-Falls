@@ -61,6 +61,7 @@ public:
 
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
+	SGD::Rectangle ForgeButton = { 0, 0, 100, 100 };
 	SGD::Rectangle HealthPotionPosition = { 0, 0, 100, 100 };
 
 	// - Hepler function to create the next level.
