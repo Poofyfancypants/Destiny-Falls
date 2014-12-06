@@ -442,7 +442,7 @@ void Companion::SetCompanionAnimation( int companionType )
 			this->GetTimeStamp()->SetCurrentAnimation( "RangerAttack" );
 			break;
 		case 4:
-			this->GetTimeStamp()->SetCurrentAnimation( "RangerAttack" );
+			this->GetTimeStamp()->SetCurrentAnimation( "GladiatorAttack" );
 			break;
 		default:
 			break;
