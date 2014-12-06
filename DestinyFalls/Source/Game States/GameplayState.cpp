@@ -15,7 +15,7 @@
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
 #include "../Game Objects/Player.h"
-#include "../Messages/MessageID.h"
+#include "../Game Objects/Companion.h"#include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_String.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
@@ -202,6 +202,7 @@ bool GameplayState::Input()
 		}
 	}
 
+
 	return true;
 }
 
@@ -360,6 +361,15 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 	return temp;
 
 
+}
+
+Object* GameplayState::CreateCompanion( SGD::Point _pos, int _ID )
+{
+	Companion* temp = new Companion;
+	temp->SetImage( m_hBoulder );
+	temp->SetPosition( _pos );
+	temp->SetSize( SGD::Size( 30, 30 ) );
+	return temp;
 }
 
 // - Helper
@@ -559,8 +569,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 1 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 2 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Icelandic", Game::GetInstance()->GetString( 7, 1 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Icelandic", Game::GetInstance()->GetString( 7, 2 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
 
 	else if( m_bPuzzleDialog )
@@ -573,8 +583,8 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 3 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 4 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Icelandic", Game::GetInstance()->GetString( 7, 3 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Icelandic", Game::GetInstance()->GetString( 7, 4 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
 
 	else if( m_bBoulderDialog )
