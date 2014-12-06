@@ -92,8 +92,10 @@ void GameplayState::Enter()
 
 	//Set up DialogManager
 	m_pDialogs = m_pDialogs->GetInstance();
+	//Load Dialogs
+	m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
+	m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 
-	m_pDialogs->Load( "resource/XML/TestDialog.xml" );
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );

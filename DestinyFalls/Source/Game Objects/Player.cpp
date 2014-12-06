@@ -13,6 +13,7 @@
 #include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
 #include "Chest.h"
+#include "../Managers/DialogManager.h"
 //#include "../Quick Time/QuickTime.h"
 
 #include "../Game Objects/Trap.h"
