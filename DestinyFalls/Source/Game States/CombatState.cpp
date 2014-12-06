@@ -303,7 +303,7 @@ void CombatState::Render( void )
 	{
 		if( ( ( Companion* ) m_pHeroes[ j ] )->GetHealth() > 0 )
 		{
-			( ( Companion* ) m_pHeroes[ j ] )->Render( j );
+			( ( Companion* ) m_pHeroes[ j ] )->CombatRender( j );
 		}
 	}
 }

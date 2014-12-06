@@ -21,7 +21,7 @@ public:
 	enum BucketList {
 		BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET,
 		CHEST_BUCKET, TRAP_BUCKET, TUTORIAL_HERO_BUCKET,
-		TUTORIAL_BOSS_BUCKET
+		TUTORIAL_BOSS_BUCKET, COMPANION_BUCKET
 	};
 	static GameplayState* GetInstance( void );
 
@@ -54,11 +54,11 @@ public:
 	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
 
 	Object* CreateChest( SGD::Point _pos, int _id );
-	Object* CreateForge(SGD::Point _pos);
+	Object* CreateForge( SGD::Point _pos );
 
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
-
+	Object* CreateCompanion(SGD::Point _pos, int _ID);
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
 	SGD::Rectangle HealthPotionPosition = { 0, 0, 100, 100 };
@@ -76,7 +76,7 @@ public:
 	// - Helper functions for the Tutorial
 	void HandleTutorial();
 	void RenderDialog();
-	SGD::HTexture GetPortrait() const {return m_hDialogImg;}
+	SGD::HTexture GetPortrait() const { return m_hDialogImg; }
 
 private:
 	GameplayState() = default;

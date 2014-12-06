@@ -8,32 +8,32 @@
 #include "../TinyXML\tinystr.h"
 #include "../TinyXML\tinyxml.h"
 
-void BitmapFont::Initialize(string path)
+void BitmapFont::Initialize( string path )
 {
-	m_hImage = SGD::GraphicsManager::GetInstance()->LoadTexture(path.c_str());
+	m_hImage = SGD::GraphicsManager::GetInstance()->LoadTexture( path.c_str() );
 }
 
-void BitmapFont::Terminate(void)
+void BitmapFont::Terminate( void )
 {
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hImage);
-	for (size_t i = 0; i < Letters.size(); i++)
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hImage );
+	for( size_t i = 0; i < Letters.size(); i++ )
 	{
 		delete Letters[i];
 	}
 	Letters.clear();
 }
 
-void BitmapFont::Draw(string fontName, const char* output, SGD::Point position, float scale, SGD::Color color) const
+void BitmapFont::Draw( string fontName, const char* output, SGD::Point position, float scale, SGD::Color color ) const
 {
 	// Validate the image
-	assert(m_hImage != SGD::INVALID_HANDLE && "BitmapFont::Draw - image was not loaded");
+	assert( m_hImage != SGD::INVALID_HANDLE && "BitmapFont::Draw - image was not loaded" );
 	// Validate the parameter
-	assert(output != nullptr && "BitmapFont::Draw - string cannot be null");
+	assert( output != nullptr && "BitmapFont::Draw - string cannot be null" );
 
 	// Is this string invisible?
-	if (output[0] == '\0'			// string is empty?
+	if( output[0] == '\0'			// string is empty?
 		|| scale == 0.0f			// scale is invisible?
-		|| color.alpha == 0)		// color is invisible?
+		|| color.alpha == 0 )		// color is invisible?
 		return;
 
 	// Store the starting X position for newlines
@@ -42,121 +42,133 @@ void BitmapFont::Draw(string fontName, const char* output, SGD::Point position, 
 	int spacewidth = 8;
 
 	// Iterate through the characters in the string
-	for (int i = 0; output[i]; i++)
+	for( int i = 0; output[i]; i++ )
 	{
 		// Get the current character
 		char ch = output[i];
 
 		// Check for whitespace
-		if (ch == ' ')
+		if( ch == ' ' )
 		{
 			// Move to the next position
 			position.x += spacewidth * scale;
 			continue;
 		}
 
-		if (m_bOnlyUppercase == true)
+		if( m_bOnlyUppercase == true )
 		{
-			ch = toupper(ch);
+			ch = toupper( ch );
 		}
 
 		// Calculate the tile ID for this character
 		int id = 0;
 
-		if (fontName == "Celtic")
+		if( fontName == "Celtic" )
 		{
-			if (ch >= 65 && ch <= 90)
+			if( ch >= 65 && ch <= 90 )
 			{
 				id = ch - 36;
 			}
-			if (ch >= 97 && ch <= 122)
+			if( ch >= 97 && ch <= 122 )
 			{
 				id = ch - 40;
 			}
 		}
-		if (fontName == "Other")
+		if( fontName == "Other" )
 		{
-			if (ch >= 65 && ch <= 90)
+			if( ch >= 65 && ch <= 90 )
 			{
 				id = ch - 35;
 			}
-			if (ch >= 97 && ch <= 122)
+			if( ch >= 97 && ch <= 122 )
 			{
 				id = ch - 40;
 			}
 		}
 
-		if (fontName == "Bernardo")
+		if( fontName == "Bernardo" )
 			id = ch - 30;
 
 		if( fontName == "Dialog" )
 			id = ch - 32;
+		if( fontName == "Icelandic" )
+		{
+			id = (unsigned char)ch;
+			if( id == -64 )
+			{
+				id = 160 - 33;
+			}
+			//	if( id == -49 )
+			//{
+			//	id = 160 - 33;
+			//}
+		}
 
 
 		// Calculate the source rect for that glyph
 		SGD::Rectangle cell;
-		cell.left = (float)(Letters[id]->x);
-		cell.top = (float)(Letters[id]->y);
-		cell.right = (float)(cell.left + Letters[id]->width);
-		cell.bottom = (float)(cell.top + Letters[id]->height);
+		cell.left = (float)( Letters[id]->x );
+		cell.top = (float)( Letters[id]->y );
+		cell.right = (float)( cell.left + Letters[id]->width );
+		cell.bottom = (float)( cell.top + Letters[id]->height );
 
 		SGD::Point pos = position;
-		pos.x -= (float)(Letters[id]->Xoffset * scale);
-		pos.y += (float)(Letters[id]->Yoffest * scale);
+		pos.x -= (float)( Letters[id]->Xoffset * scale );
+		pos.y += (float)( Letters[id]->Yoffest * scale );
 
 		// Draw the character
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection(m_hImage, pos, cell, 0.0f, {}, color, { scale, scale });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hImage, pos, cell, 0.0f, {}, color, { scale, scale } );
 
 		// Move to the next position
-		position.x += (int)(Letters[id]->Xadvance * scale);
+		position.x += (int)( Letters[id]->Xadvance * scale );
 	}
 }
 
-bool BitmapFont::LoadFontFile(string path)
+bool BitmapFont::LoadFontFile( string path )
 {
-	assert(path.c_str() != nullptr);
+	assert( path.c_str() != nullptr );
 
 	TiXmlDocument doc;
 
-	if (doc.LoadFile(path.c_str()) == false)
+	if( doc.LoadFile( path.c_str() ) == false )
 	{
 		return false;
 	}
 
 	TiXmlElement* pFont = doc.RootElement();
 
-	if (pFont == nullptr)
+	if( pFont == nullptr )
 	{
 		return false;
 	}
 
 	TiXmlElement* chars = pFont->FirstChildElement();
 
-	while (chars != nullptr)
+	while( chars != nullptr )
 	{
 
-		if (chars == nullptr)
+		if( chars == nullptr )
 		{
 			return false;
 		}
 
 		TiXmlElement* pChar = chars->FirstChildElement();
 
-		while (pChar != nullptr)
+		while( pChar != nullptr )
 		{
 			CharAttributes* x = new CharAttributes;
-			pChar->Attribute("id", &x->id);
-			pChar->Attribute("x", &x->x);
-			pChar->Attribute("y", &x->y);
-			pChar->Attribute("width", &x->width);
-			pChar->Attribute("height", &x->height);
-			pChar->Attribute("xoffset", &x->Xoffset);
-			pChar->Attribute("yoffset", &x->Yoffest);
-			pChar->Attribute("xadvance", &x->Xadvance);
-			pChar->Attribute("page", &x->page);
-			pChar->Attribute("chnl", &x->chnl);
+			pChar->Attribute( "id", &x->id );
+			pChar->Attribute( "x", &x->x );
+			pChar->Attribute( "y", &x->y );
+			pChar->Attribute( "width", &x->width );
+			pChar->Attribute( "height", &x->height );
+			pChar->Attribute( "xoffset", &x->Xoffset );
+			pChar->Attribute( "yoffset", &x->Yoffest );
+			pChar->Attribute( "xadvance", &x->Xadvance );
+			pChar->Attribute( "page", &x->page );
+			pChar->Attribute( "chnl", &x->chnl );
 
-			Letters.push_back(x);
+			Letters.push_back( x );
 
 			pChar = pChar->NextSiblingElement();
 		}

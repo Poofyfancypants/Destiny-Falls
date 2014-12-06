@@ -13,7 +13,8 @@ public:
 
 	virtual bool TakeTurn();
 	virtual void Update(float elapsedTime);
-	virtual void Render(int _posIndex);
+	virtual void Render();
+	virtual void CombatRender(int _posIndex = 0);
 	void SetCombatImage(SGD::HTexture _texture) { m_hCompanion = _texture; }
 	virtual int GetType(void) const { return OBJ_COMPANION; }
 	int GetCoType(void) const { return Guy; }
