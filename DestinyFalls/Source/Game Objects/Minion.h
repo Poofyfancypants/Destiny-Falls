@@ -12,7 +12,7 @@ public:
 
 	enum AI_Type {Minion_AI, Off_AI, Def_AI, Heal_AI, AOE_AI, Mini_Boss, Level_Boss, Final_Boss,};
 
-	struct Element
+	struct ElementAtt
 	{
 		int ElementType = 0;
 		int ElementTier = 0;
@@ -24,8 +24,8 @@ public:
 							 //Implementing this on the side or in sprint three could be great
 
 		int DamageLevel = 10;// 0-20 scale
-		Element ElemResistance;
-		Element ElemAffinity;
+		ElementAtt ElemResistance;
+		ElementAtt ElemAffinity;
 	};
 
 	/*
@@ -104,6 +104,7 @@ public:
 	Elements m_rAffinity;
 
 	void SetMinionAnimation( int region , int minionType );
+	bool m_Block = false;
 
 private:
 	int * m_CurrentTurn;
@@ -123,6 +124,7 @@ private:
 	SGD::Rectangle Enemy1rect = { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect = { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect = { 561, 290, 625, 354 };
+
 	AnimationManager* m_pAnimator = nullptr;
 
 	bool m_bUpdateAnimation = false;

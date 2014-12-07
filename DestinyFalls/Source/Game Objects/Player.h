@@ -35,7 +35,7 @@ public:
 	void SetCombat( bool _combat = false ) { m_bCombat = _combat; }
 	void SetHealth( int _health ) { m_nHealth = _health; }
 	void SetPotions( int _potion ) { m_nPotions = _potion; }
-	int GetHealth() const { return m_nHealth; }
+	virtual int GetHealth() const { return m_nHealth; }
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
 	bool GetMoving() const {return m_bMoving;}
@@ -61,6 +61,16 @@ public:
 	void RenderDialog();
 	void UpdateDialog();
 	void PreventDialogFromRestarting( float elapsedTime );
+	QuickTime* GetQT() const { return currentQT; }
+	bool m_bDoQt = false;
+
+	bool GetSpell1Cool() const { return m_bSpell1; }
+	bool GetSpell2Cool() const { return m_bSpell2; }
+	bool GetSpell3Cool() const { return m_bSpell3; }
+
+	void SetSpell1Cool(bool _Cool) { m_bSpell1 = _Cool; }
+	void SetSpell2Cool(bool _Cool) { m_bSpell2 = _Cool; }
+	void SetSpell3Cool(bool _Cool) { m_bSpell3 = _Cool; }
 
 	bool GetMapSwitch() const { return m_bMapSwitch; }
 	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
@@ -80,15 +90,20 @@ private:
 
 	bool m_bCombat = false;
 
+	bool m_bSpell1 = false; //False == not on cooldown
+	bool m_bSpell2 = false;
+	bool m_bSpell3 = false;
+
 	int ActionSelected = 0;
 	bool selected = false;
 	int m_nCursor = 0;
+	int spellSelect = -1;
+	int counter = 0;
 
 	int * m_CurrentTurn;
 	AnimationManager* m_pAnimator = nullptr;
 
 	QuickTime* currentQT = nullptr;
-	bool m_bDoQt = false;
 
 	bool m_bLowHealthWarning = false;
 	float m_fHealthFlash = 0.0f;

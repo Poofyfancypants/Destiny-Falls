@@ -1,5 +1,6 @@
 #pragma once
 #include "AnimatedObject.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "Player.h"
 
 class Companion :
@@ -32,9 +33,12 @@ public:
 	void SetCompanionAnimation( int companionType );
 	int GetPosIndex( void ){ return m_nPosIndex; }
 	void SetPosIndex( int posIndex ){ m_nPosIndex = posIndex; }
+
+	bool m_Block = false;
+
 private:
 	int * m_CurrentTurn;
-	int m_nHealth = 20;
+	int m_nHealth = 0;
 
 	int m_nPosIndex = 0;
 	Companion_Type m_CoType;
@@ -42,10 +46,12 @@ private:
 
 	SGD::HTexture m_hCompanion = SGD::INVALID_HANDLE;
 
-	SGD::Rectangle Companion1rect = { 200 , 110 , 264 , 174 };
-	SGD::Rectangle Companion2rect = { 200 , 290 , 264 , 354 };
-	SGD::Rectangle Companion1HB = { 50 , 110 , 175 , 140 };
-	SGD::Rectangle Companion2HB = { 50 , 290 , 175 , 320 };
+	SGD::Color m_HealthColor = { 0, 0, 0, 0 };
+
+	SGD::Rectangle Companion1rect = { 140 , 110 , 204 , 174 };
+	SGD::Rectangle Companion2rect = { 140 , 290 , 204 , 354 };
+	SGD::Rectangle Companion1HB = { 50 , 110 , 150 , 140 };
+	SGD::Rectangle Companion2HB = { 50 , 290 , 150 , 320 };
 
 	AnimationManager* m_pAnimator;
 	bool m_bUpdateAnimation = false;

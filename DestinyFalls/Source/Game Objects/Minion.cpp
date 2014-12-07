@@ -56,7 +56,7 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
 			}
 			pGraphics->DrawRectangle(Enemy1HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
 	case 1: //Middle
@@ -68,7 +68,7 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
 			}
 			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
 	case 2: //Bottom
@@ -80,7 +80,7 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
 			}
 			pGraphics->DrawRectangle(Enemy3HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(450, (420 + (50 * _posIndex))), 1, { 255, 225, 255, 255 });
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
 	default:
@@ -106,14 +106,16 @@ int Minion::GetName(int _index)
 bool Minion::TakeTurn() //This will be even bigger, still don't care
 {
 	CombatState* pCombat = CombatState::GetInstance();
+	int target = 0;
 
 	switch (this->GetAIType())
 	{
 	case Minion_AI:
 		if (m_nHealth > 0)
 		{
+			target = rand() % pCombat->GetHeroes().size();
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -123,7 +125,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -133,7 +135,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -143,7 +145,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -152,11 +154,11 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 	case AOE_AI:
 		if (m_nHealth > 0)
 		{
-			int AI = rand() % 100;
-			if (AI <= 30) //AOE attack
-				pCombat->TakeAction(CombatState::ActionType::AOE, this, 0);
+			int AI = rand() % 20;
+			if (AI <= 15) //AOE attack
+				pCombat->TakeAction(CombatState::ActionType::AOE, this, target);
 			else
-				pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+				pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
@@ -196,6 +198,9 @@ void Minion::SetMinionAnimation(int region, int minionType)
 			   case 4:
 				   this->GetTimeStamp()->SetCurrentAnimation("GolemAttack");
 				   break;
+			   case 5:
+				   this->GetTimeStamp()->SetCurrentAnimation( "EarthBossAttack" );
+				   break;
 			   default:
 				   break;
 			   }
@@ -219,6 +224,9 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   break;
 			   case 4:
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack2");
+				   break;
+			   case 5:
+				   this->GetTimeStamp()->SetCurrentAnimation( "IceBossAttack" );
 				   break;
 			   default:
 				   break;
@@ -244,6 +252,9 @@ void Minion::SetMinionAnimation(int region, int minionType)
 			   case 4:
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack3");
 				   break;
+			   case 5:
+				   this->GetTimeStamp()->SetCurrentAnimation( "AirBossAttack" );
+				   break;
 			   default:
 				   break;
 			   }
@@ -268,12 +279,16 @@ void Minion::SetMinionAnimation(int region, int minionType)
 			   case 4:
 				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
 				   break;
+			   case 5:
+				   this->GetTimeStamp()->SetCurrentAnimation( "NagaAttack" );
+				   break;
 			   default:
 				   break;
 			   }
 	}
 		break;
-
+	case 4: // Higher cases will be used for bosses
+		break;
 	default:
 		break;
 	}
