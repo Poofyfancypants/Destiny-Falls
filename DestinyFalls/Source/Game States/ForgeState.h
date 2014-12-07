@@ -27,12 +27,19 @@ private:
 	ForgeState& operator=(const ForgeState&) = delete;
 
 	bool m_bForge = false;
+	bool m_bFail = false;
 
 	Runes m_ptSelectedRune;
 	Runes m_rSlot1;
 	Runes m_rSlot2;
+	Runes m_rSlot3;
 	//full inventory rectangle
 	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };
+
+	//Rune Rect Sized images for sword
+	SGD::Rectangle Equip1 = {  60, 110, 115, 200 };
+	SGD::Rectangle Equip2 = { 130, 110, 185, 200 };
+	SGD::Rectangle Equip3 = { 295, 75, 415, 175 };
 
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 250, 200, 400 };
@@ -41,8 +48,6 @@ private:
 
 	SGD::Rectangle rect1 = { 50, 50, 200, 200 };
 	SGD::Rectangle rect2 = { 50, 100, 200, 300 };
-	
-
 
 	//Rune Images
 	//t1
@@ -57,14 +62,12 @@ private:
 	SGD::Rectangle IventoryRect11 = { 420, 320, 450, 360 };
 
 
-	//Rune Rect Sized images for sword
-	SGD::Rectangle Equip1 = {  60, 110, 115, 200 };
-	SGD::Rectangle Equip2 = { 125, 110, 190, 200 };
 
 
 protected:
 
 	SGD::HTexture m_hForge = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDust = SGD::INVALID_HANDLE;
 
 	SGD::HTexture m_hFiret1 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFiret2 = SGD::INVALID_HANDLE;
