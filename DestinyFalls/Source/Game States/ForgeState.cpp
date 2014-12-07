@@ -18,6 +18,7 @@ ForgeState* ForgeState::GetInstance()
 void ForgeState::Enter()
 {
 	m_hForge = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Anvil.png");
+	m_hDust = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Dust.png");
 	m_hFiret1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet1.png");
 	m_hFiret2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet2.png");
 	m_hFiret3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Firet3.png");
@@ -26,6 +27,7 @@ void ForgeState::Enter()
 void ForgeState::Exit()
 {
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hForge);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hDust);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hFiret1);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hFiret2);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hFiret3);
@@ -155,6 +157,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if (m_rSlot1.GetElement() == Water && m_rSlot2.GetElement() == Water)
 					{
@@ -166,6 +170,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if (m_rSlot1.GetElement() == Air && m_rSlot2.GetElement() == Air)
 					{
@@ -177,6 +183,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if (m_rSlot1.GetElement() == Earth && m_rSlot2.GetElement() == Earth)
 					{
@@ -188,6 +196,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if ((m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Water) || (m_rSlot1.GetElement() == Water  && m_rSlot2.GetElement() == Fire))
 					{
@@ -199,6 +209,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if ((m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Air) || (m_rSlot1.GetElement() == Air  && m_rSlot2.GetElement() == Fire))
 					{
@@ -210,6 +222,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if ((m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Earth) || (m_rSlot1.GetElement() == Earth  && m_rSlot2.GetElement() == Fire))
 					{
@@ -221,6 +235,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if ((m_rSlot1.GetElement() == Water && m_rSlot2.GetElement() == Air) || (m_rSlot1.GetElement() == Air  && m_rSlot2.GetElement() == Water))
 					{
@@ -232,6 +248,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if ((m_rSlot1.GetElement() == Water && m_rSlot2.GetElement() == Earth) || (m_rSlot1.GetElement() == Earth  && m_rSlot2.GetElement() == Water))
 					{
@@ -243,6 +261,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 					else if ((m_rSlot1.GetElement() == Air && m_rSlot2.GetElement() == Earth) || (m_rSlot1.GetElement() == Earth && m_rSlot2.GetElement() == Air))
 					{
@@ -254,6 +274,8 @@ void ForgeState::Update(float elapsedTime)
 
 						m_rSlot3.SetElement(Fire);
 						m_rSlot3.SetTier(2);
+
+						m_bFail = false;
 					}
 				}
 				else
@@ -272,11 +294,146 @@ void ForgeState::Update(float elapsedTime)
 				int chance = rand() % 20 + 1;
 				if (chance >= 15)
 				{
+					if (m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Fire)
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
 
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Fire);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if (m_rSlot1.GetElement() == Water && m_rSlot2.GetElement() == Water)
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Water);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if (m_rSlot1.GetElement() == Air && m_rSlot2.GetElement() == Air)
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Air);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if (m_rSlot1.GetElement() == Earth && m_rSlot2.GetElement() == Earth)
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Earth);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if ((m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Water) || (m_rSlot1.GetElement() == Water  && m_rSlot2.GetElement() == Fire))
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Water);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if ((m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Air) || (m_rSlot1.GetElement() == Air  && m_rSlot2.GetElement() == Fire))
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Fire);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if ((m_rSlot1.GetElement() == Fire && m_rSlot2.GetElement() == Earth) || (m_rSlot1.GetElement() == Earth  && m_rSlot2.GetElement() == Fire))
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Earth);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if ((m_rSlot1.GetElement() == Water && m_rSlot2.GetElement() == Air) || (m_rSlot1.GetElement() == Air  && m_rSlot2.GetElement() == Water))
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Air);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if ((m_rSlot1.GetElement() == Water && m_rSlot2.GetElement() == Earth) || (m_rSlot1.GetElement() == Earth  && m_rSlot2.GetElement() == Water))
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Earth);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
+					else if ((m_rSlot1.GetElement() == Air && m_rSlot2.GetElement() == Earth) || (m_rSlot1.GetElement() == Earth && m_rSlot2.GetElement() == Air))
+					{
+						m_rSlot1.SetElement(None);
+						m_rSlot1.SetTier(0);
+
+						m_rSlot2.SetElement(None);
+						m_rSlot2.SetTier(0);
+
+						m_rSlot3.SetElement(Air);
+						m_rSlot3.SetTier(3);
+
+						m_bFail = false;
+					}
 				}
 				else
 				{
+					m_rSlot1.SetElement(None);
+					m_rSlot1.SetTier(0);
 
+					m_rSlot2.SetElement(None);
+					m_rSlot2.SetTier(0);
+
+					m_bFail = true;
 				}
 			}
 		}
@@ -369,32 +526,32 @@ void ForgeState::Render()
 
 	if (m_rSlot3.GetElement() == Fire)
 	{
-		if (m_rSlot3.GetTier() == 1)
-			pGraphics->DrawTexture(m_hFiret1, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
+		if (m_rSlot3.GetTier() == 3)
+			pGraphics->DrawTexture(m_hFiret3, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 		else if (m_rSlot3.GetTier() == 2)
 			pGraphics->DrawTexture(m_hFiret2, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 	}
 
 	if (m_rSlot3.GetElement() == Water)
 	{
-		if (m_rSlot3.GetTier() == 1)
-			pGraphics->DrawTexture(m_hFiret1, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
+		if (m_rSlot3.GetTier() == 3)
+			pGraphics->DrawTexture(m_hFiret3, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 		else if (m_rSlot3.GetTier() == 2)
 			pGraphics->DrawTexture(m_hFiret2, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 	}
 
 	if (m_rSlot3.GetElement() == Air)
 	{
-		if (m_rSlot3.GetTier() == 1)
-			pGraphics->DrawTexture(m_hFiret1, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
+		if (m_rSlot3.GetTier() == 3)
+			pGraphics->DrawTexture(m_hFiret3, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 		else if (m_rSlot3.GetTier() == 2)
 			pGraphics->DrawTexture(m_hFiret2, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 	}
 
 	if (m_rSlot3.GetElement() == Earth)
 	{
-		if (m_rSlot3.GetTier() == 1)
-			pGraphics->DrawTexture(m_hFiret1, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
+		if (m_rSlot3.GetTier() == 3)
+			pGraphics->DrawTexture(m_hFiret3, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 		else if (m_rSlot3.GetTier() == 2)
 			pGraphics->DrawTexture(m_hFiret2, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.2f, 0.18f });
 	}
