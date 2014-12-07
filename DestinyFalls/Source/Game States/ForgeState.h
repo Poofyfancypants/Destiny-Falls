@@ -30,9 +30,11 @@ private:
 	bool m_bFail = false;
 
 	Runes m_ptSelectedRune;
+
 	Runes m_rSlot1;
 	Runes m_rSlot2;
 	Runes m_rSlot3;
+
 	//full inventory rectangle
 	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };
 
@@ -43,7 +45,7 @@ private:
 
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 250, 200, 400 };
-	SGD::Rectangle ForgeButton = { 50, 50, 200, 200};
+	SGD::Rectangle ForgeButton = { 50, 50, 200, 100};
 	SGD::Rectangle ResultBox = {200, 50, 500, 200};
 
 	SGD::Rectangle rect1 = { 50, 50, 200, 200 };
