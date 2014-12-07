@@ -139,6 +139,8 @@ private:
 	bool m_bSetLevelPosition = false;
 	// - Tutorial Level
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hRanger = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hCleric = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoss = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hDialogImg = SGD::INVALID_HANDLE;
 	bool m_bFirstDialog = false;
