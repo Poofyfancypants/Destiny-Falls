@@ -253,6 +253,9 @@
     <ClInclude Include="Source\Managers\DialogManager.h">
       <Filter>Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game States\QuickTimeState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -441,6 +444,9 @@
     </ClCompile>
     <ClCompile Include="Source\Managers\DialogManager.cpp">
       <Filter>Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\QuickTimeState.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

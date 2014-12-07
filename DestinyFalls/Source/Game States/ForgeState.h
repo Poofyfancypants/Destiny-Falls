@@ -30,9 +30,11 @@ private:
 	bool m_bFail = false;
 
 	Runes m_ptSelectedRune;
+
 	Runes m_rSlot1;
 	Runes m_rSlot2;
 	Runes m_rSlot3;
+
 	//full inventory rectangle
 	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };
 
