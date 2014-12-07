@@ -1,7 +1,9 @@
 #pragma once
 #include "../Quick Time/QuickTime.h"
+#include "IGameState.h"
 
-class QuickTimeState
+class QuickTimeState :
+	public IGameState
 {
 public:
 	static QuickTimeState* GetInstance( void );
