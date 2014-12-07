@@ -867,6 +867,7 @@ void Player::PreventDialogFromRestarting( float elapsedTime )
 	if( m_fDialogTimer <= 0.0f )
 	{
 		m_bPreventDialog = false;
+		m_bRunDialog = false;
 	}
 
 }

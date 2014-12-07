@@ -78,7 +78,7 @@ private:
 
 	InventoryState(const InventoryState&) = delete;
 	InventoryState& operator=(const InventoryState&) = delete;
-
+	int m_ntabCursor = 0;
 	int m_nCursor = 0;
 	bool m_bSelect = false;
 	bool m_bSwordSelect = false;
@@ -118,7 +118,8 @@ private:
 	SGD::Rectangle RuneToolRect = { 500, 50, 700, 170 };
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 50, 200, 400 };
-
+	//
+	SGD::Rectangle CompanionRectSide = { 200, 50, 500, 400 };
 	//tabs
 	SGD::Rectangle tabArmor = { 50, 0, 162, 50 };
 	SGD::Rectangle TabWeapons = { 162, 0, 274, 50 };
@@ -189,6 +190,14 @@ protected:
 	SGD::HTexture m_hAirt2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hAirt3 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
+
+	// icons for companions
+	SGD::HTexture m_hHunterIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFighterIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hHealerIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hMageIcon = SGD::INVALID_HANDLE;
+
+
 };
 
 

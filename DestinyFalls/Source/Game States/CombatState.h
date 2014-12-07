@@ -59,6 +59,8 @@ public:
 	void SetAction(string _Action) { ActionMessage = _Action; } //Display information to the user
 	string GetAction() const { return ActionMessage; }
 
+	void SetNumQTCorrect( int numCorrect ){ m_nNumQtCorrect = numCorrect; }
+
 private:
 	CombatState() = default;
 	virtual ~CombatState() = default;
@@ -124,13 +126,15 @@ private:
 
 	int numPots;
 	int numRunes;
-	int NumQTCorrect = 0;
+	int m_nNumQTCorrect = 0;
 	
 	vector<SGD::HTexture> m_vBackgroundsEarth;
 	vector<SGD::HTexture> m_vBackgroundsIce;
 	vector<SGD::HTexture> m_vBackgroundsAir;
 	vector<SGD::HTexture> m_vBackgroundsFire;
 	vector<SGD::HTexture> m_vBackgroundsFinal;
+
+	int m_nNumQtCorrect = 0;
 
 };
 

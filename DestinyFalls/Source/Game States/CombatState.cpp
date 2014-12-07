@@ -13,6 +13,7 @@
 #include "../Runes/RuneManager.h"
 #include "../Runes/Runes.h"
 #include "../Quick Time/QuickTime.h"
+#include "../Game States/QuickTimeState.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -152,145 +153,145 @@ bool CombatState::Input(void)
 		Game::GetInstance()->RemoveState();
 	}
 
+
 	return true;
 }
 
 void CombatState::Update(float elapsedTime)
 {
+
+	ActionTimer -= elapsedTime;
+	if (ActionTimer <= 0.0f)
+		ActionTimer = 0.0f;
+
+	m_fFlash += elapsedTime;
+
+	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
-		ActionTimer -= elapsedTime;
-		if (ActionTimer <= 0.0f)
-			ActionTimer = 0.0f;
+		PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
+		((Player*)m_pHeroes[0])->Update(elapsedTime);
 
-		m_fFlash += elapsedTime;
-
-		if (((Player*)m_pHeroes[0])->GetHealth() > 0)
+		for (unsigned int i = 1; i < m_pHeroes.size(); i++)
 		{
-			PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
-			((Player*)m_pHeroes[0])->Update(elapsedTime);
-
-			for (unsigned int i = 1; i < m_pHeroes.size(); i++)
+			if (((Companion*)m_pHeroes[i])->GetHealth())
 			{
-				if (((Companion*)m_pHeroes[i])->GetHealth())
-				{
-					((Companion*)m_pHeroes[i])->Update(elapsedTime);
+				((Companion*)m_pHeroes[i])->Update(elapsedTime);
 
-				}
 			}
-			if (((Player*)m_pHeroes[0])->GetHealth() < 25 && m_fFlash > 2)
-			{
-				m_bHealthWarning = true;
-				m_fFlash = 0;
-			}
-			else
-				m_bHealthWarning = false;
-
+		}
+		if (((Player*)m_pHeroes[0])->GetHealth() < 25 && m_fFlash > 2)
+		{
+			m_bHealthWarning = true;
+			m_fFlash = 0;
 		}
 		else
+			m_bHealthWarning = false;
+
+	}
+	else
+	{
+		((Player*)m_pHeroes[0])->SetCombat(false);
+		Game::GetInstance()->RemoveState();
+		return;
+	}
+
+	if (ActionTimer <= 0.0f)
+	{
+		if (Attacker1 != -1) //System on hold
 		{
-			((Player*)m_pHeroes[0])->SetCombat(false);
-			Game::GetInstance()->RemoveState();
-			return;
+			m_pHeroes[Attacker1]->SetAttacking(false); //After the time is up
+		}
+		if (Attacker2 != -1)
+		{
+
 		}
 
-		if (ActionTimer <= 0.0f)
+		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
-			if (Attacker1 != -1) //System on hold
-			{
-				m_pHeroes[Attacker1]->SetAttacking(false); //After the time is up
-			}
-			if (Attacker2 != -1)
-			{
-
-			}
-
+			int numEnemies = 0;
 			for (size_t i = 0; i < m_pEnemies.size(); i++)
 			{
-				int numEnemies = 0;
-				for (size_t i = 0; i < m_pEnemies.size(); i++)
+				if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
 				{
-					if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
-					{
-						numEnemies++;
-						((Minion*)m_pEnemies[i])->Update(elapsedTime);
-					}
-				}
-				if (numEnemies <= 0) //Win
-				{
-					((Player*)m_pHeroes[0])->SetCombat(false);
-					((Player*)m_pHeroes[0])->m_nPotions += numPots;
-
-					Game::GetInstance()->RemoveState();
-					return;
+					numEnemies++;
+					((Minion*)m_pEnemies[i])->Update(elapsedTime);
 				}
 			}
-
-
-			for (size_t i = 0; i < m_pObjects.size(); i++)
+			if (numEnemies <= 0) //Win
 			{
-				switch (m_pObjects[i]->GetType())
+				((Player*)m_pHeroes[0])->SetCombat(false);
+				((Player*)m_pHeroes[0])->m_nPotions += numPots;
+
+				Game::GetInstance()->RemoveState();
+				return;
+			}
+		}
+
+
+		for (size_t i = 0; i < m_pObjects.size(); i++)
+		{
+			switch (m_pObjects[i]->GetType())
+			{
+			case Object::ObjectType::OBJ_PLAYER:
+				if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
 				{
-				case Object::ObjectType::OBJ_PLAYER:
-					if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+					if (ActionTimer <= 0)
 					{
-						if (ActionTimer <= 0)
+						//Attacker1 = 0; If we can make this work it might be cool
+						//Not sure why I wanted it other than that
+						if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
 						{
-							//Attacker1 = 0; If we can make this work it might be cool
-							//Not sure why I wanted it other than that
-							if (((Player*)m_pObjects[i])->TakeTurn(elapsedTime))
-							{
-								CurrentTurn++;
-							}
+							CurrentTurn++;
 						}
 					}
-					break;
-				case Object::ObjectType::OBJ_COMPANION:
-					if (((Companion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-					{
-						if (ActionTimer <= 0)
-						if (((Companion*)m_pObjects[i])->TakeTurn(elapsedTime))
-							CurrentTurn++;
-					}
-					break;
-				case Object::ObjectType::OBJ_MINION:
-					if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-					{
-						if (ActionTimer <= 0)
-						if (((Minion*)m_pObjects[i])->TakeTurn())
-							CurrentTurn++;
-					}
-					break;
 				}
-			}
-			if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
-				CurrentTurn = 0;
-
-		}
-		else
-		{
-
-			if (Attacker1 != -1)
-			{
-				if (m_pHeroes[Attacker1]->GetAttacking())
+				break;
+			case Object::ObjectType::OBJ_COMPANION:
+				if (((Companion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
 				{
-					m_vOffset.x = ((m_pHeroes[Attacker1]->GetPosition().x + m_CombatPos1.x));
-					m_vOffset.y = ((m_pHeroes[Attacker1]->GetPosition().y + m_CombatPos1.y));
-					m_vOffset.Normalize();
-					(Playerrect.Offset(m_vOffset / 3));
+					if (ActionTimer <= 0)
+					if (((Companion*)m_pObjects[i])->TakeTurn(elapsedTime))
+						CurrentTurn++;
 				}
+				break;
+			case Object::ObjectType::OBJ_MINION:
+				if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+				{
+					if (ActionTimer <= 0)
+					if (((Minion*)m_pObjects[i])->TakeTurn())
+						CurrentTurn++;
+				}
+				break;
 			}
+		}
+		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
+			CurrentTurn = 0;
 
+	}
+	else
+	{
 
-			for (size_t i = 0; i < m_pEnemies.size(); i++)
+		if (Attacker1 != -1)
+		{
+			if (m_pHeroes[Attacker1]->GetAttacking())
 			{
-				((Minion*)m_pEnemies[i])->Update(elapsedTime);
-				((Minion*)m_pEnemies[i])->Render(i);
-
+				m_vOffset.x = ((m_pHeroes[Attacker1]->GetPosition().x + m_CombatPos1.x));
+				m_vOffset.y = ((m_pHeroes[Attacker1]->GetPosition().y + m_CombatPos1.y));
+				m_vOffset.Normalize();
+				(Playerrect.Offset(m_vOffset / 3));
 			}
+		}
+
+
+		for (size_t i = 0; i < m_pEnemies.size(); i++)
+		{
+			((Minion*)m_pEnemies[i])->Update(elapsedTime);
+			((Minion*)m_pEnemies[i])->Render(i);
 
 		}
 
 	}
+
 }
 void CombatState::Render(void)
 {
@@ -762,6 +763,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 {
 	int Total;
 	bool localBlock = false;
+	m_nNumQTCorrect = 0;
+
 	RuneManager mag;
 
 	if (_From->GetType() == iObject::OBJ_PLAYER)
@@ -780,13 +783,16 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
+		/*Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
+		( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
+		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
+		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
+
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-			NumQTCorrect = 0;
-
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (NumQTCorrect * 5)));
+			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 			//Cool idea to give you a better chance against harder monsters with more potential damage
@@ -1072,7 +1078,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 
 			stuff += spell1.c_str();
 			e1 = InventoryState::GetInstance()->GetRingSlot1();
-			Total = ((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) * 50 + (NumQTCorrect * 5)));
+			Total = ((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
 
 			break;
 		case 1:
@@ -1080,14 +1086,14 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 
 			stuff += spell2.c_str();
 			d1 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (NumQTCorrect * 5)));
+			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
 			break;
 		case 2:
 			ComboElements d2;
 
 			stuff += spell3.c_str();
 			d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot2(), InventoryState::GetInstance()->GetRingSlot3());
-			Total = ((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) * 50 + (NumQTCorrect * 5)));
+			Total = ((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
 
 			break;
 		default:
@@ -1098,7 +1104,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		SetAction(stuff += Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
-		NumQTCorrect = 0;
+		m_nNumQTCorrect = 0;
 		//((Player*)_From)->RunQuickTime((((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + 3);
 	}
 	else
@@ -1115,9 +1121,9 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
 		ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-		NumQTCorrect = 0;
+		m_nNumQTCorrect = 0;
 
-		Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (NumQTCorrect * 5)));
+		Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 		string message = "You Counter the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
@@ -1151,10 +1157,10 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 
 		ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-		NumQTCorrect = 0;
+		m_nNumQTCorrect = 0;
 		//((Player*)_From)->RunQuickTime((((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + 3);
 
-		Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (NumQTCorrect * 5)));
+		Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
