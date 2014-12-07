@@ -168,6 +168,11 @@ bool Companion::TakeTurn(float elapsedTime)
 					   }
 					   else
 					   {
+						   if (m_nCursor < 0)
+							   m_nCursor = 0;
+						   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+							   m_nCursor = pCombat->GetEnemies().size() - 1;
+
 						   if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 							   m_nCursor++;
 

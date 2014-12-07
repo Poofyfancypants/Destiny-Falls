@@ -813,7 +813,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)// _From == Minion
 	{
-
 		for (size_t i = 1; i < m_pHeroes.size(); i++)
 		{
 			if (((Companion*)m_pHeroes[i])->GetCoType() == Companion::Companion_Type::Tank)
@@ -1170,6 +1169,15 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 		string message = "Your Ally Intercepts the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		SetAction(message += "'s  Attack!");
+	}
+	else if (_From->GetType() == iObject::OBJ_COMPANION)
+	{
+		string message = "The ";
+		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+		SetAction(message += " Intercepts your Ally's Attack!");
+
+		Total = rand() % 15 + 30;
+		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 	}
 	return Total;
 }
