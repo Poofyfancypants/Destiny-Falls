@@ -24,6 +24,11 @@ void InventoryState::Enter()
 	m_hGauntlet = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Gauntlet.jpg");
 	m_hArmor = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Armor.png");
 
+	m_hHunterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/HunterIcon.png");
+	m_hFighterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FighterIcon.png");
+	m_hHealerIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/HealerIcon.png");
+	m_hMageIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MageIcon.png");
+
 	m_vSword.resize(3);
 	m_vRing.resize(3);
 	m_vArmor.resize(3);
@@ -38,6 +43,11 @@ void InventoryState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hSword);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hGauntlet);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hArmor);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hFighterIcon);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hMageIcon);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hHunterIcon);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hHealerIcon);
+
 
 }
 
@@ -45,40 +55,46 @@ bool InventoryState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0, 6))
 		Game::GetInstance()->RemoveState(); //Make this Pause
 
-	if (pInput->IsKeyPressed(SGD::Key::E))
+	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonDown(0, 6))
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
-
+	
 	// Check tab Selection
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::A) || pInput->IsKeyPressed(SGD::Key::S) || pInput->IsKeyPressed(SGD::Key::D) || pInput->IsKeyPressed(SGD::Key::F))
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::UpArrow) )
 	{
-		if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || pInput->IsKeyPressed(SGD::Key::A))
+		m_ntabCursor++;
+
+		if (m_ntabCursor == -1)
+			m_ntabCursor = 3;
+		else if (m_ntabCursor == 4)
+			m_ntabCursor = 0;
+
+		if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || m_ntabCursor == 0)
 		{
 			m_bArmorTab = !m_bArmorTab;
 			m_bWeaponsTab = false;
 			m_bRunesTab = false;
 			m_bCompanionsTab = false;
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || pInput->IsKeyPressed(SGD::Key::S))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || m_ntabCursor == 1)
 		{
 			m_bWeaponsTab = !m_bWeaponsTab;
 			m_bRunesTab = false;
 			m_bArmorTab = false;
 			m_bCompanionsTab = false;
-
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || pInput->IsKeyPressed(SGD::Key::F))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || m_ntabCursor == 3)
 		{
 			m_bCompanionsTab = !m_bCompanionsTab;
 			m_bRunesTab = false;
 			m_bArmorTab = false;
 			m_bWeaponsTab = false;
 		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || pInput->IsKeyPressed(SGD::Key::D))
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || m_ntabCursor == 2)
 		{
 			m_bRunesTab = !m_bRunesTab;
 			m_bWeaponsTab = false;
@@ -86,14 +102,48 @@ bool InventoryState::Input()
 			m_bCompanionsTab = false;
 		}
 	}
+	else if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+	{
+		m_ntabCursor++;
+		if (m_ntabCursor == -1)
+			m_ntabCursor = 3;
+		else if (m_ntabCursor == 4)
+			m_ntabCursor = 0;
 
+		if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || m_ntabCursor == 0)
+		{
+			m_bArmorTab = !m_bArmorTab;
+			m_bWeaponsTab = false;
+			m_bRunesTab = false;
+			m_bCompanionsTab = false;
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || m_ntabCursor == 3)
+		{
+			m_bWeaponsTab = !m_bWeaponsTab;
+			m_bRunesTab = false;
+			m_bArmorTab = false;
+			m_bCompanionsTab = false;
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || m_ntabCursor == 1)
+		{
+			m_bCompanionsTab = !m_bCompanionsTab;
+			m_bRunesTab = false;
+			m_bArmorTab = false;
+			m_bWeaponsTab = false;
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || m_ntabCursor == 2)
+		{
+			m_bRunesTab = !m_bRunesTab;
+			m_bWeaponsTab = false;
+			m_bArmorTab = false;
+			m_bCompanionsTab = false;
+		}
+	}
 	if (m_bWeaponsTab)
 	{
 		if (pauseSelection == false)
 		{
 			equipPos = 30;
-
-
 
 			if (pInput->IsKeyPressed(SGD::Key::LeftArrow))
 			{
@@ -969,11 +1019,26 @@ void InventoryState::Render()
 		m_bWeaponsTab = false;
 #pragma endregion
 
+	if (m_bCompanionsTab)
+	{
+		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
+		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Fighter", SGD::Point(210, 50), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Healer", SGD::Point(345, 50), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
+		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(345, 70), {}, {}, {}, { .3f, .28f });
+		pGraphics->DrawString("Hunter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Mage", SGD::Point(345, 205), SGD::Color(0, 0, 0));
+
+		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, {.35f, .35f});
+		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(330, 225), {}, {}, {}, { .35f, .35f });
+
+
+	}
 
 #pragma region ArmorSlot
 
-	if (m_bCompanionsTab)
-		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
+
 
 	if (m_bArmorTab)
 	{
@@ -1342,67 +1407,68 @@ void InventoryState::Render()
 	if (m_bArmorTab || m_bWeaponsTab || m_bRunesTab)
 	{
 
-
-		if (m_bShowToolTip1)
+		if (pauseSelection)
 		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a low level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			if (m_bShowToolTip1 || equipPos == 0)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a low level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip2 || equipPos == 5)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a mid level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}if (m_bShowToolTip3 || equipPos)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a high level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip4 || equipPos == 1)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a low level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip5 || equipPos == 6)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a mid level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip6 || equipPos == 9)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a high level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip7 || equipPos == 3)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a low level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip8 || equipPos == 7)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a mid level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip9 || equipPos == 10)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a high level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip10 || equipPos == 4)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a low level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip11 || equipPos == 8)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a mid level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
+			if (m_bShowToolTip12 || equipPos == 11)
+			{
+				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
+				pGraphics->DrawString("Gives your weapon\n a high level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
+			}
 		}
-		if (m_bShowToolTip2)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a mid level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}if (m_bShowToolTip3)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a high level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip4)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a low level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip5)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a mid level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip6)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a high level\n Water Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip7)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a low level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip8)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a mid level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip9)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a high level\n Air Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip10)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a low level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip11)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a mid level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-		if (m_bShowToolTip12)
-		{
-			pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
-			pGraphics->DrawString("Gives your weapon\n a high level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-		}
-
 
 		pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawTexture(m_hFiret1, { 210, 240 }, {}, {}, {}, { 0.1f, 0.1f });
