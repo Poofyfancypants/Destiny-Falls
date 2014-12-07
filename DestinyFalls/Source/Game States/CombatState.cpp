@@ -577,8 +577,9 @@ bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //
 				{
 					pAudio->PlayAudio( Game::GetInstance()->m_mMeleeButton );
 					ComboElements d1 = mag.ElementCombination( InventoryState::GetInstance()->GetSwordSlot1() , InventoryState::GetInstance()->GetSwordSlot2() );
-					Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
 
+					Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
+					
 					( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 						( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 					( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();

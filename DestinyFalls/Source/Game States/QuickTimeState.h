@@ -18,6 +18,8 @@ public:
 	void RunQuickTime();
 	void StopQuickTime();
 
+	
+
 private:
 	QuickTimeState() = default;
 	virtual ~QuickTimeState() = default;
