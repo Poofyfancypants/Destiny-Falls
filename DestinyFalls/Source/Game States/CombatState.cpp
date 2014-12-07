@@ -118,6 +118,11 @@ void CombatState::Enter(void)
 	m_CombatPos2.y = (Game::GetInstance()->GetScreenHeight() / 2);
 
 	((Player*)m_pHeroes[0])->StartCombat();
+
+	//if (((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetMapSwitch() == false)
+	//{
+	//	((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetMapSwitch() == true;
+	//}
 }
 
 void CombatState::Exit(void)
@@ -296,10 +301,14 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
 	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
+
+	//backgrounds
+	
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)

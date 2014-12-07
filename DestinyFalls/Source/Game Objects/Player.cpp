@@ -141,6 +141,7 @@ void Player::Render( void )
 	if( m_bPlayCombatAnimation )
 	{
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), 289, 264 );
+
 	}
 	else
 	{
@@ -281,6 +282,8 @@ SGD::Rectangle Player::GetRect( void ) const
 	return sourceRect;
 }
 
+
+
 void Player::HandleCollision( const iObject* pOther )
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
@@ -291,6 +294,7 @@ void Player::HandleCollision( const iObject* pOther )
 		{
 			pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
 			Game::GetInstance()->AddState( CombatState::GetInstance() );
+
 		}
 
 	}

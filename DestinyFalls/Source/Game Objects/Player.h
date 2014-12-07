@@ -72,8 +72,12 @@ public:
 	void SetSpell2Cool(bool _Cool) { m_bSpell2 = _Cool; }
 	void SetSpell3Cool(bool _Cool) { m_bSpell3 = _Cool; }
 
+	bool GetMapSwitch() const { return m_bMapSwitch; }
+	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
+
 private:
 
+	bool m_bMapSwitch = true;
 	int m_nDirection;
 	int m_nPrevDirection;
 	bool m_bSliding = false;

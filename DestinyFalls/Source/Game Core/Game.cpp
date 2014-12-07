@@ -252,6 +252,7 @@ int Game::Update( void )
 
 	m_pStateStack[m_nCurrState]->Render();
 
+
 	return 0;		// keep playing!
 }
 
