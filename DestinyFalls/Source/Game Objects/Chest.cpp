@@ -14,6 +14,10 @@ Chest::Chest()
 
 	numPots = rand() % 3;
 	numRunes = rand() % 2;
+
+	this->GetTimeStamp()->SetCurrentAnimation( "ChestOpening" );
+	this->GetTimeStamp()->SetCurrentFrame( 0 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 }
 
 
@@ -33,6 +37,11 @@ void Chest::Update(float elapsedTime)
 			Colliding = false;
 		}
 	}
+
+	if( Opened )
+	{
+		m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+	}
 }
 
 void Chest::Render(void)
@@ -49,7 +58,8 @@ void Chest::Render(void)
 		pGraphics->DrawRectangle( rec, SGD::Color( 0, 0, 255 ) );
 	}
 
-	pGraphics->DrawTexture(m_hImage, point);
+	//pGraphics->DrawTexture(m_hImage, point);
+	m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , ( int ) ( point.x + ( m_szSize.width / 2.0f ) ) , ( int ) ( point.y + ( m_szSize.height / 2.0f ) ) );
 
 	if (Colliding)
 	{
@@ -57,6 +67,8 @@ void Chest::Render(void)
 		tempPos.x = (m_ptPosition.x - GameplayState::GetInstance()->GetWorldCam().x);
 		tempPos.y = (m_ptPosition.y - GameplayState::GetInstance()->GetWorldCam().y);
 		SGD::GraphicsManager::GetInstance()->DrawString("Q", tempPos, SGD::Color(255, 255, 0, 0));
+		Opened = true;
+
 	}
 }
 
