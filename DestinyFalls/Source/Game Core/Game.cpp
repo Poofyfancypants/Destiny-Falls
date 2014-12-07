@@ -124,6 +124,7 @@ bool Game::Initialize( float width, float height )
 
 	pAudio->PlayAudio( m_mMusic, true );
 
+	m_bIcelandic = true;
 	LoadStrings();
 
 
@@ -251,6 +252,7 @@ int Game::Update( void )
 
 	m_pStateStack[m_nCurrState]->Render();
 
+
 	return 0;		// keep playing!
 }
 
@@ -342,6 +344,7 @@ void Game::Terminate( void )
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
 	m_pAnimator->DeleteInstance();
+	m_pDialogs->DeleteInstance();
 
 
 }
@@ -395,6 +398,8 @@ void Game::ClearStates()
 
 void Game::LoadStrings()
 {
+	m_pDialogs = m_pDialogs->GetInstance();
+
 	m_StringTable[0][1] = "Play";
 	m_StringTable[0][2] = "Load Game";
 	m_StringTable[0][3] = "Options";
@@ -455,8 +460,11 @@ void Game::LoadStrings()
 
 		m_StringTable[9][1] = "Music Vol";
 		m_StringTable[9][2] = "SFX Vol";
-		m_StringTable[9][3] = "Fullscreen";
+		m_StringTable[9][3] = "Screen";
 		m_StringTable[9][4] = "Language";
+
+		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
+		m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 	}
 	else
 	{
@@ -464,12 +472,12 @@ void Game::LoadStrings()
 		m_StringTable[7][2] = "Thetta gaeti verid okkar eini sens til ad stodvann.";
 		m_StringTable[7][3] = "Fardu Varlega, hann hefur buid til thrautir til ad haegja a okkur";
 		m_StringTable[7][4] = "Thu getur leyst thaer med thvi ad renna ther a milli veggja";
-		m_StringTable[7][5] = "Thessir steinar geta verid nothaefir Yttu a R til ad henda theim.";
+		m_StringTable[7][5] = "Thessir steinar geta verid gagnlegir, Yttu a R til ad henda theim.";
 		m_StringTable[7][6] = "Thetta eru haettulegar gildrur, reyndu ad fordast thaer!";
 		m_StringTable[7][7] = "Og mundu ad gosbrunnurinn hjalpar ther ef thu tapar bardaga.";
 		m_StringTable[7][8] = "Passadu thig! Onnur gildra, ekki styga a hana!";
 		m_StringTable[7][9] = "Thessi thraut hefur tvaer utkomur, thu gaetir fundid kystu!";
-		m_StringTable[8][1] = "Sko thu fannst kystu! Fekkstu Rune?";
+		m_StringTable[8][1] = "Sko thu fannst kystu! Fekkstu Rune? Eda kanski Potion?";
 		m_StringTable[8][2] = "Runeir getturu notad i gegnum bakpokann thinn med thvi ad yta E";
 		m_StringTable[8][3] = "Tharna! Vertu fyrir aftan mig!";
 		m_StringTable[8][4] = "Kysstur geta gefid ther Health Potion, ef thu hefur meidst geturu ";
@@ -478,8 +486,15 @@ void Game::LoadStrings()
 
 		m_StringTable[9][1] = "Tonlist Vol";
 		m_StringTable[9][2] = "SFX Vol";
-		m_StringTable[9][3] = "Fullscreen";
+		m_StringTable[9][3] = "Skjar";
 		m_StringTable[9][4] = "Tungumal";
+
+		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
+		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
 	}
+
+
+	//Set up DialogManager
+	//Load Dialogs
 
 }

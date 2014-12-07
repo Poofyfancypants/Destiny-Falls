@@ -3,21 +3,21 @@
   <Message>
     <Name>GreetingsResponse</Name>
     <Portrait>PlayerIcon.png</Portrait>
-    <Words>Greetings, wanderer!</Words>
+    <Words>Godan Daginn, Ferdalangi.</Words>
   </Message>
   <Message>
     <Name>Agree</Name>
     <Portrait>PlayerIcon.png</Portrait>
-    <Words>Indeed, you are most welcome to join me on my quest!</Words>
+    <Words>Audvitad mattu hjalpa til!</Words>
   </Message>
   <Message>
     <Name>Decline</Name>
     <Portrait>PlayerIcon.png</Portrait>
-    <Words>Not at this time, wanderer, but perhaps later.</Words>
+    <Words>Ekki akkurat nuna, kanski seinna!</Words>
   </Message>
   <Message>
     <Name>HowFaresResponse</Name>
     <Portrait>PlayerIcon.png</Portrait>
-    <Words>The quest proceeds well.</Words>
+    <Words>Allt gengur vel!</Words>
   </Message>
 </Dialogue>

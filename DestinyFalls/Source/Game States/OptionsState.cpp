@@ -188,14 +188,14 @@ void OptionsState::Render()
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 2 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 366 }, 1, { 255, 0, 0, 0 } );
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 2 ).c_str(), { ( 7 * 32 ) / 2, 364 }, 1, { 255, 0, 0 } );
 
-	pFonts->Render( "Dialog", ( m_bWindowed ? "Windowed" : "Fullscreen" ), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 430 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", ( m_bWindowed ? "Windowed" : "Fullscreen" ), { ( ( 7 * 32 ) / 2 ) + 220, 428 }, 1, { 255, 0, 0 } );
+	pFonts->Render( "Other", ( m_bWindowed ? "Windowed" : "Fullscreen" ), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 430 }, 1, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", ( m_bWindowed ? "Windowed" : "Fullscreen" ), { ( ( 7 * 32 ) / 2 ) + 220, 428 }, 1, { 255, 0, 0 } );
 
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 3 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 430 }, 1, { 255, 0, 0, 0 } );
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 3 ).c_str(), { ( 7 * 32 ) / 2, 428 }, 1, { 255, 0, 0 } );
 
-	pFonts->Render( "Dialog", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 490 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { ( ( 7 * 32 ) / 2 ) + 220, 488 }, 1, { 255, 0, 0 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 490 }, 1, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { ( ( 7 * 32 ) / 2 ) + 220, 488 }, 1, { 255, 0, 0 } );
 
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 4 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 490 }, 1, { 255, 0, 0, 0 } );
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 4 ).c_str(), { ( 7 * 32 ) / 2, 488 }, 1, { 255, 0, 0 } );

@@ -62,83 +62,104 @@ bool InventoryState::Input()
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
-	
+
+
 	// Check tab Selection
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::UpArrow) )
-	{
-		m_ntabCursor++;
-
-		if (m_ntabCursor == -1)
-			m_ntabCursor = 3;
-		else if (m_ntabCursor == 4)
-			m_ntabCursor = 0;
-
-		if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || m_ntabCursor == 0)
-		{
-			m_bArmorTab = !m_bArmorTab;
-			m_bWeaponsTab = false;
-			m_bRunesTab = false;
-			m_bCompanionsTab = false;
-		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || m_ntabCursor == 1)
-		{
-			m_bWeaponsTab = !m_bWeaponsTab;
-			m_bRunesTab = false;
-			m_bArmorTab = false;
-			m_bCompanionsTab = false;
-		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || m_ntabCursor == 3)
-		{
-			m_bCompanionsTab = !m_bCompanionsTab;
-			m_bRunesTab = false;
-			m_bArmorTab = false;
-			m_bWeaponsTab = false;
-		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || m_ntabCursor == 2)
-		{
-			m_bRunesTab = !m_bRunesTab;
-			m_bWeaponsTab = false;
-			m_bArmorTab = false;
-			m_bCompanionsTab = false;
-		}
-	}
-	else if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+	if (pInput->IsKeyPressed(SGD::Key::UpArrow))
 	{
 		m_ntabCursor++;
 		if (m_ntabCursor == -1)
 			m_ntabCursor = 3;
 		else if (m_ntabCursor == 4)
 			m_ntabCursor = 0;
-
-		if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || m_ntabCursor == 0)
-		{
-			m_bArmorTab = !m_bArmorTab;
-			m_bWeaponsTab = false;
-			m_bRunesTab = false;
-			m_bCompanionsTab = false;
-		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || m_ntabCursor == 3)
-		{
-			m_bWeaponsTab = !m_bWeaponsTab;
-			m_bRunesTab = false;
-			m_bArmorTab = false;
-			m_bCompanionsTab = false;
-		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || m_ntabCursor == 1)
-		{
-			m_bCompanionsTab = !m_bCompanionsTab;
-			m_bRunesTab = false;
-			m_bArmorTab = false;
-			m_bWeaponsTab = false;
-		}
-		else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || m_ntabCursor == 2)
-		{
-			m_bRunesTab = !m_bRunesTab;
-			m_bWeaponsTab = false;
-			m_bArmorTab = false;
-			m_bCompanionsTab = false;
-		}
 	}
+
+	if (pInput->IsKeyPressed(SGD::Key::DownArrow))
+	{
+		m_ntabCursor--;
+		if (m_ntabCursor == -1)
+			m_ntabCursor = 3;
+		else if (m_ntabCursor == 4)
+			m_ntabCursor = 0;
+	}
+
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	{
+		if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor))
+			m_ntabCursor = 0;
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons))
+			m_ntabCursor = 1;
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes))
+			m_ntabCursor = 2;
+		else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions))
+			m_ntabCursor = 3;
+		//if (m_ntabCursor == -1)
+		//	m_ntabCursor = 3;
+		//else if (m_ntabCursor == 4)
+		//	m_ntabCursor = 0;
+
+	}
+	if (m_ntabCursor == 0)
+	{
+		m_bArmorTab = true;
+		m_bWeaponsTab = false;
+		m_bRunesTab = false;
+		m_bCompanionsTab = false;
+	}
+	else if (m_ntabCursor == 1)
+	{
+		m_bWeaponsTab = true;
+		m_bRunesTab = false;
+		m_bArmorTab = false;
+		m_bCompanionsTab = false;
+	}
+	else if ( m_ntabCursor == 3)
+	{
+		m_bCompanionsTab = true;
+		m_bRunesTab = false;
+		m_bArmorTab = false;
+		m_bWeaponsTab = false;
+	}
+	else if (m_ntabCursor == 2)
+	{
+		m_bRunesTab = true;
+		m_bWeaponsTab = false;
+		m_bArmorTab = false;
+		m_bCompanionsTab = false;
+	}
+	/*else
+	{*/
+
+
+	/*if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || m_ntabCursor == 0)
+	{
+	m_bArmorTab = !m_bArmorTab;
+	m_bWeaponsTab = false;
+	m_bRunesTab = false;
+	m_bCompanionsTab = false;
+	}
+	else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || m_ntabCursor == 3)
+	{
+	m_bWeaponsTab = !m_bWeaponsTab;
+	m_bRunesTab = false;
+	m_bArmorTab = false;
+	m_bCompanionsTab = false;
+	}
+	else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || m_ntabCursor == 1)
+	{
+	m_bCompanionsTab = !m_bCompanionsTab;
+	m_bRunesTab = false;
+	m_bArmorTab = false;
+	m_bWeaponsTab = false;
+	}
+	else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || m_ntabCursor == 2)
+	{
+	m_bRunesTab = !m_bRunesTab;
+	m_bWeaponsTab = false;
+	m_bArmorTab = false;
+	m_bCompanionsTab = false;
+	}*/
+	//}
 	if (m_bWeaponsTab)
 	{
 		if (pauseSelection == false)
@@ -600,10 +621,8 @@ bool InventoryState::Input()
 #pragma endregion
 
 #pragma region tooltips
-
-		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
 		{
-			m_bShowToolTip1 = !m_bShowToolTip1;
+			m_bShowToolTip1 = true;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
 			m_bShowToolTip4 = false;
@@ -619,7 +638,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect2))
 		{
-			m_bShowToolTip2 = !m_bShowToolTip2;
+			m_bShowToolTip2 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip3 = false;
 			m_bShowToolTip4 = false;
@@ -634,7 +653,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect3))
 		{
-			m_bShowToolTip3 = !m_bShowToolTip3;
+			m_bShowToolTip3 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip4 = false;
@@ -649,7 +668,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect4))
 		{
-			m_bShowToolTip4 = !m_bShowToolTip4;
+			m_bShowToolTip4 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -664,7 +683,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect5))
 		{
-			m_bShowToolTip5 = !m_bShowToolTip5;
+			m_bShowToolTip5 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -679,7 +698,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect6))
 		{
-			m_bShowToolTip6 = !m_bShowToolTip6;
+			m_bShowToolTip6 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -694,7 +713,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect7))
 		{
-			m_bShowToolTip7 = !m_bShowToolTip7;
+			m_bShowToolTip7 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -709,7 +728,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect8))
 		{
-			m_bShowToolTip8 = !m_bShowToolTip8;
+			m_bShowToolTip8 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -724,7 +743,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect9))
 		{
-			m_bShowToolTip9 = !m_bShowToolTip9;
+			m_bShowToolTip9 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -739,7 +758,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect10))
 		{
-			m_bShowToolTip10 = !m_bShowToolTip10;
+			m_bShowToolTip10 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -754,7 +773,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect11))
 		{
-			m_bShowToolTip11 = !m_bShowToolTip11;
+			m_bShowToolTip11 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -769,7 +788,7 @@ bool InventoryState::Input()
 		}
 		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect12))
 		{
-			m_bShowToolTip12 = !m_bShowToolTip12;
+			m_bShowToolTip12 = true;
 			m_bShowToolTip1 = false;
 			m_bShowToolTip2 = false;
 			m_bShowToolTip3 = false;
@@ -782,8 +801,9 @@ bool InventoryState::Input()
 			m_bShowToolTip10 = false;
 			m_bShowToolTip11 = false;
 		}
-#pragma endregion 
 	}
+#pragma endregion 
+	
 	//leave inventory
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
@@ -1023,14 +1043,14 @@ void InventoryState::Render()
 	{
 		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
 		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
-		pGraphics->DrawString("Fighter", SGD::Point(210, 50), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Tank", SGD::Point(210, 50), SGD::Color(0, 0, 0));
 		pGraphics->DrawString("Healer", SGD::Point(345, 50), SGD::Color(0, 0, 0));
 		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
 		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(345, 70), {}, {}, {}, { .3f, .28f });
-		pGraphics->DrawString("Hunter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Fighter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
 		pGraphics->DrawString("Mage", SGD::Point(345, 205), SGD::Color(0, 0, 0));
 
-		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, {.35f, .35f});
+		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, { .35f, .35f });
 		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(330, 225), {}, {}, {}, { .35f, .35f });
 
 
@@ -1227,7 +1247,6 @@ void InventoryState::Render()
 
 	if (m_bRunesTab)
 	{
-
 		m_bWeaponsTab = false;
 		m_bArmorTab = false;
 		//outline tab
@@ -1406,10 +1425,10 @@ void InventoryState::Render()
 
 
 #pragma region ToolTips
-	if( m_bArmorTab || m_bWeaponsTab || m_bRunesTab )
+	if (m_bArmorTab || m_bWeaponsTab || m_bRunesTab)
 	{
 
-		if (pauseSelection)
+		if (pauseSelection )
 		{
 			if (m_bShowToolTip1 || equipPos == 0)
 			{
@@ -1420,7 +1439,8 @@ void InventoryState::Render()
 			{
 				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 				pGraphics->DrawString("Gives your weapon\n a mid level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-			}if (m_bShowToolTip3 || equipPos)
+			}
+			if (m_bShowToolTip3 || equipPos)
 			{
 				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 				pGraphics->DrawString("Gives your weapon\n a high level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
@@ -1602,10 +1622,19 @@ void InventoryState::Render()
 		SGD::Point TextPositionOne;
 		SGD::Point TextPositionTwo;
 
-		TextPositionOne.x = DialogBoxOne.left + 60;
+		if( Game::GetInstance()->GetIcelandic() )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 60;
+			TextPositionTwo.x = DialogBoxOne.left + 150;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 60;
+			TextPositionTwo.x = DialogBoxOne.left + 80;
+		}
+
 		TextPositionOne.y = DialogBoxOne.top + 20;
-		TextPositionTwo.x = DialogBoxOne.left + 80;
-		TextPositionTwo.y = DialogBoxOne.top + 50;
+		TextPositionTwo.x = DialogBoxOne.left +80;		TextPositionTwo.y = DialogBoxOne.top + 50;
 
 		portraitPosition.x = DialogBoxOne.left - 10;
 		portraitPosition.y = DialogBoxOne.top - 30;

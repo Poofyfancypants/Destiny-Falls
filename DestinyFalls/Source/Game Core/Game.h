@@ -7,6 +7,7 @@
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../Managers/BitmapFontManager.h"
 #include "../Managers/AnimationManager.h"
+#include "../Managers/DialogManager.h"
 
 /**************************************************************/
 // Forward class declaration
@@ -138,6 +139,7 @@ private:
 	// Game Font
 	//BitmapFont*				m_pFont = nullptr;
 	BitmapFontManager * m_pFonts = nullptr;
+	DialogManager* m_pDialogs;
 
 	// - FPS
 	bool m_bDebug = false;

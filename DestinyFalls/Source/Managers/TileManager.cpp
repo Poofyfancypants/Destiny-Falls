@@ -40,6 +40,7 @@ bool TileManager::LoadLevel( const char* _file )
 	Tile readTile;
 	int xIndex, yIndex, nMapSizeX, nMapSizeY, nGridWidth, nGridHeight, col, pSpawn;
 	int startSlide, endSlide, checkPoint, boulderSpawn, QTevent, nextLevel, prevLevel;
+	int mainLevel, sideLevel;
 	tilePath = "resource/graphics/TileSets/";
 
 	pRoot->Attribute( "MapSizeX", &nMapSizeX );
@@ -57,6 +58,8 @@ bool TileManager::LoadLevel( const char* _file )
 
 	while( pTile != nullptr )
 	{
+		pTile->Attribute( "MainLevel", &mainLevel );
+		pTile->Attribute( "SideLevel", &sideLevel );
 		pTile->Attribute( "PrevLevel", &prevLevel );
 		pTile->Attribute( "NextLevel", &nextLevel );
 		pTile->Attribute( "sourceX", &readTile.nX );
@@ -76,6 +79,7 @@ bool TileManager::LoadLevel( const char* _file )
 		pTile->Attribute( "QTEvent", &QTevent );
 		pTile->Attribute( "chestID", &readTile.m_nChestID );
 
+
 		m_TileMap.resize( nMapSizeX );
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
 			m_TileMap[i].resize( nMapSizeY );
@@ -89,6 +93,8 @@ bool TileManager::LoadLevel( const char* _file )
 		readTile.QTEvent = (bool)QTevent;
 		readTile.NextLevel = (bool)nextLevel;
 		readTile.PrevLevel = (bool)prevLevel;
+		readTile.SideLevel = (bool)sideLevel;
+		readTile.MainLevel = (bool)mainLevel;
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
@@ -211,21 +217,86 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].QTEvent )
 				{
-					// QT Event;
+
 				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].NextLevel )
 				{
+					if( GameplayState::GetInstance()->GetCurrentSideLevel() == -1 )
+						GameplayState::GetInstance()->SetSideLevel( 0 );
+
 					if( GameplayState::GetInstance()->GetChangeLevel() == false )
 					{
+						GameplayState::GetInstance()->SetLoadLevelPosition( false );
+						GameplayState::GetInstance()->SetLoadSidePosition( false );
 						GameplayState::GetInstance()->NextLevel();
+						GameplayState::GetInstance()->NextSideLevel();
 						GameplayState::GetInstance()->ChangeLevel( true );
+
+						switch( player->GetDirection() )
+						{
+						case 1:
+							m_ptPrevLevelPos = { (float)( i*m_szGridSize.width ), (float)( ( 1 + j )*m_szGridSize.height ) };
+							break;
+						case 2:
+							m_ptPrevLevelPos = { (float)( i*m_szGridSize.width ), (float)( ( j - 1 )*m_szGridSize.height ) };
+							break;
+						case 3:
+							m_ptPrevLevelPos = { (float)( ( i + 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
+							break;
+						case 4:
+							m_ptPrevLevelPos = { (float)( ( i - 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
+							break;
+						}
+
 					}
 				}
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].PrevLevel )
 				{
 					if( GameplayState::GetInstance()->GetChangeLevel() == false )
 					{
+						GameplayState::GetInstance()->SetLoadLevelPosition( true );
+						GameplayState::GetInstance()->SetLoadSidePosition( false );
+
 						GameplayState::GetInstance()->PrevLevel();
+						GameplayState::GetInstance()->PrevSideLevel();
+						GameplayState::GetInstance()->ChangeLevel( true );
+					}
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].SideLevel )
+				{
+					if( GameplayState::GetInstance()->GetChangeSideLevel() == false )
+					{
+						if( GameplayState::GetInstance()->GetCurrentSideLevel() == -1 )
+							GameplayState::GetInstance()->SetSideLevel( 0 );
+
+
+						GameplayState::GetInstance()->SetLoadSidePosition( false );
+						GameplayState::GetInstance()->SetLoadLevelPosition( false );
+
+						GameplayState::GetInstance()->ChangeSideLevel( true );
+						switch( player->GetDirection() )
+						{
+						case 1:
+							m_ptPrevBonusPos = { (float)( i*m_szGridSize.width ), (float)( ( 1 + j )*m_szGridSize.height ) };
+							break;
+						case 2:
+							m_ptPrevBonusPos = { (float)( i*m_szGridSize.width ), (float)( ( j - 1 )*m_szGridSize.height ) };
+							break;
+						case 3:
+							m_ptPrevBonusPos = { (float)( ( i + 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
+							break;
+						case 4:
+							m_ptPrevBonusPos = { (float)( ( i - 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
+							break;
+						}
+					}
+				}
+				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].MainLevel )
+				{
+					if( GameplayState::GetInstance()->GetChangeSideLevel() == false )
+					{
+						GameplayState::GetInstance()->SetLoadSidePosition( true );
+						GameplayState::GetInstance()->SetLoadLevelPosition( false );
 						GameplayState::GetInstance()->ChangeLevel( true );
 					}
 				}
@@ -245,10 +316,10 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 			{
 				if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].collisionTile )
 					return true;
-				else if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
-					return true;
-				else if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].EndSlide )
-					return true;
+				//else if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].StartSlide )
+				//	return true;
+				//else if( PlayerCollision.IsIntersecting( m_TileMap[i][j].CollisionRect ) && m_TileMap[i][j].EndSlide )
+				//	return true;
 			}
 		}
 
@@ -269,7 +340,7 @@ void TileManager::SpawnObjects()
 				// - MOER SPESIFIC WHEN WE HAVE MORE ENEMY TYPES
 
 				Object* tempEnemy = nullptr;
-				tempEnemy = GameplayState::GetInstance()->CreateEnemy( dest );
+				tempEnemy = GameplayState::GetInstance()->CreateEnemy( dest, m_TileMap[row][col].m_nEnemyID );
 				GameplayState::GetInstance()->GetObjManager()->AddObject( tempEnemy, GameplayState::ENEMY_BUCKET );
 				tempEnemy->Release();
 			}
@@ -304,12 +375,32 @@ void TileManager::SpawnObjects()
 			if( m_TileMap[row][col].m_nCompanionID != 0 )
 			{
 				Object* tempComp = nullptr;
-				tempComp = GameplayState::GetInstance()->CreateCompanion( dest, m_TileMap[row][col].m_nCompanionID);
+				tempComp = GameplayState::GetInstance()->CreateCompanion( dest, m_TileMap[row][col].m_nCompanionID );
 				GameplayState::GetInstance()->GetObjManager()->AddObject( tempComp, GameplayState::COMPANION_BUCKET );
 				tempComp->Release();
 			}
-
+			if( m_TileMap[row][col].NextLevel )
+			{
+				switch( dynamic_cast<Player*>( GameplayState::GetInstance()->GetPlayer() )->GetDirection() )
+				{
+				case 0:
+					break;
+				case 1:
+					m_ptPrevLevelPos = { (float)( row*m_szGridSize.width ), (float)( ( 1 + col )*m_szGridSize.height ) };
+					break;
+				case 2:
+					m_ptPrevLevelPos = { (float)( row*m_szGridSize.width ), (float)( ( col - 1 )*m_szGridSize.height ) };
+					break;
+				case 3:
+					m_ptPrevLevelPos = { (float)( ( row + 1 )*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
+					break;
+				case 4:
+					m_ptPrevLevelPos = { (float)( ( row - 1 )*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
+					break;
+				}
+			}
 		}
+
 	}
 }
 

@@ -74,10 +74,14 @@ public:
 
 	void SetRect(SGD::Rectangle pRect1) { playerRect = pRect1; }
 	
+	bool GetMapSwitch() const { return m_bMapSwitch; }
+	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
+
 private:
 
 	SGD::Rectangle playerRect = { 225, 200, 289, 264 };
 
+	bool m_bMapSwitch = true;
 	int m_nDirection;
 	int m_nPrevDirection;
 	bool m_bSliding = false;

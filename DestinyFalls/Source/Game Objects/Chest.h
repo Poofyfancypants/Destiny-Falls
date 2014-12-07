@@ -3,6 +3,7 @@
 #include "AnimatedObject.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include <vector>
+#include "../Managers/AnimationManager.h"
 
 class Chest :
 	public AnimatedObject
@@ -38,4 +39,5 @@ private:
 	int numRunes;
 	bool trappedChest;
 	float textTimer = 3.0f;
+	AnimationManager* m_pAnimator = nullptr;
 };

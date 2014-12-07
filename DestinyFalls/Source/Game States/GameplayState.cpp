@@ -77,8 +77,9 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
-
-	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil1.png");
+	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/OverWorldRanger.png" );
+	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/OverWorldCleric.png" );
+	m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -91,17 +92,19 @@ void GameplayState::Enter()
 
 	pAudio->PlayAudio( bmusic, true );
 
-
-	//Set up DialogManager
-	m_pDialogs = m_pDialogs->GetInstance();
-	//Load Dialogs
-	m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
-	m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
-
+	m_bSetSidePosition = false;
+	m_bSetLevelPosition = false;
+	m_bFirstDialog = false;
+	m_bPuzzleDialog = false;
+	m_bBoulderDialog = false;
+	m_bTrapDialog = false;
+	m_bMainDialog = false;
+	m_bChestDialog = false;
+	m_bSigmundDialog = false;
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
-	ForgeButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60) }, SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 59), (Game::GetInstance()->GetScreenHeight()) });
+	ForgeButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 59 ), ( Game::GetInstance()->GetScreenHeight() ) } );
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
 	m_ptWorldCam = { 0, 0 };
@@ -126,10 +129,10 @@ void GameplayState::Exit()
 		m_pPlayer = nullptr;
 	}
 
-	pAudio->UnloadAudio(bmusic);
+	pAudio->UnloadAudio( bmusic );
 
 	//unload images
-	pGraphics->UnloadTexture(m_hForge);
+	pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
@@ -138,6 +141,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hHero );
 	pGraphics->UnloadTexture( m_hDialogImg );
 	pGraphics->UnloadTexture( m_hHealthPot );
+	pGraphics->UnloadTexture( m_hRanger );
+	pGraphics->UnloadTexture( m_hCleric );
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -146,7 +151,6 @@ void GameplayState::Exit()
 	delete m_pMap;
 	m_pMap = nullptr;
 	m_pAnimator->DeleteInstance();
-	m_pDialogs->DeleteInstance();
 }
 
 bool GameplayState::Input()
@@ -170,17 +174,18 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::F))
+	if( pInput->IsKeyPressed( SGD::Key::F ) )
 	{
-		Game::GetInstance()->AddState(ForgeState::GetInstance());
+		Game::GetInstance()->AddState( ForgeState::GetInstance() );
 	}
 
 	// - Toggle DebugMode with F2
 	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
 		m_bDebug = !m_bDebug;
-	if( pInput->IsKeyPressed( SGD::Key::F5 ) )
+	if( m_nCurrentLevel == 0 && pInput->IsKeyPressed( SGD::Key::Tab ) )
 	{
 		NextLevel();
+		SetSideLevel( 1 );
 		m_bChangeLevels = true;
 	}
 	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
@@ -193,15 +198,15 @@ bool GameplayState::Input()
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
 		{
-			Game::GetInstance()->AddState(InventoryState::GetInstance() );
+			Game::GetInstance()->AddState( InventoryState::GetInstance() );
 		}
-		if (pInput->GetCursorPosition().IsPointInRectangle(ForgeButton))
+		if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
 		{
-			Game::GetInstance()->AddState(ForgeState::GetInstance());
+			Game::GetInstance()->AddState( ForgeState::GetInstance() );
 		}
 	}
 
-
+	m_bIcelandic = Game::GetInstance()->GetIcelandic();
 
 	return true;
 }
@@ -209,6 +214,7 @@ bool GameplayState::Input()
 void GameplayState::Update( float elapsedTime )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
@@ -220,23 +226,24 @@ void GameplayState::Update( float elapsedTime )
 	}
 
 
-	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
 	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
-	m_pObjects->CheckCollisions( PLAYER_BUCKET , COMPANION_BUCKET );
+	m_pObjects->CheckCollisions( PLAYER_BUCKET, COMPANION_BUCKET );
 
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
-	if( m_nCurrentLevel == 0 )
+	if( m_nCurrentLevel == 0 && m_nCurrentSideLevel == -1 )
 		HandleTutorial();
 
 	// - Next Level?
 	if( m_bChangeLevels )
 		LoadNewLevel();
+	else if( m_bChangeSideLevels )
+		LoadNewSideLevel();
 }
 
 void GameplayState::Render()
@@ -245,7 +252,6 @@ void GameplayState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
-
 
 	pGraphics->SetClearColor();
 	m_pObjects->RenderAll();
@@ -262,8 +268,8 @@ void GameplayState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
-	pGraphics->DrawTexture(m_hForge, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, { 0.4f, 0.35f });
-	
+	pGraphics->DrawTexture( m_hForge, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.4f, 0.35f } );
+
 	if( m_nCurrentLevel == 0 )
 	{
 		RenderDialog();
@@ -282,6 +288,10 @@ void GameplayState::Render()
 
 
 	pGraphics->DrawTexture( m_hHealthPot, SGD::Point( HealthPotionPosition.left, HealthPotionPosition.top ), {}, {}, {}, { 0.7f, 0.7f } );
+	pFont->Render( "Bernardo",
+		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
+		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
+		2, SGD::Color( 255, 0, 0 ) );
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
@@ -294,7 +304,7 @@ Object* GameplayState::CreatePlayer( SGD::Point _pos )
 	return temp;
 }
 
-Object* GameplayState::CreateEnemy( SGD::Point _pos )
+Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 {
 	Enemy* temp = new Enemy;
 	temp->SetImage( m_henemy );
@@ -365,7 +375,10 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 Object* GameplayState::CreateCompanion( SGD::Point _pos, int _ID )
 {
 	Companion* temp = new Companion;
-	temp->SetImage( m_hBoulder );
+	if( _ID == 1 )
+		temp->SetImage( m_hRanger );
+	else
+		temp->SetImage( m_hCleric );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 30, 30 ) );
 	return temp;
@@ -376,6 +389,8 @@ void GameplayState::UnloadAndCreate()
 {
 
 	int playerHealth, numPotions;
+	SGD::Point prevPos = m_pMap->GetPrevPosition();
+	SGD::Point prevLevelPos = m_pMap->GetPrevLevelPosition();
 	if( m_pPlayer != nullptr )
 	{
 		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
@@ -401,11 +416,15 @@ void GameplayState::UnloadAndCreate()
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
 	( (Player*)m_pPlayer )->SetHealth( playerHealth );
 	( (Player*)m_pPlayer )->SetPotions( numPotions );
+
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
 
 
 	delete m_pMap;
 	m_pMap = new TileManager;
+	m_pMap->SetPrevPosition( prevPos );
+	m_pMap->SetPrevLevelPosition( prevLevelPos );
+
 
 	if( m_nCurrentLevel == 0 )
 	{
@@ -432,22 +451,42 @@ void GameplayState::LoadNewLevel()
 		case GameplayState::TUTORIAL_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+			if( m_bSetSidePosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
+			else  if( m_bSetLevelPosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::EARTH_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
+			if( m_bSetSidePosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
+			else  if( m_bSetLevelPosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::WATER_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/waterLevel.xml" );
+			if( m_bSetSidePosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
+			else  if( m_bSetLevelPosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::AIR_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/FireLevelT1.xml" );
+			if( m_bSetSidePosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
+			else  if( m_bSetLevelPosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::FIRE_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/FinalLevel.xml" );
+			if( m_bSetSidePosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
+			else  if( m_bSetLevelPosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::BOSS_LEVEL:
 			Game::GetInstance()->AddState( WinState::GetInstance() );
@@ -460,6 +499,35 @@ void GameplayState::LoadNewLevel()
 	}
 
 	m_bChangeLevels = false;
+}
+void GameplayState::LoadNewSideLevel()
+{
+	// - Needs to be filled in. 9 levels
+	switch( m_nCurrentSideLevel )
+	{
+	case GameplayState::TUTORIAL_SIDE:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/CastleBlevel.xml" );
+		break;
+	case GameplayState::EARTH_SIDE:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/FarmHouseBLevel.xml" );
+		break;
+	case GameplayState::WATER_SIDE:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/IceForestBLevel.xml" );
+		break;
+	case GameplayState::AIR_SIDE:
+		break;
+	case GameplayState::FIRE_SIDE:
+		break;
+	case GameplayState::BOSS_SIDE:
+		break;
+	default:
+		break;
+	}
+
+	m_bChangeSideLevels = false;
 }
 
 void GameplayState::HandleTutorial()
@@ -560,8 +628,16 @@ void GameplayState::RenderDialog()
 
 	if( m_bFirstDialog )
 	{
-		TextPositionOne.x = DialogBoxOne.left + 50;
-		TextPositionTwo.x = DialogBoxOne.left + 200;
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 150;
+			TextPositionTwo.x = DialogBoxOne.left + 170;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 50;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
 
 		heroPosition = { (float)( ( 3 * 32 ) - m_ptWorldCam.x ), (float)( ( 8 * 32 ) - m_ptWorldCam.y ) };
 
@@ -574,9 +650,16 @@ void GameplayState::RenderDialog()
 
 	else if( m_bPuzzleDialog )
 	{
-		TextPositionOne.x = DialogBoxOne.left + 160;
-		TextPositionTwo.x = DialogBoxOne.left + 100;
-
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 115;
+			TextPositionTwo.x = DialogBoxOne.left + 140;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 160;
+			TextPositionTwo.x = DialogBoxOne.left + 100;
+		}
 		heroPosition = { (float)( ( 7 * 32 ) - m_ptWorldCam.x ), (float)( ( 14 * 32 ) - m_ptWorldCam.y ) };
 
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
@@ -588,9 +671,15 @@ void GameplayState::RenderDialog()
 
 	else if( m_bBoulderDialog )
 	{
-		TextPositionOne.y = DialogBoxOne.top + 25;
-		TextPositionTwo.x = DialogBoxOne.left + 115;
-
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 115;
+			TextPositionTwo.x = DialogBoxOne.left + 140;
+		}
+		else
+		{
+			TextPositionTwo.x = DialogBoxOne.left + 115;
+		}
 		heroPosition = { (float)( ( 12 * 32 ) - m_ptWorldCam.x ), (float)( ( 0 * 32 ) - m_ptWorldCam.y ) };
 
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
@@ -604,10 +693,16 @@ void GameplayState::RenderDialog()
 	else if( m_bTrapDialog )
 	{
 		heroPosition = { (float)( ( 26 * 32 ) - m_ptWorldCam.x ), (float)( ( 2 * 32 ) - m_ptWorldCam.y ) };
-
-		TextPositionOne.x = DialogBoxOne.left + 90;
-		TextPositionTwo.x = DialogBoxOne.left + 110;
-
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 130;
+			TextPositionTwo.x = DialogBoxOne.left + 110;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 90;
+			TextPositionTwo.x = DialogBoxOne.left + 110;
+		}
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );		// - Draw string One.
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
@@ -619,10 +714,16 @@ void GameplayState::RenderDialog()
 	else if( m_bMainDialog )
 	{
 		heroPosition = { (float)( ( 24 * 32 ) - m_ptWorldCam.x ), (float)( ( 16 * 32 ) - m_ptWorldCam.y ) };
-
-		TextPositionOne.x = DialogBoxOne.left + 150;
-		TextPositionTwo.x = DialogBoxOne.left + 120;
-
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 180;
+			TextPositionTwo.x = DialogBoxOne.left + 120;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 150;
+			TextPositionTwo.x = DialogBoxOne.left + 120;
+		}
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
@@ -633,10 +734,16 @@ void GameplayState::RenderDialog()
 	else if( m_bChestDialog )
 	{
 		heroPosition = { (float)( ( 20 * 32 ) - m_ptWorldCam.x ), (float)( ( 7 * 32 ) - m_ptWorldCam.y ) };
-
-		TextPositionOne.x = DialogBoxOne.left + 110;
-		TextPositionTwo.x = DialogBoxOne.left + 120;
-
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 150;
+			TextPositionTwo.x = DialogBoxOne.left + 120;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 110;
+			TextPositionTwo.x = DialogBoxOne.left + 120;
+		}
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
@@ -647,8 +754,12 @@ void GameplayState::RenderDialog()
 	else if( m_bSigmundDialog )
 	{
 		heroPosition = { (float)( ( 16 * 32 ) - m_ptWorldCam.x ), (float)( ( 19 * 32 ) - m_ptWorldCam.y ) };
-
-		TextPositionOne.x = DialogBoxOne.left + 220;
+		if( m_bIcelandic )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 220;
+		}
+		else
+			TextPositionOne.x = DialogBoxOne.left + 220;
 
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );

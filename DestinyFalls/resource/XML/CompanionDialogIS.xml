@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dialogue>
+  <Message>
+    <Name>Greeting</Name>
+    <Portrait>TestCompanionPortrait.png</Portrait>
+    <Words>Hallo hetja!</Words>
+  </Message>
+  <Message>
+    <Name>RequestToJoin</Name>
+    <Portrait>TestCompanionPortrait.png</Portrait>
+    <Words>Ma eg hjalpa ther i leidangri thinum?</Words>
+  </Message>
+  <Message>
+    <Name>HowFares</Name>
+    <Portrait>TestCompanionPortrait.png</Portrait>
+    <Words>Hvernig gengur leidangurinn?</Words>
+  </Message>
+</Dialogue>
