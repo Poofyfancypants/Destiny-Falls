@@ -304,7 +304,7 @@ Object* GameplayState::CreatePlayer( SGD::Point _pos )
 	return temp;
 }
 
-Object* GameplayState::CreateEnemy( SGD::Point _pos )
+Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 {
 	Enemy* temp = new Enemy;
 	temp->SetImage( m_henemy );

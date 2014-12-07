@@ -47,7 +47,7 @@ public:
 	TileManager* GetMap() const { return m_pMap; }
 
 	Object* CreatePlayer( SGD::Point _pos );
-	Object* CreateEnemy( SGD::Point _pos );
+	Object* CreateEnemy( SGD::Point _pos, int _id );
 	Object* CreateChest( SGD::Point _pos );
 
 	//Audio

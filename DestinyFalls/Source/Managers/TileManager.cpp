@@ -340,7 +340,7 @@ void TileManager::SpawnObjects()
 				// - MOER SPESIFIC WHEN WE HAVE MORE ENEMY TYPES
 
 				Object* tempEnemy = nullptr;
-				tempEnemy = GameplayState::GetInstance()->CreateEnemy( dest );
+				tempEnemy = GameplayState::GetInstance()->CreateEnemy( dest, m_TileMap[row][col].m_nEnemyID );
 				GameplayState::GetInstance()->GetObjManager()->AddObject( tempEnemy, GameplayState::ENEMY_BUCKET );
 				tempEnemy->Release();
 			}
