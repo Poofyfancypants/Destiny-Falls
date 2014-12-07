@@ -343,6 +343,7 @@ void Game::Terminate( void )
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
 	m_pAnimator->DeleteInstance();
+	m_pDialogs->DeleteInstance();
 
 
 }
@@ -483,4 +484,10 @@ void Game::LoadStrings()
 		m_StringTable[9][4] = "Tungumal";
 	}
 
+
+		//Set up DialogManager
+	m_pDialogs = m_pDialogs->GetInstance();
+	//Load Dialogs
+	m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
+	m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
 }

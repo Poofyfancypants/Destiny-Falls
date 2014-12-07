@@ -93,11 +93,7 @@ void GameplayState::Enter()
 	pAudio->PlayAudio( bmusic, true );
 
 
-	//Set up DialogManager
-	m_pDialogs = m_pDialogs->GetInstance();
-	//Load Dialogs
-	m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
-	m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
+
 
 
 	// Invisible inventory selection button behind inventory image.
@@ -147,7 +143,6 @@ void GameplayState::Exit()
 	delete m_pMap;
 	m_pMap = nullptr;
 	m_pAnimator->DeleteInstance();
-	m_pDialogs->DeleteInstance();
 }
 
 bool GameplayState::Input()
