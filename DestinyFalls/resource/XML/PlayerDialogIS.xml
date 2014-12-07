@@ -2,22 +2,22 @@
 <Dialogue>
   <Message>
     <Name>GreetingsResponse</Name>
-    <Portrait>testhero.png</Portrait>
+    <Portrait>PlayerIcon.png</Portrait>
     <Words>Godan Daginn, Ferdalangi.</Words>
   </Message>
   <Message>
     <Name>Agree</Name>
-    <Portrait>testhero.png</Portrait>
+    <Portrait>PlayerIcon.png</Portrait>
     <Words>Audvitad mattu hjalpa til!</Words>
   </Message>
   <Message>
     <Name>Decline</Name>
-    <Portrait>testhero.png</Portrait>
+    <Portrait>PlayerIcon.png</Portrait>
     <Words>Ekki akkurat nuna, kanski seinna!</Words>
   </Message>
   <Message>
     <Name>HowFaresResponse</Name>
-    <Portrait>testhero.png</Portrait>
+    <Portrait>PlayerIcon.png</Portrait>
     <Words>Allt gengur vel!</Words>
   </Message>
 </Dialogue>

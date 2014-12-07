@@ -397,6 +397,8 @@ void Game::ClearStates()
 
 void Game::LoadStrings()
 {
+	m_pDialogs = m_pDialogs->GetInstance();
+
 	m_StringTable[0][1] = "Play";
 	m_StringTable[0][2] = "Load Game";
 	m_StringTable[0][3] = "Options";
@@ -459,6 +461,9 @@ void Game::LoadStrings()
 		m_StringTable[9][2] = "SFX Vol";
 		m_StringTable[9][3] = "Screen";
 		m_StringTable[9][4] = "Language";
+
+		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
+		m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 	}
 	else
 	{
@@ -482,12 +487,13 @@ void Game::LoadStrings()
 		m_StringTable[9][2] = "SFX Vol";
 		m_StringTable[9][3] = "Skjar";
 		m_StringTable[9][4] = "Tungumal";
+
+		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
+		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
 	}
 
 
-		//Set up DialogManager
-	m_pDialogs = m_pDialogs->GetInstance();
+	//Set up DialogManager
 	//Load Dialogs
-	m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
-	m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
+
 }

@@ -28,7 +28,7 @@ Player::Player() : Listener( this )
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 	m_hPortrait = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/PlayerIcon.jpg" );
-	m_hDialogImg = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/heroPortrait.png" );
+	m_hDialogImg = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/PlayerIcon.jpg" );
 	m_hDialogImg2 = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/TestCompanionPortrait.png" );
 }
 Player::~Player()
@@ -823,7 +823,7 @@ void Player::RenderDialog()
 		break;
 	case 2:
 		pDialog->Render( "Dialog", "GreetingsResponse", TextPositionOne, 1, SGD::Color( 0, 0, 0 ) );
-		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
+		pGraphics->DrawTexture( m_hDialogImg, portraitPosition, {}, {}, {}, {.3f,.3f} );
 		break;
 	case 3:
 		pDialog->Render( "Dialog", "HowFares", TextPositionOne, 1, SGD::Color( 0, 0, 0 ) );
@@ -831,7 +831,7 @@ void Player::RenderDialog()
 		break;
 	case 4:
 		pDialog->Render( "Dialog", "HowFaresResponse", TextPositionOne, 1, SGD::Color( 0, 0, 0 ) );
-		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
+		pGraphics->DrawTexture( m_hDialogImg, portraitPosition, {}, {}, {}, {.3f,.3f} );
 		break;
 	case 5:
 		pDialog->Render( "Dialog", "RequestToJoin", TextPositionOne, 1, SGD::Color( 0, 0, 0 ) );
@@ -839,7 +839,7 @@ void Player::RenderDialog()
 		break;
 	case 6:
 		pDialog->Render( "Dialog", "Agree", TextPositionOne, 1, SGD::Color( 0, 0, 0 ) );
-		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
+		pGraphics->DrawTexture( m_hDialogImg, portraitPosition, {}, {}, {}, {.3f,.3f} );
 		break;
 	default:
 		break;
