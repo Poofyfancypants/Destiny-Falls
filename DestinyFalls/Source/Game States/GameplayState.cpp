@@ -139,6 +139,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hHero );
 	pGraphics->UnloadTexture( m_hDialogImg );
 	pGraphics->UnloadTexture( m_hHealthPot );
+	pGraphics->UnloadTexture(m_hRanger);
+	pGraphics->UnloadTexture(m_hCleric);
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;

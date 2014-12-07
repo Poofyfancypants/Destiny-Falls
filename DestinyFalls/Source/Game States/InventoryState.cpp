@@ -1249,7 +1249,6 @@ void InventoryState::Render()
 
 	if (m_bRunesTab)
 	{
-
 		m_bWeaponsTab = false;
 		m_bArmorTab = false;
 		//outline tab
@@ -1442,7 +1441,8 @@ void InventoryState::Render()
 			{
 				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 				pGraphics->DrawString("Gives your weapon\n a mid level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
-			}if (m_bShowToolTip3 || equipPos)
+			}
+			if (m_bShowToolTip3 || equipPos)
 			{
 				pGraphics->DrawRectangle(RuneToolRect, SGD::Color{ 255, 250, 250, 250 }, SGD::Color{ 1, 255, 255, 255 });
 				pGraphics->DrawString("Gives your weapon\n a high level\n Fire Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
