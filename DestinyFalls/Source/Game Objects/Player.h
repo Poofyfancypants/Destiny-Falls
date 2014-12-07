@@ -46,8 +46,10 @@ public:
 	int GetNumPotions() const { return m_nPotions; }
 	int m_nPotions = 0;
 
+
 	void RunQuickTime(int length);
 	void StopQuickTime();
+	QuickTime* GetQuickTime( void ){ return currentQT; }
 
 	int GetPrevDirection() const {return m_nPrevDirection;}
 	bool GetBoulderCollision() const {return m_bCollision;}
@@ -58,6 +60,7 @@ public:
 
 	void RenderDialog();
 	void UpdateDialog();
+	void PreventDialogFromRestarting( float elapsedTime );
 
 private:
 
@@ -88,13 +91,17 @@ private:
 	bool m_bUpdateAnimation = true;
 
 	SGD::HTexture m_hPortrait = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hDialogImg2 = SGD::INVALID_HANDLE;
+
 
 	bool m_bPlayCombatAnimation = false;
 
 	string m_szLastAnimation;
 
 	bool m_bRunDialog = false;
-
+	bool m_bPreventDialog = false;
+	float m_fDialogTimer = 5.0f;
 	int m_nLineCounter = 1;
 
 };

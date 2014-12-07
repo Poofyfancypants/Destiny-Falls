@@ -75,6 +75,7 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/ClericAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/RangerAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
 
 	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil1.png");

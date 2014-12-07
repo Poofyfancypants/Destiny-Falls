@@ -45,5 +45,5 @@ void SplashScreenState::Update( float elapsedTime )
 
 void SplashScreenState::Render()
 {
-	SGD::GraphicsManager::GetInstance()->DrawTexture( m_hImage , SGD::Point( 0.0f , 0.0f ) );
+	SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hImage , SGD::Point( 0.0f , 0.0f ), SGD::Rectangle(0.0f, 0.0f, 800.0f, 600.0f) );
 }

@@ -27,11 +27,14 @@ Player::Player() : Listener( this )
 	this->GetTimeStamp()->SetCurrentFrame( 0 );
 	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 	m_hPortrait = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/PlayerIcon.jpg" );
-
+	m_hDialogImg = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/heroPortrait.png" );
+	m_hDialogImg2 = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/TestCompanionPortrait.png" );
 }
 Player::~Player()
 {
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hPortrait );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hDialogImg );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hDialogImg2 );
 
 }
 
@@ -122,6 +125,11 @@ void Player::Update( float elapsedTime )
 		}
 		else
 			m_bLowHealthWarning = false;
+
+		if( m_bPreventDialog )
+		{
+			PreventDialogFromRestarting( elapsedTime );
+		}
 	}
 
 
@@ -134,10 +142,7 @@ void Player::Render( void )
 	{
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), 289, 264 );
 	}
-	else if( m_bRunDialog )
-	{
-		RenderDialog();
-	}
+	
 	else
 	{
 		SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
@@ -159,9 +164,6 @@ void Player::Render( void )
 		pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
 		pGraphics->DrawTexture( m_hPortrait, SGD::Point( currentHealthHUD.x - 70, currentHealthHUD.y - 30 ), {}, {}, {}, { .5f, .5f } );
 
-		std::string potString = std::to_string( m_nPotions );
-		potString += " Potions";
-		pGraphics->DrawString( potString.c_str(), { ( Game::GetInstance()->GetScreenWidth() - 100 ), ( Game::GetInstance()->GetScreenHeight() - 80 ) }, SGD::Color( 255, 255, 0, 0 ) );
 
 		if( m_pAnimator->GetInstance()->CheckSize() )
 		{
@@ -172,6 +174,10 @@ void Player::Render( void )
 		if( m_bLowHealthWarning )
 			pGraphics->DrawRectangle( SGD::Rectangle( 0, 0, Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() ), { 100, 255, 0, 0 } );
 
+		if( m_bRunDialog && !m_bPreventDialog )
+		{
+			RenderDialog();
+		}
 	}
 }
 
@@ -256,9 +262,9 @@ void Player::TakeInput()
 
 	m_bUpdateAnimation = pInput->IsAnyKeyDown();
 
-	if( m_bRunDialog )
+	if( m_bRunDialog && !m_bPreventDialog )
 	{
-		if( pInput->IsAnyKeyDown() )
+		if( pInput->IsAnyKeyPressed() )
 		{
 			UpdateDialog();
 		}
@@ -508,21 +514,27 @@ void Player::RenderDialog()
 	{
 		case 1:
 			pDialog->Render( "Dialog" , "Greeting" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			pGraphics->DrawTexture( m_hDialogImg2 , portraitPosition );
 			break;
 		case 2:
 			pDialog->Render( "Dialog" , "GreetingsResponse" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			pGraphics->DrawTexture( m_hDialogImg , portraitPosition );
 			break;
 		case 3:
 			pDialog->Render( "Dialog" , "HowFares" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			pGraphics->DrawTexture( m_hDialogImg2 , portraitPosition );
 			break;
 		case 4:
 			pDialog->Render( "Dialog" , "HowFaresResponse" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			pGraphics->DrawTexture( m_hDialogImg , portraitPosition );
 			break;
 		case 5:
 			pDialog->Render( "Dialog" , "RequestToJoin" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			pGraphics->DrawTexture( m_hDialogImg2 , portraitPosition );
 			break;
 		case 6:
 			pDialog->Render( "Dialog" , "Agree" , TextPositionOne , 1 , SGD::Color( 0 , 0 , 0 ) );
+			pGraphics->DrawTexture( m_hDialogImg , portraitPosition );
 			break;
 		default:
 			break;
@@ -531,12 +543,25 @@ void Player::RenderDialog()
 
 void Player::UpdateDialog( )
 {
-	if( m_nLineCounter <= 6 )
+	if( m_nLineCounter < 6 )
 	{
 		m_nLineCounter++;
 	}
 	else
 	{
 		m_bRunDialog = false;
+		m_bPreventDialog = true;
+		m_nLineCounter = 1;
 	}
+}
+
+void Player::PreventDialogFromRestarting( float elapsedTime )
+{
+	m_fDialogTimer -= elapsedTime;
+
+	if( m_fDialogTimer <= 0.0f )
+	{
+		m_bPreventDialog = false;
+	}
+
 }
