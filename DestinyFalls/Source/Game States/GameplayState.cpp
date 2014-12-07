@@ -75,9 +75,10 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/ClericAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/RangerAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
 
-	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil.png");
+	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil1.png");
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -100,7 +101,7 @@ void GameplayState::Enter()
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
-	ForgeButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120) }, SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 59), (Game::GetInstance()->GetScreenHeight() - 59) });
+	ForgeButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60) }, SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 59), (Game::GetInstance()->GetScreenHeight()) });
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
 	m_ptWorldCam = { 0, 0 };
@@ -194,15 +195,12 @@ bool GameplayState::Input()
 		{
 			Game::GetInstance()->AddState(InventoryState::GetInstance() );
 		}
-	}
-	// Toggle Forge
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
-	{
 		if (pInput->GetCursorPosition().IsPointInRectangle(ForgeButton))
 		{
 			Game::GetInstance()->AddState(ForgeState::GetInstance());
 		}
 	}
+
 
 
 	return true;
@@ -264,6 +262,8 @@ void GameplayState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
+	pGraphics->DrawTexture(m_hForge, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, { 0.4f, 0.35f });
+	
 	if( m_nCurrentLevel == 0 )
 	{
 		RenderDialog();
@@ -271,7 +271,6 @@ void GameplayState::Render()
 
 	// Inventory Image/Scaling
 	//pGraphics->DrawRectangle( InventoryButton, SGD::Color{ 0, 0, 255, 0 } );
-	pGraphics->DrawTexture(m_hForge, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 120)), {}, {}, {}, { 0.15f, 0.25f });
 	pGraphics->DrawTexture( m_hInvButton, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.5f, 0.5f } );
 
 	pGraphics->DrawRectangle( SGD::Rectangle(

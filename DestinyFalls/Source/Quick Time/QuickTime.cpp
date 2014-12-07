@@ -14,14 +14,29 @@ QuickTime::QuickTime()
 {
 	//clear key vector
 	m_vKeys.clear();
+
+	if( SGD::InputManager::GetInstance()->IsControllerConnected( 0 ) || SGD::InputManager::GetInstance()->IsControllerConnected( 1 ) )
+	{
+		//push back buttons into the key vector
+		m_vKeys.push_back( SGD::Key::Zero );
+		m_vKeys.push_back( SGD::Key::One );
+		m_vKeys.push_back( SGD::Key::Two );
+		m_vKeys.push_back( SGD::Key::Three );
+		m_vKeys.push_back( SGD::Key::Four );
+		m_vKeys.push_back( SGD::Key::Five );
+	}
+	else
+	{
+		//push back buttons into the key vector
+		m_vKeys.push_back( SGD::Key::Q );
+		m_vKeys.push_back( SGD::Key::W );
+		m_vKeys.push_back( SGD::Key::E );
+		m_vKeys.push_back( SGD::Key::A );
+		m_vKeys.push_back( SGD::Key::S );
+		m_vKeys.push_back( SGD::Key::D );
+	}
 	
-	//push back buttons into the key vector
-	m_vKeys.push_back( SGD::Key::Q );
-	m_vKeys.push_back( SGD::Key::W );
-	m_vKeys.push_back( SGD::Key::E );
-	m_vKeys.push_back( SGD::Key::A );
-	m_vKeys.push_back( SGD::Key::S );
-	m_vKeys.push_back( SGD::Key::D );
+	
 
 	//clear out the input and output vectors
 	m_vInput.clear();
@@ -247,6 +262,37 @@ void QuickTime::GenerateRandomLetter()
 			m_sOutput += "D";
 		}
 			break;
+		case SGD::Key::Zero:
+		{
+			m_sOutput += "0";
+		}
+			break;
+		case SGD::Key::One:
+		{
+			m_sOutput += "1";
+		}
+			break;
+		case SGD::Key::Two:
+		{
+			m_sOutput += "W";
+		}
+			break;
+		case SGD::Key::Three:
+		{
+			m_sOutput += "3";
+		}
+			break;
+		case SGD::Key::Four:
+		{
+			m_sOutput += "4";
+		}
+			break;
+		case SGD::Key::Five:
+		{
+			m_sOutput += "5";
+		}
+			break;
+		
 		default:
 			break;
 	}
@@ -295,6 +341,42 @@ void QuickTime::AddGuess( SGD::Key x )
 			m_sRenderInput += " D ";
 		}
 			break;
+		case SGD::Key::Zero:
+		{
+			m_sInput += "0";
+			m_sRenderInput += " 0 ";
+
+		}
+			break;
+		case SGD::Key::One:
+		{
+			m_sInput += "1";
+			m_sRenderInput += " 1 ";
+		}
+			break;
+		case SGD::Key::Two:
+		{
+			m_sInput += "2";
+			m_sRenderInput += " 2 ";
+		}
+			break;
+		case SGD::Key::Three:
+		{
+			m_sInput += "3";
+			m_sRenderInput += " 3 ";
+		}
+			break;
+		case SGD::Key::Four:
+		{
+			m_sInput += "4";
+			m_sRenderInput += " 4 ";
+		}
+			break;
+		case SGD::Key::Five:
+		{
+			m_sInput += "5";
+			m_sRenderInput += " 5 ";
+		}
 		default:
 			break;
 	}

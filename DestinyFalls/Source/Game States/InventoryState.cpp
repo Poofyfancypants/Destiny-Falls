@@ -1223,7 +1223,6 @@ void InventoryState::Render()
 #pragma endregion
 
 
-	//pGraphics->DrawRectangle(rect3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 #pragma region RingSlot
 
 	if (m_bRunesTab)
@@ -1404,7 +1403,10 @@ void InventoryState::Render()
 	else
 		m_bRunesTab = false;
 #pragma endregion
-	if (m_bArmorTab || m_bWeaponsTab || m_bRunesTab)
+
+
+#pragma region ToolTips
+	if( m_bArmorTab || m_bWeaponsTab || m_bRunesTab )
 	{
 
 		if (pauseSelection)
@@ -1469,6 +1471,7 @@ void InventoryState::Render()
 				pGraphics->DrawString("Gives your weapon\n a high level\n Earth Ability.", SGD::Point(501, 51), SGD::Color{ 255, 0, 0, 0 });
 			}
 		}
+#pragma endregion
 
 		pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawTexture(m_hFiret1, { 210, 240 }, {}, {}, {}, { 0.1f, 0.1f });
