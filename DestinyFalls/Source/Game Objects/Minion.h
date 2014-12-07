@@ -98,6 +98,9 @@ public:
 	void SetString(int _region, int _AI);
 	int GetName(int _index = 1);
 
+	bool GetBlock() const { return m_Block; }
+	void SetBlock(bool _block) { m_Block = _block; }
+
 	Minion();
 	~Minion();
 
@@ -105,6 +108,13 @@ public:
 
 	void SetMinionAnimation( int region , int minionType );
 	bool m_Block = false;
+
+	void SetMinionRect1(SGD::Rectangle mRect1) { Enemy1rect = mRect1; }
+	void SetMinionRect2(SGD::Rectangle mRect2) { Enemy2rect = mRect2; }
+	void SetMinionRect3(SGD::Rectangle mRect3) { Enemy3rect = mRect3; }
+
+	void ResetAnimation();
+	void SetAnimation(bool _update) { m_bUpdateAnimation = _update; }
 
 private:
 	int * m_CurrentTurn;

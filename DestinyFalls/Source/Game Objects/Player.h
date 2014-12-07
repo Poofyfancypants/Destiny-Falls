@@ -72,7 +72,11 @@ public:
 	void SetSpell2Cool(bool _Cool) { m_bSpell2 = _Cool; }
 	void SetSpell3Cool(bool _Cool) { m_bSpell3 = _Cool; }
 
+	void SetRect(SGD::Rectangle pRect1) { playerRect = pRect1; }
+	
 private:
+
+	SGD::Rectangle playerRect = { 225, 200, 289, 264 };
 
 	int m_nDirection;
 	int m_nPrevDirection;
@@ -91,6 +95,7 @@ private:
 	bool m_bSpell3 = false;
 
 	int ActionSelected = 0;
+
 	bool selected = false;
 	int m_nCursor = 0;
 	int spellSelect = -1;

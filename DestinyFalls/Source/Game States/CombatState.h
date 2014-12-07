@@ -60,6 +60,10 @@ public:
 	string GetAction() const { return ActionMessage; }
 
 	void SetNumQTCorrect( int numCorrect ){ m_nNumQtCorrect = numCorrect; }
+	void ShakeScreen(float elapsedTime);
+	void ResetRects();
+
+	bool TakeTurn(Object*);
 
 private:
 	CombatState() = default;
@@ -87,8 +91,14 @@ private:
 
 	SGD::Point SavePlayerPos = { 0, 0 };
 
+	int m_nCursor = 0;
+	int ActionSelected = 0;
+	bool selected = false;
+	int spellSelect = -1;
+
 	int CurrentTurn;
 	bool m_bCoolDown = false;
+	bool m_bShake = false;
 
 	string ActionMessage;
 	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
