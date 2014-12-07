@@ -1,49 +1,64 @@
 #pragma once
 #include "AnimatedObject.h"
+#include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "Player.h"
 
 class Companion :
 	/*public AnimatedObject,*/ public Player
 {
 public:
-	enum Companion_Type {Cleric = 1, Melee, Mage, Tank};
+	enum Companion_Type { Cleric = 1, Melee, Mage, Tank };
 
 	Companion();
 	~Companion();
 
 	virtual bool TakeTurn( float elapsedTime ) override;
-	virtual void Update(float elapsedTime);
-	virtual void Render(int _posIndex);
-	void SetCombatImage(SGD::HTexture _texture) { m_hCompanion = _texture; }
-	virtual int GetType(void) const { return OBJ_COMPANION; }
+	virtual void Update( float elapsedTime );
+	virtual void Render();
+	virtual void CombatRender( int _posIndex = 0 );
+	void SetCombatImage( SGD::HTexture _texture ) { m_hCompanion = _texture; }
+	virtual int GetType( void ) const { return OBJ_COMPANION; }
 	int GetCoType( void ) const { return m_CoType; }
 
-	void SetC0Type(Companion_Type _CoType) { m_CoType = _CoType; }
+	void SetC0Type( Companion_Type _CoType ) { m_CoType = _CoType; }
 
-	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
+	void CurrentTurn( int * _CurrentTurn ) { m_CurrentTurn = _CurrentTurn; }
 
 	int GetHealth() const { return m_nHealth; }
-	void SetHealth(int _health) { m_nHealth = _health; }
+	void SetHealth( int _health ) { m_nHealth = _health; }
 
-	void SetString(int _type) { TypeString = _type; }
+	void SetString( int _type ) { TypeString = _type; }
+
 
 	void SetCompanionAnimation( int companionType );
+	int GetPosIndex( void ){ return m_nPosIndex; }
+	void SetPosIndex( int posIndex ){ m_nPosIndex = posIndex; }
+
+	bool m_Block = false;
 
 private:
 	int * m_CurrentTurn;
-	int m_nHealth = 20;
+	int m_nHealth = 0;
 
+	int m_nPosIndex = 0;
 	Companion_Type m_CoType;
 	int TypeString = 0;
 
 	SGD::HTexture m_hCompanion = SGD::INVALID_HANDLE;
 
-	SGD::Rectangle Comp1HB = { 650, 110, 775, 140 };
-	SGD::Rectangle Comp2HB = { 625, 200, 750, 230 };
-	SGD::Rectangle Comp1rect = { 561, 110, 625, 174 };
-	SGD::Rectangle Comp2rect = { 536, 200, 600, 264 };
-	//int * m_CurrentTurn;
+	SGD::Color m_HealthColor = { 0, 0, 0, 0 };
+
+	SGD::Rectangle Companion1rect = { 140 , 110 , 204 , 174 };
+	SGD::Rectangle Companion2rect = { 140 , 290 , 204 , 354 };
+	SGD::Rectangle Companion1HB = { 50 , 110 , 150 , 140 };
+	SGD::Rectangle Companion2HB = { 50 , 290 , 150 , 320 };
+
 	AnimationManager* m_pAnimator;
 	bool m_bUpdateAnimation = false;
+
+
+	int ActionSelected = 0;
+	bool selected = false;
+	int m_nCursor = 0;
 };
 

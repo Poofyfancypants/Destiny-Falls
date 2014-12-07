@@ -50,7 +50,7 @@ void Minion::Render(int _posIndex)
 	case 0: //Top
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
+			//	pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
@@ -62,7 +62,7 @@ void Minion::Render(int _posIndex)
 	case 1: //Middle
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
+			//	pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
@@ -74,7 +74,7 @@ void Minion::Render(int _posIndex)
 	case 2: //Bottom
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
+			//pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
@@ -106,14 +106,16 @@ int Minion::GetName(int _index)
 bool Minion::TakeTurn() //This will be even bigger, still don't care
 {
 	CombatState* pCombat = CombatState::GetInstance();
+	int target = 0;
 
 	switch (this->GetAIType())
 	{
 	case Minion_AI:
 		if (m_nHealth > 0)
 		{
+			target = rand() % pCombat->GetHeroes().size();
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -123,7 +125,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -133,7 +135,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -143,7 +145,7 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		if (m_nHealth > 0)
 		{
 			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
@@ -154,14 +156,14 @@ bool Minion::TakeTurn() //This will be even bigger, still don't care
 		{
 			int AI = rand() % 20;
 			if (AI <= 15) //AOE attack
-				pCombat->TakeAction(CombatState::ActionType::AOE, this, 0);
+				pCombat->TakeAction(CombatState::ActionType::AOE, this, target);
 			else
-				pCombat->TakeAction(CombatState::ActionType::Melee, this, 0);
+				pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
 
-				m_bUpdateAnimation = true;
+			m_bUpdateAnimation = true;
 			this->GetTimeStamp()->SetCurrentFrame(0);
 			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-			
+
 		}
 		break;
 	default:

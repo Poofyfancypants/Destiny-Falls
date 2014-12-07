@@ -118,79 +118,25 @@ bool Game::Initialize( float width, float height )
 	m_mChime12 = pAudio->LoadAudio( L"resource/audio/chime-12.wav" );
 	m_mBoo = pAudio->LoadAudio( L"resource/audio/Boo.wav" );
 	m_mCheer = pAudio->LoadAudio( L"resource/audio/Cheer.wav" );
-	m_mWinMusic = pAudio->LoadAudio(L"resource/audio/WinMusic.wav");
+	m_mWinMusic = pAudio->LoadAudio( L"resource/audio/WinMusic.wav" );
+
 
 
 	pAudio->PlayAudio( m_mMusic, true );
 
-	m_StringTable[0][1] = "Play";
-	m_StringTable[0][2] = "Load Game";
-	m_StringTable[0][3] = "Options";
-	m_StringTable[0][4] = "How to Play";
-	m_StringTable[0][5] = "Credits";
-	m_StringTable[0][6] = "Exit";
-	m_StringTable[0][7] = "Resume";
-	m_StringTable[0][8] = "Save";
-	m_StringTable[0][9] = "You Died";
-
-	//Earth
-	m_StringTable[1][1] = "Minion";
-	m_StringTable[1][2] = "Behemoth";
-	m_StringTable[1][3] = "Rock Elemental";
-	m_StringTable[1][4] = "Green Sage";
-	m_StringTable[1][5] = "Heavy Golem";
-
-	//Water
-	m_StringTable[2][1] = "Minion";
-	m_StringTable[2][2] = "Behemoth";
-	m_StringTable[2][3] = "Water Elemental";
-	m_StringTable[2][4] = "Blue Sage";
-	m_StringTable[2][5] = "Heavy Golem";
-
-	//Air
-	m_StringTable[3][1] = "Minion";
-	m_StringTable[3][2] = "Behemoth";
-	m_StringTable[3][3] = "Air Elemental";
-	m_StringTable[3][4] = "White Sage";
-	m_StringTable[3][5] = "Heavy Golem";
-
-	//Fire
-	m_StringTable[4][1] = "Minion";
-	m_StringTable[4][2] = "Behemoth";
-	m_StringTable[4][3] = "Fire Elemental";
-	m_StringTable[4][4] = "Fire Sage";
-	m_StringTable[4][5] = "Fire Baron";
-
-	// - Tutorial Strings
-
-	m_StringTable[7][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
-	m_StringTable[7][2] = "This might be our only chance to stop him!";
-	m_StringTable[7][3] = "Careful though, he has laid puzzles to slow us down. ";
-	m_StringTable[7][4] = "Solve them by sliding between walls! I'll see you on the other side.";
-	m_StringTable[7][5] = "These Boulders can be useful to solve puzzles! Press R to throw them around!";
-	m_StringTable[7][6] = "Thouse are dangerous traps that you should do your best to avoid!";
-	m_StringTable[7][7] = "And remember the fountain will help you recover from defeat.";
-	m_StringTable[7][8] = "Watch out! Another Trap. Try not to step on it. Also..";
-	m_StringTable[7][9] = "This puzzle has two different exits, You could find a Chest!";
-	m_StringTable[8][1] = "See you found a chest! Press Q to open it! Did you find a rune?";
-	m_StringTable[8][2] = "Runes you can equip through your Inventory by pressing E";
-	m_StringTable[8][3] = "Look, There he is! Get behind me!";
-	m_StringTable[8][4] = "If you are low on health already, chests can drop health potions,";
-	m_StringTable[8][5] = "that will restore your health once aquiered by pressing P";
-	m_StringTable[8][6] = "*Run into the boulders and press R repeatedly until it moves*";
-
+	LoadStrings();
 
 
 	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/main.png" );
-	m_hOptions = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/Options.png");
-	m_hHTP = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/4Elements.png");
-	m_hSaveLoad = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MenuBackgrounds/Tree_Elements.png");
+	m_hOptions = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/Options.png" );
+	m_hHTP = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/4Elements.png" );
+	m_hSaveLoad = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/Tree_Elements.png" );
 
 
 	SaveandLoadState::GetInstance()->m_hBackground = m_hSaveLoad;
-	HowToPlayState::GetInstance()->m_hBackground =   m_hHTP;
-	OptionsState::GetInstance()->m_hBackground =     m_hOptions;
-	MainMenuState::GetInstance()->m_hBackground =    m_hMainMenu;
+	HowToPlayState::GetInstance()->m_hBackground = m_hHTP;
+	OptionsState::GetInstance()->m_hBackground = m_hOptions;
+	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;
 
 	m_hEarth1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Forest1.png" );
 	m_hEarth2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Forest2.png" );
@@ -351,9 +297,9 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hFinal3 );
 
 	pGraphics->UnloadTexture( m_hMainMenu );
-	pGraphics->UnloadTexture(m_hSaveLoad);
-	pGraphics->UnloadTexture(m_hHTP);
-	pGraphics->UnloadTexture(m_hOptions);
+	pGraphics->UnloadTexture( m_hSaveLoad );
+	pGraphics->UnloadTexture( m_hHTP );
+	pGraphics->UnloadTexture( m_hOptions );
 
 
 	pAudio->UnloadAudio( m_mMusic );
@@ -376,9 +322,9 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mChime12 );
 	pAudio->UnloadAudio( m_mBoo );
 	pAudio->UnloadAudio( m_mCheer );
-	pAudio->UnloadAudio(m_mWinMusic);
+	pAudio->UnloadAudio( m_mWinMusic );
 
-	
+
 
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
@@ -443,6 +389,97 @@ void Game::ClearStates()
 			   OutputDebugStringW( L"GameplayState::MessageProc - unknown message id\n" );
 	}
 		break;
+	}
+
+}
+
+void Game::LoadStrings()
+{
+	m_StringTable[0][1] = "Play";
+	m_StringTable[0][2] = "Load Game";
+	m_StringTable[0][3] = "Options";
+	m_StringTable[0][4] = "How to Play";
+	m_StringTable[0][5] = "Credits";
+	m_StringTable[0][6] = "Exit";
+	m_StringTable[0][7] = "Resume";
+	m_StringTable[0][8] = "Save";
+	m_StringTable[0][9] = "You Died";
+
+	//Earth
+	m_StringTable[1][1] = "Minion";
+	m_StringTable[1][2] = "Behemoth";
+	m_StringTable[1][3] = "Rock Elemental";
+	m_StringTable[1][4] = "Green Sage";
+	m_StringTable[1][5] = "Heavy Golem";
+
+	//Water
+	m_StringTable[2][1] = "Minion";
+	m_StringTable[2][2] = "Behemoth";
+	m_StringTable[2][3] = "Water Elemental";
+	m_StringTable[2][4] = "Blue Sage";
+	m_StringTable[2][5] = "Heavy Golem";
+
+	//Air
+	m_StringTable[3][1] = "Minion";
+	m_StringTable[3][2] = "Behemoth";
+	m_StringTable[3][3] = "Air Elemental";
+	m_StringTable[3][4] = "White Sage";
+	m_StringTable[3][5] = "Heavy Golem";
+
+	//Fire
+	m_StringTable[4][1] = "Minion";
+	m_StringTable[4][2] = "Behemoth";
+	m_StringTable[4][3] = "Fire Elemental";
+	m_StringTable[4][4] = "Fire Sage";
+	m_StringTable[4][5] = "Fire Baron";
+
+	// - Tutorial Strings
+
+	if( !m_bIcelandic )
+	{
+		m_StringTable[7][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
+		m_StringTable[7][2] = "This might be our only chance to stop him!";
+		m_StringTable[7][3] = "Careful though, he has laid puzzles to slow us down. ";
+		m_StringTable[7][4] = "Solve them by sliding between walls! I'll see you on the other side.";
+		m_StringTable[7][5] = "These Boulders can be useful to solve puzzles! Press R to throw them around!";
+		m_StringTable[7][6] = "Thouse are dangerous traps that you should do your best to avoid!";
+		m_StringTable[7][7] = "And remember the fountain will help you recover from defeat.";
+		m_StringTable[7][8] = "Watch out! Another Trap. Try not to step on it. Also..";
+		m_StringTable[7][9] = "This puzzle has two different exits, You could find a Chest!";
+		m_StringTable[8][1] = "See you found a chest! Press Q to open it! Did you find a rune?";
+		m_StringTable[8][2] = "Runes you can equip through your Inventory by pressing E";
+		m_StringTable[8][3] = "Look, There he is! Get behind me!";
+		m_StringTable[8][4] = "If you are low on health already, chests can drop health potions,";
+		m_StringTable[8][5] = "that will restore your health once aquiered by pressing P";
+		m_StringTable[8][6] = "*Run into the boulders and press R repeatedly until it moves*";
+
+		m_StringTable[9][1] = "Music Vol";
+		m_StringTable[9][2] = "SFX Vol";
+		m_StringTable[9][3] = "Fullscreen";
+		m_StringTable[9][4] = "Language";
+	}
+	else
+	{
+		m_StringTable[7][1] = "Tharna ertu! Sigmundur sast fyrir Nord-Austan okkur!";
+		m_StringTable[7][2] = "Thetta gaeti verid okkar eini sens til ad stodvann.";
+		m_StringTable[7][3] = "Fardu Varlega, hann hefur buid til thrautir til ad haegja a okkur";
+		m_StringTable[7][4] = "Thu getur leyst thaer med thvi ad renna ther a milli veggja";
+		m_StringTable[7][5] = "Thessir steinar geta verid nothaefir Yttu a R til ad henda theim.";
+		m_StringTable[7][6] = "Thetta eru haettulegar gildrur, reyndu ad fordast thaer!";
+		m_StringTable[7][7] = "Og mundu ad gosbrunnurinn hjalpar ther ef thu tapar bardaga.";
+		m_StringTable[7][8] = "Passadu thig! Onnur gildra, ekki styga a hana!";
+		m_StringTable[7][9] = "Thessi thraut hefur tvaer utkomur, thu gaetir fundid kystu!";
+		m_StringTable[8][1] = "Sko thu fannst kystu! Fekkstu Rune?";
+		m_StringTable[8][2] = "Runeir getturu notad i gegnum bakpokann thinn med thvi ad yta E";
+		m_StringTable[8][3] = "Tharna! Vertu fyrir aftan mig!";
+		m_StringTable[8][4] = "Kysstur geta gefid ther Health Potion, ef thu hefur meidst geturu ";
+		m_StringTable[8][5] = "drukkid Health Potion med tvhi ad yta a P";
+		m_StringTable[8][6] = "*Hlauptu a tha og yttu a R oft thangad til hann hreyfist*";
+
+		m_StringTable[9][1] = "Tonlist Vol";
+		m_StringTable[9][2] = "SFX Vol";
+		m_StringTable[9][3] = "Fullscreen";
+		m_StringTable[9][4] = "Tungumal";
 	}
 
 }

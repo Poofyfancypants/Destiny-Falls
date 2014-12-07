@@ -201,10 +201,9 @@ void MainMenuState::Render()
 	
 	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, {0.3f, 0.3f});
 	
-	pGraphics->DrawRectangle(TestAnimationSystem, SGD::Color{ 255, 0, 255, 255 });
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
+	pFonts->Render( "Dialog", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 2 ).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 4 ).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 } );

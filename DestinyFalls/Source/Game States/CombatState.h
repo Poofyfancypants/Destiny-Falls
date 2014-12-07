@@ -45,6 +45,7 @@ public:
 	int HealAlly(Object* _From, Object* _To);
 	int DealAOEDamage(Object* _From, Object* _To);
 
+	std::vector<Object*> GetHeroes() const { return m_pHeroes; }
 	std::vector<Object*> GetEnemies() const { return m_pEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
@@ -68,19 +69,21 @@ private:
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
 
-	SGD::Rectangle Compation1HB	= { 50, 110, 175, 140 };
+	SGD::Rectangle Companion1HB	= { 50, 110, 150, 140 };
+	SGD::Rectangle Companion2HB	= { 50, 290, 150, 320 };
 	SGD::Rectangle PlayerHB		= { 75, 200, 200, 230 };
-	SGD::Rectangle Compation2HB	= { 50, 290, 175, 320 };
 	SGD::Rectangle Enemy1HB		= { 650, 110, 775, 140};
 	SGD::Rectangle Enemy2HB		= { 625, 200, 750, 230};
 	SGD::Rectangle Enemy3HB		= { 650, 290, 775, 320};
 
-	SGD::Rectangle Compation1rect	= { 200, 110, 264, 174 };
+	SGD::Rectangle Companion1rect	= { 75, 110, 139, 174 };
+	SGD::Rectangle Companion2rect	= { 75, 290, 139, 354 };
 	SGD::Rectangle Playerrect		= { 225, 200, 289, 264 };
-	SGD::Rectangle Compation2rect	= { 200, 290, 264, 354 };
 	SGD::Rectangle Enemy1rect		= { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
+
+	SGD::Point SavePlayerPos = { 0, 0 };
 
 	int CurrentTurn;
 	bool m_bCoolDown = false;
