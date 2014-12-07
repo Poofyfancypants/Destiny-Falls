@@ -138,9 +138,13 @@ void Player::Update( float elapsedTime )
 void Player::Render( void )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
+	
+
 	if( m_bPlayCombatAnimation )
 	{
 		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), 289, 264 );
+
 	}
 	
 	else
@@ -279,6 +283,8 @@ SGD::Rectangle Player::GetRect( void ) const
 	return sourceRect;
 }
 
+
+
 void Player::HandleCollision( const iObject* pOther )
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
@@ -289,6 +295,7 @@ void Player::HandleCollision( const iObject* pOther )
 		{
 			pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
 			Game::GetInstance()->AddState( CombatState::GetInstance() );
+
 		}
 
 	}
@@ -372,7 +379,6 @@ bool Player::TakeTurn( float elapsedTime )
 	{
 		pGraphics->DrawString( "Magic", SGD::Point{ 250, 470 }, SGD::Color( 255, 255, 255, 255 ) );
 	}
-	//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 	pGraphics->DrawRectangle( PlayerSelection, SGD::Color( 255, 0, 255, 0 ), SGD::Color( 255, 0, 255, 0 ) );
 
 

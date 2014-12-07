@@ -1023,11 +1023,11 @@ void InventoryState::Render()
 	{
 		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
 		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
-		pGraphics->DrawString("Fighter", SGD::Point(210, 50), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Tank", SGD::Point(210, 50), SGD::Color(0, 0, 0));
 		pGraphics->DrawString("Healer", SGD::Point(345, 50), SGD::Color(0, 0, 0));
 		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
 		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(345, 70), {}, {}, {}, { .3f, .28f });
-		pGraphics->DrawString("Hunter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Fighter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
 		pGraphics->DrawString("Mage", SGD::Point(345, 205), SGD::Color(0, 0, 0));
 
 		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, {.35f, .35f});

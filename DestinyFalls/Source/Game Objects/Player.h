@@ -62,8 +62,12 @@ public:
 	void UpdateDialog();
 	void PreventDialogFromRestarting( float elapsedTime );
 
+	bool GetMapSwitch() const { return m_bMapSwitch; }
+	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
+
 private:
 
+	bool m_bMapSwitch = true;
 	int m_nDirection;
 	int m_nPrevDirection;
 	bool m_bSliding = false;
