@@ -198,7 +198,8 @@ bool GameplayState::Input()
 		}
 		if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
 		{
-			Game::GetInstance()->AddState(InventoryState::GetInstance());		}
+			Game::GetInstance()->AddState(ForgeState::GetInstance());
+		}
 	}
 
 	m_bIcelandic = Game::GetInstance()->GetIcelandic();
@@ -439,8 +440,7 @@ void GameplayState::LoadNewLevel()
 		{
 		case GameplayState::TUTORIAL_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/testWhite.xml" );
-			//m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+			m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
