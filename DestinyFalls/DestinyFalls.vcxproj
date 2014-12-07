@@ -133,6 +133,7 @@
     <ClInclude Include="Source\Game States\MainMenuState.h" />
     <ClInclude Include="Source\Game States\OptionsState.h" />
     <ClInclude Include="Source\Game States\PauseMenuState.h" />
+    <ClInclude Include="Source\Game States\QuickTimeState.h" />
     <ClInclude Include="Source\Game States\SaveandLoadState.h" />
     <ClInclude Include="Source\Game States\SplashScreenState.h" />
     <ClInclude Include="Source\Game States\WinState.h" />
@@ -198,6 +199,7 @@
     <ClCompile Include="Source\Game States\MainMenuState.cpp" />
     <ClCompile Include="Source\Game States\OptionsState.cpp" />
     <ClCompile Include="Source\Game States\PauseMenuState.cpp" />
+    <ClCompile Include="Source\Game States\QuickTimeState.cpp" />
     <ClCompile Include="Source\Game States\SaveandLoadState.cpp" />
     <ClCompile Include="Source\Game States\SplashScreenState.cpp" />
     <ClCompile Include="Source\Game States\WinState.cpp" />
@@ -225,6 +227,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="DestinyFalls.ico" />
+    <Image Include="icon1.ico" />
     <Image Include="small.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

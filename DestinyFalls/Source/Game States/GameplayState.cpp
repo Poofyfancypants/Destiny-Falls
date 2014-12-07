@@ -15,7 +15,8 @@
 #include "../Game Objects/SpikeTrap.h"
 #include "../Game Objects/FireTrap.h"
 #include "../Game Objects/Player.h"
-#include "../Game Objects/Companion.h"#include "../Messages/MessageID.h"
+#include "../Game Objects/Companion.h"
+#include "../Messages/MessageID.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_String.h"
 #include "../../SGD Wrappers/SGD_MessageManager.h"
@@ -74,9 +75,10 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/ClericAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/RangerAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
 
-
+	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil1.png");
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -99,7 +101,7 @@ void GameplayState::Enter()
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
-	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 120 ) }, SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 59 ), ( Game::GetInstance()->GetScreenHeight() - 59 ) } );
+	ForgeButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60) }, SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 59), (Game::GetInstance()->GetScreenHeight()) });
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
 	m_ptWorldCam = { 0, 0 };
@@ -124,9 +126,10 @@ void GameplayState::Exit()
 		m_pPlayer = nullptr;
 	}
 
-	pAudio->UnloadAudio( bmusic );
+	pAudio->UnloadAudio(bmusic);
 
 	//unload images
+	pGraphics->UnloadTexture(m_hForge);
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
@@ -191,19 +194,15 @@ bool GameplayState::Input()
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
 		{
-			Game::GetInstance()->AddState( InventoryState::GetInstance() );
+			Game::GetInstance()->AddState(InventoryState::GetInstance() );
 		}
-	}
-	// Toggle Inventory
-	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
-	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
 		{
-			Game::GetInstance()->AddState( InventoryState::GetInstance() );
-		}
+			Game::GetInstance()->AddState(InventoryState::GetInstance());		}
 	}
 
 	m_bIcelandic = Game::GetInstance()->GetIcelandic();
+
 	return true;
 }
 
@@ -228,6 +227,7 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
+	m_pObjects->CheckCollisions( PLAYER_BUCKET , COMPANION_BUCKET );
 
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
@@ -264,6 +264,8 @@ void GameplayState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
+	pGraphics->DrawTexture(m_hForge, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, { 0.4f, 0.35f });
+	
 	if( m_nCurrentLevel == 0 )
 	{
 		RenderDialog();
@@ -282,10 +284,6 @@ void GameplayState::Render()
 
 
 	pGraphics->DrawTexture( m_hHealthPot, SGD::Point( HealthPotionPosition.left, HealthPotionPosition.top ), {}, {}, {}, { 0.7f, 0.7f } );
-	pFont->Render( "Bernardo",
-		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
-		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
-		2, SGD::Color( 255, 0, 0 ) );
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )

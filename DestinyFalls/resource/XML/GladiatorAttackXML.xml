@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="GladiatorAttack" numFrames="7" looping="0" hTexture="gladiator_arena_sprites.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="1" dTop="224" dRight="51" dBottom="278" cLeft="1" cTop="224" cRight="51" cBottom="279" x="30" y="50" />
+      <frame duration="0.25" damage="0" event="none" dLeft="89" dTop="222" dRight="133" dBottom="277" cLeft="88" cTop="221" cRight="133" cBottom="277" x="27" y="52" />
+      <frame duration="0.25" damage="0" event="none" dLeft="175" dTop="222" dRight="222" dBottom="279" cLeft="174" cTop="222" cRight="222" cBottom="280" x="27" y="53" />
+      <frame duration="0.25" damage="0" event="none" dLeft="268" dTop="223" dRight="328" dBottom="281" cLeft="267" cTop="222" cRight="328" cBottom="281" x="18" y="52" />
+      <frame duration="0.25" damage="0" event="none" dLeft="350" dTop="222" dRight="414" dBottom="279" cLeft="349" cTop="222" cRight="414" cBottom="279" x="22" y="53" />
+      <frame duration="0.25" damage="0" event="none" dLeft="424" dTop="225" dRight="480" dBottom="280" cLeft="423" cTop="225" cRight="480" cBottom="280" x="32" y="50" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1" dTop="224" dRight="51" dBottom="278" cLeft="1" cTop="224" cRight="51" cBottom="279" x="30" y="50" />
+    </animation_info>
+  </animation>
+</Root>
