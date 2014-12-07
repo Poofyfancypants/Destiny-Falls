@@ -53,6 +53,15 @@ void Player::Update( float elapsedTime )
 	}
 	else
 	{
+		//if( m_bDoQt )
+		//{
+		//	currentQT->Update( elapsedTime );
+
+		//	if( currentQT->GetIsOver() == true )
+		//	{
+		//		StopQuickTime();
+		//	}
+		//}
 		if( m_nHealth <= 0 )
 		{
 			pAudio->PlayAudio( Game::GetInstance()->deathSound, false );
@@ -124,7 +133,6 @@ void Player::Update( float elapsedTime )
 			m_bLowHealthWarning = false;
 	}
 
-
 }
 
 void Player::Render( void )
@@ -136,6 +144,10 @@ void Player::Render( void )
 	}
 	else
 	{
+		//if( currentQT != nullptr )
+		//{
+		//	currentQT->Render();
+		//}
 		SGD::Vector vec = { ( m_ptPosition.x ), ( m_ptPosition.y ) };
 		SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
 		if( GameplayState::GetInstance()->GetDebugState() )
@@ -155,10 +167,6 @@ void Player::Render( void )
 		pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
 		pGraphics->DrawTexture( m_hPortrait, SGD::Point( currentHealthHUD.x - 70, currentHealthHUD.y - 30 ), {}, {}, {}, { .5f, .5f } );
 
-		std::string potString = std::to_string( m_nPotions );
-		potString += " Potions";
-		pGraphics->DrawString( potString.c_str(), { ( Game::GetInstance()->GetScreenWidth() - 100 ), ( Game::GetInstance()->GetScreenHeight() - 80 ) }, SGD::Color( 255, 255, 0, 0 ) );
-
 		if( m_pAnimator->GetInstance()->CheckSize() )
 		{
 			m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), (int)( point.x + ( m_szSize.width / 2.0f ) ), (int)( point.y + ( m_szSize.height / 2.0f ) ) );
@@ -176,6 +184,10 @@ void Player::TakeInput()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
+	if( currentQT != nullptr )
+	{
+		currentQT->m_kLastKeyPressed = pInput->GetAnyKeyPressed();
+	}
 	if( m_bMoving )
 	{
 		m_bUpdateAnimation = false;
@@ -293,6 +305,8 @@ void Player::HandleCollision( const iObject* pOther )
 		const Trap* trap = dynamic_cast<const Trap*>( pOther );
 
 		m_nHealth -= trap->GetDamage();
+
+		//RunQuickTime( 3 );
 	}
 	if( pOther->GetType() == OBJ_BOULDER )
 	{

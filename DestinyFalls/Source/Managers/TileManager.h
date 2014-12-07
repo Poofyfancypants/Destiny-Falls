@@ -26,9 +26,10 @@ struct Tile
 	bool BoulderSpawn;
 	bool NextLevel;
 	bool PrevLevel;
+	bool MainLevel;
+	bool SideLevel;
 	
 	SGD::Rectangle CollisionRect;
-
 
 };
 
@@ -44,7 +45,10 @@ public:
 	bool TileCollision(Object* _player, SGD::Point _futurePos);
 	void SpawnObjects();
 	void NextWaypoint(Enemy* _enemy);
-
+	SGD::Point GetPrevLevelPosition() const {return m_ptPrevLevelPos;}
+	SGD::Point GetPrevPosition() const {return m_ptPrevBonusPos;}
+	void SetPrevLevelPosition(SGD::Point _Pos) {m_ptPrevLevelPos = _Pos;}
+	void SetPrevPosition(SGD::Point _Pos) {m_ptPrevBonusPos = _Pos;}
 private:
 	SGD::HTexture tileSet = SGD::INVALID_HANDLE;
 	string m_strTileSetPath;
@@ -52,6 +56,8 @@ private:
 	vector<vector<Tile>> m_TileMap;
 	SGD::Size m_szMapSize;
 	SGD::Size m_szGridSize;
-
+	SGD::Point m_ptPrevLevelPos;
+	SGD::Point m_ptPrevBonusPos;
+	
 };
 

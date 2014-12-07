@@ -296,7 +296,7 @@ bool InventoryState::Input()
 			m_ptSelectedRune.SetElement( Earth );
 			m_ptSelectedRune.SetTier( 3 );
 		}
-		
+
 	}
 	// remove runes from the equipped slot
 	if( pInput->IsKeyPressed( SGD::Key::MouseRight ) )
@@ -344,7 +344,7 @@ bool InventoryState::Input()
 #pragma endregion
 
 #pragma region tooltips
-		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
+		if( pInput->GetCursorPosition().IsPointInRectangle( IventoryRect1 ) )
 		{
 			m_bShowToolTip1 = !m_bShowToolTip1;
 			m_bShowToolTip2 = false;
@@ -1224,9 +1224,18 @@ void InventoryState::Render()
 		SGD::Point TextPositionOne;
 		SGD::Point TextPositionTwo;
 
-		TextPositionOne.x = DialogBoxOne.left + 60;
+		if( Game::GetInstance()->GetIcelandic() )
+		{
+			TextPositionOne.x = DialogBoxOne.left + 60;
+			TextPositionTwo.x = DialogBoxOne.left + 150;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 60;
+			TextPositionTwo.x = DialogBoxOne.left + 80;
+		}
+
 		TextPositionOne.y = DialogBoxOne.top + 20;
-		TextPositionTwo.x = DialogBoxOne.left +80;
 		TextPositionTwo.y = DialogBoxOne.top + 50;
 
 		portraitPosition.x = DialogBoxOne.left - 10;

@@ -19,6 +19,7 @@ public:
 
 	// - Holds all the levels of the game.
 	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL };
+	enum SideLevels { TUTORIAL_SIDE, EARTH_SIDE, WATER_SIDE, AIR_SIDE, FIRE_SIDE, BOSS_SIDE };
 	enum BucketList {
 		BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET,
 		CHEST_BUCKET, TRAP_BUCKET, TUTORIAL_HERO_BUCKET,
@@ -59,7 +60,7 @@ public:
 
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
-	Object* CreateCompanion(SGD::Point _pos, int _ID);
+	Object* CreateCompanion( SGD::Point _pos, int _ID );
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
 	SGD::Rectangle ForgeButton = { 0, 0, 100, 100 };
@@ -67,12 +68,22 @@ public:
 
 	// - Hepler function to create the next level.
 	void LoadNewLevel();
+	void LoadNewSideLevel();
 	void SetLevel( int _level ) { m_nCurrentLevel = _level; }
+	void SetSideLevel( int _level ) { m_nCurrentSideLevel = _level; }
 	void NextLevel() { m_nCurrentLevel++; }
 	void PrevLevel() { m_nCurrentLevel--; }
+	void NextSideLevel() { m_nCurrentSideLevel++; }
+	void PrevSideLevel() { m_nCurrentSideLevel--; }
 	void ChangeLevel( bool _change ) { m_bChangeLevels = _change; }
+	void ChangeSideLevel(bool _change) {  m_bChangeSideLevels = _change; }
 	bool GetChangeLevel() const { return m_bChangeLevels; }
+	bool GetChangeSideLevel() const { return m_bChangeSideLevels; }
+	void SetLoadLevelPosition(bool _change) {m_bSetLevelPosition = _change;}
+	void SetLoadSidePosition(bool _change) {m_bSetSidePosition = _change;}
 	int GetCurrentLevel() const { return m_nCurrentLevel; }
+	int GetCurrentSideLevel() const { return m_nCurrentSideLevel; }
+
 	void UnloadAndCreate();
 
 	// - Helper functions for the Tutorial
@@ -121,7 +132,10 @@ private:
 	// - Level progression
 	int m_nCurrentLevel = 0;
 	bool m_bChangeLevels = false;
-
+	int m_nCurrentSideLevel = -1;
+	bool m_bChangeSideLevels = false;
+	bool m_bSetSidePosition = false;
+	bool m_bSetLevelPosition = false;
 	// - Tutorial Level
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoss = SGD::INVALID_HANDLE;
@@ -133,4 +147,5 @@ private:
 	bool m_bMainDialog = false;
 	bool m_bChestDialog = false;
 	bool m_bSigmundDialog = false;
+	bool m_bIcelandic = false;
 };

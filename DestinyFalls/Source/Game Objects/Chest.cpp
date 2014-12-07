@@ -56,7 +56,7 @@ void Chest::Render(void)
 		SGD::Point tempPos;
 		tempPos.x = (m_ptPosition.x - GameplayState::GetInstance()->GetWorldCam().x);
 		tempPos.y = (m_ptPosition.y - GameplayState::GetInstance()->GetWorldCam().y);
-		SGD::GraphicsManager::GetInstance()->DrawString("Press Q to Open", tempPos, SGD::Color(255, 255, 0, 0));
+		SGD::GraphicsManager::GetInstance()->DrawString("Q", tempPos, SGD::Color(255, 255, 0, 0));
 	}
 }
 
