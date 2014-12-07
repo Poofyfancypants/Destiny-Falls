@@ -77,7 +77,8 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
-
+	m_hRanger = pGraphics->LoadTexture(L"resource/graphics/OverWorldRanger.png");
+	m_hCleric = pGraphics->LoadTexture(L"resource/graphics/OverWorldCleric.png");
 	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil1.png");
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
@@ -365,7 +366,10 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 Object* GameplayState::CreateCompanion( SGD::Point _pos, int _ID )
 {
 	Companion* temp = new Companion;
-	temp->SetImage( m_hBoulder );
+	if (_ID == 1)
+		temp->SetImage(m_hRanger);
+	else
+		temp->SetImage(m_hCleric);
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 30, 30 ) );
 	return temp;

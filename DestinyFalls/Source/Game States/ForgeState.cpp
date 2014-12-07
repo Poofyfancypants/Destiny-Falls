@@ -585,7 +585,7 @@ void ForgeState::Render()
 
 	if (m_bFail == true)
 	{
-		pGraphics->DrawRectangle(Equip3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
+		pGraphics->DrawRectangle(Equip3, SGD::Color{ 255, 255, 255, 255 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawTexture(m_hDust, { Equip3.left, Equip3.top }, {}, {}, {}, { 0.1f, 0.1f });
 	}
 }

@@ -43,7 +43,7 @@ private:
 
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 250, 200, 400 };
-	SGD::Rectangle ForgeButton = { 50, 50, 200, 200};
+	SGD::Rectangle ForgeButton = { 50, 50, 200, 100};
 	SGD::Rectangle ResultBox = {200, 50, 500, 200};
 
 	SGD::Rectangle rect1 = { 50, 50, 200, 200 };
