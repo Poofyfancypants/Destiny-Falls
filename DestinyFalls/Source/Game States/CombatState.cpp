@@ -13,6 +13,7 @@
 #include "../Runes/RuneManager.h"
 #include "../Runes/Runes.h"
 #include "../Quick Time/QuickTime.h"
+#include "../Game States/QuickTimeState.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -142,31 +143,14 @@ bool CombatState::Input( void )
 		Game::GetInstance()->RemoveState();
 	}
 
-	//if the player's quicktime pointer is not equal to nullptr, take in the quicktime input
-	if( ((Player*)m_pHeroes[0] )->GetQuickTime() != nullptr)
-	{
-		( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->m_kLastKeyPressed = pInput->GetAnyKeyPressed();
-	}
+
 
 	return true;
 }
 
 void CombatState::Update( float elapsedTime )
 {
-	//if the player's current qt is not a null pointer, run quicktime
-	if( ( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime() != nullptr )
-	{
-		//update quicktime
-		( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->Update( elapsedTime );
-
-		//if the quicktime event is over stop quicktime (deletes the quicktime pointer and sets it back to nullptr, thereby making this if statement false)
-		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->GetIsOver() == true )
-		{
-			( ( Player* ) m_pHeroes[ 0 ] )->StopQuickTime();
-		}
-	}
-	else//otherwise run normal update loop
-	{
+	
 		ActionTimer -= elapsedTime;
 		if( ActionTimer <= 0.0f )
 			ActionTimer = 0.0f;
@@ -297,7 +281,7 @@ void CombatState::Update( float elapsedTime )
 
 			}
 		}
-	}
+	
 }
 
 void CombatState::Render( void )
@@ -348,10 +332,7 @@ void CombatState::Render( void )
 	pGraphics->DrawRectangle( Companion1rect , SGD::Color() , SGD::Color() );
 	pGraphics->DrawRectangle( Companion2rect , SGD::Color() , SGD::Color() );
 
-	if( ( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime() != nullptr )
-	{
-		( ( Player* ) m_pHeroes[ 0 ] )->GetQuickTime()->Render();
-	}
+	
 
 
 }
@@ -597,6 +578,8 @@ bool CombatState::TakeAction( int _ActionType , Object* _this , int _target ) //
 					pAudio->PlayAudio( Game::GetInstance()->m_mMeleeButton );
 					ComboElements d1 = mag.ElementCombination( InventoryState::GetInstance()->GetSwordSlot1() , InventoryState::GetInstance()->GetSwordSlot2() );
 
+					Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
+					
 					( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 						( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 					( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();
