@@ -77,9 +77,9 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
-	m_hRanger = pGraphics->LoadTexture(L"resource/graphics/OverWorldRanger.png");
-	m_hCleric = pGraphics->LoadTexture(L"resource/graphics/OverWorldCleric.png");
-	m_hForge = pGraphics->LoadTexture(L"resource/graphics/Anvil1.png");
+	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/OverWorldRanger.png" );
+	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/OverWorldCleric.png" );
+	m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -92,13 +92,19 @@ void GameplayState::Enter()
 
 	pAudio->PlayAudio( bmusic, true );
 
-
-
-
+	m_bSetSidePosition = false;
+	m_bSetLevelPosition = false;
+	m_bFirstDialog = false;
+	m_bPuzzleDialog = false;
+	m_bBoulderDialog = false;
+	m_bTrapDialog = false;
+	m_bMainDialog = false;
+	m_bChestDialog = false;
+	m_bSigmundDialog = false;
 
 	// Invisible inventory selection button behind inventory image.
 	InventoryButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 60 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 120, 120 } );
-	ForgeButton = SGD::Rectangle(SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60) }, SGD::Point{ (Game::GetInstance()->GetScreenWidth() - 59), (Game::GetInstance()->GetScreenHeight()) });
+	ForgeButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 59 ), ( Game::GetInstance()->GetScreenHeight() ) } );
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
 	m_ptWorldCam = { 0, 0 };
@@ -123,10 +129,10 @@ void GameplayState::Exit()
 		m_pPlayer = nullptr;
 	}
 
-	pAudio->UnloadAudio(bmusic);
+	pAudio->UnloadAudio( bmusic );
 
 	//unload images
-	pGraphics->UnloadTexture(m_hForge);
+	pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
@@ -135,8 +141,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hHero );
 	pGraphics->UnloadTexture( m_hDialogImg );
 	pGraphics->UnloadTexture( m_hHealthPot );
-	pGraphics->UnloadTexture(m_hRanger);
-	pGraphics->UnloadTexture(m_hCleric);
+	pGraphics->UnloadTexture( m_hRanger );
+	pGraphics->UnloadTexture( m_hCleric );
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -179,7 +185,7 @@ bool GameplayState::Input()
 	if( m_nCurrentLevel == 0 && pInput->IsKeyPressed( SGD::Key::Tab ) )
 	{
 		NextLevel();
-		SetSideLevel(1);
+		SetSideLevel( 1 );
 		m_bChangeLevels = true;
 	}
 	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
@@ -192,11 +198,11 @@ bool GameplayState::Input()
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( InventoryButton ) )
 		{
-			Game::GetInstance()->AddState(InventoryState::GetInstance() );
+			Game::GetInstance()->AddState( InventoryState::GetInstance() );
 		}
 		if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
 		{
-			Game::GetInstance()->AddState(ForgeState::GetInstance());
+			Game::GetInstance()->AddState( ForgeState::GetInstance() );
 		}
 	}
 
@@ -226,7 +232,7 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
-	m_pObjects->CheckCollisions( PLAYER_BUCKET , COMPANION_BUCKET );
+	m_pObjects->CheckCollisions( PLAYER_BUCKET, COMPANION_BUCKET );
 
 	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
 
@@ -247,7 +253,6 @@ void GameplayState::Render()
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
 
-
 	pGraphics->SetClearColor();
 	m_pObjects->RenderAll();
 
@@ -263,8 +268,8 @@ void GameplayState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
-	pGraphics->DrawTexture(m_hForge, SGD::Point((Game::GetInstance()->GetScreenWidth() - 120), (Game::GetInstance()->GetScreenHeight() - 60)), {}, {}, {}, { 0.4f, 0.35f });
-	
+	pGraphics->DrawTexture( m_hForge, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.4f, 0.35f } );
+
 	if( m_nCurrentLevel == 0 )
 	{
 		RenderDialog();
@@ -283,6 +288,10 @@ void GameplayState::Render()
 
 
 	pGraphics->DrawTexture( m_hHealthPot, SGD::Point( HealthPotionPosition.left, HealthPotionPosition.top ), {}, {}, {}, { 0.7f, 0.7f } );
+	pFont->Render( "Bernardo",
+		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
+		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
+		2, SGD::Color( 255, 0, 0 ) );
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
@@ -366,10 +375,10 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 Object* GameplayState::CreateCompanion( SGD::Point _pos, int _ID )
 {
 	Companion* temp = new Companion;
-	if (_ID == 1)
-		temp->SetImage(m_hRanger);
+	if( _ID == 1 )
+		temp->SetImage( m_hRanger );
 	else
-		temp->SetImage(m_hCleric);
+		temp->SetImage( m_hCleric );
 	temp->SetPosition( _pos );
 	temp->SetSize( SGD::Size( 30, 30 ) );
 	return temp;

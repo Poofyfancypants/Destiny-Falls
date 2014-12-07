@@ -110,8 +110,8 @@ bool PauseMenuState::Input( void )
 		//Clicked on the Exit Game button
 		if( pInput->GetCursorPosition().IsPointInRectangle( rExitRect ) )
 		{
-			Game::GetInstance()->RemoveState();
-			Game::GetInstance()->RemoveState();
+			Game::GetInstance()->ClearStates();
+			Game::GetInstance()->AddState(MainMenuState::GetInstance());
 		}
 	}
 	return true;
