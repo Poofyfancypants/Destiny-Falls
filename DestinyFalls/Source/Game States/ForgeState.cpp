@@ -52,12 +52,92 @@ bool ForgeState::Input()
 			Game::GetInstance()->RemoveState();
 	}
 
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	{
+		if (pInput->GetCursorPosition().IsPointInRectangle(ForgeButton))
+		{
+			m_bForge = true;
+		}
+		if (pInput->GetCursorPosition().IsPointInRectangle(rect1))
+		{
+			if (m_ptSelectedRune.GetElement() != None)
+			{
+				m_rSlot1 = m_ptSelectedRune;
+			}
+		}
+		if (pInput->GetCursorPosition().IsPointInRectangle(rect2))
+		{
+			if (m_ptSelectedRune.GetElement() != None)
+			{
+				m_rSlot2 = m_ptSelectedRune;
+			}
+		}
+
+		if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect1))
+		{
+			m_ptSelectedRune.SetElement(Fire);
+			m_ptSelectedRune.SetTier(1);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect2))
+		{
+			m_ptSelectedRune.SetElement(Fire);
+			m_ptSelectedRune.SetTier(2);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect4))
+		{
+			m_ptSelectedRune.SetElement(Water);
+			m_ptSelectedRune.SetTier(1);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect5))
+		{
+			m_ptSelectedRune.SetElement(Water);
+			m_ptSelectedRune.SetTier(2);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect7))
+		{
+			m_ptSelectedRune.SetElement(Air);
+			m_ptSelectedRune.SetTier(1);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect8))
+		{
+			m_ptSelectedRune.SetElement(Air);
+			m_ptSelectedRune.SetTier(2);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect10))
+		{
+			m_ptSelectedRune.SetElement(Earth);
+			m_ptSelectedRune.SetTier(1);
+		}
+		else if (pInput->GetCursorPosition().IsPointInRectangle(IventoryRect11))
+		{
+			m_ptSelectedRune.SetElement(Earth);
+			m_ptSelectedRune.SetTier(2);
+		}
+	}
+
+	if (pInput->IsKeyPressed(SGD::Key::MouseRight))
+	{
+		if (pInput->GetCursorPosition().IsPointInRectangle(rect1))
+		{
+			InventoryState::GetInstance()->AddRunesToInventoryfromWorld(m_rSlot1);
+		}
+		if (pInput->GetCursorPosition().IsPointInRectangle(rect2))
+		{
+			InventoryState::GetInstance()->AddRunesToInventoryfromWorld(m_rSlot2);
+		}
+	}
+
+
+
 	return true;
 }
 
 void ForgeState::Update(float elapsedTime)
 {
-	
+	if (m_bForge)
+	{
+
+	}
 }
 
 void ForgeState::Render()
@@ -69,11 +149,14 @@ void ForgeState::Render()
 	GameplayState::GetInstance()->Render();
 
 	//pGraphics->DrawRectangle(GameplayState::GetInstance()->InventoryButton, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 0, 255, 255, 255 });
-	
-	pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 255, 255, 255 }, SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawRectangle(ImageRect, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
 
-	pGraphics->DrawTexture(m_hForge, SGD::Point{ ImageRect.left, ImageRect.top }, {}, {}, {}, { 0.3f, 0.45f });
+	pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 255, 255, 255 }, SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawRectangle(rect1, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawRectangle(rect2, SGD::Color{ 255, 200, 100, 0 }, SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawRectangle(ImageRect, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawRectangle(ResultBox, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
+
+	pGraphics->DrawTexture(m_hForge, SGD::Point{ ImageRect.left, ImageRect.top }, {}, {}, {}, { 0.3f, 0.3f });
 
 
 	pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
