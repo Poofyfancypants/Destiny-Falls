@@ -172,21 +172,22 @@ void CombatState::Update(float elapsedTime)
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
 	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
 		break;
 	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
 		break;
 	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.3f });
 		break;
 	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
 		break;
 	default:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
 		break;
 	}
 
@@ -410,7 +411,6 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 			  {
 				  temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
 			  }
-
 			  int randAI = rand() % 5;
 			  int randHealth = 0;
 
@@ -588,6 +588,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 		break;
 	case 2: //Mini Bosses
 	{
+
 				switch (_region)
 				{
 				case 0:
@@ -605,6 +606,8 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 		break;
 	case 3: //Level Bosses
 	{
+				
+
 				switch (_region)
 				{
 				case 0:
