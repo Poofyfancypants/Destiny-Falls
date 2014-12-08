@@ -131,7 +131,7 @@ private:
 	unsigned long m_ulGameTime = 0;
 
 	int m_nCurrState = 0;
-	std::string m_StringTable[10][10];
+	std::string m_StringTable[15][10];
 
 	std::vector<IGameState*> m_pStateStack;
 	AnimationManager* m_pAnimator;

@@ -160,10 +160,10 @@ bool Game::Initialize( float width, float height )
 	m_hFinal1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final1.png" );
 	m_hFinal2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final2.png" );
 	m_hFinal3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final3.png" );
-	m_hAirIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/AirIcon.png");
-	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FireIcon.png");
-	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterIcon.png");
-	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/EarthIcon.png");
+	m_hAirIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/AirIcon.png" );
+	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/FireIcon.png" );
+	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/WaterIcon.png" );
+	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/EarthIcon.png" );
 
 
 
@@ -308,10 +308,10 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hHTP );
 	pGraphics->UnloadTexture( m_hOptions );
 
-	pGraphics->UnloadTexture(m_hAirIcon);
-	pGraphics->UnloadTexture(m_hFireIcon);
-	pGraphics->UnloadTexture(m_hWaterIcon);
-	pGraphics->UnloadTexture(m_hEarthIcon);
+	pGraphics->UnloadTexture( m_hAirIcon );
+	pGraphics->UnloadTexture( m_hFireIcon );
+	pGraphics->UnloadTexture( m_hWaterIcon );
+	pGraphics->UnloadTexture( m_hEarthIcon );
 
 
 	pAudio->UnloadAudio( m_mMusic );
@@ -480,6 +480,17 @@ void Game::LoadStrings()
 		m_StringTable[9][3] = "Screen";
 		m_StringTable[9][4] = "Language";
 
+		// - Combat Tutorial
+		m_StringTable[9][5] = "When it is your turn you get to select between your abilities.";
+		m_StringTable[9][6] = "Once you've selected an action, you can choose your target.";
+		m_StringTable[9][7] = "Your attacks power is based on the amount of right keystrokes";
+		m_StringTable[9][8] = "during this quick time, be ready to press the displayed keys.";
+		m_StringTable[9][9] = "You control your Companions turns as well and they have different";
+		m_StringTable[10][1] = "set of abilities, but do not utilise the QuickTime.";
+		m_StringTable[10][2] = "The enemy will retalliate and attack you during their turn,";
+		m_StringTable[10][3] = "you have to be careful and watch your health.";
+
+
 		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 	}
@@ -506,12 +517,21 @@ void Game::LoadStrings()
 		m_StringTable[9][3] = "Skjar";
 		m_StringTable[9][4] = "Tungumal";
 
+		// - Combat Tutorial
+		m_StringTable[9][5] = "Thegar umferdin kemur ad ther faerdu ad velja ability til ad nota.";
+		m_StringTable[9][6] = "Eftir ad ability er valinn, veluru ovin til ad radast a.";
+		m_StringTable[9][7] = "Kraftur arasarinnar fer eftir thvi hvad thu hittir a marga retta takka";
+		m_StringTable[9][8] = "a medan thetta Quick Time er i gangi, vertu tilbuin ad yta a tha sem thu serd";
+		m_StringTable[9][9] = "Thu faerd einnig ad stjorna vinum thinum, their hafa adra abilities en thu,";
+		m_StringTable[10][1] = "en notast ekki vid QuickTime.";
+		m_StringTable[10][2] = "Thegar thad er ekki think umferd mun ovinurinn radast a thig til baka";
+		m_StringTable[10][3] = "thu verdur ad passa thad ad thu deyjir ekki.";
+
+
+
 		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
+
 	}
-
-
-	//Set up DialogManager
-	//Load Dialogs
 
 }

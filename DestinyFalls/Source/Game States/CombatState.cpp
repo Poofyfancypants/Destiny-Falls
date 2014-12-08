@@ -223,33 +223,14 @@ bool CombatState::Input(void)
 
 void CombatState::Update(float elapsedTime)
 {
+
 	ActionTimer -= elapsedTime;
 	if (ActionTimer <= 0.0f)
 		ActionTimer = 0.0f;
 
 	m_fFlash += elapsedTime;
 
-	switch (GameplayState::GetInstance()->GetCurrentLevel())
-	{
-	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
-		break;
-	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
-		break;
-	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
-		break;
-	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.3f });
-		break;
-	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
-		break;
-	default:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
-		break;
-	}
+	DrawBackground();
 
 	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
@@ -383,6 +364,7 @@ void CombatState::Update(float elapsedTime)
 			ResetRects();
 		}
 	}
+
 }
 void CombatState::Render(void)
 {
@@ -445,7 +427,8 @@ void CombatState::Render(void)
 			((Companion*)m_pHeroes[j])->CombatRender(j);
 		}
 	}
-
+	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
+		HandleTutorial();
 }
 
 Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care
@@ -1036,7 +1019,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
-		Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
@@ -1044,6 +1026,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			{
 				if (((Minion*)m_pEnemies[i])->m_Block)
 				{
+					Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 					BlockAttack(_From, m_pEnemies[i]);
 					localBlock = ((Minion*)m_pEnemies[i])->m_Block;
 					((Minion*)m_pEnemies[i])->m_Block = false;
@@ -1059,12 +1042,13 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-
+			Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQTCorrect * 50));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 			//Cool idea to give you a better chance against harder monsters with more potential damage
 
+			if (((Minion*)_To)->GetAIType() == Minion::Off_AI)
 			if (((Minion*)_To)->GetAIType() == Minion::Off_AI)
 			{
 				if (rand() % 20 > 1)
@@ -2593,5 +2577,123 @@ void CombatState::ResetRects()
 			((Minion*)m_pObjects[i])->SetMinionRect2(Enemy2rect);
 			((Minion*)m_pObjects[i])->SetMinionRect3(Enemy3rect);
 		}
+	}
+}
+
+void CombatState::HandleTutorial()
+{
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	BitmapFontManager *pFont = BitmapFontManager::GetInstance();
+
+	SGD::Point ptWorldCam = GameplayState::GetInstance()->GetWorldCam();
+
+	SGD::Point heroPosition;
+	SGD::Point portraitPosition;
+	// - Location of the Dialog Box at the bottom of the screen.
+
+	SGD::Rectangle DialogBoxOne;
+	DialogBoxOne.left = 25;
+	DialogBoxOne.top = Game::GetInstance()->GetScreenHeight() - 105;
+	DialogBoxOne.right = Game::GetInstance()->GetScreenWidth() - 25;
+	DialogBoxOne.bottom = Game::GetInstance()->GetScreenHeight() - 5;
+
+	// - Location to print the strings within the dialog Box
+	SGD::Point TextPositionOne;
+	SGD::Point TextPositionTwo;
+
+	TextPositionOne.x = DialogBoxOne.left + 40;
+	TextPositionOne.y = DialogBoxOne.top + 20;
+	TextPositionTwo.x = DialogBoxOne.left + 20;
+	TextPositionTwo.y = DialogBoxOne.top + 50;
+
+	portraitPosition.x = DialogBoxOne.left - 10;
+	portraitPosition.y = DialogBoxOne.top - 30;
+
+	if (CurrentTurn == m_pHeroes[0]->GetTurnPos())
+	{
+		if (Game::GetInstance()->GetIcelandic())
+		{
+			TextPositionOne.x = DialogBoxOne.left + 100;
+			TextPositionTwo.x = DialogBoxOne.left + 150;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 120;
+			TextPositionTwo.x = DialogBoxOne.left + 125;
+		}
+
+		heroPosition = { (float)((3 * 32) - ptWorldCam.x), (float)((8 * 32) - ptWorldCam.y) };
+
+		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(220, 215, 143), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPortrait(), portraitPosition);
+		pFont->Render("Dialog", Game::GetInstance()->GetString(9, 5).c_str(), TextPositionOne, .7f, SGD::Color(0, 0, 0));
+		pFont->Render("Dialog", Game::GetInstance()->GetString(9, 6).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
+
+	}
+	else if (CurrentTurn == m_pHeroes[1]->GetTurnPos() || CurrentTurn == m_pHeroes[2]->GetTurnPos())
+	{
+		if (Game::GetInstance()->GetIcelandic())
+		{
+			TextPositionOne.x = DialogBoxOne.left + 50;
+			TextPositionTwo.x = DialogBoxOne.left + 240;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 100;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
+
+		heroPosition = { (float)((3 * 32) - ptWorldCam.x), (float)((8 * 32) - ptWorldCam.y) };
+
+		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(220, 215, 143), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPortrait(), portraitPosition);
+		pFont->Render("Dialog", Game::GetInstance()->GetString(9, 9).c_str(), TextPositionOne, .7f, SGD::Color(0, 0, 0));
+		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 1).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
+
+	}
+	else
+	{
+		if (Game::GetInstance()->GetIcelandic())
+		{
+			TextPositionOne.x = DialogBoxOne.left + 80;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 150;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
+
+		heroPosition = { (float)((3 * 32) - ptWorldCam.x), (float)((8 * 32) - ptWorldCam.y) };
+
+		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(220, 215, 143), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPortrait(), portraitPosition);
+		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 2).c_str(), TextPositionOne, .7f, SGD::Color(0, 0, 0));
+		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 3).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
+	}
+}
+
+void CombatState::DrawBackground()
+{
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	{
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
+		break;
+	case 2:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	case 3:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	case 4:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.3f });
+		break;
+	case 5:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	default:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
 	}
 }
