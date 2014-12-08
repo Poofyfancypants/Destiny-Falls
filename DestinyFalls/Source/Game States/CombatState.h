@@ -48,7 +48,7 @@ public:
 	std::vector<Object*> GetHeroes() const { return m_pHeroes; }
 	std::vector<Object*> GetEnemies() const { return m_pEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
-	Object* AddMinion(int _region = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
+	Object* AddMinion(int _region = 0, int EnemyType = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
 	Object* AddCompanion(); 
 
 	bool GetCooldown() { return m_bCoolDown; }
@@ -66,6 +66,7 @@ public:
 	bool TakeTurn(Object*);
 
 private:
+
 	CombatState() = default;
 	virtual ~CombatState() = default;
 

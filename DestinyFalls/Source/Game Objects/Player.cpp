@@ -291,9 +291,9 @@ void Player::HandleCollision( const iObject* pOther )
 	{
 		if( !m_bCombat )
 		{
+			CombatEnemyID = ((Enemy*)pOther)->GetEnemyType();
 			pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
 			Game::GetInstance()->AddState( CombatState::GetInstance() );
-
 		}
 
 	}

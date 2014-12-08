@@ -225,8 +225,6 @@ void GameplayState::Update( float elapsedTime )
 		m_fFPSTime = 0.0f;
 	}
 
-
-
 	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
@@ -309,6 +307,7 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 	Enemy* temp = new Enemy;
 	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
+	temp->SetEnemyType(_id);
 	temp->SetSize( SGD::Size( 32, 32 ) );
 	m_pMap->NextWaypoint( temp );
 	temp->SetWaypointID( 1 );
