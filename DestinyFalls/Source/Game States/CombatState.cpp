@@ -41,35 +41,92 @@ void CombatState::Enter(void)
 
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
-
+	//minion Icons
+	
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
-	for (unsigned int i = 0; i < rand() % 3 + 1; i++)
+#pragma region AddingCombatEnemies
+	if (player->CombatEnemyID == 1)
+	{
+		for (unsigned int i = 0; i < rand() % 2 + 2; i++)
+		{
+			Object* temp;
+			switch (GameplayState::GetInstance()->GetCurrentLevel())
+			{
+			case 1:
+				temp = AddMinion(0, player->CombatEnemyID);
+				break;
+			case 2:
+				temp = AddMinion(1, player->CombatEnemyID);
+				break;
+			case 3:
+				temp = AddMinion(2, player->CombatEnemyID);
+				break;
+			case 4:
+				temp = AddMinion(3, player->CombatEnemyID);
+				break;
+			default:
+				temp = AddMinion(rand() % 4, player->CombatEnemyID);
+
+				break;
+			}
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+		}
+	}
+	else if (player->CombatEnemyID == 2)
 	{
 		Object* temp;
 		switch (GameplayState::GetInstance()->GetCurrentLevel())
 		{
 		case 1:
-			temp = AddMinion(0);
+			temp = AddMinion(0, player->CombatEnemyID);
 			break;
 		case 2:
-			temp = AddMinion(1);
+			temp = AddMinion(1, player->CombatEnemyID);
 			break;
 		case 3:
-			temp = AddMinion(2);
+			temp = AddMinion(2, player->CombatEnemyID);
 			break;
 		case 4:
-			temp = AddMinion(3);
+			temp = AddMinion(3, player->CombatEnemyID);
 			break;
 		default:
-			temp = AddMinion(rand() % 4);
+			temp = AddMinion(rand() % 4, player->CombatEnemyID);
 
 			break;
 		}
 		m_pObjects.push_back(temp);
 		m_pEnemies.push_back(temp);
 	}
+	else if (player->CombatEnemyID == 3)
+	{
+		Object* temp;
+		switch (GameplayState::GetInstance()->GetCurrentLevel())
+		{
+		case 1:
+			temp = AddMinion(0, player->CombatEnemyID);
+			break;
+		case 2:
+			temp = AddMinion(1, player->CombatEnemyID);
+			break;
+		case 3:
+			temp = AddMinion(2, player->CombatEnemyID);
+			break;
+		case 4:
+			temp = AddMinion(3, player->CombatEnemyID);
+			break;
+		default:
+			temp = AddMinion(rand() % 4, player->CombatEnemyID);
+
+			break;
+		}
+		m_pObjects.push_back(temp);
+		m_pEnemies.push_back(temp);
+	}
+#pragma endregion
+#pragma region AddingCombatCompanions
 
 	for (unsigned int i = 1; i < 3; i++)
 	{
@@ -87,6 +144,7 @@ void CombatState::Enter(void)
 		m_pObjects.push_back(temp);
 		m_pHeroes.push_back(temp);
 	}
+#pragma endregion
 
 	for (size_t i = 1; i < m_pObjects.size(); i++)
 	{
@@ -119,10 +177,6 @@ void CombatState::Enter(void)
 
 	((Player*)m_pHeroes[0])->StartCombat();
 
-	//if (((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetMapSwitch() == false)
-	//{
-	//	((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetMapSwitch() == true;
-	//}
 }
 
 void CombatState::Exit(void)
@@ -143,7 +197,6 @@ void CombatState::Exit(void)
 	pGraphics->UnloadTexture(m_hplayer);
 
 	pAudio->UnloadAudio(cMusic);
-
 }
 
 bool CombatState::Input(void)
@@ -168,6 +221,28 @@ void CombatState::Update(float elapsedTime)
 		ActionTimer = 0.0f;
 
 	m_fFlash += elapsedTime;
+
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	{
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
+		break;
+	case 2:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	case 3:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	case 4:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.3f });
+		break;
+	case 5:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	default:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	}
 
 	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
@@ -271,11 +346,9 @@ void CombatState::Update(float elapsedTime)
 		}
 		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
 			CurrentTurn = 0;
-
 	}
 	else
 	{
-
 		if (Attacker1 != -1)
 		{
 			if (m_pHeroes[Attacker1]->GetAttacking())
@@ -307,14 +380,25 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
+	//pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
+	//Enemy Icons
+	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
+	{
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+	}
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
 	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
 
-	//backgrounds
-	
+
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
@@ -325,7 +409,6 @@ void CombatState::Render(void)
 		pHcolor = { 255, 255, 0, 0 };
 
 	pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
-	/*pGraphics->DrawTexture( m_hplayer , { Playerrect.left - 20 , Playerrect.top - 10 } , { } , { } , { } , { .5 , .5 } );*/
 	((Player*)m_pHeroes[0])->Render();
 
 	if (PlayerHB.right > PlayerHB.left)
@@ -352,208 +435,335 @@ void CombatState::Render(void)
 		}
 	}
 
-	//pGraphics->DrawRectangle(Companion1rect, SGD::Color(), SGD::Color());
-	//pGraphics->DrawRectangle(Companion2rect, SGD::Color(), SGD::Color());
 }
 
-Object* CombatState::AddMinion(int _region) //This is gonna get big, don't care
+Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care
 {
-	//_region = rand() % 4;
 	Minion* temp = new Minion;
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
-	temp->SetInit(rand() % 20);
-	temp->SetAffinity((Elements)_region);
 
-	if (m_pEnemies.size() == 0)
+	switch (EnemyID)
 	{
-		temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+
+	case 1:
+	{
+			  temp->SetInit(rand() % 20);
+			  temp->SetAffinity((Elements)_region);
+
+			  if (m_pEnemies.size() == 0)
+			  {
+				  temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+			  }
+			  else if (m_pEnemies.size() == 1)
+			  {
+				  temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+			  }
+			  else if (m_pEnemies.size() == 2)
+			  {
+				  temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
+			  }
+			  int randAI = rand() % 5;
+			  int randHealth = 0;
+
+			  switch (randAI)
+			  {
+			  case 0: // Minion
+				  randHealth = rand() % 40 + 40;
+				  temp->SetMods(6, 3, _region, 0, 0);
+
+				  switch (_region)
+				  {
+				  case 0:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Minion_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 1:
+					  temp->SetMinionAnimation(_region, randAI);
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Minion_AI);
+					  break;
+				  case 2:
+					  temp->SetMinionAnimation(_region, randAI);
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Minion_AI);
+					  break;
+				  case 3:
+					  temp->SetMinionAnimation(_region, randAI);
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Minion_AI);
+					  break;
+				  }
+				  break;
+			  case 1: // Offensive
+				  randHealth = rand() % 35 + 50;
+
+				  if (randHealth > 50)
+					  temp->SetMods(6, 5, _region, 2, 1);
+				  else
+					  temp->SetMods(6, 5, _region, 3, 1);
+
+				  switch (_region)
+				  {
+
+				  case 0:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Off_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 1:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Off_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 2:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Off_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 3:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Off_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  }
+				  break;
+			  case 2: // Defensive
+				  randHealth = rand() % 20 + 80;
+
+				  if (randHealth > 90)
+					  temp->SetMods(6, 2, _region, 1, 3);
+				  else
+					  temp->SetMods(6, 2, _region, 2, 3);
+
+				  switch (_region)
+				  {
+
+				  case 0:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Def_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+
+					  break;
+				  case 1:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Def_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+
+
+					  break;
+				  case 2:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Def_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+
+					  break;
+				  case 3:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Def_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  }
+				  break;
+			  case 3: // Healing
+				  randHealth = rand() % 35 + 45;
+
+				  if (randHealth > 60)
+					  temp->SetMods(6, 1, _region, 1, 2);
+				  else
+					  temp->SetMods(6, 1, _region, 1, 3);
+
+				  switch (_region)
+				  {
+				  case 0:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Heal_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+
+					  break;
+				  case 1:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Heal_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 2:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Heal_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 3:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::Heal_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  }
+				  break;
+			  case 4: // AOE
+				  randHealth = rand() % 40 + 55;
+
+				  if (randHealth > 75)
+					  temp->SetMods(6, 4, _region, 2, 1);
+				  else
+					  temp->SetMods(6, 4, _region, 3, 2);
+
+				  switch (_region)
+				  {
+				  case 0:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::AOE_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 1:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::AOE_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 2:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::AOE_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  case 3:
+					  temp->SetString(_region, randAI);
+					  temp->SetAIType(Minion::AI_Type::AOE_AI);
+					  temp->SetMinionAnimation(_region, randAI);
+					  break;
+				  }
+				  break;
+			  default:
+				  break;
+			  }
+
+			  temp->SetHealth(randHealth);
 	}
-	else if (m_pEnemies.size() == 1)
+		break;
+	case 2: //Mini Bosses
 	{
-		temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				temp->SetInit(rand() % 20);
+				temp->SetAffinity((Elements)_region);
+				if (m_pEnemies.size() == 0)
+				{
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+				}
+				else if (m_pEnemies.size() == 1)
+				{
+					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				}
+				else if (m_pEnemies.size() == 2)
+				{
+					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
+				}
+
+				switch (_region)
+				{
+				case 0:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				case 1:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				case 2:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				case 3:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				default:
+					break;
+				}
+
+				temp->SetHealth(150);
 	}
-	else if (m_pEnemies.size() == 2)
+		break;
+	case 3: //Level Bosses
 	{
-		temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
+				if (m_pEnemies.size() == 0)
+				{
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+				}
+				else if (m_pEnemies.size() == 1)
+				{
+					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				}
+				else if (m_pEnemies.size() == 2)
+				{
+					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
+				}
+
+				temp->SetInit(rand() % 20);
+				temp->SetAffinity((Elements)_region);
+
+				switch (_region)
+				{
+				case 0:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				case 1:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				case 2:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				case 3:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
+					break;
+				default:
+					break;
+				}
+
+				temp->SetHealth(150);
+
 	}
-
-	int randAI = rand() % 5;
-	int randHealth = 0;
-
-	switch (randAI)
+		break;
+	case 4: //Final Boss
 	{
-	case 0: // Minion
-		randHealth = rand() % 40 + 40;
-		temp->SetMods(6, 3, _region, 0, 0);
 
-		switch (_region)
-		{
-		case 0:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Minion_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 1:
-			temp->SetMinionAnimation(_region, randAI);
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Minion_AI);
-			break;
-		case 2:
-			temp->SetMinionAnimation(_region, randAI);
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Minion_AI);
-			break;
-		case 3:
-			temp->SetMinionAnimation(_region, randAI);
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Minion_AI);
-			break;
-		}
-		break;
-	case 1: // Offensive
-		randHealth = rand() % 35 + 50;
-
-		if (randHealth > 50)
-			temp->SetMods(6, 5, _region, 2, 1);
-		else
-			temp->SetMods(6, 5, _region, 3, 1);
-
-		switch (_region)
-		{
-
-		case 0:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Off_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 1:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Off_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 2:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Off_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 3:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Off_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		}
-		break;
-	case 2: // Defensive
-		randHealth = rand() % 20 + 80;
-
-		if (randHealth > 90)
-			temp->SetMods(6, 2, _region, 1, 3);
-		else
-			temp->SetMods(6, 2, _region, 2, 3);
-
-		switch (_region)
-		{
-
-		case 0:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Def_AI);
-			temp->SetMinionAnimation(_region, randAI);
-
-			break;
-		case 1:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Def_AI);
-			temp->SetMinionAnimation(_region, randAI);
-
-
-			break;
-		case 2:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Def_AI);
-			temp->SetMinionAnimation(_region, randAI);
-
-			break;
-		case 3:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Def_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		}
-		break;
-	case 3: // Healing
-		randHealth = rand() % 35 + 45;
-
-		if (randHealth > 60)
-			temp->SetMods(6, 1, _region, 1, 2);
-		else
-			temp->SetMods(6, 1, _region, 1, 3);
-
-		switch (_region)
-		{
-
-		case 0:
-
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Heal_AI);
-			temp->SetMinionAnimation(_region, randAI);
-
-			break;
-		case 1:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Heal_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 2:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Heal_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 3:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::Heal_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		}
-		break;
-	case 4: // AOE
-		randHealth = rand() % 40 + 55;
-
-		if (randHealth > 75)
-			temp->SetMods(6, 4, _region, 2, 1);
-		else
-			temp->SetMods(6, 4, _region, 3, 2);
-
-		switch (_region)
-		{
-		case 0:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::AOE_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 1:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::AOE_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 2:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::AOE_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		case 3:
-			temp->SetString(_region, randAI);
-			temp->SetAIType(Minion::AI_Type::AOE_AI);
-			temp->SetMinionAnimation(_region, randAI);
-			break;
-		}
+	}
 		break;
 	default:
 		break;
 	}
-
-
-	temp->SetHealth(randHealth);
 	return temp;
 }
 
@@ -800,8 +1010,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		/*Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
-		( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
+		Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
+		/*( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
 
@@ -1237,10 +1447,19 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
 		if (_To->GetType() == iObject::OBJ_PLAYER)
+		{
 			((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() + Total);
-		else
-			((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() + Total);
 
+			if (((Player*)_To)->GetHealth() > ((Player*)_To)->GetMaxHealth())
+				((Player*)_To)->SetHealth(((Player*)_To)->GetMaxHealth());
+		}
+		else
+		{
+			((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() + Total);
+			if (((Companion*)_To)->GetHealth() > ((Companion*)_To)->GetMaxHealth())
+				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
+		}
+		
 	}
 
 	return Total;
@@ -1351,7 +1570,7 @@ bool CombatState::TakeTurn(Object* _this)
 								{
 									if (ActionSelected == 0) //Melee
 									{
-										PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x + 40, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
+										PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 150, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 110, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
 										pCombat->SetAction("Choose Target");
 										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 										{
@@ -1759,6 +1978,10 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				 if (ActionSelected == CombatState::ActionType::Heal)
 																				 {
+																					 if (m_nCursor < 0)
+																						 m_nCursor = 0;
+																					 if (m_nCursor > m_pHeroes.size() - 1)
+																						 m_nCursor = m_pHeroes.size() - 1;
 
 																					 if (((Player*)m_pHeroes[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
@@ -1809,6 +2032,7 @@ bool CombatState::TakeTurn(Object* _this)
 								   }
 									   break;
 #pragma endregion
+#pragma region Melee
 								   case Companion::Companion_Type::Melee:
 								   {
 																			if (selected == false) //Pick an action (melee magic or armor)
@@ -1892,6 +2116,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			return false;
 								   }
 									   break;
+#pragma endregion
+#pragma region Mage
 								   case Companion::Companion_Type::Mage:
 								   {
 																		   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
@@ -1977,6 +2203,8 @@ bool CombatState::TakeTurn(Object* _this)
 																		   return false;
 								   }
 									   break;
+#pragma endregion
+#pragma region Tank
 								   case Companion::Companion_Type::Tank:
 								   {
 																		   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
@@ -2065,6 +2293,7 @@ bool CombatState::TakeTurn(Object* _this)
 																		   return false;
 								   }
 									   break;
+#pragma endregion
 								   default:
 									   break;
 								   }
@@ -2138,6 +2367,38 @@ bool CombatState::TakeTurn(Object* _this)
 										((Minion*)_this)->ResetAnimation();
 
 									}
+									break;
+								case Minion::AI_Type::Mini_Boss:
+									switch (((Minion*)_this)->GetAffinity())
+									{
+									case Elements::Earth:
+										break;
+									case Elements::Water:
+										break;
+									case Elements::Air:
+										break;
+									case Elements::Fire:
+										break;
+									default:
+										break;
+									}
+									break;
+								case Minion::AI_Type::Level_Boss:
+									switch (((Minion*)_this)->GetAffinity())
+									{
+									case Elements::Earth:
+										break;
+									case Elements::Water:
+										break;
+									case Elements::Air:
+										break;
+									case Elements::Fire:
+										break;
+									default:
+										break;
+									}
+									break;
+								case Minion::AI_Type::Final_Boss:
 									break;
 								default:
 									break;

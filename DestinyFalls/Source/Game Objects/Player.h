@@ -77,6 +77,8 @@ public:
 	bool GetMapSwitch() const { return m_bMapSwitch; }
 	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
 
+	int CombatEnemyID = -1;
+
 private:
 
 	SGD::Rectangle playerRect = { 225, 200, 289, 264 };

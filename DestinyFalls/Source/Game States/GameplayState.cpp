@@ -49,26 +49,26 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
 	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/BehemothAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml"); 
+	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml");  // Air level boss
+	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" ); // Water mini boss
+	m_pAnimator->Load( "resource/XML/BehemothAttackXML.xml" ); 
 	m_pAnimator->Load( "resource/XML/BombAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthEnemyAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml");	// Earth mini boss
+	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );		// Earth level boss
 	m_pAnimator->Load( "resource/XML/GenieAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GolemAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GreenGoblinAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/IceBossAttackXML.xml" );	// Water level boss
 	m_pAnimator->Load( "resource/XML/IceElementalAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/NagaAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/NagaAttackXML.xml" );  // fire level boss
 	m_pAnimator->Load( "resource/XML/OrcAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/OrcElementalAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/OrcSkeletonAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/OrcSkeletonAttackXML.xml" ); // fire mini boss
 	m_pAnimator->Load( "resource/XML/PlantAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/RockElementalAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/TitanAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/TitanAttackXML.xml" );  // final boss
 	m_pAnimator->Load( "resource/XML/WaterElementalAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/WaterEnemyAttackXML.xml" );
 
@@ -229,8 +229,6 @@ void GameplayState::Update( float elapsedTime )
 		m_fFPSTime = 0.0f;
 	}
 
-
-
 	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
@@ -311,11 +309,28 @@ Object* GameplayState::CreatePlayer( SGD::Point _pos )
 Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 {
 	Enemy* temp = new Enemy;
-	temp->SetImage( m_henemy );
 	temp->SetPosition( _pos );
+	temp->SetEnemyType(_id);
 	temp->SetSize( SGD::Size( 32, 32 ) );
 	m_pMap->NextWaypoint( temp );
 	temp->SetWaypointID( 1 );
+	switch (_id)
+	{
+	case 0:
+		temp->SetImage( m_henemy );
+		break;
+	case 1:
+		temp->SetImage(m_henemy);
+		break;
+	case 2:
+		temp->SetImage(m_henemy);
+		break;
+	case 3:
+		temp->SetImage(m_henemy);
+		break;
+	default:
+		break;
+	}
 	return temp;
 }
 

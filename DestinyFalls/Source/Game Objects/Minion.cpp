@@ -199,6 +199,9 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("GolemAttack");
 				   break;
 			   case 5:
+				   this->GetTimeStamp()->SetCurrentAnimation("EarthMiniBossAttack");
+				   break;
+			   case 6:
 				   this->GetTimeStamp()->SetCurrentAnimation( "EarthBossAttack" );
 				   break;
 			   default:
@@ -226,7 +229,10 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack2");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation( "IceBossAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation( "BaronAttack" );
+				   break;
+			   case 6:
+				   this->GetTimeStamp()->SetCurrentAnimation("IceBossAttack");
 				   break;
 			   default:
 				   break;
@@ -253,7 +259,10 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack3");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation( "AirBossAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation( "AirMiniBossAttack" );
+				   break;
+			   case 6:
+				   this->GetTimeStamp()->SetCurrentAnimation("AirBossAttack");
 				   break;
 			   default:
 				   break;
@@ -280,7 +289,10 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation( "NagaAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation( "OrcSkeletonAttack" );
+				   break;
+			   case 6:
+				   this->GetTimeStamp()->SetCurrentAnimation("NagaAttack");
 				   break;
 			   default:
 				   break;
@@ -288,6 +300,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 	}
 		break;
 	case 4: // Higher cases will be used for bosses
+		this->GetTimeStamp()->SetCurrentAnimation("TitanAttack");
 		break;
 	default:
 		break;

@@ -160,6 +160,11 @@ bool Game::Initialize( float width, float height )
 	m_hFinal1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final1.png" );
 	m_hFinal2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final2.png" );
 	m_hFinal3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final3.png" );
+	m_hAirIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/AirIcon.png");
+	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FireIcon.png");
+	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterIcon.png");
+	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/EarthIcon.png");
+
 
 
 	CombatState::GetInstance()->AddBackgroundsEarth( m_hEarth1 );
@@ -303,6 +308,11 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hHTP );
 	pGraphics->UnloadTexture( m_hOptions );
 
+	pGraphics->UnloadTexture(m_hAirIcon);
+	pGraphics->UnloadTexture(m_hFireIcon);
+	pGraphics->UnloadTexture(m_hWaterIcon);
+	pGraphics->UnloadTexture(m_hEarthIcon);
+
 
 	pAudio->UnloadAudio( m_mMusic );
 	pAudio->UnloadAudio( m_mButton );
@@ -416,27 +426,34 @@ void Game::LoadStrings()
 	m_StringTable[1][3] = "Rock Elemental";
 	m_StringTable[1][4] = "Green Sage";
 	m_StringTable[1][5] = "Heavy Golem";
-
+	m_StringTable[1][6] = "Earth Mini Boss";
 	//Water
 	m_StringTable[2][1] = "Minion";
 	m_StringTable[2][2] = "Behemoth";
 	m_StringTable[2][3] = "Water Elemental";
 	m_StringTable[2][4] = "Blue Sage";
 	m_StringTable[2][5] = "Heavy Golem";
-
+	m_StringTable[2][6] = "Water Mini Boss";
 	//Air
 	m_StringTable[3][1] = "Minion";
 	m_StringTable[3][2] = "Behemoth";
 	m_StringTable[3][3] = "Air Elemental";
 	m_StringTable[3][4] = "White Sage";
 	m_StringTable[3][5] = "Heavy Golem";
-
+	m_StringTable[3][6] = "Air Mini Boss";
 	//Fire
 	m_StringTable[4][1] = "Minion";
 	m_StringTable[4][2] = "Behemoth";
 	m_StringTable[4][3] = "Fire Elemental";
 	m_StringTable[4][4] = "Fire Sage";
 	m_StringTable[4][5] = "Fire Baron";
+	m_StringTable[4][6] = "Fire Mini Boss";
+	//Level Bosses/Final Boss
+
+	m_StringTable[5][1] = "Earth Boss";
+	m_StringTable[5][2] = "Water Boss";
+	m_StringTable[5][3] = "Air Boss";
+	m_StringTable[5][4] = "Fire Boss";
 
 	// - Tutorial Strings
 

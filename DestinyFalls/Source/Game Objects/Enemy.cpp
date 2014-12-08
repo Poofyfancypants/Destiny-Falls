@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Enemy.h"
 #include "Player.h"
+#include "../Game States/CombatState.h"
 #include "../Messages/DestroyObjectMessage.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -67,6 +68,7 @@ void Enemy::HandleCollision(const iObject* pOther)
 		DestroyObjectMessage* pMsg = new DestroyObjectMessage(this);
 		pMsg->QueueMessage();
 		pMsg = nullptr;
+
 		((Player*)pOther)->SetCombat(true);
 	}
 }

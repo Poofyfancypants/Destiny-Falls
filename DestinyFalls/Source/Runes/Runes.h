@@ -1,6 +1,6 @@
 #pragma once
 
-enum Elements { Fire, Earth, Water, Air, None };
+enum Elements { Earth, Water, Air, Fire, None };
 
 class Runes
 {
