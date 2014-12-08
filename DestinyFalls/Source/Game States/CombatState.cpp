@@ -169,6 +169,27 @@ void CombatState::Update(float elapsedTime)
 
 	m_fFlash += elapsedTime;
 
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	{
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 2:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 3:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 4:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 5:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	default:
+		break;
+	}
+
 	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
 		PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
@@ -271,11 +292,9 @@ void CombatState::Update(float elapsedTime)
 		}
 		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
 			CurrentTurn = 0;
-
 	}
 	else
 	{
-
 		if (Attacker1 != -1)
 		{
 			if (m_pHeroes[Attacker1]->GetAttacking())
@@ -314,7 +333,7 @@ void CombatState::Render(void)
 	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
 
 	//backgrounds
-	
+	//pGraphics->DrawTexture(Game::GetInstance()->m)
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
