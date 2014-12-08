@@ -41,10 +41,12 @@ void FireTrap::Render( void )
 	}
 
 	// - Temp Code till we have sprites.
-	SGD::Rectangle rec = GetRect();
-	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
+	//SGD::Rectangle rec = GetRect();
+//	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
 	// - Collision Rectangle
-	pGraphics->DrawRectangle( rec, SGD::Color( 255, 0, 0 ) );
+
+	pGraphics->DrawTexture(m_hImage, point);
+	//pGraphics->DrawRectangle( rec, SGD::Color( 255, 0, 0 ) );
 }
 SGD::Rectangle FireTrap::GetRect( void ) const
 {
