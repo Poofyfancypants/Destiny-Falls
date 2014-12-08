@@ -34,12 +34,21 @@ public:
 	int GetPosIndex( void ){ return m_nPosIndex; }
 	void SetPosIndex( int posIndex ){ m_nPosIndex = posIndex; }
 
-	bool m_Block = false;
+
+	void SetCompanionRect1(SGD::Rectangle cRect1) { Companion1rect = cRect1; }
+	void SetCompanionRect2(SGD::Rectangle cRect2) { Companion2rect = cRect2; }
+
+	bool GetBlock() const { return m_Block; }
+	void SetBlock(bool _block) { m_Block = _block; }
+
+	void ResetAnimation();
+	void SetAnimation(bool _update) { m_bUpdateAnimation = _update; }
 
 private:
 	int * m_CurrentTurn;
 	int m_nHealth = 0;
 
+	bool m_Block = false;
 	int m_nPosIndex = 0;
 	Companion_Type m_CoType;
 	int TypeString = 0;

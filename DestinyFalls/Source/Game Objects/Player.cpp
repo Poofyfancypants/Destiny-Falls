@@ -140,8 +140,7 @@ void Player::Render( void )
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	if( m_bPlayCombatAnimation )
 	{
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), 289, 264 );
-
+		m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), playerRect.right, playerRect.bottom);
 	}
 	else
 	{
@@ -349,7 +348,6 @@ void Player::HandleCollision( const iObject* pOther )
 		m_bRunDialog = true;
 	}
 }
-
 
 bool Player::TakeTurn( float elapsedTime )
 {

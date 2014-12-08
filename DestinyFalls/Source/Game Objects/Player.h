@@ -72,10 +72,14 @@ public:
 	void SetSpell2Cool(bool _Cool) { m_bSpell2 = _Cool; }
 	void SetSpell3Cool(bool _Cool) { m_bSpell3 = _Cool; }
 
+	void SetRect(SGD::Rectangle pRect1) { playerRect = pRect1; }
+	
 	bool GetMapSwitch() const { return m_bMapSwitch; }
 	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
 
 private:
+
+	SGD::Rectangle playerRect = { 225, 200, 289, 264 };
 
 	bool m_bMapSwitch = true;
 	int m_nDirection;
@@ -95,6 +99,7 @@ private:
 	bool m_bSpell3 = false;
 
 	int ActionSelected = 0;
+
 	bool selected = false;
 	int m_nCursor = 0;
 	int spellSelect = -1;

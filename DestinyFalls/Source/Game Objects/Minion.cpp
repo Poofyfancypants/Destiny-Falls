@@ -307,3 +307,9 @@ void Minion::SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int
 	Modifiers.ElemAffinity.ElementTier = _tier1;
 	Modifiers.ElemResistance.ElementTier = _tier2;
 }
+
+void Minion::ResetAnimation()
+{
+	this->GetTimeStamp()->SetCurrentFrame(0);
+	this->GetTimeStamp()->SetTimeOnFrame(0.0f);
+}

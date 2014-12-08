@@ -9,7 +9,6 @@ Companion::Companion()
 {
 }
 
-
 Companion::~Companion()
 {
 }
@@ -49,7 +48,6 @@ void Companion::Render()
 	pGraphics->DrawTexture(m_hImage, point);
 
 }
-
 
 void Companion::CombatRender(int _posIndex)
 {
@@ -93,18 +91,19 @@ bool Companion::TakeTurn(float elapsedTime)
 
 	switch (GetCoType())
 	{
+#pragma region cleric
 	case Cleric:
 	{
 				   if (selected == false) //Pick an action (melee magic or armor)
 				   {
 					   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
-					   if (true) //cooldown
+					   if (false) //cooldown
 					   {
-						   pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+						   pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
 					   }
 					   else
 					   {
-						   pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
+						   pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
 					   }
 					   //pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 					   pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
@@ -206,23 +205,23 @@ bool Companion::TakeTurn(float elapsedTime)
 				   return false;
 	}
 		break;
+#pragma endregion
 	case Melee:
 	{
-				  pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
-				  if (CombatState::GetInstance()->GetCooldown())
-				  {
-					  pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
-				  }
-				  else
-				  {
-					  pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
-				  }
-				  //pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
-				  pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
-
-
 				  if (selected == false) //Pick an action (melee magic or armor)
 				  {
+					  pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
+					  if (false)
+					  {
+						  pGraphics->DrawString("Fury", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255)); //AOE attack
+					  }
+					  else
+					  {
+						  pGraphics->DrawString("Fury", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+					  }
+					  //pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
+					  pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
+
 					  pCombat->SetAction("Choose Action");
 					  if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 						  m_nCursor--;
@@ -498,4 +497,10 @@ void Companion::SetCompanionAnimation(int companionType)
 	this->GetTimeStamp()->SetCurrentFrame(0);
 	this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 
+}
+
+void Companion::ResetAnimation()
+{
+	this->GetTimeStamp()->SetCurrentFrame(0);
+	this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 }
