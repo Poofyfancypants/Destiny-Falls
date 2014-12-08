@@ -139,6 +139,7 @@ void GameplayState::Exit()
 	//unload images
 	pGraphics->UnloadTexture( m_hminiboss );
 	pGraphics->UnloadTexture( m_hlevelboss );
+	pGraphics->UnloadTexture(m_hFinalboss);
 	pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );

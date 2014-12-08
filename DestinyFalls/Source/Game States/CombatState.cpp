@@ -987,7 +987,6 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 												}
 											}
 
-
 											string message = "The ";
 											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
 											SetAction(message += " Attacks!");
@@ -2455,7 +2454,6 @@ bool CombatState::TakeTurn(Object* _this)
 
 										((Minion*)_this)->SetAnimation(true);
 										((Minion*)_this)->ResetAnimation();
-
 									}
 									break;
 								case Minion::AI_Type::Mini_Boss:
@@ -2464,11 +2462,13 @@ bool CombatState::TakeTurn(Object* _this)
 									case Elements::Earth:
 										if (((Minion*)_this)->GetHealth() > 0)
 										{
-											target = rand() % pCombat->GetHeroes().size();
-											pCombat->SetActionTimer(1);
-											TakeAction(CombatState::ActionType::Melee, _this, target);
-											((Minion*)_this)->SetAnimation(true);
+											int AI = rand() % 20;
+											if (AI <= 15) //AOE attack
+												TakeAction(CombatState::ActionType::AOE, _this, target);
+											else
+												TakeAction(CombatState::ActionType::Melee, _this, target);
 
+											((Minion*)_this)->SetAnimation(true);
 											((Minion*)_this)->ResetAnimation();
 										}
 										break;
