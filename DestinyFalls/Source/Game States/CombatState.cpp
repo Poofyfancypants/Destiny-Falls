@@ -2453,12 +2453,18 @@ bool CombatState::TakeTurn(Object* _this)
 									switch (((Minion*)_this)->GetAffinity())
 									{
 									case Elements::Earth:
+										target = rand() % pCombat->GetHeroes().size();
+										pCombat->SetActionTimer(1);
+										TakeAction(CombatState::ActionType::Melee, _this, target);
 										break;
 									case Elements::Water:
 										break;
 									case Elements::Air:
 										break;
 									case Elements::Fire:
+										target = rand() % pCombat->GetHeroes().size();
+										pCombat->SetActionTimer(1);
+										TakeAction(CombatState::ActionType::AOE, _this, target);
 										break;
 									default:
 										break;
