@@ -47,7 +47,9 @@ void SpikeTrap::Render( void )
 	SGD::Rectangle rec = GetRect();
 	rec.Offset( -GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y );
 	// - Collision Rectangle
-	pGraphics->DrawRectangle( rec, SGD::Color() );
+	//pGraphics->DrawRectangle( rec, SGD::Color() );
+
+	pGraphics->DrawTexture(m_hImage, point);
 }
 SGD::Rectangle SpikeTrap::GetRect( void ) const
 {
