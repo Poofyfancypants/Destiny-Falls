@@ -294,6 +294,7 @@ void GameplayState::Render()
 		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
 		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
 		2, SGD::Color( 255, 0, 0 ) );
+
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )

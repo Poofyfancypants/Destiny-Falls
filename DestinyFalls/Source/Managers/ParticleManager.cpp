@@ -7,6 +7,7 @@
 #include "../Game States/GameplayState.h"
 #include "../Engines/Particle.h"
 
+
 ParticleManager::ParticleManager()
 {
 
@@ -14,18 +15,18 @@ ParticleManager::ParticleManager()
 
 ParticleManager::~ParticleManager()
 {
-	
+
 }
 
 void ParticleManager::Exit()
 {
-	SGD::GraphicsManager *gm = SGD::GraphicsManager::GetInstance();
-	gm->UnloadTexture(pImage);
+	SGD::GraphicsManager *pGraphics = SGD::GraphicsManager::GetInstance();
+	pGraphics->UnloadTexture(pImage);
 }
 
 void ParticleManager::ReadXML(const char* filepath)
 {
-	SGD::GraphicsManager* gm = SGD::GraphicsManager::GetInstance();
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	TiXmlDocument doc;
 	if (doc.LoadFile(filepath) == false)
@@ -36,7 +37,7 @@ void ParticleManager::ReadXML(const char* filepath)
 	RootElement->Attribute("ParticleAmount", &numParticles);
 	managerFilepath = "resource/graphics/";
 	managerFilepath += RootElement->Attribute("Texture");
-	pImage = gm->LoadTexture(managerFilepath.c_str(), SGD::Color(0, 0, 0));
+	pImage = pGraphics->LoadTexture(managerFilepath.c_str(), SGD::Color(0, 0, 0));
 
 	int particleCircle;
 	int particleSquare;
@@ -78,25 +79,57 @@ void ParticleManager::ReadXML(const char* filepath)
 
 void ParticleManager::Render(Object * rhs)// add a point and a size, to place it anywhere when calling render
 {
-	SGD::GraphicsManager * gm = SGD::GraphicsManager::GetInstance();
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
 
 	for (unsigned int i = 0; i < particlevector.size(); i++)
 	{
 		if (rhs != nullptr)
 		{
-			int x = rhs[i].GetPosition().x;		// min values
-			int y = rhs[i].GetPosition().y;		// min values
+			int x = rhs->GetPosition().x;		// min values
+			int y = rhs->GetPosition().y;		// min values
 			int width = particlevector[i].emitWidth;	// max values
 			int height = particlevector[i].emitHeight;	// max values
 
 			particlevector[i].position.x = (x + rand() % (width - x) + x);
 			particlevector[i].position.y = (y + rand() % (height - y) + y);
 
-			gm->DrawTexture(pImage,
-				SGD::Point(particlevector[i].position.x,
-				particlevector[i].position.y));
+			pGraphics->DrawTexture(pImage, SGD::Point(x, y));
 		}
 		else
-			gm->DrawTexture(pImage, SGD::Point(rand() % 1000, rand() % 1000), {}, {}, SGD::Color(particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB));
+		{
+			int RandomA = rand() % 256;
+			int RandomR = rand() % 256;
+			int RandomG = rand() % 256;
+			int RandomB = rand() % 256;
+
+			pGraphics->DrawTexture(pImage, SGD::Point(rand() % 1000, rand() % 1000), {}, {}, SGD::Color(particlevector[i].startColorA, (particlevector[i].startColorR + RandomR),( particlevector[i].startColorG + RandomG),( particlevector[i].startColorB) +RandomB));
+		}
+	}
+}
+
+
+void ParticleManager::RenderPoint(SGD::Point pt)// add a point and a size, to place it anywhere when calling render
+{
+	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
+
+	for (unsigned int i = 0; i < particlevector.size(); i++)
+	{
+		if (pt.x > 0 && pt.y > 0)
+		{
+			int x = pt.x;		// min values
+			int y = pt.y;		// min values
+			int width = particlevector[i].emitWidth;	// max values
+			int height = particlevector[i].emitHeight;	// max values
+
+			/*x = (pt.x + i);
+			y = (pt.y + i);*/
+			
+			pGraphics->DrawTexture(pImage, SGD::Point(x , y), particlevector[i].rotation, {}, SGD::Color( particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB ));
+		}
+		else
+		{
+
+			pGraphics->DrawTexture(pImage, SGD::Point(rand() % 100, rand() % 100), {}, {}, SGD::Color(particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB));
+		}
 	}
 }
