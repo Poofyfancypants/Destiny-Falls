@@ -2483,7 +2483,7 @@ bool CombatState::TakeTurn(Object* _this)
 								case Minion::AI_Type::Final_Boss:
 									if (((Minion*)_this)->GetHealth() > 0)
 									{
-										//if (((Minion*)_this)->GetHealth() > 150 && ((Minion*)_this)->GetHealth() < )
+										//if (((Minion*)_this)->GetHealth() > 150 && ((Minion*)_this)->GetHealth() < 200)
 										//{
 										//
 										//}
