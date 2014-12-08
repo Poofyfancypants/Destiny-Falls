@@ -515,9 +515,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 
 				  switch (_region)
 				  {
-
 				  case 0:
-
 					  temp->SetString(_region, randAI);
 					  temp->SetAIType(Minion::AI_Type::Heal_AI);
 					  temp->SetMinionAnimation(_region, randAI);
