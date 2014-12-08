@@ -110,6 +110,9 @@ private:
 	SGD::HTexture m_hSpikeTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hminiboss  = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hlevelboss = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFinalboss = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoulder = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHealthPot = SGD::INVALID_HANDLE;
@@ -137,6 +140,7 @@ private:
 	bool m_bChangeSideLevels = false;
 	bool m_bSetSidePosition = false;
 	bool m_bSetLevelPosition = false;
+
 	// - Tutorial Level
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hRanger = SGD::INVALID_HANDLE;

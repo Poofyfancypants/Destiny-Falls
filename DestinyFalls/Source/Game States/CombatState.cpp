@@ -1020,7 +1020,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * m_nNumQTCorrect + 50));
+			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQTCorrect * 50));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 			//Cool idea to give you a better chance against harder monsters with more potential damage
