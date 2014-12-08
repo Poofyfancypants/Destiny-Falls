@@ -106,7 +106,8 @@ private:
 	float m_fWorldHeight = 1;
 
 	SGD::Point m_ptWorldCam = SGD::Point{ 0, 0 };
-
+	SGD::HTexture m_hFireTrap = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hSpikeTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
