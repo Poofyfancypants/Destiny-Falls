@@ -82,30 +82,47 @@ void CombatState::Enter(void)
 		switch (GameplayState::GetInstance()->GetCurrentLevel())
 		{
 		case 1:
-			temp = AddMinion(0, player->CombatEnemyID);
-			temp2 = AddMinion(0, 1);
+			temp = AddMinion(0, 1);
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+			temp2 = AddMinion(0, player->CombatEnemyID);
+			m_pObjects.push_back(temp2);
+			m_pEnemies.push_back(temp2);
 			break;
 		case 2:
-			temp = AddMinion(1, player->CombatEnemyID);
-			temp2 = AddMinion(1, 1);
+			temp = AddMinion(1, 1);
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+			temp2 = AddMinion(1, player->CombatEnemyID);
+			m_pObjects.push_back(temp2);
+			m_pEnemies.push_back(temp2);
 			break;
 		case 3:
-			temp = AddMinion(2, player->CombatEnemyID);
-			temp2 = AddMinion(2, 1);
+			temp = AddMinion(2, 1);
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+			temp2 = AddMinion(2, player->CombatEnemyID);
+			m_pObjects.push_back(temp2);
+			m_pEnemies.push_back(temp2);
 			break;
 		case 4:
-			temp = AddMinion(3, player->CombatEnemyID);
-			temp2 = AddMinion(3, 1);
+			temp = AddMinion(3, 1);
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+			temp2 = AddMinion(3, player->CombatEnemyID);
+			m_pObjects.push_back(temp2);
+			m_pEnemies.push_back(temp2);
 			break;
 		default:
-			temp = AddMinion(rand() % 4, player->CombatEnemyID);
-			temp2 = AddMinion(rand() % 4, 1);
+			temp = AddMinion(rand() % 4, 1);
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+			temp2 = AddMinion(rand() % 4, player->CombatEnemyID);
+			m_pObjects.push_back(temp2);
+			m_pEnemies.push_back(temp2);
 			break;
 		}
-		m_pObjects.push_back(temp);
-		m_pObjects.push_back(temp2);
-		m_pEnemies.push_back(temp);
-		m_pEnemies.push_back(temp2);
+		
 	}
 	else if (player->CombatEnemyID == 3)
 	{
@@ -183,7 +200,6 @@ void CombatState::Enter(void)
 	m_CombatPos2.y = (Game::GetInstance()->GetScreenHeight() / 2);
 
 	((Player*)m_pHeroes[0])->StartCombat();
-
 }
 
 void CombatState::Exit(void)
@@ -309,6 +325,35 @@ void CombatState::Update(float elapsedTime)
 				((Player*)m_pHeroes[0])->SetCombat(false);
 				((Player*)m_pHeroes[0])->m_nPotions += numPots;
 
+				if (((Player*)m_pHeroes[0])->CombatEnemyID == 1)
+				{
+					Runes tempRune;
+					tempRune.SetElement((Elements)(rand() % 4));
+					tempRune.SetTier(rand() % 2 + 1);
+					InventoryState::GetInstance()->AddRunesToInventoryfromWorld(tempRune);
+
+				}
+				else if (((Player*)m_pHeroes[0])->CombatEnemyID == 2)
+				{
+					Runes tempRune;
+					tempRune.SetElement((Elements)GameplayState::GetInstance()->GetCurrentLevel());
+					tempRune.SetTier(3);
+					InventoryState::GetInstance()->AddRunesToInventoryfromWorld(tempRune);
+
+				}
+				else if (((Player*)m_pHeroes[0])->CombatEnemyID == 3)
+				{
+					Runes tempRune;
+					tempRune.SetElement((Elements)GameplayState::GetInstance()->GetCurrentLevel());
+					tempRune.SetTier(3);
+					InventoryState::GetInstance()->AddRunesToInventoryfromWorld(tempRune);
+					Runes tempRune2;
+					tempRune2.SetElement((Elements)GameplayState::GetInstance()->GetCurrentLevel());
+					tempRune2.SetTier(3);
+					InventoryState::GetInstance()->AddRunesToInventoryfromWorld(tempRune2);
+
+				}
+
 				Game::GetInstance()->RemoveState();
 				return;
 			}
@@ -405,11 +450,9 @@ void CombatState::Render(void)
 		}
 	}
 
-	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
-
-
+	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 200, 150, 150, 150 });
+	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 200, 150, 150, 150 });
+	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 10, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
@@ -781,6 +824,16 @@ Object* CombatState::AddCompanion()
 {
 	Companion* temp = new Companion;
 	temp->SetInit(rand() % 20);
+
+
+	if (m_pHeroes.size() == 1)
+	{
+		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+	}
+	else if (m_pHeroes.size() == 2)
+	{
+		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+	}
 
 	Companion::Companion_Type coT = (Companion::Companion_Type)(/*rand() % 4 + */1);
 	switch (coT)
@@ -1551,7 +1604,7 @@ bool CombatState::TakeTurn(Object* _this)
 									float posX = 200.0f;
 									PlayerSelection = { posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
 
-									pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
+									pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 0,0,0));
 
 									if (CombatState::GetInstance()->GetCooldown())
 									{
@@ -2012,11 +2065,6 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				 if (ActionSelected == CombatState::ActionType::Heal)
 																				 {
-																					 if (m_nCursor < 0)
-																						 m_nCursor = 0;
-																					 if (m_nCursor > m_pHeroes.size() - 1)
-																						 m_nCursor = m_pHeroes.size() - 1;
-
 																					 if (m_nCursor < 0)
 																						 m_nCursor = 0;
 																					 if (m_nCursor > m_pHeroes.size() - 1)
