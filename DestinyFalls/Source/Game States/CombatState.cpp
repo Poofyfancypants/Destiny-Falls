@@ -41,7 +41,8 @@ void CombatState::Enter(void)
 
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
-
+	//minion Icons
+	
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
@@ -307,8 +308,19 @@ void CombatState::Render(void)
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
 	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
 
-	//backgrounds
-	
+	//Enemy Icons
+	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
+	{
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y - 80), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y- 80), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y - 80), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y- 80), {}, {}, {}, { .1f, .1f });
+	}
+
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)

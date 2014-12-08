@@ -97,6 +97,12 @@ public:
 	SGD::HTexture m_hFinal2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFinal3 = SGD::INVALID_HANDLE;
 
+	SGD::HTexture m_hFireIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hWaterIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAirIcon = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hEarthIcon = SGD::INVALID_HANDLE;
+
+
 	int GetFrames() {return m_nFPS;}
 	// Menu backgrounds
 	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;

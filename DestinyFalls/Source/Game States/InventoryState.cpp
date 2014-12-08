@@ -838,11 +838,11 @@ void InventoryState::Render()
 	pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 	pGraphics->DrawRectangle(TabRunes, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 	// Tab Names
-	pGraphics->DrawString("Armor", SGD::Point(50, 0), SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawString("Sword", SGD::Point(162, 0), SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawString("Gauntlet", SGD::Point(274, 0), SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawString("Companion", SGD::Point(386, 0), SGD::Color{ 255, 0, 0, 0 });
-
+	pGraphics->DrawString("Armizzle", SGD::Point(50, 0), SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawString("Swizzle", SGD::Point(162, 0), SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawString("Gauntizzle", SGD::Point(274, 0), SGD::Color{ 255, 0, 0, 0 });
+	pGraphics->DrawString("Companizzle", SGD::Point(386, 0), SGD::Color{ 255, 0, 0, 0 });
+	
 	// full inventory rect
 	pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 0, 200, 100 }, SGD::Color{ 255, 0, 0, 0 });
 
