@@ -77,27 +77,34 @@ void CombatState::Enter(void)
 	else if (player->CombatEnemyID == 2)
 	{
 		Object* temp;
+		Object* temp2;
 		switch (GameplayState::GetInstance()->GetCurrentLevel())
 		{
 		case 1:
 			temp = AddMinion(0, player->CombatEnemyID);
+			temp2 = AddMinion(0, 1);
 			break;
 		case 2:
 			temp = AddMinion(1, player->CombatEnemyID);
+			temp2 = AddMinion(1, 1);
 			break;
 		case 3:
 			temp = AddMinion(2, player->CombatEnemyID);
+			temp2 = AddMinion(2, 1);
 			break;
 		case 4:
 			temp = AddMinion(3, player->CombatEnemyID);
+			temp2 = AddMinion(3, 1);
 			break;
 		default:
 			temp = AddMinion(rand() % 4, player->CombatEnemyID);
-
+			temp2 = AddMinion(rand() % 4, 1);
 			break;
 		}
 		m_pObjects.push_back(temp);
+		m_pObjects.push_back(temp2);
 		m_pEnemies.push_back(temp);
+		m_pEnemies.push_back(temp2);
 	}
 	else if (player->CombatEnemyID == 3)
 	{
@@ -972,6 +979,12 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 												DealMeleeDamage(_this, m_pHeroes[_target]);
 											}
 								}
+									break;
+								case 5: //Mini Boss
+									break;
+								case 6: //Level Boss
+									break;
+								case 7: //Final Boss
 									break;
 								}
 
@@ -1975,6 +1988,11 @@ bool CombatState::TakeTurn(Object* _this)
 																				 if (ActionSelected == CombatState::ActionType::Heal)
 																				 {
 
+																					 if (m_nCursor < 0)
+																						 m_nCursor = 0;
+																					 if (m_nCursor > m_pHeroes.size() - 1)
+																						 m_nCursor = m_pHeroes.size() - 1;
+
 																					 if (((Player*)m_pHeroes[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
 
@@ -2366,8 +2384,26 @@ bool CombatState::TakeTurn(Object* _this)
 									case Elements::Earth:
 										break;
 									case Elements::Water:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									case Elements::Air:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									case Elements::Fire:
 										break;
