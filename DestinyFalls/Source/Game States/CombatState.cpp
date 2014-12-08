@@ -1011,8 +1011,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		Game::GetInstance()->AddState(QuickTimeState::GetInstance());/*
-		( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
+		Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
+		/*( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
 
@@ -1979,6 +1979,10 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				 if (ActionSelected == CombatState::ActionType::Heal)
 																				 {
+																					 if (m_nCursor < 0)
+																						 m_nCursor = 0;
+																					 if (m_nCursor > m_pHeroes.size() - 1)
+																						 m_nCursor = m_pHeroes.size() - 1;
 
 																					 if (((Player*)m_pHeroes[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
