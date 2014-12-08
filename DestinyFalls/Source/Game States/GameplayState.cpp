@@ -77,8 +77,11 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
-	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/OverWorldRanger.png" );
-	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/OverWorldCleric.png" );
+	m_hminiboss  = pGraphics->LoadTexture(L"resource/graphics/testMB1.png");
+	m_hlevelboss = pGraphics->LoadTexture(L"resource/graphics/testLB1.png");
+	m_hFinalboss = pGraphics->LoadTexture(L"resource/graphics/testLB5.png");
+	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/testc.png" );
+	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/testc2.png" );
 	m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
@@ -134,6 +137,8 @@ void GameplayState::Exit()
 	pAudio->UnloadAudio( bmusic );
 
 	//unload images
+	pGraphics->UnloadTexture( m_hminiboss );
+	pGraphics->UnloadTexture( m_hlevelboss );
 	pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
@@ -323,10 +328,13 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 		temp->SetImage(m_henemy);
 		break;
 	case 2:
-		temp->SetImage(m_henemy);
+		temp->SetImage(m_hminiboss);
 		break;
 	case 3:
-		temp->SetImage(m_henemy);
+		temp->SetImage(m_hlevelboss);
+		break;
+	case 4:
+		temp->SetImage(m_hFinalboss);
 		break;
 	default:
 		break;
