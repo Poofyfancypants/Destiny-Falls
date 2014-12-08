@@ -731,7 +731,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				case 1:
@@ -739,7 +739,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				case 2:
@@ -747,7 +747,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				case 3:
@@ -755,7 +755,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				default:
@@ -768,7 +768,13 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 		break;
 	case 4: //Final Boss
 	{
-
+				temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				temp->SetMods(12, 5, _region, 3, 3);
+				temp->SetString(4, _region);
+				temp->SetAIType(Minion::AI_Type::Level_Boss);
+				temp->SetMinionAnimation(_region, 6);
+				temp->SetAffinity(Earth);
+				temp->SetHealth(200);
 	}
 		break;
 	default:
@@ -2475,6 +2481,19 @@ bool CombatState::TakeTurn(Object* _this)
 									}
 									break;
 								case Minion::AI_Type::Final_Boss:
+									if (((Minion*)_this)->GetHealth() > 0)
+									{
+										//if (((Minion*)_this)->GetHealth() > 150 && ((Minion*)_this)->GetHealth() < )
+										//{
+										//
+										//}
+										target = rand() % pCombat->GetHeroes().size();
+										pCombat->SetActionTimer(1);
+										TakeAction(CombatState::ActionType::Melee, _this, target);
+										((Minion*)_this)->SetAnimation(true);
+
+										((Minion*)_this)->ResetAnimation();
+									}
 									break;
 								default:
 									break;
