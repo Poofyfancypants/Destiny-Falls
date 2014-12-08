@@ -7,13 +7,11 @@ class Emitter;
 class ParticleManager
 {
 private:
-
 	std::vector<Particle> particlevector;
 	int numParticles;
 	Emitter size;
 	std::string managerFilepath;
 	SGD::HTexture pImage = SGD::INVALID_HANDLE;
-
 
 public:
 
@@ -24,7 +22,5 @@ public:
 	void Render(Object * rhs = nullptr);
 	void Update();
 	void Exit();
-
-
 };
 

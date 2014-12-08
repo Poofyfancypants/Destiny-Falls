@@ -82,4 +82,5 @@ void CreditState::Render()
 
 	m_particle.Render();
 
+
 }
