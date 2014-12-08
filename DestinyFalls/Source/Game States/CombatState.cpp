@@ -225,6 +225,27 @@ void CombatState::Update(float elapsedTime)
 
 	m_fFlash += elapsedTime;
 
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	{
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 2:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 3:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 4:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	case 5:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.0f });
+		break;
+	default:
+		break;
+	}
+
 	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
 		PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
@@ -327,11 +348,9 @@ void CombatState::Update(float elapsedTime)
 		}
 		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
 			CurrentTurn = 0;
-
 	}
 	else
 	{
-
 		if (Attacker1 != -1)
 		{
 			if (m_pHeroes[Attacker1]->GetAttacking())
@@ -553,9 +572,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 
 				  switch (_region)
 				  {
-
 				  case 0:
-
 					  temp->SetString(_region, randAI);
 					  temp->SetAIType(Minion::AI_Type::Heal_AI);
 					  temp->SetMinionAnimation(_region, randAI);
