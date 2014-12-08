@@ -46,7 +46,36 @@ void CombatState::Enter(void)
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
-	for (unsigned int i = 0; i < rand() % 2 + 2; i++)
+#pragma region AddingCombatEnemies
+	if (player->CombatEnemyID == 1)
+	{
+		for (unsigned int i = 0; i < rand() % 2 + 2; i++)
+		{
+			Object* temp;
+			switch (GameplayState::GetInstance()->GetCurrentLevel())
+			{
+			case 1:
+				temp = AddMinion(0, player->CombatEnemyID);
+				break;
+			case 2:
+				temp = AddMinion(1, player->CombatEnemyID);
+				break;
+			case 3:
+				temp = AddMinion(2, player->CombatEnemyID);
+				break;
+			case 4:
+				temp = AddMinion(3, player->CombatEnemyID);
+				break;
+			default:
+				temp = AddMinion(rand() % 4, player->CombatEnemyID);
+
+				break;
+			}
+			m_pObjects.push_back(temp);
+			m_pEnemies.push_back(temp);
+		}
+	}
+	else if (player->CombatEnemyID == 2)
 	{
 		Object* temp;
 		switch (GameplayState::GetInstance()->GetCurrentLevel())
@@ -71,6 +100,33 @@ void CombatState::Enter(void)
 		m_pObjects.push_back(temp);
 		m_pEnemies.push_back(temp);
 	}
+	else if (player->CombatEnemyID == 3)
+	{
+		Object* temp;
+		switch (GameplayState::GetInstance()->GetCurrentLevel())
+		{
+		case 1:
+			temp = AddMinion(0, player->CombatEnemyID);
+			break;
+		case 2:
+			temp = AddMinion(1, player->CombatEnemyID);
+			break;
+		case 3:
+			temp = AddMinion(2, player->CombatEnemyID);
+			break;
+		case 4:
+			temp = AddMinion(3, player->CombatEnemyID);
+			break;
+		default:
+			temp = AddMinion(rand() % 4, player->CombatEnemyID);
+
+			break;
+		}
+		m_pObjects.push_back(temp);
+		m_pEnemies.push_back(temp);
+	}
+#pragma endregion
+#pragma region AddingCombatCompanions
 
 	for (unsigned int i = 1; i < 3; i++)
 	{
@@ -88,6 +144,7 @@ void CombatState::Enter(void)
 		m_pObjects.push_back(temp);
 		m_pHeroes.push_back(temp);
 	}
+#pragma endregion
 
 	for (size_t i = 1; i < m_pObjects.size(); i++)
 	{
@@ -120,10 +177,6 @@ void CombatState::Enter(void)
 
 	((Player*)m_pHeroes[0])->StartCombat();
 
-	//if (((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetMapSwitch() == false)
-	//{
-	//	((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetMapSwitch() == true;
-	//}
 }
 
 void CombatState::Exit(void)
@@ -588,51 +641,120 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 		break;
 	case 2: //Mini Bosses
 	{
+				temp->SetInit(rand() % 20);
+				temp->SetAffinity((Elements)_region);
+				if (m_pEnemies.size() == 0)
+				{
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+				}
+				else if (m_pEnemies.size() == 1)
+				{
+					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				}
+				else if (m_pEnemies.size() == 2)
+				{
+					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
+				}
 
 				switch (_region)
 				{
 				case 0:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
 					break;
 				case 1:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
 					break;
 				case 2:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
 					break;
 				case 3:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(_region, 5);
+						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
+						  temp->SetMinionAnimation(_region, 5);
+				}
 					break;
 				default:
 					break;
 				}
+
+				temp->SetHealth(150);
 	}
 		break;
 	case 3: //Level Bosses
 	{
-				
+				if (m_pEnemies.size() == 0)
+				{
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+				}
+				else if (m_pEnemies.size() == 1)
+				{
+					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				}
+				else if (m_pEnemies.size() == 2)
+				{
+					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
+				}
+
+				temp->SetInit(rand() % 20);
+				temp->SetAffinity((Elements)_region);
 
 				switch (_region)
 				{
 				case 0:
 				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 5);
-				}										   
-					break;								   
-				case 1:									   
-				{										   
+				}
+					break;
+				case 1:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 5);
-				}										    
-					break;								    
-				case 2:									    
-				{										    
+				}
+					break;
+				case 2:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 5);
-				}										    
-					break;								    
-				case 3:									    
-				{										    
+				}
+					break;
+				case 3:
+				{
+						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetString(4, _region);
+						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 5);
 				}
 					break;
 				default:
 					break;
 				}
+
+				temp->SetHealth(150);
+
 	}
 		break;
 	case 4: //Final Boss
@@ -889,7 +1011,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		Game::GetInstance()->AddState( QuickTimeState::GetInstance() );/*
+		Game::GetInstance()->AddState(QuickTimeState::GetInstance());/*
 		( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
@@ -1326,10 +1448,19 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
 		if (_To->GetType() == iObject::OBJ_PLAYER)
+		{
 			((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() + Total);
-		else
-			((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() + Total);
 
+			if (((Player*)_To)->GetHealth() > ((Player*)_To)->GetMaxHealth())
+				((Player*)_To)->SetHealth(((Player*)_To)->GetMaxHealth());
+		}
+		else
+		{
+			((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() + Total);
+			if (((Companion*)_To)->GetHealth() > ((Companion*)_To)->GetMaxHealth())
+				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
+		}
+		
 	}
 
 	return Total;
@@ -1898,6 +2029,7 @@ bool CombatState::TakeTurn(Object* _this)
 								   }
 									   break;
 #pragma endregion
+#pragma region Melee
 								   case Companion::Companion_Type::Melee:
 								   {
 																			if (selected == false) //Pick an action (melee magic or armor)
@@ -1981,6 +2113,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			return false;
 								   }
 									   break;
+#pragma endregion
+#pragma region Mage
 								   case Companion::Companion_Type::Mage:
 								   {
 																		   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
@@ -2066,6 +2200,8 @@ bool CombatState::TakeTurn(Object* _this)
 																		   return false;
 								   }
 									   break;
+#pragma endregion
+#pragma region Tank
 								   case Companion::Companion_Type::Tank:
 								   {
 																		   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
@@ -2154,6 +2290,7 @@ bool CombatState::TakeTurn(Object* _this)
 																		   return false;
 								   }
 									   break;
+#pragma endregion
 								   default:
 									   break;
 								   }
@@ -2227,6 +2364,38 @@ bool CombatState::TakeTurn(Object* _this)
 										((Minion*)_this)->ResetAnimation();
 
 									}
+									break;
+								case Minion::AI_Type::Mini_Boss:
+									switch (((Minion*)_this)->GetAffinity())
+									{
+									case Elements::Earth:
+										break;
+									case Elements::Water:
+										break;
+									case Elements::Air:
+										break;
+									case Elements::Fire:
+										break;
+									default:
+										break;
+									}
+									break;
+								case Minion::AI_Type::Level_Boss:
+									switch (((Minion*)_this)->GetAffinity())
+									{
+									case Elements::Earth:
+										break;
+									case Elements::Water:
+										break;
+									case Elements::Air:
+										break;
+									case Elements::Fire:
+										break;
+									default:
+										break;
+									}
+									break;
+								case Minion::AI_Type::Final_Boss:
 									break;
 								default:
 									break;
