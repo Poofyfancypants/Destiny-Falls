@@ -42,7 +42,7 @@ void CombatState::Enter(void)
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
 	//minion Icons
-	
+
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
@@ -387,19 +387,22 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-//	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
+	//	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
 
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
 	{
-		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+		{
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		}
 	}
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
@@ -453,7 +456,6 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 
 	switch (EnemyID)
 	{
-
 	case 1:
 	{
 			  temp->SetInit(rand() % 20);
@@ -986,10 +988,28 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 								}
 									break;
 								case 5: //Mini Boss
+								{
+											string message = "The ";
+											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+											SetAction(message += " Attacks!");
+											DealMeleeDamage(_this, m_pHeroes[_target]);
+								}
 									break;
 								case 6: //Level Boss
+								{
+											string message = "The ";
+											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+											SetAction(message += " Attacks!");
+											DealMeleeDamage(_this, m_pHeroes[_target]);
+								}
 									break;
 								case 7: //Final Boss
+								{
+											string message = "The ";
+											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+											SetAction(message += " Attacks!");
+											DealMeleeDamage(_this, m_pHeroes[_target]);
+								}
 									break;
 								}
 
@@ -1024,7 +1044,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
+		Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 		/*( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
@@ -1473,7 +1493,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 			if (((Companion*)_To)->GetHealth() > ((Companion*)_To)->GetMaxHealth())
 				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
 		}
-		
+
 	}
 
 	return Total;
@@ -2391,6 +2411,15 @@ bool CombatState::TakeTurn(Object* _this)
 									switch (((Minion*)_this)->GetAffinity())
 									{
 									case Elements::Earth:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									case Elements::Water:
 										if (((Minion*)_this)->GetHealth() > 0)
@@ -2417,6 +2446,15 @@ bool CombatState::TakeTurn(Object* _this)
 									case Elements::Fire:
 										break;
 									default:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									}
 									break;
