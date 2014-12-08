@@ -308,24 +308,26 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	//pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
-
-	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
+	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
 
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
 	{
 		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y - 80), {}, {}, {}, { .1f, .1f });
+			pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y- 80), {}, {}, {}, { .1f, .1f });
+			pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y - 80), {}, {}, {}, { .1f, .1f });
+			pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
-			pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 20, m_pEnemies[i]->GetPosition().y- 80), {}, {}, {}, { .1f, .1f });
+			pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 	}
+
+	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 150, 150, 150 });
+	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
+
+
 
 
 	SGD::Color pHcolor;

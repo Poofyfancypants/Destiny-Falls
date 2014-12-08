@@ -1,5 +1,7 @@
 #pragma once
 #include "Trap.h"
+#include "../Managers/ParticleManager.h"
+
 class FireTrap :
 	public Trap
 {
@@ -7,6 +9,7 @@ class FireTrap :
 	int m_nDamage = 1;
 	float m_fTimer = 0;
 	bool m_bStartTimer = false;
+	ParticleManager m_pParticle;
 public:
 	FireTrap();
 	~FireTrap();
