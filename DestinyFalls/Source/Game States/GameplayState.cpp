@@ -89,7 +89,9 @@ void GameplayState::Enter()
 	m_hInvButton = pGraphics->LoadTexture( L"resource/graphics/NewInventory.png" );
 	m_hHero = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
-
+	m_hSpikeTrap = pGraphics->LoadTexture( L"resource/graphics/spikeTrap.png" );
+	m_hFireTrap = pGraphics->LoadTexture( L"resource/graphics/fireTrap.png" );
+	
 	pAudio->PlayAudio( bmusic, true );
 
 	m_bSetSidePosition = false;
@@ -143,6 +145,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hHealthPot );
 	pGraphics->UnloadTexture( m_hRanger );
 	pGraphics->UnloadTexture( m_hCleric );
+	pGraphics->UnloadTexture( m_hSpikeTrap );
+	pGraphics->UnloadTexture( m_hFireTrap );
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -348,6 +352,7 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id ){
 	{
 		FireTrap* temp = new FireTrap;
 		temp->SetPosition( _pos );
+		temp->SetImage(m_hFireTrap);
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
@@ -355,6 +360,7 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id ){
 	{
 		SpikeTrap* temp = new SpikeTrap;
 		temp->SetPosition( _pos );
+		temp->SetImage(m_hSpikeTrap);
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
