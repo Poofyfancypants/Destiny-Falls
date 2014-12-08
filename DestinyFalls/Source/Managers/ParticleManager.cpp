@@ -41,10 +41,10 @@ void ParticleManager::ReadXML(const char* filepath)
 	int particleCircle;
 	int particleSquare;
 	int particleLine;
+
 	for (unsigned int i = 0; i < numParticles; i++)
 	{
 		Particle ptemp;
-
 		RootElement->Attribute("ParticleLifeTime", &ptemp.particleLifeTime);
 		RootElement->Attribute("Scale", &ptemp.scale);
 		RootElement->Attribute("Rotation", &ptemp.rotation);
@@ -79,16 +79,13 @@ void ParticleManager::ReadXML(const char* filepath)
 void ParticleManager::Render(Object * rhs)// add a point and a size, to place it anywhere when calling render
 {
 	SGD::GraphicsManager * gm = SGD::GraphicsManager::GetInstance();
-	
 
 	for (unsigned int i = 0; i < particlevector.size(); i++)
 	{
-
-
 		if (rhs != nullptr)
 		{
-			int x = rhs->GetPosition().x;		// min values
-			int y = rhs->GetPosition().y;		// min values
+			int x = rhs[i].GetPosition().x;		// min values
+			int y = rhs[i].GetPosition().y;		// min values
 			int width = particlevector[i].emitWidth;	// max values
 			int height = particlevector[i].emitHeight;	// max values
 
@@ -100,13 +97,6 @@ void ParticleManager::Render(Object * rhs)// add a point and a size, to place it
 				particlevector[i].position.y));
 		}
 		else
-		{
-			gm->DrawTexture(pImage,
-				SGD::Point(rand() % 1000,
-				rand() % 1000), {}, {}, SGD::Color(255,255,255));
-		}
-
+			gm->DrawTexture(pImage, SGD::Point(rand() % 1000, rand() % 1000), {}, {}, SGD::Color(particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB));
 	}
-
-
 }

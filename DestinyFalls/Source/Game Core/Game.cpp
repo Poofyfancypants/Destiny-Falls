@@ -160,6 +160,11 @@ bool Game::Initialize( float width, float height )
 	m_hFinal1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final1.png" );
 	m_hFinal2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final2.png" );
 	m_hFinal3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final3.png" );
+	m_hAirIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/AirIcon.png");
+	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FireIcon.png");
+	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterIcon.png");
+	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/EarthIcon.png");
+
 
 
 	CombatState::GetInstance()->AddBackgroundsEarth( m_hEarth1 );
@@ -302,6 +307,11 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hSaveLoad );
 	pGraphics->UnloadTexture( m_hHTP );
 	pGraphics->UnloadTexture( m_hOptions );
+
+	pGraphics->UnloadTexture(m_hAirIcon);
+	pGraphics->UnloadTexture(m_hFireIcon);
+	pGraphics->UnloadTexture(m_hWaterIcon);
+	pGraphics->UnloadTexture(m_hEarthIcon);
 
 
 	pAudio->UnloadAudio( m_mMusic );
