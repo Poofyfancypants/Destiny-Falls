@@ -42,7 +42,7 @@ void CombatState::Enter(void)
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
 	//minion Icons
-	
+
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
@@ -996,6 +996,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
+		Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
 			if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Def_AI)
@@ -1010,7 +1012,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
 		/*( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
@@ -1019,7 +1020,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
+			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * m_nNumQTCorrect + 50));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 			//Cool idea to give you a better chance against harder monsters with more potential damage
@@ -1459,7 +1460,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 			if (((Companion*)_To)->GetHealth() > ((Companion*)_To)->GetMaxHealth())
 				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
 		}
-		
+
 	}
 
 	return Total;
