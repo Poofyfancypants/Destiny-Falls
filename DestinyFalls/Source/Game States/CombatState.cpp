@@ -1944,7 +1944,7 @@ bool CombatState::TakeTurn(Object* _this)
 										}
 										else // spellSelect is set, choose target
 										{
-											PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x + 40, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
+											PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 150, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 110, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
 											pCombat->SetAction("Choose Target");
 
 											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
@@ -2052,7 +2052,6 @@ bool CombatState::TakeTurn(Object* _this)
 																			 else//Action selected, now pick target
 																			 {
 																				 pCombat->SetAction("Choose Target");
-																				 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y, ((Player*)m_pHeroes[m_nCursor])->GetPosition().x + 40, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 40 };
 
 																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																				 {
@@ -2065,6 +2064,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				 if (ActionSelected == CombatState::ActionType::Heal)
 																				 {
+
 																					 if (m_nCursor < 0)
 																						 m_nCursor = 0;
 																					 if (m_nCursor > m_pHeroes.size() - 1)
@@ -2072,6 +2072,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																					 if (((Player*)m_pHeroes[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
+																					 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x + 110, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y, ((Player*)m_pHeroes[m_nCursor])->GetPosition().x + 150, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 40 };
 
 																					 if (m_nCursor < 0)
 																						 m_nCursor = 0;
@@ -2081,6 +2082,7 @@ bool CombatState::TakeTurn(Object* _this)
 																				 }
 																				 else
 																				 {
+																					
 																					 if (m_nCursor < 0)
 																						 m_nCursor = 0;
 																					 if (m_nCursor > m_pEnemies.size() - 1)
@@ -2088,13 +2090,13 @@ bool CombatState::TakeTurn(Object* _this)
 
 																					 if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
+																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x + 40, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
 																					 if (m_nCursor < 0)
 																						 m_nCursor = 0;
 																					 if (m_nCursor > m_pEnemies.size() - 1)
 																						 m_nCursor = m_pEnemies.size() - 1;
 
-																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x + 40, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 																				 }
 
 
