@@ -65,6 +65,9 @@ public:
 
 	bool TakeTurn(Object*);
 
+	void HandleTutorial();
+	void DrawBackground();
+
 private:
 
 	CombatState() = default;

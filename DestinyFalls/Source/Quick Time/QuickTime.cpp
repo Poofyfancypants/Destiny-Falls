@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "QuickTime.h"
-
+#include "../Game States/GameplayState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../Bitmap Font/BitmapFont.h"
@@ -36,7 +36,10 @@ QuickTime::QuickTime()
 		m_vKeys.push_back( SGD::Key::D );
 	}
 	
-	
+	if( GameplayState::GetInstance()->GetCurrentLevel() == 0 )
+	{
+		m_fAlertTimer = 4.0f;
+	}
 
 	//clear out the input and output vectors
 	m_vInput.clear();
@@ -180,7 +183,7 @@ void QuickTime::Render()
 {
 	SGD::Rectangle rect = { 250 , 300 , 300 , 350 };
 
-	SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color { 255 , 100 , 100 , 100 } );
+	//SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color { 255 , 100 , 100 , 100 } );
 
 	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
