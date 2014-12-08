@@ -42,7 +42,7 @@ void CombatState::Enter(void)
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
 	//minion Icons
-	
+
 	//play combat music
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
@@ -78,27 +78,34 @@ void CombatState::Enter(void)
 	else if (player->CombatEnemyID == 2)
 	{
 		Object* temp;
+		Object* temp2;
 		switch (GameplayState::GetInstance()->GetCurrentLevel())
 		{
 		case 1:
 			temp = AddMinion(0, player->CombatEnemyID);
+			temp2 = AddMinion(0, 1);
 			break;
 		case 2:
 			temp = AddMinion(1, player->CombatEnemyID);
+			temp2 = AddMinion(1, 1);
 			break;
 		case 3:
 			temp = AddMinion(2, player->CombatEnemyID);
+			temp2 = AddMinion(2, 1);
 			break;
 		case 4:
 			temp = AddMinion(3, player->CombatEnemyID);
+			temp2 = AddMinion(3, 1);
 			break;
 		default:
 			temp = AddMinion(rand() % 4, player->CombatEnemyID);
-
+			temp2 = AddMinion(rand() % 4, 1);
 			break;
 		}
 		m_pObjects.push_back(temp);
+		m_pObjects.push_back(temp2);
 		m_pEnemies.push_back(temp);
+		m_pEnemies.push_back(temp2);
 	}
 	else if (player->CombatEnemyID == 3)
 	{
@@ -216,33 +223,14 @@ bool CombatState::Input(void)
 
 void CombatState::Update(float elapsedTime)
 {
+
 	ActionTimer -= elapsedTime;
 	if (ActionTimer <= 0.0f)
 		ActionTimer = 0.0f;
 
 	m_fFlash += elapsedTime;
 
-	switch (GameplayState::GetInstance()->GetCurrentLevel())
-	{
-	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {255, 255, 255, 255}, { 2.0f, 2.4f });
-		break;
-	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
-		break;
-	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
-		break;
-	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.3f });
-		break;
-	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
-		break;
-	default:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
-		break;
-	}
+	DrawBackground();
 
 	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
@@ -376,11 +364,13 @@ void CombatState::Update(float elapsedTime)
 			ResetRects();
 		}
 	}
+
 }
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	//pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
+	//	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
+
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
 	{
@@ -437,7 +427,8 @@ void CombatState::Render(void)
 			((Companion*)m_pHeroes[j])->CombatRender(j);
 		}
 	}
-
+	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
+		HandleTutorial();
 }
 
 Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care
@@ -448,7 +439,6 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 
 	switch (EnemyID)
 	{
-
 	case 1:
 	{
 			  temp->SetInit(rand() % 20);
@@ -724,7 +714,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				case 1:
@@ -732,7 +722,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				case 2:
@@ -740,7 +730,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				case 3:
@@ -748,7 +738,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 						  temp->SetMods(12, 5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
-						  temp->SetMinionAnimation(_region, 5);
+						  temp->SetMinionAnimation(_region, 6);
 				}
 					break;
 				default:
@@ -761,7 +751,13 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 		break;
 	case 4: //Final Boss
 	{
-
+				temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				temp->SetMods(12, 5, _region, 3, 3);
+				temp->SetString(4, _region);
+				temp->SetAIType(Minion::AI_Type::Level_Boss);
+				temp->SetMinionAnimation(_region, 6);
+				temp->SetAffinity(Earth);
+				temp->SetHealth(200);
 	}
 		break;
 	default:
@@ -980,6 +976,30 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 											}
 								}
 									break;
+								case 5: //Mini Boss
+								{
+											string message = "The ";
+											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+											SetAction(message += " Attacks!");
+											DealMeleeDamage(_this, m_pHeroes[_target]);
+								}
+									break;
+								case 6: //Level Boss
+								{
+											string message = "The ";
+											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+											SetAction(message += " Attacks!");
+											DealMeleeDamage(_this, m_pHeroes[_target]);
+								}
+									break;
+								case 7: //Final Boss
+								{
+											string message = "The ";
+											message += (pGame->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
+											SetAction(message += " Attacks!");
+											DealMeleeDamage(_this, m_pHeroes[_target]);
+								}
+									break;
 								}
 
 	}
@@ -999,12 +1019,14 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
+
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
 			if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Def_AI)
 			{
 				if (((Minion*)m_pEnemies[i])->m_Block)
 				{
+					Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 					BlockAttack(_From, m_pEnemies[i]);
 					localBlock = ((Minion*)m_pEnemies[i])->m_Block;
 					((Minion*)m_pEnemies[i])->m_Block = false;
@@ -1013,7 +1035,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		Game::GetInstance()->AddState( QuickTimeState::GetInstance() );
 		/*( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
 		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
 		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
@@ -1021,12 +1042,13 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
+			Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQTCorrect * 50));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 			//Cool idea to give you a better chance against harder monsters with more potential damage
 
+			if (((Minion*)_To)->GetAIType() == Minion::Off_AI)
 			if (((Minion*)_To)->GetAIType() == Minion::Off_AI)
 			{
 				if (rand() % 20 > 1)
@@ -1462,7 +1484,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 			if (((Companion*)_To)->GetHealth() > ((Companion*)_To)->GetMaxHealth())
 				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
 		}
-		
+
 	}
 
 	return Total;
@@ -1986,6 +2008,11 @@ bool CombatState::TakeTurn(Object* _this)
 																					 if (m_nCursor > m_pHeroes.size() - 1)
 																						 m_nCursor = m_pHeroes.size() - 1;
 
+																					 if (m_nCursor < 0)
+																						 m_nCursor = 0;
+																					 if (m_nCursor > m_pHeroes.size() - 1)
+																						 m_nCursor = m_pHeroes.size() - 1;
+
 																					 if (((Player*)m_pHeroes[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
 
@@ -2375,14 +2402,50 @@ bool CombatState::TakeTurn(Object* _this)
 									switch (((Minion*)_this)->GetAffinity())
 									{
 									case Elements::Earth:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									case Elements::Water:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									case Elements::Air:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									case Elements::Fire:
 										break;
 									default:
+										if (((Minion*)_this)->GetHealth() > 0)
+										{
+											target = rand() % pCombat->GetHeroes().size();
+											pCombat->SetActionTimer(1);
+											TakeAction(CombatState::ActionType::Melee, _this, target);
+											((Minion*)_this)->SetAnimation(true);
+
+											((Minion*)_this)->ResetAnimation();
+										}
 										break;
 									}
 									break;
@@ -2402,6 +2465,19 @@ bool CombatState::TakeTurn(Object* _this)
 									}
 									break;
 								case Minion::AI_Type::Final_Boss:
+									if (((Minion*)_this)->GetHealth() > 0)
+									{
+										//if (((Minion*)_this)->GetHealth() > 150 && ((Minion*)_this)->GetHealth() < 200)
+										//{
+										//
+										//}
+										target = rand() % pCombat->GetHeroes().size();
+										pCombat->SetActionTimer(1);
+										TakeAction(CombatState::ActionType::Melee, _this, target);
+										((Minion*)_this)->SetAnimation(true);
+
+										((Minion*)_this)->ResetAnimation();
+									}
 									break;
 								default:
 									break;
@@ -2501,5 +2577,123 @@ void CombatState::ResetRects()
 			((Minion*)m_pObjects[i])->SetMinionRect2(Enemy2rect);
 			((Minion*)m_pObjects[i])->SetMinionRect3(Enemy3rect);
 		}
+	}
+}
+
+void CombatState::HandleTutorial()
+{
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	BitmapFontManager *pFont = BitmapFontManager::GetInstance();
+
+	SGD::Point ptWorldCam = GameplayState::GetInstance()->GetWorldCam();
+
+	SGD::Point heroPosition;
+	SGD::Point portraitPosition;
+	// - Location of the Dialog Box at the bottom of the screen.
+
+	SGD::Rectangle DialogBoxOne;
+	DialogBoxOne.left = 25;
+	DialogBoxOne.top = Game::GetInstance()->GetScreenHeight() - 105;
+	DialogBoxOne.right = Game::GetInstance()->GetScreenWidth() - 25;
+	DialogBoxOne.bottom = Game::GetInstance()->GetScreenHeight() - 5;
+
+	// - Location to print the strings within the dialog Box
+	SGD::Point TextPositionOne;
+	SGD::Point TextPositionTwo;
+
+	TextPositionOne.x = DialogBoxOne.left + 40;
+	TextPositionOne.y = DialogBoxOne.top + 20;
+	TextPositionTwo.x = DialogBoxOne.left + 20;
+	TextPositionTwo.y = DialogBoxOne.top + 50;
+
+	portraitPosition.x = DialogBoxOne.left - 10;
+	portraitPosition.y = DialogBoxOne.top - 30;
+
+	if (CurrentTurn == m_pHeroes[0]->GetTurnPos())
+	{
+		if (Game::GetInstance()->GetIcelandic())
+		{
+			TextPositionOne.x = DialogBoxOne.left + 100;
+			TextPositionTwo.x = DialogBoxOne.left + 150;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 120;
+			TextPositionTwo.x = DialogBoxOne.left + 125;
+		}
+
+		heroPosition = { (float)((3 * 32) - ptWorldCam.x), (float)((8 * 32) - ptWorldCam.y) };
+
+		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(220, 215, 143), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPortrait(), portraitPosition);
+		pFont->Render("Dialog", Game::GetInstance()->GetString(9, 5).c_str(), TextPositionOne, .7f, SGD::Color(0, 0, 0));
+		pFont->Render("Dialog", Game::GetInstance()->GetString(9, 6).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
+
+	}
+	else if (CurrentTurn == m_pHeroes[1]->GetTurnPos() || CurrentTurn == m_pHeroes[2]->GetTurnPos())
+	{
+		if (Game::GetInstance()->GetIcelandic())
+		{
+			TextPositionOne.x = DialogBoxOne.left + 50;
+			TextPositionTwo.x = DialogBoxOne.left + 240;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 100;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
+
+		heroPosition = { (float)((3 * 32) - ptWorldCam.x), (float)((8 * 32) - ptWorldCam.y) };
+
+		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(220, 215, 143), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPortrait(), portraitPosition);
+		pFont->Render("Dialog", Game::GetInstance()->GetString(9, 9).c_str(), TextPositionOne, .7f, SGD::Color(0, 0, 0));
+		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 1).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
+
+	}
+	else
+	{
+		if (Game::GetInstance()->GetIcelandic())
+		{
+			TextPositionOne.x = DialogBoxOne.left + 80;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
+		else
+		{
+			TextPositionOne.x = DialogBoxOne.left + 150;
+			TextPositionTwo.x = DialogBoxOne.left + 200;
+		}
+
+		heroPosition = { (float)((3 * 32) - ptWorldCam.x), (float)((8 * 32) - ptWorldCam.y) };
+
+		pGraphics->DrawRectangle(DialogBoxOne, SGD::Color(220, 215, 143), SGD::Color(0, 0, 0));
+		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPortrait(), portraitPosition);
+		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 2).c_str(), TextPositionOne, .7f, SGD::Color(0, 0, 0));
+		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 3).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
+	}
+}
+
+void CombatState::DrawBackground()
+{
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	{
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
+		break;
+	case 2:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	case 3:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	case 4:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.3f });
+		break;
+	case 5:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
+	default:
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		break;
 	}
 }

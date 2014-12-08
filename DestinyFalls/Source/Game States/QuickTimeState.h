@@ -18,7 +18,7 @@ public:
 	void RunQuickTime();
 	void StopQuickTime();
 
-	
+	void HandleTutorial();
 
 private:
 	QuickTimeState() = default;

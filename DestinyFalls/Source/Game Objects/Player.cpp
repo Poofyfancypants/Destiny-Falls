@@ -303,6 +303,7 @@ void Player::HandleCollision( const iObject* pOther )
 		{
 			if( ( (Chest*)pOther )->IsTrapped() )
 			{
+				CombatEnemyID = 1;
 				Game::GetInstance()->AddState( CombatState::GetInstance() );
 				m_bCombat = true;
 				( (Chest*)pOther )->SetTrapped();
