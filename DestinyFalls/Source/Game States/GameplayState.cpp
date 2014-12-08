@@ -333,7 +333,7 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 	case 3:
 		temp->SetImage(m_hlevelboss);
 		break;
-	case 3:
+	case 4:
 		temp->SetImage(m_hFinalboss);
 		break;
 	default:
