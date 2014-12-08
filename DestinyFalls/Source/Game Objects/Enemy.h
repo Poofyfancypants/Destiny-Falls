@@ -29,11 +29,16 @@ public:
 	void SetCurrentWaypoint( SGD::Point _pt ) { m_ptCurrentWaypoint = _pt; }
 	void SetPath(SGD::Vector _pth) {m_vPath = _pth;}
 
+	int GetEnemyType() const { return m_nEnemyType; }
+	void SetEnemyType(int _id) { m_nEnemyType = _id; }
+
 private:
 	// - Waypoint being chased
 	int m_nWaypointID = 1;
 	SGD::Point m_ptNextWaypoint;
 	SGD::Point m_ptCurrentWaypoint;
 	SGD::Vector m_vPath;
+
+	int m_nEnemyType = -1;
 };
 
