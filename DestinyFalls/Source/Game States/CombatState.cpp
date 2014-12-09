@@ -42,6 +42,7 @@ void CombatState::Enter(void)
 
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
+	cHealingAbility = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/HealAbility.wav");
 	//minion Icons
 
 	//play combat music
@@ -211,7 +212,7 @@ void CombatState::Exit(void)
 	m_pHeroes.clear();
 
 	pGraphics->UnloadTexture(m_hplayer);
-
+	pAudio->UnloadAudio(cHealingAbility);
 	pAudio->UnloadAudio(cMusic);
 }
 
@@ -1469,22 +1470,30 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 }
 int CombatState::HealAlly(Object* _From, Object* _To)
 {
+	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
 	int Total;
 	RuneManager mag;
 
 	Total = rand() % 30 + 20;
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
+		pAudio->PlayAudio(cHealingAbility, false);
 		((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() + Total);
+		
+
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
 	{
+		pAudio->PlayAudio(cHealingAbility, false);
+
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() + Total);
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
 		if (_To->GetType() == iObject::OBJ_PLAYER)
 		{
+			pAudio->PlayAudio(cHealingAbility, false);
 			((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() + Total);
 
 			if (((Player*)_To)->GetHealth() > ((Player*)_To)->GetMaxHealth())
@@ -1492,7 +1501,9 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 		}
 		else
 		{
+			pAudio->PlayAudio(cHealingAbility, false);
 			((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() + Total);
+
 			if (((Companion*)_To)->GetHealth() > ((Companion*)_To)->GetMaxHealth())
 				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
 		}
