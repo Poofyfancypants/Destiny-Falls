@@ -81,6 +81,4 @@ void CreditState::Render()
 	pFonts->Render("Other", "esc to Exit", { 680, 550 }, 1, { 255, 255, 255, 255 });
 
 	m_particle.Render();
-
-
 }

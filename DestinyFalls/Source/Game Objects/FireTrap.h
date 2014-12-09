@@ -9,7 +9,7 @@ class FireTrap :
 	int m_nDamage = 1;
 	float m_fTimer = 0;
 	bool m_bStartTimer = false;
-	ParticleManager m_pParticle;
+	ParticleManager m_pParticle ;
 public:
 	FireTrap();
 	~FireTrap();

@@ -374,16 +374,16 @@ void CombatState::Render(void)
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
 	{
-		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+		if (((Minion*)(m_pEnemies[i]))->GetHealth() > 0)
 		{
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
+			pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 		}
 	}
 
@@ -1990,7 +1990,7 @@ bool CombatState::TakeTurn(Object* _this)
 																			 else//Action selected, now pick target
 																			 {
 																				 pCombat->SetAction("Choose Target");
-																				 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y, ((Player*)m_pHeroes[m_nCursor])->GetPosition().x + 40, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 40 };
+																				 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x - 150, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y , ((Player*)m_pHeroes[m_nCursor])->GetPosition().x - 110, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 40 };
 
 																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																				 {
@@ -2037,7 +2037,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					 if (m_nCursor > m_pEnemies.size() - 1)
 																						 m_nCursor = m_pEnemies.size() - 1;
 
-																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x + 40, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
+																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x -110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 																				 }
 
 
@@ -2453,12 +2453,18 @@ bool CombatState::TakeTurn(Object* _this)
 									switch (((Minion*)_this)->GetAffinity())
 									{
 									case Elements::Earth:
+										target = rand() % pCombat->GetHeroes().size();
+										pCombat->SetActionTimer(1);
+										TakeAction(CombatState::ActionType::Melee, _this, target);
 										break;
 									case Elements::Water:
 										break;
 									case Elements::Air:
 										break;
 									case Elements::Fire:
+										target = rand() % pCombat->GetHeroes().size();
+										pCombat->SetActionTimer(1);
+										TakeAction(CombatState::ActionType::AOE, _this, target);
 										break;
 									default:
 										break;
@@ -2678,22 +2684,22 @@ void CombatState::DrawBackground()
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
 	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {255,255,255,255}, { 2.0f, 2.4f });
 		break;
 	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
 		break;
 	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.3f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.3f });
 		break;
 	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
 		break;
 	default:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.5f });
 		break;
 	}
 }

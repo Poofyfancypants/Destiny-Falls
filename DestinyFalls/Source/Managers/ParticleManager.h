@@ -20,6 +20,7 @@ public:
 
 	void ReadXML(const char* filepath);
 	void Render(Object * rhs = nullptr);
+	void RenderPoint(SGD::Point pt);
 	void Update();
 	void Exit();
 };
