@@ -198,9 +198,6 @@ bool GameplayState::Input()
 		m_bDebug = !m_bDebug;
 	if (m_nCurrentLevel == 0 && pInput->IsKeyPressed(SGD::Key::Tab))
 	{
-		NextLevel();
-		SetSideLevel(1);
-		m_bChangeLevels = true;
 		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
 	if (pInput->IsKeyPressed(SGD::Key::F6))
@@ -331,7 +328,7 @@ void GameplayState::Render()
 		SGD::Point(HealthPotionPosition.right - 7, HealthPotionPosition.top - 15),
 		2, SGD::Color(255, 0, 0));
 
-	if( m_nCurrentLevel == 0 )
+	if( m_nCurrentLevel == 0 && m_nCurrentSideLevel == -1)
 	{
 		RenderDialog();
 	}
