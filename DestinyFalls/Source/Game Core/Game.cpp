@@ -455,10 +455,7 @@ void Game::LoadStrings()
 	m_StringTable[5][4] = "Fire Boss";
 
 	//inventory
-	m_StringTable[6][1] = "Armor";
-	m_StringTable[6][2] = "Sword";
-	m_StringTable[6][3] = "Gauntlet";
-	m_StringTable[6][4] = "Companions";
+
 	m_StringTable[6][5] = "Tier1:";
 	m_StringTable[6][6] = "Tier2:";
 	m_StringTable[6][7] = "Tier3:";
@@ -474,6 +471,11 @@ void Game::LoadStrings()
 
 	if( !m_bIcelandic )
 	{
+		m_StringTable[6][1] = "Armor";
+		m_StringTable[6][2] = "Sword";
+		m_StringTable[6][3] = "Gauntlet";
+		m_StringTable[6][4] = "Companions";
+
 		m_StringTable[7][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
 		m_StringTable[7][2] = "This might be our only chance to stop him!";
 		m_StringTable[7][3] = "Careful though, he has laid puzzles to slow us down. ";
@@ -513,6 +515,11 @@ void Game::LoadStrings()
 	}
 	else
 	{
+		m_StringTable[6][1] = "Brynja";
+		m_StringTable[6][2] = "Sverd";
+		m_StringTable[6][3] = "Hanski";
+		m_StringTable[6][4] = "Forunautar";
+
 		m_StringTable[7][1] = "Tharna ertu! Sigmundur sast fyrir Nord-Austan okkur!";
 		m_StringTable[7][2] = "Thetta gaeti verid okkar eini sens til ad stodvann.";
 		m_StringTable[7][3] = "Fardu Varlega, hann hefur buid til thrautir til ad haegja a okkur";
