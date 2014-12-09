@@ -124,7 +124,6 @@ bool Game::Initialize( float width, float height )
 
 	pAudio->PlayAudio( m_mMusic, true );
 
-	m_bIcelandic = true;
 	LoadStrings();
 
 
@@ -455,6 +454,22 @@ void Game::LoadStrings()
 	m_StringTable[5][3] = "Air Boss";
 	m_StringTable[5][4] = "Fire Boss";
 
+	//inventory
+	m_StringTable[6][1] = "Armor";
+	m_StringTable[6][2] = "Sword";
+	m_StringTable[6][3] = "Gauntlet";
+	m_StringTable[6][4] = "Companions";
+	m_StringTable[6][5] = "Tier1:";
+	m_StringTable[6][6] = "Tier2:";
+	m_StringTable[6][7] = "Tier3:";
+	m_StringTable[6][8] = "Tank:";
+	m_StringTable[6][9] = "Healer:";
+	m_StringTable[6][10] = "Fighter:";
+	m_StringTable[6][11] = "Mage:";
+
+
+
+
 	// - Tutorial Strings
 
 	if( !m_bIcelandic )
@@ -489,6 +504,8 @@ void Game::LoadStrings()
 		m_StringTable[10][1] = "set of abilities, but do not utilise the QuickTime.";
 		m_StringTable[10][2] = "The enemy will retalliate and attack you during their turn,";
 		m_StringTable[10][3] = "you have to be careful and watch your health.";
+		m_StringTable[10][4] = "Runes that you equip will affect your abilities in combat,";
+		m_StringTable[10][5] = "plus the Forge will let you combine any spare Runes you have.";
 
 
 		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
@@ -526,7 +543,8 @@ void Game::LoadStrings()
 		m_StringTable[10][1] = "en notast ekki vid QuickTime.";
 		m_StringTable[10][2] = "Thegar thad er ekki think umferd mun ovinurinn radast a thig til baka";
 		m_StringTable[10][3] = "thu verdur ad passa thad ad thu deyjir ekki.";
-
+		m_StringTable[10][4] = "Runir sem ad thu setur a thig hafa ahrif a abilites i bardaga,";
+		m_StringTable[10][5] = "og Forgeinn leyfir ther ad blanda saman Runeum sem ad thu tharf ekki ad nota.";
 
 
 		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );

@@ -18,7 +18,7 @@ class GameplayState :
 public:
 
 	// - Holds all the levels of the game.
-	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL };
+	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL, WIN_LEVEL };
 	enum SideLevels { TUTORIAL_SIDE, EARTH_SIDE, WATER_SIDE, AIR_SIDE, FIRE_SIDE, BOSS_SIDE };
 	enum BucketList {
 		BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET,
@@ -90,6 +90,7 @@ public:
 	void HandleTutorial();
 	void RenderDialog();
 	SGD::HTexture GetPortrait() const { return m_hDialogImg; }
+	SGD::HTexture GetPotionIMG() const { return m_hHealthPot; }
 	void SetScreenShake() { m_bScreenShake = true; m_fShakeTimer = 0.3f; }
 
 private:
@@ -107,6 +108,7 @@ private:
 	float m_fWorldHeight = 1;
 
 	SGD::Point m_ptWorldCam = SGD::Point{ 0, 0 };
+	SGD::HTexture m_hTutorialRune = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFireTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSpikeTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
