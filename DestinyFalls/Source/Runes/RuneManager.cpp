@@ -161,7 +161,32 @@ float RuneManager::DamageComboElement(ComboElements x, Elements y)
 // element vs. element, being attacked = x,  attacked = y, order is important 
 float RuneManager::DamageReduction(Elements x, Elements y)
 {
-	return 0;
+	if ((x == Fire) && (y == Water))
+		return 2;
+	if ((x == Water) && (y == Fire))
+		return 0.5;
+	if ((x == Fire) && (y == Air))
+		return 0.5;
+	if ((x == Air) && (y == Fire))
+		return 2;
+	if ((x == Fire) && (y == Earth))
+		return 1;
+	if ((x == Earth) && (y == Fire))
+		return 1;
+	if ((x == Water) && (y == Air))
+		return 1;
+	if ((x == Air) && (y == Water))
+		return 1;
+	if ((x == Water) && (y == Earth))
+		return 2;
+	if ((x == Earth) && (y == Water))
+		return 0.5;
+	if ((x == Air) && (y == Earth))
+		return 0.5;
+	if ((x == Earth) && (y == Air))
+		return 2;
+
+	return 1;
 }
 
 string RuneManager::ToString(ComboElements x)

@@ -61,7 +61,7 @@ void Player::Update( float elapsedTime )
 		{
 			pAudio->PlayAudio( Game::GetInstance()->deathSound, false );
 			m_nHealth = 0;
-			Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
+			Game::GetInstance()->AddState(DeathState::GetInstance());
 
 			m_ptPosition = GetCheckpoint();
 			//m_nHealth = 100;
