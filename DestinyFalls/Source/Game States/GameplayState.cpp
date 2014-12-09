@@ -98,8 +98,6 @@ void GameplayState::Enter()
 
 	pAudio->PlayAudio( bmusic, true );
 
-	pAudio->PlayAudio( bmusic, true );
-
 	m_bSetSidePosition = false;
 	m_bSetLevelPosition = false;
 	m_bFirstDialog = false;
