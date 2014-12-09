@@ -754,7 +754,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				}
 
-				temp->SetHealth(150);
+				temp->SetHealth(300);
 
 	}
 		break;
@@ -2478,6 +2478,7 @@ bool CombatState::TakeTurn(Object* _this)
 										target = rand() % pCombat->GetHeroes().size();
 										pCombat->SetActionTimer(1);
 										TakeAction(CombatState::ActionType::Melee, _this, target);
+										((Minion*)_this)->ResetAnimation();
 										break;
 									case Elements::Water:
 										break;
@@ -2487,6 +2488,7 @@ bool CombatState::TakeTurn(Object* _this)
 										target = rand() % pCombat->GetHeroes().size();
 										pCombat->SetActionTimer(1);
 										TakeAction(CombatState::ActionType::AOE, _this, target);
+										((Minion*)_this)->ResetAnimation();
 										break;
 									default:
 										break;
