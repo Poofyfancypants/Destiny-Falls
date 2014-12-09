@@ -84,17 +84,17 @@ bool TileManager::LoadLevel( const char* _file )
 		for( size_t i = 0; i < m_TileMap.size(); i++ )
 			m_TileMap[i].resize( nMapSizeY );
 
-		readTile.collisionTile = (bool)col;
-		readTile.PlayerSpawn = (bool)pSpawn;
-		readTile.StartSlide = (bool)startSlide;
-		readTile.EndSlide = (bool)endSlide;
-		readTile.CheckPoint = (bool)checkPoint;
-		readTile.BoulderSpawn = (bool)boulderSpawn;
-		readTile.QTEvent = (bool)QTevent;
-		readTile.NextLevel = (bool)nextLevel;
-		readTile.PrevLevel = (bool)prevLevel;
-		readTile.SideLevel = (bool)sideLevel;
-		readTile.MainLevel = (bool)mainLevel;
+		readTile.collisionTile = (col ? true : false);
+		readTile.PlayerSpawn = (pSpawn ? true : false);
+		readTile.StartSlide = (startSlide ? true : false);
+		readTile.EndSlide = (endSlide ? true : false);
+		readTile.CheckPoint = (checkPoint ? true : false);
+		readTile.BoulderSpawn = (boulderSpawn ? true : false);
+		readTile.QTEvent = (QTevent ? true : false);
+		readTile.NextLevel = (nextLevel ? true : false);
+		readTile.PrevLevel = (prevLevel ? true : false);
+		readTile.SideLevel = (sideLevel ? true : false);
+		readTile.MainLevel = (mainLevel ? true : false);
 
 		readTile.CollisionRect = SGD::Rectangle( (float)( xIndex*m_szGridSize.width ),
 			(float)( yIndex*m_szGridSize.height ),
