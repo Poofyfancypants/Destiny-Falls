@@ -384,6 +384,7 @@ Object* GameplayState::CreateChest(SGD::Point _pos, int _id)
 	Chest* temp = new Chest;
 	temp->SetImage(m_hChest);
 	temp->SetSize({ 32, 32 });
+	temp->SetTier(_id);
 
 	if (_id == 1) // - Set the loot of Tier 1 chests
 	{
@@ -392,13 +393,13 @@ Object* GameplayState::CreateChest(SGD::Point _pos, int _id)
 	}
 	else if (_id == 2) // - Set the loot of Tier 2 chests
 	{
-		int numPots = rand() % 2;
-		int numRunes = rand() % 2;
+		int numPots = rand() % 2 + 1;
+		int numRunes = rand() % 3;
 	}
 	else if (_id == 3) // - Set the loot of Tier 3 chests
 	{
-		int numPots = rand() % 2;
-		int numRunes = rand() % 2;
+		int numPots = rand() % 2 + 2;
+		int numRunes = rand() % 3 + 1;
 	}
 	temp->SetPosition(_pos);
 	return temp;
