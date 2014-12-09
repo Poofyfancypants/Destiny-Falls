@@ -56,7 +56,7 @@ void OptionsState::Exit()
 	std::ofstream save;
 	save.open( "Options.txt" );
 	if( save.is_open() )
-		save << m_nMusic << " " << m_nEffects << " " << m_bWindowed;
+		save << m_nMusic << " " << m_nEffects << " " << m_bWindowed ;
 
 
 }

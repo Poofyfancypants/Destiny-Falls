@@ -49,7 +49,7 @@ public:
 	std::vector<Object*> GetEnemies() const { return m_pEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0, int EnemyType = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
-	Object* AddCompanion(); 
+	Object* AddCompanion(int _type); 
 
 	bool GetCooldown() { return m_bCoolDown; }
 	void SetCooldown(bool x) { m_bCoolDown = x; }
@@ -65,6 +65,9 @@ public:
 
 	bool TakeTurn(Object*);
 
+	void HandleTutorial();
+	void DrawBackground();
+
 private:
 
 	CombatState() = default;
@@ -76,15 +79,21 @@ private:
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
 
-	SGD::Rectangle Companion1HB	= { 50, 110, 150, 140 };
-	SGD::Rectangle Companion2HB	= { 50, 290, 150, 320 };
-	SGD::Rectangle PlayerHB		= { 75, 200, 200, 230 };
+//	SGD::Rectangle Companion1HB	= { 50, 20, 150, 50 };
+//	SGD::Rectangle Companion2HB	= { 50, 250, 150, 280 };
+	SGD::Rectangle PlayerHB		= { 75, 180, 200, 210 };
 	SGD::Rectangle Enemy1HB		= { 650, 110, 775, 140};
 	SGD::Rectangle Enemy2HB		= { 625, 200, 750, 230};
 	SGD::Rectangle Enemy3HB		= { 650, 290, 775, 320};
 
-	SGD::Rectangle Companion1rect	= { 75, 110, 139, 174 };
-	SGD::Rectangle Companion2rect	= { 75, 290, 139, 354 };
+
+	SGD::Rectangle Companion1rect = { 100, 100, 164, 164 };
+	SGD::Rectangle Companion1HB = { 50, 60, 150, 90 };
+	SGD::Rectangle Companion2rect = { 100, 300, 164, 364 };
+	SGD::Rectangle Companion2HB = { 50, 260, 150, 290 };
+
+//	SGD::Rectangle Companion1rect	= { 75, 110, 139, 174 };
+//	SGD::Rectangle Companion2rect	= { 75, 310, 139, 374 };
 	SGD::Rectangle Playerrect		= { 225, 200, 289, 264 };
 	SGD::Rectangle Enemy1rect		= { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
@@ -100,6 +109,8 @@ private:
 	int CurrentTurn;
 	bool m_bCoolDown = false;
 	bool m_bShake = false;
+
+	bool entered = false;
 
 	string ActionMessage;
 	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
@@ -134,10 +145,11 @@ private:
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
+	SGD::HAudio cHealingAbility = SGD::INVALID_HANDLE;
+
 
 	int numPots;
 	int numRunes;
-	int m_nNumQTCorrect = 0;
 	
 	vector<SGD::HTexture> m_vBackgroundsEarth;
 	vector<SGD::HTexture> m_vBackgroundsIce;

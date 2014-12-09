@@ -18,7 +18,7 @@ class GameplayState :
 public:
 
 	// - Holds all the levels of the game.
-	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL };
+	enum LevelList { TUTORIAL_LEVEL, EARTH_LEVEL, WATER_LEVEL, AIR_LEVEL, FIRE_LEVEL, BOSS_LEVEL, WIN_LEVEL };
 	enum SideLevels { TUTORIAL_SIDE, EARTH_SIDE, WATER_SIDE, AIR_SIDE, FIRE_SIDE, BOSS_SIDE };
 	enum BucketList {
 		BOULDER_BUCKET, PLAYER_BUCKET, ENEMY_BUCKET,
@@ -90,6 +90,8 @@ public:
 	void HandleTutorial();
 	void RenderDialog();
 	SGD::HTexture GetPortrait() const { return m_hDialogImg; }
+	SGD::HTexture GetPotionIMG() const { return m_hHealthPot; }
+	void SetScreenShake() { m_bScreenShake = true; m_fShakeTimer = 0.3f; }
 
 private:
 	GameplayState() = default;
@@ -106,10 +108,14 @@ private:
 	float m_fWorldHeight = 1;
 
 	SGD::Point m_ptWorldCam = SGD::Point{ 0, 0 };
+	SGD::HTexture m_hTutorialRune = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFireTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSpikeTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HTexture m_henemy = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hminiboss  = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hlevelboss = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFinalboss = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hChest = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hBoulder = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHealthPot = SGD::INVALID_HANDLE;
@@ -123,6 +129,10 @@ private:
 	ParticleManager m_particle;
 
 	bool m_bPaused = false;
+	bool m_bScreenShake = false;
+	float m_fShakeTimer = 0.0f;
+	float m_fDeltaPos = 0.0f;
+	SGD::Vector SoftVec = { 0, 0 };
 
 	// - Debug Mode
 	bool m_bDebug = false;
@@ -137,6 +147,7 @@ private:
 	bool m_bChangeSideLevels = false;
 	bool m_bSetSidePosition = false;
 	bool m_bSetLevelPosition = false;
+
 	// - Tutorial Level
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hRanger = SGD::INVALID_HANDLE;
@@ -151,4 +162,5 @@ private:
 	bool m_bChestDialog = false;
 	bool m_bSigmundDialog = false;
 	bool m_bIcelandic = false;
+	bool m_bUpdateTutorial = true;
 };

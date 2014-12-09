@@ -57,10 +57,10 @@ private:
 
 	SGD::Color m_HealthColor = { 0, 0, 0, 0 };
 
-	SGD::Rectangle Companion1rect = { 140 , 110 , 204 , 174 };
-	SGD::Rectangle Companion2rect = { 140 , 290 , 204 , 354 };
-	SGD::Rectangle Companion1HB = { 50 , 110 , 150 , 140 };
-	SGD::Rectangle Companion2HB = { 50 , 290 , 150 , 320 };
+	SGD::Rectangle Companion1rect = { 140 , 100 , 204 , 164 };
+	SGD::Rectangle Companion1HB = { 50 , 60 , 150 , 90 };
+	SGD::Rectangle Companion2rect = { 140 , 300 , 204 , 364 };
+	SGD::Rectangle Companion2HB = { 50 , 260 , 150 , 290 };
 
 	AnimationManager* m_pAnimator;
 	bool m_bUpdateAnimation = false;

@@ -124,7 +124,6 @@ bool Game::Initialize( float width, float height )
 
 	pAudio->PlayAudio( m_mMusic, true );
 
-	m_bIcelandic = true;
 	LoadStrings();
 
 
@@ -160,10 +159,10 @@ bool Game::Initialize( float width, float height )
 	m_hFinal1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final1.png" );
 	m_hFinal2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final2.png" );
 	m_hFinal3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Final3.png" );
-	m_hAirIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/AirIcon.png");
-	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FireIcon.png");
-	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterIcon.png");
-	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/EarthIcon.png");
+	m_hAirIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/AirIcon.png" );
+	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/FireIcon.png" );
+	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/WaterIcon.png" );
+	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/EarthIcon.png" );
 
 
 
@@ -308,10 +307,10 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hHTP );
 	pGraphics->UnloadTexture( m_hOptions );
 
-	pGraphics->UnloadTexture(m_hAirIcon);
-	pGraphics->UnloadTexture(m_hFireIcon);
-	pGraphics->UnloadTexture(m_hWaterIcon);
-	pGraphics->UnloadTexture(m_hEarthIcon);
+	pGraphics->UnloadTexture( m_hAirIcon );
+	pGraphics->UnloadTexture( m_hFireIcon );
+	pGraphics->UnloadTexture( m_hWaterIcon );
+	pGraphics->UnloadTexture( m_hEarthIcon );
 
 
 	pAudio->UnloadAudio( m_mMusic );
@@ -455,10 +454,28 @@ void Game::LoadStrings()
 	m_StringTable[5][3] = "Air Boss";
 	m_StringTable[5][4] = "Fire Boss";
 
+	//inventory
+
+	m_StringTable[6][5] = "Tier1:";
+	m_StringTable[6][6] = "Tier2:";
+	m_StringTable[6][7] = "Tier3:";
+	m_StringTable[6][8] = "Tank:";
+	m_StringTable[6][9] = "Healer:";
+	m_StringTable[6][10] = "Fighter:";
+	m_StringTable[6][11] = "Mage:";
+
+
+
+
 	// - Tutorial Strings
 
 	if( !m_bIcelandic )
 	{
+		m_StringTable[6][1] = "Armor";
+		m_StringTable[6][2] = "Sword";
+		m_StringTable[6][3] = "Gauntlet";
+		m_StringTable[6][4] = "Companions";
+
 		m_StringTable[7][1] = "Finally, you are here! Sigmund has been sighted to the North-East of here.";
 		m_StringTable[7][2] = "This might be our only chance to stop him!";
 		m_StringTable[7][3] = "Careful though, he has laid puzzles to slow us down. ";
@@ -480,11 +497,29 @@ void Game::LoadStrings()
 		m_StringTable[9][3] = "Screen";
 		m_StringTable[9][4] = "Language";
 
+		// - Combat Tutorial
+		m_StringTable[9][5] = "When it is your turn you get to select between your abilities.";
+		m_StringTable[9][6] = "Once you've selected an action, you can choose your target.";
+		m_StringTable[9][7] = "Your attacks power is based on the amount of right keystrokes";
+		m_StringTable[9][8] = "during this quick time, be ready to press the displayed keys.";
+		m_StringTable[9][9] = "You control your Companions turns as well and they have different";
+		m_StringTable[10][1] = "set of abilities, but do not utilise the QuickTime.";
+		m_StringTable[10][2] = "The enemy will retalliate and attack you during their turn,";
+		m_StringTable[10][3] = "you have to be careful and watch your health.";
+		m_StringTable[10][4] = "Runes that you equip will affect your abilities in combat,";
+		m_StringTable[10][5] = "plus the Forge will let you combine any spare Runes you have.";
+
+
 		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 	}
 	else
 	{
+		m_StringTable[6][1] = "Brynja";
+		m_StringTable[6][2] = "Sverd";
+		m_StringTable[6][3] = "Hanski";
+		m_StringTable[6][4] = "Forunautar";
+
 		m_StringTable[7][1] = "Tharna ertu! Sigmundur sast fyrir Nord-Austan okkur!";
 		m_StringTable[7][2] = "Thetta gaeti verid okkar eini sens til ad stodvann.";
 		m_StringTable[7][3] = "Fardu Varlega, hann hefur buid til thrautir til ad haegja a okkur";
@@ -506,12 +541,22 @@ void Game::LoadStrings()
 		m_StringTable[9][3] = "Skjar";
 		m_StringTable[9][4] = "Tungumal";
 
+		// - Combat Tutorial
+		m_StringTable[9][5] = "Thegar umferdin kemur ad ther faerdu ad velja ability til ad nota.";
+		m_StringTable[9][6] = "Eftir ad ability er valinn, veluru ovin til ad radast a.";
+		m_StringTable[9][7] = "Kraftur arasarinnar fer eftir thvi hvad thu hittir a marga retta takka";
+		m_StringTable[9][8] = "a medan thetta Quick Time er i gangi, vertu tilbuin ad yta a tha sem thu serd";
+		m_StringTable[9][9] = "Thu faerd einnig ad stjorna vinum thinum, their hafa adra abilities en thu,";
+		m_StringTable[10][1] = "en notast ekki vid QuickTime.";
+		m_StringTable[10][2] = "Thegar thad er ekki think umferd mun ovinurinn radast a thig til baka";
+		m_StringTable[10][3] = "thu verdur ad passa thad ad thu deyjir ekki.";
+		m_StringTable[10][4] = "Runir sem ad thu setur a thig hafa ahrif a abilites i bardaga,";
+		m_StringTable[10][5] = "og Forgeinn leyfir ther ad blanda saman Runeum sem ad thu tharf ekki ad nota.";
+
+
 		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
+
 	}
-
-
-	//Set up DialogManager
-	//Load Dialogs
 
 }

@@ -49,13 +49,13 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/ChestXML.xml" );
 	m_pAnimator->Load( "resource/XML/HeroSwordSwingXML.xml" );
 	m_pAnimator->Load( "resource/XML/AirBossAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml"); 
-	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml");  // Air level boss
+	m_pAnimator->Load( "resource/XML/AirElementalAttackXML.xml" );
+	m_pAnimator->Load( "resource/XML/AirMiniBossAttackXML.xml" );  // Air level boss
 	m_pAnimator->Load( "resource/XML/BaronAttackXML.xml" ); // Water mini boss
-	m_pAnimator->Load( "resource/XML/BehemothAttackXML.xml" ); 
+	m_pAnimator->Load( "resource/XML/BehemothAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/BombAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/EarthEnemyAttackXML.xml" );
-	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml");	// Earth mini boss
+	m_pAnimator->Load( "resource/XML/EarthMiniBossAttackXML.xml" );	// Earth mini boss
 	m_pAnimator->Load( "resource/XML/EarthBossAttackXML.xml" );		// Earth level boss
 	m_pAnimator->Load( "resource/XML/GenieAttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GolemAttackXML.xml" );
@@ -77,8 +77,12 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
-	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/OverWorldRanger.png" );
-	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/OverWorldCleric.png" );
+	m_hTutorialRune = pGraphics->LoadTexture( L"resource/graphics/Firet2.png" );
+	m_hminiboss = pGraphics->LoadTexture( L"resource/graphics/testMB1.png" );
+	m_hlevelboss = pGraphics->LoadTexture( L"resource/graphics/testLB1.png" );
+	m_hFinalboss = pGraphics->LoadTexture( L"resource/graphics/testLB5.png" );
+	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/testc.png" );
+	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/testc2.png" );
 	m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
@@ -91,7 +95,7 @@ void GameplayState::Enter()
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
 	m_hSpikeTrap = pGraphics->LoadTexture( L"resource/graphics/spikeTrap.png" );
 	m_hFireTrap = pGraphics->LoadTexture( L"resource/graphics/fireTrap.png" );
-	
+
 	pAudio->PlayAudio( bmusic, true );
 
 	m_bSetSidePosition = false;
@@ -134,6 +138,9 @@ void GameplayState::Exit()
 	pAudio->UnloadAudio( bmusic );
 
 	//unload images
+	pGraphics->UnloadTexture( m_hminiboss );
+	pGraphics->UnloadTexture( m_hlevelboss );
+	pGraphics->UnloadTexture( m_hFinalboss );
 	pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
@@ -147,6 +154,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hCleric );
 	pGraphics->UnloadTexture( m_hSpikeTrap );
 	pGraphics->UnloadTexture( m_hFireTrap );
+	pGraphics->UnloadTexture( m_hTutorialRune );
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -161,11 +169,11 @@ bool GameplayState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::F1 ) )
-	{
-		Game::GetInstance()->RemoveState(); //Make this Pause
-		Game::GetInstance()->AddState( MainMenuState::GetInstance() );
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F1 ) )
+	//{
+	//	Game::GetInstance()->RemoveState(); //Make this Pause
+	//	Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+	//}
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
@@ -184,19 +192,17 @@ bool GameplayState::Input()
 	}
 
 	// - Toggle DebugMode with F2
-	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
+	if( pInput->IsKeyPressed( SGD::Key::F1 ) )
 		m_bDebug = !m_bDebug;
 	if( m_nCurrentLevel == 0 && pInput->IsKeyPressed( SGD::Key::Tab ) )
 	{
-		NextLevel();
-		SetSideLevel( 1 );
-		m_bChangeLevels = true;
+		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
-	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	{
-		NextLevel();
-		m_bChangeLevels = true;
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	//{
+	//	NextLevel();
+	//	m_bChangeLevels = true;
+	//}
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
@@ -228,6 +234,10 @@ void GameplayState::Update( float elapsedTime )
 		m_nFrames = 0;
 		m_fFPSTime = 0.0f;
 	}
+	if( m_fShakeTimer > 0 )
+	{
+		m_fShakeTimer -= elapsedTime;
+	}
 
 	m_pObjects->UpdateAll( elapsedTime );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
@@ -236,9 +246,30 @@ void GameplayState::Update( float elapsedTime )
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, TRAP_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, COMPANION_BUCKET );
 
-	m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
+	if( m_bScreenShake )
+	{
+		int randY = 0;
+		int randX = 0;
 
-	if( m_nCurrentLevel == 0 && m_nCurrentSideLevel == -1 )
+		randX = rand() % 6 - 3;
+		randY = rand() % 6 - 3;
+
+		randX = (float)randX;
+		randY = (float)randY;
+
+		if( m_fShakeTimer <= 0.0f )
+		{
+			m_bScreenShake = false;
+		}
+		m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f + randX, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f + randY };
+
+	}
+	else
+	{
+		m_ptWorldCam = { m_pPlayer->GetPosition().x - Game::GetInstance()->GetScreenWidth() / 2.0f, m_pPlayer->GetPosition().y - Game::GetInstance()->GetScreenHeight() / 2.0f };
+	}
+
+	if( m_nCurrentLevel == 0 && m_bUpdateTutorial )
 		HandleTutorial();
 
 	// - Next Level?
@@ -294,6 +325,12 @@ void GameplayState::Render()
 		to_string( ( (Player*)( m_pPlayer ) )->GetNumPotions() ).c_str(),
 		SGD::Point( HealthPotionPosition.right - 7, HealthPotionPosition.top - 15 ),
 		2, SGD::Color( 255, 0, 0 ) );
+
+	if( m_nCurrentLevel == 0 )
+	{
+		RenderDialog();
+	}
+
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
@@ -310,23 +347,26 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 {
 	Enemy* temp = new Enemy;
 	temp->SetPosition( _pos );
-	temp->SetEnemyType(_id);
+	temp->SetEnemyType( _id );
 	temp->SetSize( SGD::Size( 32, 32 ) );
 	m_pMap->NextWaypoint( temp );
 	temp->SetWaypointID( 1 );
-	switch (_id)
+	switch( _id )
 	{
 	case 0:
 		temp->SetImage( m_henemy );
 		break;
 	case 1:
-		temp->SetImage(m_henemy);
+		temp->SetImage( m_henemy );
 		break;
 	case 2:
-		temp->SetImage(m_henemy);
+		temp->SetImage( m_hminiboss );
 		break;
 	case 3:
-		temp->SetImage(m_henemy);
+		temp->SetImage( m_hlevelboss );
+		break;
+	case 4:
+		temp->SetImage( m_hFinalboss );
 		break;
 	default:
 		break;
@@ -341,6 +381,7 @@ Object* GameplayState::CreateChest( SGD::Point _pos, int _id )
 	Chest* temp = new Chest;
 	temp->SetImage( m_hChest );
 	temp->SetSize( { 32, 32 } );
+	temp->SetTier( _id );
 
 	if( _id == 1 ) // - Set the loot of Tier 1 chests
 	{
@@ -349,13 +390,13 @@ Object* GameplayState::CreateChest( SGD::Point _pos, int _id )
 	}
 	else if( _id == 2 ) // - Set the loot of Tier 2 chests
 	{
-		int numPots = rand() % 2;
-		int numRunes = rand() % 2;
+		int numPots = rand() % 2 + 1;
+		int numRunes = rand() % 3;
 	}
 	else if( _id == 3 ) // - Set the loot of Tier 3 chests
 	{
-		int numPots = rand() % 2;
-		int numRunes = rand() % 2;
+		int numPots = rand() % 2 + 2;
+		int numRunes = rand() % 3 + 1;
 	}
 	temp->SetPosition( _pos );
 	return temp;
@@ -367,7 +408,7 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id ){
 	{
 		FireTrap* temp = new FireTrap;
 		temp->SetPosition( _pos );
-		temp->SetImage(m_hFireTrap);
+		temp->SetImage( m_hFireTrap );
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
@@ -375,7 +416,7 @@ Object* GameplayState::CreateTrap( SGD::Point _pos, int _id ){
 	{
 		SpikeTrap* temp = new SpikeTrap;
 		temp->SetPosition( _pos );
-		temp->SetImage(m_hSpikeTrap);
+		temp->SetImage( m_hSpikeTrap );
 		temp->SetSize( SGD::Size( 32, 32 ) );
 		return temp;
 	}
@@ -387,7 +428,7 @@ Object* GameplayState::CreateBoulder( SGD::Point _pos )
 	Boulder* temp = new Boulder;
 	temp->SetImage( m_hBoulder );
 	temp->SetPosition( _pos );
-	temp->SetSize( SGD::Size( 30, 30 ) );
+	temp->SetSize( SGD::Size( 28, 28 ) );
 	return temp;
 
 
@@ -467,6 +508,7 @@ void GameplayState::LoadNewLevel()
 	}
 	else
 	{
+		m_bUpdateTutorial = true;
 		switch( m_nCurrentLevel )
 		{
 		case GameplayState::TUTORIAL_LEVEL:
@@ -495,7 +537,7 @@ void GameplayState::LoadNewLevel()
 			break;
 		case GameplayState::AIR_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/FireLevelT1.xml" );
+			m_pMap->LoadLevel( "resource/XML/airLevel2.xml" );
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -503,18 +545,26 @@ void GameplayState::LoadNewLevel()
 			break;
 		case GameplayState::FIRE_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/FinalLevel.xml" );
+			m_pMap->LoadLevel( "resource/XML/FireLevelT1.xml" );
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::BOSS_LEVEL:
+			UnloadAndCreate();
+			m_pMap->LoadLevel( "resource/XML/FinalLevel.xml" );
+			if( m_bSetSidePosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
+			else  if( m_bSetLevelPosition )
+				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
+			break;
+		case GameplayState::WIN_LEVEL:
 			Game::GetInstance()->AddState( WinState::GetInstance() );
 			m_nCurrentLevel = 1;
 			break;
-			//default:
-			//	break;
+		default:
+			break;
 		}
 
 	}
@@ -523,6 +573,18 @@ void GameplayState::LoadNewLevel()
 }
 void GameplayState::LoadNewSideLevel()
 {
+	if( m_nCurrentLevel == 0 )
+	{
+		m_bFirstDialog = false;
+		m_bPuzzleDialog = false;
+		m_bBoulderDialog = false;
+		m_bTrapDialog = false;
+		m_bMainDialog = false;
+		m_bChestDialog = false;
+		m_bSigmundDialog = false;
+		m_bUpdateTutorial = false;
+	}
+
 	// - Needs to be filled in. 9 levels
 	switch( m_nCurrentSideLevel )
 	{
@@ -539,6 +601,8 @@ void GameplayState::LoadNewSideLevel()
 		m_pMap->LoadLevel( "resource/XML/IceForestBLevel.xml" );
 		break;
 	case GameplayState::AIR_SIDE:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/AirBLevel.xml" );
 		break;
 	case GameplayState::FIRE_SIDE:
 		break;
@@ -727,6 +791,7 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );		// - Draw string One.
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
+		pGraphics->DrawTexture( m_hSpikeTrap, SGD::Point( DialogBoxOne.left + 50, DialogBoxOne.top + 30 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 6 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 7 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 
@@ -748,6 +813,7 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
+		pGraphics->DrawTexture( m_hFireTrap, SGD::Point( DialogBoxOne.left + 50, DialogBoxOne.top + 30 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 8 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 7, 9 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}
@@ -768,6 +834,7 @@ void GameplayState::RenderDialog()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( m_hHero, heroPosition );
 		pGraphics->DrawTexture( m_hDialogImg, portraitPosition );
+		pGraphics->DrawTexture( m_hTutorialRune, SGD::Point( DialogBoxOne.left + 40, DialogBoxOne.top + 5 ), {}, {}, {}, { 0.2f, 0.18f } );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 1 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 2 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 	}

@@ -18,7 +18,9 @@ public:
 	void RunQuickTime();
 	void StopQuickTime();
 
-	
+	void HandleTutorial();
+
+	QuickTime* GetCurrentQT()const { return currentQT; }
 
 private:
 	QuickTimeState() = default;

@@ -31,12 +31,16 @@ public:
 	bool Opened = false;
 	bool Colliding = false;
 
+	void SetTier(int _tier) { m_nTier = _tier; }
+	int GetTier() const { return m_nTier; }
+
 private:
 	SGD::HTexture m_hChestImage = SGD::INVALID_HANDLE;
 	SGD::HAudio m_hChestOpen = SGD::INVALID_HANDLE;
 
 	int numPots;
 	int numRunes;
+	int m_nTier = 0;
 	bool trappedChest;
 	float textTimer = 3.0f;
 	AnimationManager* m_pAnimator = nullptr;
