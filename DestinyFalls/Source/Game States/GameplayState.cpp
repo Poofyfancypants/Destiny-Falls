@@ -527,7 +527,7 @@ void GameplayState::LoadNewLevel()
 			else  if (m_bSetLevelPosition)
 				m_pPlayer->SetPosition(m_pMap->GetPrevLevelPosition());
 			break;
-			case GameplayState::WIN_LEVEL
+		case GameplayState::WIN_LEVEL:
 			Game::GetInstance()->AddState( WinState::GetInstance() );
 			m_nCurrentLevel = 1;
 			break;
