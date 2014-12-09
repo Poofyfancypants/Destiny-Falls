@@ -56,6 +56,7 @@ bool DeathState::Input(void)
 		switch (m_nCursor)
 		{
 		case PauseSelections::resume:
+			((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(100);
 			Game::GetInstance()->RemoveState();
 			break;
 		case PauseSelections::save:
