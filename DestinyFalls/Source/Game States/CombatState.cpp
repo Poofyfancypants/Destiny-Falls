@@ -1097,7 +1097,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
-				RuneManager::DamageReduction(InventoryState::GetInstance()->GetArmorSlot1(), ((Minion*)_From)->GetAffinity()) * Total;
+				RuneManager rmtemp;
+				rmtemp.DamageReduction(InventoryState::GetInstance()->GetArmorSlot1(), ((Minion*)_From)->GetAffinity()) * Total;
 				((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 				if (rand() % 20 > 13)
 				{
