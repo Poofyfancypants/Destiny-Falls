@@ -442,9 +442,9 @@ void CombatState::Render(void)
 		}
 	}
 
-	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 200, 150, 150, 150 });
-	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 200, 150, 150, 150 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 10, ActionRect.top + 5 }, SGD::Color(255, 255, 255, 255));
+	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
+	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
+	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 0, 0, 0));
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
@@ -1144,7 +1144,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 		if (localBlock == false)
 		{
-			Total = rand() % (10 * ((Minion*)_From)->GetMods().DamageLevel) * ((Minion*)_From)->GetMods().DamageLevel;
+			Total = rand() % (10 * ((Minion*)_From)->GetMods().DamageLevel) + ((Minion*)_From)->GetMods().DamageLevel;
 
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
@@ -1642,11 +1642,11 @@ bool CombatState::TakeTurn(Object* _this)
 
 									if (CombatState::GetInstance()->GetCooldown())
 									{
-										pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
+										pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
 									}
 									else
 									{
-										pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+										pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
 									}
 
 									//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
@@ -2051,14 +2051,14 @@ bool CombatState::TakeTurn(Object* _this)
 
 																			 if (selected == false) //Pick an action (melee magic or armor)
 																			 {
-																				 pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 255, 255));
+																				 pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
 																				 if (false) //cooldown
 																				 {
-																					 pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 255, 255));
+																					 pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
 																				 }
 																				 else
 																				 {
-																					 pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 255, 255));
+																					 pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
 																				 }
 																				 //pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 																				 pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
