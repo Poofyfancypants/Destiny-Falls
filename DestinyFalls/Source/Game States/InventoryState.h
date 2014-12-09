@@ -75,7 +75,13 @@ public:
 
 	// - Tutorial 
 	void HandleTutorial();
-	SGD::HTexture GetRuneImage() const {return m_hFiret2;}
+
+	SGD::HTexture GetRuneImage() const { return m_hFiret2; }
+
+	SGD::HTexture GetTankIcon() const { return m_hFighterIcon; }
+	SGD::HTexture GetMageIcon() const { return m_hMageIcon; }
+	SGD::HTexture GetMeleeIcon() const { return m_hHunterIcon; }
+	SGD::HTexture GetClericIcon() const { return m_hHealerIcon; }
 private:
 	InventoryState() = default;
 	virtual ~InventoryState() = default;

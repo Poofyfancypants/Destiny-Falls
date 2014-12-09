@@ -1847,8 +1847,8 @@ void InventoryState::HandleTutorial()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( GameplayState::GetInstance()->GetPortrait(), portraitPosition );
 		pGraphics->DrawTexture(GameplayState::GetInstance()->GetPotionIMG(), SGD::Point( DialogBoxOne.left + 10, DialogBoxOne.top + 20));
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 4 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 5 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 4 ).c_str(), TextPositionOne, 0.7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 8, 5 ).c_str(), TextPositionTwo, 0.7f, SGD::Color( 0, 0, 0 ) );
 
 	}
 	else
@@ -1870,8 +1870,8 @@ void InventoryState::HandleTutorial()
 		pGraphics->DrawRectangle( DialogBoxOne, SGD::Color( 220, 215, 143 ), SGD::Color( 0, 0, 0 ) );
 		pGraphics->DrawTexture( GameplayState::GetInstance()->GetPortrait(), portraitPosition );
 
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 10, 4 ).c_str(), TextPositionOne, .7, SGD::Color( 0, 0, 0 ) );
-		pFont->Render( "Dialog", Game::GetInstance()->GetString( 10, 5 ).c_str(), TextPositionTwo, .7, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 10, 4 ).c_str(), TextPositionOne, 0.7f, SGD::Color( 0, 0, 0 ) );
+		pFont->Render( "Dialog", Game::GetInstance()->GetString( 10, 5 ).c_str(), TextPositionTwo, 0.7f, SGD::Color( 0, 0, 0 ) );
 
 	}
 }
