@@ -14,6 +14,7 @@
 #include "../Runes/Runes.h"
 #include "../Quick Time/QuickTime.h"
 #include "../Game States/QuickTimeState.h"
+#include "../Runes/Runes.h"
 
 CombatState* CombatState::GetInstance()
 {
@@ -129,6 +130,14 @@ void CombatState::Enter(void)
 
 			break;
 		}
+		m_pObjects.push_back(temp);
+		m_pEnemies.push_back(temp);
+	}
+	else if (player->CombatEnemyID == 4)
+	{
+		Object* temp;
+		temp = AddMinion(4, player->CombatEnemyID);
+
 		m_pObjects.push_back(temp);
 		m_pEnemies.push_back(temp);
 	}
@@ -446,11 +455,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 
 			  if (m_pEnemies.size() == 0)
 			  {
-				  temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+				  temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
 			  }
 			  else if (m_pEnemies.size() == 1)
 			  {
-				  temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				  temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
 			  }
 			  else if (m_pEnemies.size() == 2)
 			  {
@@ -754,8 +763,8 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
 				temp->SetMods(12, 5, _region, 3, 3);
 				temp->SetString(4, _region);
-				temp->SetAIType(Minion::AI_Type::Level_Boss);
-				temp->SetMinionAnimation(_region, 6);
+				temp->SetAIType(Minion::AI_Type::Final_Boss);
+				temp->SetMinionAnimation(_region, 0);
 				temp->SetAffinity(Earth);
 				temp->SetHealth(200);
 	}
@@ -800,7 +809,8 @@ Object* CombatState::AddCompanion()
 	return temp;
 }
 
-bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _spell) //Can I Add An Object* for the target
+bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _spell)
+//Can I Add An Object* for the target
 //I'm thinking about the order of actions here
 //Possibly get the target or attacker's type before damage type, we'll see what's most repetative
 //Companions are going to possibly cause some problems
@@ -819,7 +829,8 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 								{
 
 																	   pAudio->PlayAudio(Game::GetInstance()->m_mMeleeButton);
-																	   DealMeleeDamage(_this, m_pEnemies[_target]);
+																	  
+																		   DealMeleeDamage(_this, m_pEnemies[_target]);
 
 								}
 									break;
@@ -1026,7 +1037,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			{
 				if (((Minion*)m_pEnemies[i])->m_Block)
 				{
-					Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+					//Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 					BlockAttack(_From, m_pEnemies[i]);
 					localBlock = ((Minion*)m_pEnemies[i])->m_Block;
 					((Minion*)m_pEnemies[i])->m_Block = false;
@@ -1042,8 +1053,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-			Game::GetInstance()->AddState(QuickTimeState::GetInstance());
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQTCorrect * 50));
+			//Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+			Total = (((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 5));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 			//Cool idea to give you a better chance against harder monsters with more potential damage
@@ -1334,7 +1345,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 
 			stuff += spell1.c_str();
 			e1 = InventoryState::GetInstance()->GetRingSlot1();
-			Total = ((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
+			Total = ((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
 
 			break;
 		case 1:
@@ -1342,14 +1353,14 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 
 			stuff += spell2.c_str();
 			d1 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
+			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
 			break;
 		case 2:
 			ComboElements d2;
 
 			stuff += spell3.c_str();
 			d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot2(), InventoryState::GetInstance()->GetRingSlot3());
-			Total = ((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQTCorrect * 5)));
+			Total = ((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
 
 			break;
 		default:
@@ -1618,14 +1629,25 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nCursor = 0;
 										if (m_nCursor > pCombat->GetEnemies().size() - 1)
 											m_nCursor = pCombat->GetEnemies().size() - 1;
+										
 
 										if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 										{
-											selected = false;
+											entered = true;
 											((Player*)_this)->SetAttacking(true);
-											TakeAction(ActionSelected, _this, m_nCursor);
-											m_nCursor = 0;
-											return true;
+											Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+										}
+										if (entered)
+										{
+											if (QuickTimeState::GetInstance()->GetCurrentQT()->GetIsOver())
+											{
+												entered = false;
+												selected = false;
+												QuickTimeState::GetInstance()->StopQuickTime();
+												TakeAction(ActionSelected, _this, m_nCursor);
+												m_nCursor = 0;
+												return true;
+											}
 										}
 
 										if (PlayerSelection.left < PlayerSelection.right)
@@ -2467,10 +2489,23 @@ bool CombatState::TakeTurn(Object* _this)
 								case Minion::AI_Type::Final_Boss:
 									if (((Minion*)_this)->GetHealth() > 0)
 									{
-										//if (((Minion*)_this)->GetHealth() > 150 && ((Minion*)_this)->GetHealth() < 200)
-										//{
-										//
-										//}
+										if (((Minion*)_this)->GetHealth() >= 100 && ((Minion*)_this)->GetHealth() < 150)
+										{
+											((Minion*)_this)->SetAffinity(Water);
+										}
+										if (((Minion*)_this)->GetHealth() >= 75 && ((Minion*)_this)->GetHealth() < 100)
+										{
+											((Minion*)_this)->SetAffinity(Air);
+										}
+										if (((Minion*)_this)->GetHealth() >= 50 && ((Minion*)_this)->GetHealth() < 75)
+										{
+											((Minion*)_this)->SetAffinity(Fire);
+										}
+										if (((Minion*)_this)->GetHealth() >= 0 && ((Minion*)_this)->GetHealth() < 50)
+										{
+											((Minion*)_this)->SetAffinity(((Elements)(rand()%4)));
+										}
+
 										target = rand() % pCombat->GetHeroes().size();
 										pCombat->SetActionTimer(1);
 										TakeAction(CombatState::ActionType::Melee, _this, target);

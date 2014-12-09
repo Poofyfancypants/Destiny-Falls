@@ -53,7 +53,7 @@ void QuickTimeState::Update( float elapsedTime )
 		if( currentQT->GetIsOver() == true )
 		{
 			CombatState::GetInstance()->SetNumQTCorrect( currentQT->GetNumCorrect() );
-			StopQuickTime();
+			//StopQuickTime();
 			Game::GetInstance()->RemoveState();
 		}
 	}
