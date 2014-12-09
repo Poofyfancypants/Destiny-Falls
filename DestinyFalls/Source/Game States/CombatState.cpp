@@ -232,7 +232,7 @@ void CombatState::Update(float elapsedTime)
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
 	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
+		//SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { 0, 0 }, {}, {}, {}, { 2.0f, 2.4f });
 		break;
 	case 2:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { 0, 0 }, {}, {}, {}, { 2.0f, 2.2f });
