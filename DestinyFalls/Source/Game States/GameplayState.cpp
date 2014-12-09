@@ -169,11 +169,11 @@ bool GameplayState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::F1 ) )
-	{
-		Game::GetInstance()->RemoveState(); //Make this Pause
-		Game::GetInstance()->AddState( MainMenuState::GetInstance() );
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F1 ) )
+	//{
+	//	Game::GetInstance()->RemoveState(); //Make this Pause
+	//	Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+	//}
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
@@ -192,17 +192,17 @@ bool GameplayState::Input()
 	}
 
 	// - Toggle DebugMode with F2
-	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
+	if( pInput->IsKeyPressed( SGD::Key::F1 ) )
 		m_bDebug = !m_bDebug;
 	if( m_nCurrentLevel == 0 && pInput->IsKeyPressed( SGD::Key::Tab ) )
 	{
 		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
-	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	{
-		NextLevel();
-		m_bChangeLevels = true;
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	//{
+	//	NextLevel();
+	//	m_bChangeLevels = true;
+	//}
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{

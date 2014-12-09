@@ -848,10 +848,10 @@ void InventoryState::Render()
 
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
-	pFonts->Render("Other", "Armor", SGD::Point(50, 0), 1, SGD::Color{ 255, 0, 0, 0 });
-	pFonts->Render("Other", "Sword", SGD::Point(162, 0), 1, SGD::Color{ 255, 0, 0, 0 });
-	pFonts->Render("Other", "Gauntlet", SGD::Point(274, 0), .9f, SGD::Color{ 255, 0, 0, 0 });
-	pFonts->Render("Other", "Companion", SGD::Point(386, 0), .9f, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", Game::GetInstance()->GetString(6,1).c_str(), SGD::Point(50, 0), 1, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", Game::GetInstance()->GetString(6,2).c_str(), SGD::Point(162, 0), 1, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", Game::GetInstance()->GetString(6,3).c_str(), SGD::Point(274, 0), .9f, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", Game::GetInstance()->GetString(6,4).c_str(), SGD::Point(386, 0), .9f, SGD::Color{ 255, 0, 0, 0 });
 
 
 	
