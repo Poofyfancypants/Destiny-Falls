@@ -1093,7 +1093,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 		if (localBlock == false)
 		{
-			Total = (rand() % (10 * ((Minion*)_From)->GetMods().DamageLevel)) * ((Minion*)_From)->GetMods().DamageLevel;
+			Total = rand() % (10 * ((Minion*)_From)->GetMods().DamageLevel) * ((Minion*)_From)->GetMods().DamageLevel;
 
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
