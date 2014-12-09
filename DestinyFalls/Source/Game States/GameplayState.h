@@ -90,6 +90,7 @@ public:
 	void HandleTutorial();
 	void RenderDialog();
 	SGD::HTexture GetPortrait() const { return m_hDialogImg; }
+	SGD::HTexture GetPotionIMG() const { return m_hHealthPot; }
 
 private:
 	GameplayState() = default;
@@ -106,6 +107,7 @@ private:
 	float m_fWorldHeight = 1;
 
 	SGD::Point m_ptWorldCam = SGD::Point{ 0, 0 };
+	SGD::HTexture m_hTutorialRune = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFireTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSpikeTrap = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;

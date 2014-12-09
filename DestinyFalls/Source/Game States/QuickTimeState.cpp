@@ -137,6 +137,5 @@ void QuickTimeState::HandleTutorial()
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 9, 7 ).c_str(), TextPositionOne, .7f, SGD::Color( 0, 0, 0 ) );
 		pFont->Render( "Dialog", Game::GetInstance()->GetString( 9, 8 ).c_str(), TextPositionTwo, .7f, SGD::Color( 0, 0, 0 ) );
 
-		//Sleep( 3000 );
 	}
 }
