@@ -104,6 +104,8 @@ private:
 	bool m_bCoolDown = false;
 	bool m_bShake = false;
 
+	bool entered = false;
+
 	string ActionMessage;
 	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
 

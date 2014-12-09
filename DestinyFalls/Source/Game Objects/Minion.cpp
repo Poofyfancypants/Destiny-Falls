@@ -47,10 +47,20 @@ void Minion::Render(int _posIndex)
 
 	switch (_posIndex)
 	{
-	case 0: //Top
+	case 0: //Middle
 		if (m_nHealth > 0)
 		{
-			//	pGraphics->DrawRectangle(Enemy1rect, SGD::Color{ 100, 0, 150, 0 }, SGD::Color{ 255, 255, 255, 255 });
+		if (m_pAnimator->GetInstance()->CheckSize())
+			{
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
+			}
+			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
+		}
+		break;
+	case 1:  //Top 
+		if (m_nHealth > 0)
+		{
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
@@ -59,22 +69,9 @@ void Minion::Render(int _posIndex)
 			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
-	case 1: //Middle
-		if (m_nHealth > 0)
-		{
-			//	pGraphics->DrawRectangle(Enemy2rect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
-			if (m_pAnimator->GetInstance()->CheckSize())
-			{
-				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
-			}
-			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
-		}
-		break;
 	case 2: //Bottom
 		if (m_nHealth > 0)
 		{
-			//pGraphics->DrawRectangle(Enemy3rect, SGD::Color{ 100, 150, 0, 0 }, SGD::Color{ 255, 255, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
@@ -202,7 +199,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("EarthMiniBossAttack");
 				   break;
 			   case 6:
-				   this->GetTimeStamp()->SetCurrentAnimation( "EarthBossAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation("EarthBossAttack");
 				   break;
 			   default:
 				   break;
@@ -229,7 +226,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack2");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation( "BaronAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
 				   break;
 			   case 6:
 				   this->GetTimeStamp()->SetCurrentAnimation("IceBossAttack");
@@ -259,7 +256,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack3");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation( "AirMiniBossAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation("AirMiniBossAttack");
 				   break;
 			   case 6:
 				   this->GetTimeStamp()->SetCurrentAnimation("AirBossAttack");
@@ -289,7 +286,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation( "OrcSkeletonAttack" );
+				   this->GetTimeStamp()->SetCurrentAnimation("OrcSkeletonAttack");
 				   break;
 			   case 6:
 				   this->GetTimeStamp()->SetCurrentAnimation("NagaAttack");
@@ -300,8 +297,14 @@ void Minion::SetMinionAnimation(int region, int minionType)
 	}
 		break;
 	case 4: // Higher cases will be used for bosses
-		this->GetTimeStamp()->SetCurrentAnimation("TitanAttack");
-		break;
+		switch (minionType)
+		{
+		case 0:
+			this->GetTimeStamp()->SetCurrentAnimation("TitanAttack");
+			break;
+		default:
+			break;
+		}
 	default:
 		break;
 	}

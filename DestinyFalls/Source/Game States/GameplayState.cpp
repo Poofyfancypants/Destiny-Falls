@@ -140,6 +140,7 @@ void GameplayState::Exit()
 	//unload images
 	pGraphics->UnloadTexture( m_hminiboss );
 	pGraphics->UnloadTexture( m_hlevelboss );
+	pGraphics->UnloadTexture(m_hFinalboss);
 	pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
@@ -504,7 +505,7 @@ void GameplayState::LoadNewLevel()
 			break;
 		case GameplayState::AIR_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/FireLevelT1.xml" );
+			m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -512,18 +513,26 @@ void GameplayState::LoadNewLevel()
 			break;
 		case GameplayState::FIRE_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/FinalLevel.xml" );
+			m_pMap->LoadLevel( "resource/XML/FireLevelT1.xml" );
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
 			break;
 		case GameplayState::BOSS_LEVEL:
+			UnloadAndCreate();
+			m_pMap->LoadLevel("resource/XML/FinalLevel.xml");
+			if (m_bSetSidePosition)
+				m_pPlayer->SetPosition(m_pMap->GetPrevPosition());
+			else  if (m_bSetLevelPosition)
+				m_pPlayer->SetPosition(m_pMap->GetPrevLevelPosition());
+			break;
+		case GameplayState::WIN_LEVEL:
 			Game::GetInstance()->AddState( WinState::GetInstance() );
 			m_nCurrentLevel = 1;
 			break;
-			//default:
-			//	break;
+			default:
+				break;
 		}
 
 	}

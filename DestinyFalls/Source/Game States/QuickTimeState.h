@@ -20,6 +20,8 @@ public:
 
 	void HandleTutorial();
 
+	QuickTime* GetCurrentQT()const { return currentQT; }
+
 private:
 	QuickTimeState() = default;
 	virtual ~QuickTimeState() = default;
