@@ -49,7 +49,7 @@ public:
 	std::vector<Object*> GetEnemies() const { return m_pEnemies; }
 	const std::vector<Object*>* GetObjManager() const { return &m_pObjects; }
 	Object* AddMinion(int _region = 0, int EnemyType = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
-	Object* AddCompanion(); 
+	Object* AddCompanion(int _type); 
 
 	bool GetCooldown() { return m_bCoolDown; }
 	void SetCooldown(bool x) { m_bCoolDown = x; }

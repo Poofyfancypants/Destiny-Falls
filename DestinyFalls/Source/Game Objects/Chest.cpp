@@ -33,9 +33,7 @@ void Chest::Update(float elapsedTime)
 	{
 		textTimer -= 1 * elapsedTime;
 		if (textTimer <= 0.0f)
-		{
 			Colliding = false;
-		}
 	}
 
 	if( Opened )

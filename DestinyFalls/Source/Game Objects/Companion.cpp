@@ -42,7 +42,6 @@ void Companion::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-
 	SGD::Vector vec = { (m_ptPosition.x), (m_ptPosition.y) };
 	SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
 	pGraphics->DrawTexture(m_hImage, point);
@@ -55,18 +54,18 @@ void Companion::CombatRender(int _posIndex)
 	switch (_posIndex)
 	{
 	case 1:
+		pGraphics->DrawRectangle(Companion1HB, m_HealthColor);
 		if (m_pAnimator->GetInstance()->CheckSize())
 		{
 			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Companion1rect.right, Companion1rect.bottom);
 		}
-		pGraphics->DrawRectangle(Companion1HB, m_HealthColor);
 		break;
 	case 2:
+		pGraphics->DrawRectangle(Companion2HB, m_HealthColor);
 		if (m_pAnimator->GetInstance()->CheckSize())
 		{
 			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Companion2rect.right, Companion2rect.bottom);
 		}
-		pGraphics->DrawRectangle(Companion2HB, m_HealthColor);
 		break;
 
 	default:

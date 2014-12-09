@@ -50,34 +50,34 @@ void Minion::Render(int _posIndex)
 	case 0: //Middle
 		if (m_nHealth > 0)
 		{
-		if (m_pAnimator->GetInstance()->CheckSize())
+			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
+			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
 			}
-			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
 	case 1:  //Top 
 		if (m_nHealth > 0)
 		{
+			pGraphics->DrawRectangle(Enemy1HB, m_HealthColor);
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
 			}
-			pGraphics->DrawRectangle(Enemy1HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
 	case 2: //Bottom
 		if (m_nHealth > 0)
 		{
+			pGraphics->DrawRectangle(Enemy3HB, m_HealthColor);
+			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
 			}
-			pGraphics->DrawRectangle(Enemy3HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 255 });
 		}
 		break;
 	default:
