@@ -13,6 +13,8 @@ FireTrap::FireTrap()
 
 FireTrap::~FireTrap()
 {
+	m_pParticle.Exit();
+
 }
 
 void FireTrap::Update(float elapsedTime)

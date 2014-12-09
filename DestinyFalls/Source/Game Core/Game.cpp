@@ -455,6 +455,22 @@ void Game::LoadStrings()
 	m_StringTable[5][3] = "Air Boss";
 	m_StringTable[5][4] = "Fire Boss";
 
+	//inventory
+	m_StringTable[6][1] = "Armor";
+	m_StringTable[6][2] = "Sword";
+	m_StringTable[6][3] = "Gauntlet";
+	m_StringTable[6][4] = "Companions";
+	m_StringTable[6][5] = "Tier1:";
+	m_StringTable[6][6] = "Tier2:";
+	m_StringTable[6][7] = "Tier3:";
+	m_StringTable[6][8] = "Tank:";
+	m_StringTable[6][9] = "Healer:";
+	m_StringTable[6][10] = "Fighter:";
+	m_StringTable[6][11] = "Mage:";
+
+
+
+
 	// - Tutorial Strings
 
 	if( !m_bIcelandic )

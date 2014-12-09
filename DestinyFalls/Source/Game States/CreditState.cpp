@@ -60,7 +60,7 @@ void CreditState::Render()
 	float x = Game::GetInstance()->GetScreenWidth() / 1024;
 	float y = Game::GetInstance()->GetScreenHeight() / 512;
 
-	pFonts->Render("Celtic", "Credits:",			{ 100, 25 }, 2, { 255, 255, 255, 255 });
+	pFonts->Render("Celtic", "Credits:",{ 100, 25 }, 2, { 255, 255, 255, 255 });
 
 	pFonts->Render("Other", "EP:", { 100, 100 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "John OLeske", { 125, 125 }, 1, { 255, 255, 255, 255 });

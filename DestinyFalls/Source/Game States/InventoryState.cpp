@@ -838,10 +838,15 @@ void InventoryState::Render()
 	pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 	pGraphics->DrawRectangle(TabRunes, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 	// Tab Names
-	pGraphics->DrawString("Armizzle", SGD::Point(50, 0), SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawString("Swizzle", SGD::Point(162, 0), SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawString("Gauntizzle", SGD::Point(274, 0), SGD::Color{ 255, 0, 0, 0 });
-	pGraphics->DrawString("Companizzle", SGD::Point(386, 0), SGD::Color{ 255, 0, 0, 0 });
+
+	BitmapFontManager * pFonts = pFonts->GetInstance();
+
+	pFonts->Render("Other", "Armor", SGD::Point(50, 0), 1, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", "Sword", SGD::Point(162, 0), 1, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", "Gauntlet", SGD::Point(274, 0), .9f, SGD::Color{ 255, 0, 0, 0 });
+	pFonts->Render("Other", "Companion", SGD::Point(386, 0), .9f, SGD::Color{ 255, 0, 0, 0 });
+
+
 	
 	// full inventory rect
 	pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 0, 200, 100 }, SGD::Color{ 255, 0, 0, 0 });
@@ -879,8 +884,7 @@ void InventoryState::Render()
 
 
 		//Tier Strings
-		pGraphics->DrawString("Tier1", SGD::Point(200, 175), SGD::Color{ 255, 0, 0, 0 });
-
+		pFonts->Render("Dialog", "Tier 1", SGD::Point(200, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 		if (m_vSword[0].GetElement() == Fire)
 		{
 
@@ -927,7 +931,7 @@ void InventoryState::Render()
 
 
 		pGraphics->DrawRectangle(RuneSet2, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawString("Tier2", SGD::Point(300, 175), SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Dialog", "Tier 2", SGD::Point(300, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 
 		if (m_vSword[1].GetElement() == Fire)
@@ -976,7 +980,7 @@ void InventoryState::Render()
 
 
 		pGraphics->DrawRectangle(RuneSet3, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawString("Tier3", SGD::Point(400, 175), SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Dialog", "Tier 3", SGD::Point(400, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		if (m_vSword[2].GetElement() == Fire)
 		{
@@ -1043,17 +1047,27 @@ void InventoryState::Render()
 	{
 		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
 		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
-		pGraphics->DrawString("Tank", SGD::Point(210, 50), SGD::Color(0, 0, 0));
-		pGraphics->DrawString("Healer", SGD::Point(345, 50), SGD::Color(0, 0, 0));
+		/*pGraphics->DrawString("Tank", SGD::Point(210, 50), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Healer", SGD::Point(345, 50), SGD::Color(0, 0, 0));*/
+		pFonts->Render("Other", "Tank", SGD::Point(210, 50), 1, SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Other", "Healer", SGD::Point(345, 50), 1, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
 		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(345, 70), {}, {}, {}, { .3f, .28f });
-		pGraphics->DrawString("Fighter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
-		pGraphics->DrawString("Mage", SGD::Point(345, 205), SGD::Color(0, 0, 0));
-
+	/*	pGraphics->DrawString("Fighter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
+		pGraphics->DrawString("Mage", SGD::Point(345, 205), SGD::Color(0, 0, 0));*/
+		pFonts->Render("Other", "Fighter", SGD::Point(210, 205), 1, SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Other", "Mage", SGD::Point(345, 205), 1, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, { .35f, .35f });
 		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(330, 225), {}, {}, {}, { .35f, .35f });
+		
 
 
+		
+		
+
+
+		
+		
 	}
 
 #pragma region ArmorSlot
@@ -1081,7 +1095,8 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(rect6, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 
 		//Tier Strings
-		pGraphics->DrawString("Tier1", SGD::Point(200, 175), SGD::Color{ 255, 0, 0, 0 });
+	
+		pFonts->Render("Dialog", "Tier 1", SGD::Point(200, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		if (m_vArmor[0].GetElement() == Fire)
 		{
@@ -1127,7 +1142,7 @@ void InventoryState::Render()
 				pGraphics->DrawTexture(m_hFiret3, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
 		pGraphics->DrawRectangle(RuneSet2, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawString("Tier2", SGD::Point(300, 175), SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Dialog", "Tier 2", SGD::Point(300, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 
 
@@ -1178,7 +1193,7 @@ void InventoryState::Render()
 
 
 		pGraphics->DrawRectangle(RuneSet3, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawString("Tier3", SGD::Point(400, 175), SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Dialog", "Tier 3", SGD::Point(400, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		if (m_vArmor[2].GetElement() == Fire)
 		{
@@ -1265,7 +1280,7 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(rect6, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 
 		//Tier Strings
-		pGraphics->DrawString("Tier1", SGD::Point(200, 175), SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Dialog", "Tier 1", SGD::Point(200, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		if (m_vRing[0].GetElement() == Fire)
 		{
@@ -1311,8 +1326,7 @@ void InventoryState::Render()
 				pGraphics->DrawTexture(m_hFiret3, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f });
 		}
 		pGraphics->DrawRectangle(RuneSet2, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawString("Tier2", SGD::Point(300, 175), SGD::Color{ 255, 0, 0, 0 });
-
+		pFonts->Render("Dialog", "Tier 2", SGD::Point(300, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		if (m_vRing[1].GetElement() == Fire)
 		{
@@ -1361,7 +1375,7 @@ void InventoryState::Render()
 
 		//right side line dividers
 		pGraphics->DrawRectangle(RuneSet3, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawString("Tier3", SGD::Point(400, 175), SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Dialog", "Tier 3", SGD::Point(400, 175), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		if (m_vRing[2].GetElement() == Fire)
 		{
