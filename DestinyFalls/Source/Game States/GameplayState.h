@@ -90,6 +90,7 @@ public:
 	void HandleTutorial();
 	void RenderDialog();
 	SGD::HTexture GetPortrait() const { return m_hDialogImg; }
+	void SetScreenShake() { m_bScreenShake = true; m_fShakeTimer = 0.3f; }
 
 private:
 	GameplayState() = default;
@@ -126,6 +127,10 @@ private:
 	ParticleManager m_particle;
 
 	bool m_bPaused = false;
+	bool m_bScreenShake = false;
+	float m_fShakeTimer = 0.0f;
+	float m_fDeltaPos = 0.0f;
+	SGD::Vector SoftVec = { 0, 0 };
 
 	// - Debug Mode
 	bool m_bDebug = false;

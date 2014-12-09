@@ -317,6 +317,7 @@ void Player::HandleCollision( const iObject* pOther )
 		const Trap* trap = dynamic_cast<const Trap*>( pOther );
 
 		m_nHealth -= trap->GetDamage();
+		GameplayState::GetInstance()->SetScreenShake();
 
 		//RunQuickTime( 3 );
 	}

@@ -140,7 +140,6 @@ private:
 
 	int numPots;
 	int numRunes;
-	int m_nNumQTCorrect = 0;
 	
 	vector<SGD::HTexture> m_vBackgroundsEarth;
 	vector<SGD::HTexture> m_vBackgroundsIce;
