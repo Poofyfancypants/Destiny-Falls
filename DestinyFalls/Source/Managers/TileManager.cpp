@@ -246,6 +246,9 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 						case 4:
 							m_ptPrevLevelPos = { (float)( ( i - 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
 							break;
+						default:
+							m_ptPrevLevelPos = { (float)( i*m_szGridSize.width ), (float)( ( j - 1 )*m_szGridSize.height ) };
+							break;
 						}
 
 					}

@@ -72,6 +72,10 @@ public:
 
 
 	void ClearInventory();
+
+	// - Tutorial 
+	void HandleTutorial();
+	SGD::HTexture GetRuneImage() const {return m_hFiret2;}
 private:
 	InventoryState() = default;
 	virtual ~InventoryState() = default;
@@ -169,8 +173,10 @@ private:
 	SGD::Rectangle EquipG2 = { 320, 70, 380, 150 };
 	SGD::Rectangle EquipG3 = { 420, 70, 480, 150 };
 
-
-
+	// - Tutorial Info 
+	float m_fDialogScroll = 7.0f;
+	float m_fTimer = 0;
+	bool m_nDialogSwap = false;
 protected:
 
 
