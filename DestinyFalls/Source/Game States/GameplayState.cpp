@@ -537,7 +537,7 @@ void GameplayState::LoadNewLevel()
 			break;
 		case GameplayState::AIR_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
+			m_pMap->LoadLevel( "resource/XML/airLevel2.xml" );
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -601,6 +601,8 @@ void GameplayState::LoadNewSideLevel()
 		m_pMap->LoadLevel( "resource/XML/IceForestBLevel.xml" );
 		break;
 	case GameplayState::AIR_SIDE:
+		UnloadAndCreate();
+		m_pMap->LoadLevel( "resource/XML/AirBLevel.xml" );
 		break;
 	case GameplayState::FIRE_SIDE:
 		break;
