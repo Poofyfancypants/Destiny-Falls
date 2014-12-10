@@ -1674,7 +1674,8 @@ bool CombatState::TakeTurn(Object* _this)
 									if (m_nCursor > 1)
 										m_nCursor = 1;
 
-									if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+										//First Selection >> Action
+									if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 									{
 										//if
 										if (m_nCursor == 0)
@@ -1724,7 +1725,8 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nCursor = pCombat->GetEnemies().size() - 1;
 
 
-										if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+											//Second Selection >> Target
+										if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 										{
 											entered = true;
 											((Player*)_this)->SetAttacking(true);
@@ -1987,8 +1989,9 @@ bool CombatState::TakeTurn(Object* _this)
 											if (m_nCursor > pInventory->m_vRing.size() - 1)
 												m_nCursor = pInventory->m_vRing.size() - 1;
 
-											if (pInput->IsKeyPressed(SGD::Key::Enter))
+											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 											{
+
 												spellSelect = m_nCursor;
 												m_nCursor = 0;
 											}
@@ -2022,7 +2025,8 @@ bool CombatState::TakeTurn(Object* _this)
 											if (m_nCursor > pCombat->GetEnemies().size() - 1)
 												m_nCursor = pCombat->GetEnemies().size() - 1;
 
-											if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+												//Second Selection >> Target
+											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 											{
 												selected = false;
 												((Player*)_this)->SetAttacking(true);
@@ -2083,7 +2087,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				 if (m_nCursor > 1)
 																					 m_nCursor = 0;
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																					 //First Selection >> Action
+																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				 {
 																					 //if
 																					 if (m_nCursor == 0)
@@ -2155,7 +2160,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				 }
 
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																					 //Second Selection >> Target
+																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				 {
 																					 selected = false;
 																					 ((Companion*)_this)->SetAttacking(true);
@@ -2205,7 +2211,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				if (m_nCursor > 1)
 																					m_nCursor = 1;
 
-																				if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																					//First Selection >> Action
+																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				{
 																					//if
 																					if (m_nCursor == 0)
@@ -2251,7 +2258,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				if (m_nCursor > m_pEnemies.size() - 1)
 																					m_nCursor = m_pEnemies.size() - 1;
 
-																				if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																					//Second Selection >> Target
+																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				{
 																					selected = false;
 																					((Companion*)_this)->SetAttacking(true);
@@ -2301,7 +2309,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (m_nCursor > 1)
 																				   m_nCursor = 1;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																				   //First Selection >> Action
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   //if
 																				   if (m_nCursor == 0)
@@ -2338,7 +2347,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				   m_nCursor = pCombat->GetEnemies().size() - 1;
 
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																				   //Second Selection >> Target
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   selected = false;
 																				   ((Companion*)_this)->SetAttacking(true);
@@ -2382,7 +2392,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (m_nCursor > 1)
 																				   m_nCursor = 1;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																				   //First Selection >> Action
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   //if
 																				   if (m_nCursor == 0)
@@ -2428,7 +2439,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				   m_nCursor = pCombat->GetEnemies().size() - 1;
 
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																				   //Second Selection >> Target
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   selected = false;
 																				   ((Companion*)_this)->SetAttacking(true);

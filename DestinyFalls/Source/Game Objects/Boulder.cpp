@@ -110,7 +110,7 @@ void Boulder::HandleCollision( const iObject* pOther )
 		if( m_nDirection == 0 )
 			m_nDirection = dynamic_cast<const Player*>( pOther )->GetDirection();
 
-		if( pInput->IsKeyPressed( SGD::Key::R ) )
+		if( pInput->IsKeyPressed( SGD::Key::R ) || pInput->IsButtonDown(0,3) )
 		{
 			switch( m_nDirection )
 			{

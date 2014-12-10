@@ -122,6 +122,7 @@ void GameplayState::Enter()
 	LoadNewLevel();
 
 
+	
 }
 
 void GameplayState::Exit()
@@ -163,6 +164,8 @@ void GameplayState::Exit()
 	delete m_pMap;
 	m_pMap = nullptr;
 	m_pAnimator->DeleteInstance();
+
+	//m_particle.Exit();
 }
 
 bool GameplayState::Input()
@@ -181,7 +184,7 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::E))
+	if (pInput->IsKeyPressed(SGD::Key::E)|| pInput->IsButtonDown(0,3))
 	{
 		Game::GetInstance()->AddState(InventoryState::GetInstance());
 	}
@@ -228,6 +231,11 @@ void GameplayState::Update(float elapsedTime)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+
+	
+	
+
+
 
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
@@ -334,6 +342,34 @@ void GameplayState::Render()
 		RenderDialog();
 	}
 
+	
+		/*if (LevelList::TUTORIAL_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test3.xml");
+		}
+		else if (LevelList::EARTH_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test2.xml");
+		}
+		else if (LevelList::WATER_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test3.xml");
+		}
+		else if (LevelList::AIR_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test4.xml");
+		}
+		else if (LevelList::FIRE_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test5.xml");
+		}
+		else if (LevelList::BOSS_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test6.xml");
+		}
+		m_particle.Render();*/
+
+	
 }
 
 Object* GameplayState::CreatePlayer(SGD::Point _pos)

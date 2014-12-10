@@ -63,9 +63,16 @@ bool InventoryState::Input()
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
 
-
 	// Check tab Selection
-	if( pInput->IsKeyPressed( SGD::Key::UpArrow ) )
+	/*if (pInput->GetLeftJoystick(SGD::Vector{ 0, -1 }))
+	{
+		m_ntabCursor++;
+		if (m_ntabCursor == -1)
+			m_ntabCursor = 3;
+		else if (m_ntabCursor == 4)
+			m_ntabCursor = 0;
+	}*/
+	if (pInput->IsKeyPressed(SGD::Key::UpArrow) || pInput->IsDPadDown( 0, SGD::DPad::Up))
 	{
 		m_ntabCursor++;
 		if( m_ntabCursor == -1 )
@@ -74,7 +81,7 @@ bool InventoryState::Input()
 			m_ntabCursor = 0;
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::DownArrow ) )
+	if (pInput->IsKeyPressed(SGD::Key::DownArrow) || pInput->IsDPadDown(0, SGD::DPad::Down))
 	{
 		m_ntabCursor--;
 		if( m_ntabCursor == -1 )
@@ -93,10 +100,6 @@ bool InventoryState::Input()
 			m_ntabCursor = 2;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( TabCompanions ) )
 			m_ntabCursor = 3;
-		//if (m_ntabCursor == -1)
-		//	m_ntabCursor = 3;
-		//else if (m_ntabCursor == 4)
-		//	m_ntabCursor = 0;
 
 	}
 	if( m_ntabCursor == 0 )
@@ -127,50 +130,18 @@ bool InventoryState::Input()
 		m_bArmorTab = false;
 		m_bCompanionsTab = false;
 	}
-	/*else
-	{*/
 
-
-	/*if (pInput->GetCursorPosition().IsPointInRectangle(tabArmor) || m_ntabCursor == 0)
-	{
-	m_bArmorTab = !m_bArmorTab;
-	m_bWeaponsTab = false;
-	m_bRunesTab = false;
-	m_bCompanionsTab = false;
-	}
-	else if (pInput->GetCursorPosition().IsPointInRectangle(TabWeapons) || m_ntabCursor == 3)
-	{
-	m_bWeaponsTab = !m_bWeaponsTab;
-	m_bRunesTab = false;
-	m_bArmorTab = false;
-	m_bCompanionsTab = false;
-	}
-	else if (pInput->GetCursorPosition().IsPointInRectangle(TabCompanions) || m_ntabCursor == 1)
-	{
-	m_bCompanionsTab = !m_bCompanionsTab;
-	m_bRunesTab = false;
-	m_bArmorTab = false;
-	m_bWeaponsTab = false;
-	}
-	else if (pInput->GetCursorPosition().IsPointInRectangle(TabRunes) || m_ntabCursor == 2)
-	{
-	m_bRunesTab = !m_bRunesTab;
-	m_bWeaponsTab = false;
-	m_bArmorTab = false;
-	m_bCompanionsTab = false;
-	}*/
-	//}
 	if( m_bWeaponsTab )
 	{
 		if( pauseSelection == false )
 		{
 			equipPos = 30;
 
-			if( pInput->IsKeyPressed( SGD::Key::LeftArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 			{
 				m_nCursor--;
 			}
-			if( pInput->IsKeyPressed( SGD::Key::RightArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
 				m_nCursor++;
 			}
@@ -198,15 +169,15 @@ bool InventoryState::Input()
 			else if( equipPos == -1 )
 				equipPos = 11;
 
-			if( pInput->IsKeyPressed( SGD::Key::RightArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
 				equipPos++;
 			}
-			else if( pInput->IsKeyPressed( SGD::Key::LeftArrow ) )
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 			{
 				equipPos--;
 			}
-			if( pInput->IsKeyPressed( SGD::Key::Enter ) )
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 			{
 				switch( m_nCursor )
 				{
@@ -277,11 +248,11 @@ bool InventoryState::Input()
 			else if( equipPos == -1 )
 				equipPos = 11;
 
-			if( pInput->IsKeyPressed( SGD::Key::LeftArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 			{
 				m_nCursor--;
 			}
-			if( pInput->IsKeyPressed( SGD::Key::RightArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
 				m_nCursor++;
 			}
@@ -294,7 +265,7 @@ bool InventoryState::Input()
 
 		}
 
-		if( pInput->IsKeyPressed( SGD::Key::Enter ) && !pauseSelection )
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2) && !pauseSelection)
 		{
 			pauseSelection = true;
 			return true;
@@ -309,15 +280,15 @@ bool InventoryState::Input()
 			else if( equipPos == -1 )
 				equipPos = 11;
 
-			if( pInput->IsKeyPressed( SGD::Key::RightArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
 				equipPos++;
 			}
-			else if( pInput->IsKeyPressed( SGD::Key::LeftArrow ) )
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 			{
 				equipPos--;
 			}
-			if( pInput->IsKeyPressed( SGD::Key::Enter ) )
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 			{
 				switch( m_nCursor )
 				{
@@ -340,7 +311,7 @@ bool InventoryState::Input()
 		}
 
 
-		if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) || pInput->IsKeyPressed( SGD::Key::Enter ) )
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 		{
 
 			if( pInput->GetCursorPosition().IsPointInRectangle( EquipA1 ) )
@@ -390,11 +361,11 @@ bool InventoryState::Input()
 			else if( equipPos == -1 )
 				equipPos = 11;
 
-			if( pInput->IsKeyPressed( SGD::Key::LeftArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 			{
 				m_nCursor--;
 			}
-			if( pInput->IsKeyPressed( SGD::Key::RightArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
 				m_nCursor++;
 			}
@@ -407,7 +378,7 @@ bool InventoryState::Input()
 
 		}
 
-		if( pInput->IsKeyPressed( SGD::Key::Enter ) && !pauseSelection )
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2))
 		{
 			pauseSelection = true;
 			return true;
@@ -422,15 +393,15 @@ bool InventoryState::Input()
 			else if( equipPos == -1 )
 				equipPos = 11;
 
-			if( pInput->IsKeyPressed( SGD::Key::RightArrow ) )
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
 				equipPos++;
 			}
-			else if( pInput->IsKeyPressed( SGD::Key::LeftArrow ) )
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 			{
 				equipPos--;
 			}
-			if( pInput->IsKeyPressed( SGD::Key::Enter ) )
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 			{
 				switch( m_nCursor )
 				{
@@ -453,7 +424,7 @@ bool InventoryState::Input()
 		}
 
 
-		if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) || pInput->IsKeyPressed( SGD::Key::Enter ) )
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 		{
 
 			if( pInput->GetCursorPosition().IsPointInRectangle( EquipG1 ) )
@@ -496,7 +467,7 @@ bool InventoryState::Input()
 
 
 
-	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) || pauseSelection || pInput->IsKeyPressed( SGD::Key::Enter ) )
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pauseSelection || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 	{
 		m_bShowToolTip1 = false;
 		m_bShowToolTip2 = false;
@@ -1291,7 +1262,6 @@ void InventoryState::Render()
 
 		if( m_vRing[0].GetElement() == Fire )
 		{
-
 			if( m_vRing[0].GetTier() == 1 )
 				pGraphics->DrawTexture( m_hFiret1, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
 			if( m_vRing[0].GetTier() == 2 )
@@ -1302,7 +1272,6 @@ void InventoryState::Render()
 
 		if( m_vRing[0].GetElement() == Water )
 		{
-
 			if( m_vRing[0].GetTier() == 1 )
 				pGraphics->DrawTexture( m_hFiret1, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
 			if( m_vRing[0].GetTier() == 2 )
@@ -1313,7 +1282,6 @@ void InventoryState::Render()
 
 		if( m_vRing[0].GetElement() == Air )
 		{
-
 			if( m_vRing[0].GetTier() == 1 )
 				pGraphics->DrawTexture( m_hFiret1, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
 			if( m_vRing[0].GetTier() == 2 )
@@ -1324,7 +1292,6 @@ void InventoryState::Render()
 
 		if( m_vRing[0].GetElement() == Earth )
 		{
-
 			if( m_vRing[0].GetTier() == 1 )
 				pGraphics->DrawTexture( m_hFiret1, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
 			if( m_vRing[0].GetTier() == 2 )

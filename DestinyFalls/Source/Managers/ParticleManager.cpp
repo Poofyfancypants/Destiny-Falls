@@ -102,7 +102,7 @@ void ParticleManager::Render(Object * rhs)// add a point and a size, to place it
 			int RandomG = rand() % 256;
 			int RandomB = rand() % 256;
 
-			pGraphics->DrawTexture(pImage, SGD::Point(rand() % 1000, rand() % 1000), {}, {}, SGD::Color(particlevector[i].startColorA, (particlevector[i].startColorR + RandomR),( particlevector[i].startColorG + RandomG),( particlevector[i].startColorB) +RandomB));
+			pGraphics->DrawTexture(pImage, SGD::Point(rand() % 100, rand() % 100), {}, {}, SGD::Color(particlevector[i].startColorA, (particlevector[i].startColorR + RandomR),( particlevector[i].startColorG + RandomG),( particlevector[i].startColorB) +RandomB));
 		}
 	}
 }
