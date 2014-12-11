@@ -11,7 +11,7 @@ class MainMenuState :
 {
 public:
 	static MainMenuState* GetInstance(void);
-	enum MenuSelections{play, load, options, howToPlay, credits, exit,};
+	enum MenuSelections{play, options, howToPlay, credits, exit,};
 
 	virtual void Enter(void)				override;
 	virtual void Exit(void)					override;
@@ -34,15 +34,24 @@ private:
 	bool m_bSelect = false;
 
 	//GameState Selection Rectangles
-	SGD::Rectangle PlayGame = { 0, 0, 0, 0 };
-	SGD::Rectangle TestAnimationSystem = { 0 , 0 , 0 , 0 };
+	// - top left - 124, 162
+	// - bot right - 232, 457
+	SGD::Rectangle playRect = { 124, 162, 232, 457 };
+	// - 277 , 472
+	// - 525 , 141
+	SGD::Rectangle optionRect = { 266 , 470 , 566 , 568 };
+	// - 248, 34
+	// - 526 , 138
+	SGD::Rectangle tutorialRect = { 248 , 34 , 526 , 138 };
+	// - 548, 154
+	// - 689, 447
+	SGD::Rectangle creditRect = { 548 , 154 , 689 , 447 };
 
-
-	SGD::Rectangle Options = { 0, 0, 0, 0 };
-	SGD::Rectangle LoadGame = { 0, 0, 0, 0 };
-	SGD::Rectangle HowToPlay = { 0, 0, 0, 0 };
-	SGD::Rectangle Credit = { 0, 0, 0, 0 };
-	SGD::Rectangle ExitGame = { 0, 0, 0, 0 };
+	SGD::HTexture m_hPlay = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hCredit= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hTutorial = SGD::INVALID_HANDLE;
+	SGD::HAudio m_hMusic = SGD::INVALID_HANDLE;
 	
 	bool m_bDebug = false;
 	bool m_bTutorial = false;

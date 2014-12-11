@@ -3,6 +3,7 @@
 #define GAME_H
 
 #include <vector>
+#include <Windows.h>
 #include "../../SGD Wrappers/SGD_Handle.h"
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../Managers/BitmapFontManager.h"
@@ -109,6 +110,10 @@ public:
 	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHTP = SGD::INVALID_HANDLE;
+
+	// - Accessor
+	bool GetWindowed() const {return m_bWindowed;}
+	void SetWindowd(bool _window) {m_bWindowed = _window;}
 
 	// - Icelandic
 	bool GetIcelandic() const {return m_bIcelandic;}

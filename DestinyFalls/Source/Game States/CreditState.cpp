@@ -39,7 +39,7 @@ bool CreditState::Input()
 		Game::GetInstance()->ClearStates();
 		pAudio->StopAudio(Game::GetInstance()->m_mWinMusic);
 		Game::GetInstance()->AddState(MainMenuState::GetInstance());
-		pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
+		//pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
 
 	}
 	return true;
