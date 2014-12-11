@@ -120,6 +120,11 @@ bool Game::Initialize( float width, float height )
 	string imageName4 = "resource/graphics/Fonts/Goblinfont_0.png";
 	string xmlFile4 = "resource/XML/Goblinfont.xml";
 	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
+	//Load the dialog font
+	string fontName5 = "InventoryFont";
+	string imageName5 = "resource/graphics/Fonts/InventoryFont_0.png";
+	string xmlFile5 = "resource/XML/InventoryFont.xml";
+	m_pFonts->Load(fontName5, imageName5, xmlFile5);
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
