@@ -101,10 +101,10 @@ bool Game::Initialize( float width, float height )
 	string xmlFile = "resource/XML/newfont.xml";
 	m_pFonts->Load( fontName, imageName, xmlFile );
 	//Load the Bernardo font
-	string fontName1 = "Celtic";
-	string imageName1 = "resource/graphics/Fonts/Celticfont_0.png";
-	string xmlFile1 = "resource/XML/Celticfont.xml";
-	m_pFonts->Load( fontName1, imageName1, xmlFile1 );
+	//string fontName1 = "Celtic";
+	//string imageName1 = "resource/graphics/Fonts/CelticMD_0.png";
+	//string xmlFile1 = "resource/XML/Celticfont.xml";
+	//m_pFonts->Load( fontName1, imageName1, xmlFile1 );
 	//Load the other font
 	string fontName2 = "Other";
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";

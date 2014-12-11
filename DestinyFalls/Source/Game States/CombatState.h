@@ -68,6 +68,8 @@ public:
 	void HandleTutorial();
 	void DrawBackground();
 
+	int GetQTLength() { return m_nQTLength; }
+
 	void SortTurnOrder();
 
 private:
@@ -78,6 +80,8 @@ private:
 
 	CombatState(const CombatState&) = delete;
 	CombatState& operator=(const CombatState&) = delete;
+
+	int m_nQTLength = 0;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };

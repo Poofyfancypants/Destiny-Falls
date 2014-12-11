@@ -83,7 +83,7 @@ void GameplayState::Enter()
 	m_hFinalboss = pGraphics->LoadTexture( L"resource/graphics/testLB5.png" );
 	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/testc.png" );
 	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/testc2.png" );
-	m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
+	//m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -142,7 +142,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hminiboss );
 	pGraphics->UnloadTexture( m_hlevelboss );
 	pGraphics->UnloadTexture( m_hFinalboss );
-	pGraphics->UnloadTexture( m_hForge );
+	//pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
@@ -187,10 +187,10 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::F ) )
-	{
-		Game::GetInstance()->AddState( ForgeState::GetInstance() );
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F ) )
+	//{
+	//	Game::GetInstance()->AddState( ForgeState::GetInstance() );
+	//}
 
 	// - Toggle DebugMode with F2
 	if( pInput->IsKeyPressed( SGD::Key::F1 ) )
@@ -211,10 +211,10 @@ bool GameplayState::Input()
 		{
 			Game::GetInstance()->AddState( InventoryState::GetInstance() );
 		}
-		if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
+	/*	if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
 		{
 			Game::GetInstance()->AddState( ForgeState::GetInstance() );
-		}
+		}*/
 	}
 
 	m_bIcelandic = Game::GetInstance()->GetIcelandic();
@@ -302,7 +302,7 @@ void GameplayState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
-	pGraphics->DrawTexture( m_hForge, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.4f, 0.35f } );
+	//pGraphics->DrawTexture( m_hForge, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.4f, 0.35f } );
 
 	if( m_nCurrentLevel == 0 )
 	{

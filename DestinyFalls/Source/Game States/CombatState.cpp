@@ -52,7 +52,7 @@ void CombatState::Enter(void)
 #pragma region AddingCombatEnemies
 	if (player->CombatEnemyID == 1)
 	{
-		for (unsigned int i = 0; i < rand() % 2 + 2; i++)
+		for (int i = 0; i < rand() % 2 + 2; i++)
 		{
 			Object* temp;
 			switch (GameplayState::GetInstance()->GetCurrentLevel())
@@ -788,7 +788,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 			  switch (randAI)
 			  {
 			  case 0: // Minion
-				  randHealth = rand() % 40 + 40;
+				  randHealth = rand() % 50 + 50;
 				  temp->SetMods(3, _region, 0, 0);
 
 				  switch (_region)
@@ -816,7 +816,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  }
 				  break;
 			  case 1: // Offensive
-				  randHealth = rand() % 35 + 50;
+				  randHealth = rand() % 45 + 55;
 
 				  if (randHealth > 50)
 					  temp->SetMods(5, _region, 2, 1);
@@ -890,7 +890,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  }
 				  break;
 			  case 3: // Healing
-				  randHealth = rand() % 35 + 45;
+				  randHealth = rand() % 45 + 55;
 
 				  if (randHealth > 60)
 					  temp->SetMods(1, _region, 1, 2);
@@ -925,7 +925,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  }
 				  break;
 			  case 4: // AOE
-				  randHealth = rand() % 40 + 55;
+				  randHealth = rand() % 40 + 60;
 
 				  if (randHealth > 75)
 					  temp->SetMods(4, _region, 2, 1);
@@ -1024,7 +1024,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				}
 
-				temp->SetHealth(150);
+				temp->SetHealth(200);
 	}
 		break;
 	case 3: //Level Bosses
@@ -1099,7 +1099,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetAffinity(Earth);
 				temp->SetAttckSpd(rand() % 6 + 6);
 
-				temp->SetHealth(200);
+				temp->SetHealth(500);
 	}
 		break;
 	default:
@@ -1361,6 +1361,7 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 		break;
 		return false;
 	}
+	return false;
 }
 
 int CombatState::DealMeleeDamage(Object* _From, Object* _To)
@@ -1387,18 +1388,13 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			}
 		}
 
-		/*( ( Minion* ) m_pEnemies[ _target ] )->SetHealth( ( ( Minion* ) m_pEnemies[ _target ] )->GetHealth() -
-		( mag.DamageComboElement( d1 , ( ( Minion* ) m_pEnemies[ _target ] )->GetAffinity() ) * 60 ) );
-		( ( Player* ) m_pHeroes[ 0 ] )->ResetAnimation();*/
-
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-			//Game::GetInstance()->AddState(QuickTimeState::GetInstance());
-			Total = (((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15));
+			
+			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			m_nNumQtCorrect = 0;
-			//Cool idea to give you a better chance against harder monsters with more potential damage
 
 			if (((Minion*)_To)->GetAIType() == Minion::Off_AI)
 			{
@@ -1438,7 +1434,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
 				RuneManager rmtemp;
-				rmtemp.DamageReduction(InventoryState::GetInstance()->GetArmorSlot1(), ((Minion*)_From)->GetAffinity()) * Total;
+				Total *= (int)(rmtemp.DamageReduction(InventoryState::GetInstance()->GetArmorSlot1(), ((Minion*)_From)->GetAffinity()));
 				((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 				if (rand() % 20 > 15)
 				{
@@ -1493,7 +1489,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 	return Total;
 }
-
 int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 {
 	int Total = 0;
@@ -1686,20 +1681,19 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			Elements e1;
 			stuff += spell1.c_str();
 			e1 = InventoryState::GetInstance()->GetRingSlot1();
-			Total = ((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
+			Total = (int)((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15));
 			break;
 		case 1:
 			ComboElements d1;
 			stuff += spell2.c_str();
 			d1 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-			Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
+			Total = (int)((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15));
 			break;
 		case 2:
 			ComboElements d2;
 			stuff += spell3.c_str();
 			d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot2(), InventoryState::GetInstance()->GetRingSlot3());
-			Total = ((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
-
+			Total = (int)((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15));
 			break;
 		default:
 			break;
@@ -1710,7 +1704,6 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 
 		m_nNumQtCorrect = 0;
-		//((Player*)_From)->RunQuickTime((((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + 3);
 	}
 	else
 	{
@@ -1727,7 +1720,7 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 	{
 		ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-		Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
+		Total = (int)((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 		string message = "You Counter the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
@@ -1777,7 +1770,7 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 
 		m_nNumQtCorrect = 0;
 
-		Total = ((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
+		Total = (int)((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
@@ -1808,7 +1801,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	int Total;
-	RuneManager mag;
+	//RuneManager mag;
 
 	Total = rand() % 30 + 20;
 	if (_From->GetType() == iObject::OBJ_PLAYER)
@@ -1850,7 +1843,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 int CombatState::DealAOEDamage(Object* _From, Object* _To)
 {
 	int Total = 0;
-	RuneManager mag;
+	//RuneManager mag;
 
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
@@ -2914,6 +2907,7 @@ bool CombatState::TakeTurn(Object* _this)
 	}
 #pragma endregion
 	}
+	return false;
 }
 
 void CombatState::ShakeScreen(float elapsedTime)
@@ -2984,6 +2978,7 @@ void CombatState::ShakeScreen(float elapsedTime)
 		}
 	}
 }
+
 void CombatState::ResetRects()
 {
 	for (size_t i = 0; i < m_pObjects.size(); i++)
