@@ -424,7 +424,7 @@ void CombatState::Update(float elapsedTime)
 
 		if (m_bShake)
 		{
-			ShakeScreen(elapsedTime);
+			//ShakeScreen(elapsedTime);
 		}
 		else
 		{
@@ -1392,7 +1392,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 			
-			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15));
+			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + (m_nNumQtCorrect/m_nQTLength)) * 15));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			m_nNumQtCorrect = 0;
 
