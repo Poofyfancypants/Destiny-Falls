@@ -33,7 +33,6 @@ private:
 	SGD::HAudio m_hEffectSound;
 	SGD::HTexture m_hButton = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hButtonHighlighted = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hTitleBoarder = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hArrow = SGD::INVALID_HANDLE;
 };
 

@@ -26,7 +26,6 @@ void OptionsState::Enter()
 
 	m_hButton = pGraphics->LoadTexture( "resource/graphics/optionsButton.png" );
 	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
-	m_hTitleBoarder = pGraphics->LoadTexture( "resource/graphics/optionTitle.png", SGD::Color() );
 	m_hBackMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
 	m_hEffectSound = pAudio->LoadAudio( "resource/audio/HealAbility.wav" );
 	m_hArrow = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/optionArrow.png", {} );
@@ -58,7 +57,6 @@ void OptionsState::Exit()
 	m_hWindow = Game::GetInstance()->GetWindowed();
 	pGraphics->UnloadTexture( m_hButton );
 	pGraphics->UnloadTexture( m_hButtonHighlighted );
-	pGraphics->UnloadTexture( m_hTitleBoarder );
 	pGraphics->UnloadTexture( m_hArrow );
 
 	pAudio->UnloadAudio( m_hBackMusic );
