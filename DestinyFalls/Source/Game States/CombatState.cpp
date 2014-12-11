@@ -39,7 +39,7 @@ void CombatState::Enter(void)
 	player->SetPosition({ Playerrect.left, Playerrect.bottom });
 	player->AddRef();
 	player->SetDeathAnimationTimer();
-	player->SetHealth( 2 );
+	//player->SetHealth( 2 );
 	m_pObjects.push_back(player);
 	m_pHeroes.push_back(player);
 
@@ -1183,7 +1183,7 @@ Object* CombatState::AddCompanion(int _type)
 	default:
 		break;
 	}
-	temp->SetHealth(1/*00*/);
+	temp->SetHealth(100);
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	return temp;
