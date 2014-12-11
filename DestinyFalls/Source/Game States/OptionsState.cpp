@@ -24,22 +24,23 @@ void OptionsState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
+	m_hButton = pGraphics->LoadTexture( "resource/graphics/optionsButton.png" );
+	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
+	m_hBackMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
+	m_hEffectSound = pAudio->LoadAudio( "resource/audio/HealAbility.wav" );
+	m_hArrow = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/optionArrow.png", {} );
 
-	std::ifstream load;
-	load.open( "Options.txt" );
-	if( load.is_open() )
-	{
-		load >> m_nMusic >> m_nEffects >> m_nScreen;
-		pAudio->SetMasterVolume( SGD::AudioGroup::Music, m_nMusic );
-		pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, m_nEffects );
+	pAudio->PlayAudio( m_hBackMusic, true );
+	m_hWindow = Game::GetInstance()->GetWindowed();
 
-		if( m_nScreen != 0 )
-			m_bWindowed = true;
-		else
-			m_bWindowed = false;
 
-		load.close();
-	}
+	// - Rectangles
+	m_mMouseoverRects["Music"] = SGD::Rectangle( 130, 110, 700, 170 );
+	m_mMouseoverRects["SFX"] = SGD::Rectangle( 130, 220, 700, 280 );
+	m_mMouseoverRects["Window"] = SGD::Rectangle( 130, 330, 700, 390 );
+	m_mMouseoverRects["Language"] = SGD::Rectangle( 130, 440, 700, 500 );
+	m_mMouseoverRects["Back"] = SGD::Rectangle( 595, 540.0f, 750, 582 );
+
 }
 
 void OptionsState::Exit()
@@ -47,18 +48,19 @@ void OptionsState::Exit()
 	SGD::AudioManager *pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-	if( pAudio->GetMasterVolume( SGD::AudioGroup::Music ) <= 255 && pAudio->GetMasterVolume( SGD::AudioGroup::Music ) >= 0 )
-		m_nMusic = pAudio->GetMasterVolume( SGD::AudioGroup::Music );
-
-	if( pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) <= 255 && pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) >= 0 )
-		m_nEffects = pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects );
-
 	std::ofstream save;
-	save.open( "Options.txt" );
+	save.open( "resource/XML/Options.txt" );
 	if( save.is_open() )
-		save << m_nMusic << " " << m_nEffects << " " << m_bWindowed ;
+		save << pAudio->GetMasterVolume( SGD::AudioGroup::Music ) << " " << pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects )
+		<< " " << Game::GetInstance()->GetWindowed() << " " << Game::GetInstance()->GetIcelandic();
 
+	m_hWindow = Game::GetInstance()->GetWindowed();
+	pGraphics->UnloadTexture( m_hButton );
+	pGraphics->UnloadTexture( m_hButtonHighlighted );
+	pGraphics->UnloadTexture( m_hArrow );
 
+	pAudio->UnloadAudio( m_hBackMusic );
+	pAudio->UnloadAudio( m_hEffectSound );
 }
 
 bool OptionsState::Input()
@@ -67,96 +69,149 @@ bool OptionsState::Input()
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
+	{
+		Sleep(200);
+		Game::GetInstance()->RemoveState();
+	}
+
+	if( pInput->IsKeyPressed( SGD::Key::Down ) == true )
+	{
+		++m_nCursor;
+		if( m_nCursor > 5 )
+			m_nCursor = 1;
+	}
+	else if( pInput->IsKeyPressed( SGD::Key::Up ) == true )
+	{
+		--m_nCursor;
+		if( m_nCursor < 1 )
+			m_nCursor = 5;
+	}
+
+	if( pInput->IsKeyPressed( SGD::Key::Left ) )
+	{
+		switch( m_nCursor )
+		{
+		case 1:
+			pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) - 10 );
+			break;
+		case 2:
+			pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) - 10 );
+			if( !pAudio->IsAudioPlaying( m_hEffectSound ) )
+				pAudio->PlayAudio( m_hEffectSound, false );
+			break;
+		case 3:
+			Game::GetInstance()->SetWindowd( !Game::GetInstance()->GetWindowed() );
+			break;
+		case 4:
+			Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
+			Game::GetInstance()->LoadStrings();
+			break;
+		default:
+			break;
+		}
+	}
+	if( pInput->IsKeyPressed( SGD::Key::Right ) )
+	{
+		switch( m_nCursor )
+		{
+		case 1:
+			pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) + 10 );
+			break;
+		case 2:
+			pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) + 10 );
+			if( !pAudio->IsAudioPlaying( m_hEffectSound ) )
+				pAudio->PlayAudio( m_hEffectSound, false );
+			break;
+		case 3:
+			Game::GetInstance()->SetWindowd( !Game::GetInstance()->GetWindowed() );
+			break;
+		case 4:
+			Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
+			Game::GetInstance()->LoadStrings();
+			break;
+		default:
+			break;
+		}
+	}
+	if( pInput->IsKeyPressed( SGD::Key::Enter ) && m_nCursor == 5 )
 		Game::GetInstance()->RemoveState();
 
-	//If Nothing is selected
-	if( m_bSelect == false )
+	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y )
 	{
-		if( pInput->IsKeyPressed( SGD::Key::Enter ) == true )
-		{
-			m_bSelect = true;
-		}
-		if( pInput->IsKeyPressed( SGD::Key::Down ) == true )
-		{
-			++m_nCursor;
-			if( m_nCursor > 3 )
-				m_nCursor = 0;
-		}
-		else if( pInput->IsKeyPressed( SGD::Key::Up ) == true )
-		{
-			--m_nCursor;
-			if( m_nCursor < 0 )
-				m_nCursor = 3;
-		}
+		if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Music"] ) )
+			m_nCursor = 1;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["SFX"] ) )
+			m_nCursor = 2;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Window"] ) )
+			m_nCursor = 3;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Language"] ) )
+			m_nCursor = 4;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Back"] ) )
+			m_nCursor = 5;
 	}
-	//If something is selected
-	else
-	{
-		//Unselect?
-		if( pInput->IsKeyPressed( SGD::Key::Enter ) == true )
-			m_bSelect = false;
 
-		if( m_nCursor == 0 ) // Music
+	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	{
+		SGD::Rectangle LeftArrow = SGD::Rectangle{ SGD::Point( 440, 110 * m_nCursor ), SGD::Size( 60, 60 ) };
+		SGD::Rectangle RightArrow = SGD::Rectangle( SGD::Point( 650, 110 * m_nCursor ), SGD::Size( 60, 60 ) );
+		if( pInput->GetCursorPosition().IsPointInRectangle( LeftArrow ) )
 		{
-			if( pInput->IsKeyPressed( SGD::Key::Right ) == true )
+			switch( m_nCursor )
 			{
-				pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) + 10 );
-			}
-			else if( pInput->IsKeyPressed( SGD::Key::Left ) == true )
-			{
+			case 1:
 				pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) - 10 );
-			}
-		}
-		else if( m_nCursor == 1 )	// SFX
-		{
-			if( pInput->IsKeyPressed( SGD::Key::Right ) == true )
-			{
-				pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) + 10 );
-				//pAudio->PlayAudio(m_hEffectSound, false);
-			}
-			else if( pInput->IsKeyPressed( SGD::Key::Left ) == true )
-			{
+				break;
+			case 2:
 				pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) - 10 );
-				//pAudio->PlayAudio(m_hEffectSound, false);
-				//Play a sound effect here
-			}
-		}
-		else if( m_nCursor == 2 ) //Full Screen toggle
-		{
-			if( pInput->IsKeyPressed( SGD::Key::Right ) == true )
-			{
-				m_bWindowed = !m_bWindowed;
-			}
-			else if( pInput->IsKeyPressed( SGD::Key::Left ) == true )
-			{
-				m_bWindowed = !m_bWindowed;
-			}
+				if( !pAudio->IsAudioPlaying( m_hEffectSound ) )
+					pAudio->PlayAudio( m_hEffectSound, false );
 
-			if( pInput->IsKeyPressed( SGD::Key::Enter ) )
-			{
-				SGD::GraphicsManager::GetInstance()->Resize( { Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, m_bWindowed );
+				break;
+			case 3:
+				Game::GetInstance()->SetWindowd( !Game::GetInstance()->GetWindowed() );
+				break;
+			case 4:
+				Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
+				Game::GetInstance()->LoadStrings();
+				break;
+			default:
+				break;
 			}
 		}
-		else if( m_nCursor == 3 )
+		if( pInput->GetCursorPosition().IsPointInRectangle( RightArrow ) )
 		{
-			if( pInput->IsKeyPressed( SGD::Key::Right ) == true )
+			switch( m_nCursor )
 			{
+			case 1:
+				pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) + 10 );
+				break;
+			case 2:
+				pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) + 10 );
+				if( !pAudio->IsAudioPlaying( m_hEffectSound ) )
+					pAudio->PlayAudio( m_hEffectSound, false );
+				break;
+			case 3:
+				Game::GetInstance()->SetWindowd( !Game::GetInstance()->GetWindowed() );
+				break;
+			case 4:
 				Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
+				Game::GetInstance()->LoadStrings();
+				break;
+			default:
+				break;
 			}
-			else if( pInput->IsKeyPressed( SGD::Key::Left ) == true )
-			{
-				Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
-			}
-			Game::GetInstance()->LoadStrings();
 		}
+		if( m_nCursor == 5 )
+			Game::GetInstance()->RemoveState();
 	}
-
 	return true;
 }
 
 void OptionsState::Update( float elapsedTime )
 {
-
+	if( Game::GetInstance()->GetWindowed() != m_hWindow )
+		SGD::GraphicsManager::GetInstance()->Resize( { Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, Game::GetInstance()->GetWindowed() );
+	m_hWindow = Game::GetInstance()->GetWindowed();
 }
 
 void OptionsState::Render()
@@ -167,55 +222,52 @@ void OptionsState::Render()
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 
 	pGraphics->DrawTexture( m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f } );
-
+	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 10 }, 2.0f, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 13 }, 2.0f, { 50, 50, 200 } );
 	string MusicVolume;
 	string SFXVolume;
 	MusicVolume = to_string( pAudio->GetMasterVolume( SGD::AudioGroup::Music ) / 10 );
 	SFXVolume = to_string( pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) / 10 );
-	//Fullscreen = ( m_bWindowed ? "Windowed" : "Fullscreen" );
-	//Language = ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" );
 
-	pFonts->Render( "Dialog", MusicVolume.c_str(), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 302 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", MusicVolume.c_str(), { ( ( 7 * 32 ) / 2 ) + 220, 300 }, 1, { 255, 0, 0 } );
+	for( size_t i = 1; i <= 4; i++ )
+	{
+		if( i == m_nCursor )
+			pGraphics->DrawTexture( m_hButtonHighlighted, { 130, (float)( 110 * i ) } );
+		else
+			pGraphics->DrawTexture( m_hButton, { 130, (float)( 110 * i ) } );
+		pFonts->Render( "Other", Game::GetInstance()->GetString( 9, i ).c_str(), { 210, (float)( ( 110 * i ) + 15 ) }, 1, { 255, 0, 0, 0 } );
+		pFonts->Render( "Other", Game::GetInstance()->GetString( 9, i ).c_str(), { 210, (float)( ( 110 * i ) + 17 ) }, 1, { 50, 50, 200 } );
+
+		if( i == m_nCursor )
+		{
+			pGraphics->DrawTexture( m_hButtonHighlighted, { 500, (float)( 110 * i ) }, {}, {}, {}, { .6f, 1.0f } );
+			pGraphics->DrawTexture( m_hArrow, { 450, (float)( 110 * i ) }, {}, {}, {}, { 1, 1 } );
+		}
+		else
+			pGraphics->DrawTexture( m_hButton, { 500, (float)( 110 * i ) }, {}, {}, {}, { .6f, 1.0f } );
+
+	}
+
+	pFonts->Render( "Dialog", MusicVolume.c_str(), { 565, (float)( ( 110 ) + 5 ) }, 1.5f, { 255, 0, 0, 0 } );
+	pFonts->Render( "Dialog", MusicVolume.c_str(), { 565, (float)( ( 110 ) + 7 ) }, 1.5f, { 50, 50, 200 } );
+
+	pFonts->Render( "Dialog", SFXVolume.c_str(), { 565, (float)( ( 220 ) + 5 ) }, 1.5f, { 255, 0, 0, 0 } );
+	pFonts->Render( "Dialog", SFXVolume.c_str(), { 565, (float)( ( 220 ) + 7 ) }, 1.5f, { 50, 50, 200 } );
 
 
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 1 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 302 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 1 ).c_str(), { ( 7 * 32 ) / 2, 300 }, 1, { 255, 0, 0 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetWindowed() ? "Windowed" : "Fullscreen" ), { 520, (float)( ( 340 ) + 5 ) }, 1, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetWindowed() ? "Windowed" : "Fullscreen" ), { 520, (float)( ( 340 ) + 7 ) }, 1, { 50, 50, 200 } );
 
-	pFonts->Render( "Dialog", SFXVolume.c_str(), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 366 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", SFXVolume.c_str(), { ( ( 7 * 32 ) / 2 ) + 220, 364 }, 1, { 255, 0, 0 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { 540, (float)( ( 450 ) + 5 ) }, 1, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { 540, (float)( ( 450 ) + 7 ) }, 1, { 50, 50, 200 } );
 
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 2 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 366 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 2 ).c_str(), { ( 7 * 32 ) / 2, 364 }, 1, { 255, 0, 0 } );
-
-	pFonts->Render( "Other", ( m_bWindowed ? "Windowed" : "Fullscreen" ), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 430 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", ( m_bWindowed ? "Windowed" : "Fullscreen" ), { ( ( 7 * 32 ) / 2 ) + 220, 428 }, 1, { 255, 0, 0 } );
-
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 3 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 430 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 3 ).c_str(), { ( 7 * 32 ) / 2, 428 }, 1, { 255, 0, 0 } );
-
-	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { ( ( ( 7 * 32 ) / 2 ) - 2 ) + 220, 490 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { ( ( 7 * 32 ) / 2 ) + 220, 488 }, 1, { 255, 0, 0 } );
-
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 4 ).c_str(), { ( ( 7 * 32 ) / 2 ) - 2, 490 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 9, 4 ).c_str(), { ( 7 * 32 ) / 2, 488 }, 1, { 255, 0, 0 } );
-
-	int offset;
-	if( !m_bSelect )
-		offset = 0;
+	if( 5 == m_nCursor )
+		pGraphics->DrawTexture( m_hButtonHighlighted, { 595, 540.0f }, {}, {}, {}, { .6f, .6f } );
 	else
-		offset = 200;
+		pGraphics->DrawTexture( m_hButton, { 595, 540.0f }, {}, {}, {}, { .6f, .6f } );
 
+	pFonts->Render( "Other", "Back", { 645.0f, 542.0f }, 1, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", "Back", { 645.0f, 545.0f }, 1, { 50, 50, 200 } );
 
-	pFonts->Render( "Dialog", "-", { ( ( 7 * 32 ) / 2.0f + offset - 2 ) - 15, ( 300.0f + 64 * m_nCursor ) + 2 }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", "-", { ( ( 7 * 32 ) / 2.0f + offset ) - 15, 300.0f + 64 * m_nCursor }, 1, { 255, 0, 0 } );
-
-	//How to Exit
-
-	pFonts->Render( "Other", "esc to Exit", { 670, 520 }, 1, { 255, 0, 0 } );
-
-	//How to Select
-
-	pFonts->Render( "Other", "ENTER to select", { 30, 520 }, 1, { 255, 0, 0 } );
 
 }
