@@ -115,6 +115,11 @@ bool Game::Initialize( float width, float height )
 	string imageName3 = "resource/graphics/Fonts/dialog.png";
 	string xmlFile3 = "resource/XML/newDialog.xml";
 	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
+	//Load the dialog font
+	string fontName4 = "Goblin";
+	string imageName4 = "resource/graphics/Fonts/Goblinfont_0.png";
+	string xmlFile4 = "resource/XML/Goblinfont.xml";
+	m_pFonts->Load(fontName4, imageName4, xmlFile4);
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -210,9 +215,6 @@ bool Game::Initialize( float width, float height )
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal1 );
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal2 );
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal3 );
-
-
-
 
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );

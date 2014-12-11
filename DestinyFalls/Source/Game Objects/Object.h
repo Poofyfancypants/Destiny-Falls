@@ -34,6 +34,9 @@ public:
 
 	int GetInit() const { return Initiative; }
 	void SetInit(int _init) { Initiative = _init; }
+	int GetAttckSpd() const { return AttackSpeed; }
+	void SetAttckSpd(int _speed) { AttackSpeed = _speed; }
+
 	void SetTurnPos(int _turn) { m_nTurnPos = _turn; }
 	int GetTurnPos() const { return m_nTurnPos; }
 	virtual bool GetAttacking() const { return isAttacking; }
@@ -47,6 +50,8 @@ protected:
 
 private:
 	int Initiative = 0;
+	int AttackSpeed = 6; //Max Turn rotation is Default
+
 	int m_nTurnPos;
 
 	unsigned int m_unRefCount = 1;
