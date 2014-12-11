@@ -162,4 +162,5 @@ private:
 	bool m_bChestDialog = false;
 	bool m_bSigmundDialog = false;
 	bool m_bIcelandic = false;
+	bool m_bUpdateTutorial = true;
 };

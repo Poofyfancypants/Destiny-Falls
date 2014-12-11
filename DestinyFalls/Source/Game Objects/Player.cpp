@@ -45,6 +45,7 @@ void Player::Update(float elapsedTime)
 	if (m_bPlayCombatAnimation)
 	{
 		m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
+		// - Why is this here!??
 		if (m_nHealth <= 0)
 		{
 			pAudio->PlayAudio(Game::GetInstance()->deathSound, false);
@@ -62,6 +63,7 @@ void Player::Update(float elapsedTime)
 			pAudio->PlayAudio(Game::GetInstance()->deathSound, false);
 			m_nHealth = 0;
 			Game::GetInstance()->AddState(DeathState::GetInstance());
+			m_bSliding = false;
 
 			m_ptPosition = GetCheckpoint();
 			//m_nHealth = 100;
