@@ -41,6 +41,8 @@ public:
 	int GetTurnPos() const { return m_nTurnPos; }
 	virtual bool GetAttacking() const { return isAttacking; }
 	virtual void SetAttacking(bool _false = false) { isAttacking = _false; }
+	void SetDeltaHP(int _HP) { DeltaHP = _HP; }
+	int GetDeltaHP() const { return DeltaHP; }
 
 protected:
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
@@ -51,6 +53,7 @@ protected:
 private:
 	int Initiative = 0;
 	int AttackSpeed = 6; //Max Turn rotation is Default
+	int DeltaHP = 0;
 
 	int m_nTurnPos;
 

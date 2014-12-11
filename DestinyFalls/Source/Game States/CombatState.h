@@ -12,7 +12,7 @@ class CombatState :
 	public IGameState
 {
 public:
-	enum ActionType{Melee, Magic, Armor, AOE, Heal};
+	enum ActionType{Melee, Magic, Block, AOE, Heal, };
 
 	static CombatState* GetInstance();
 
@@ -103,6 +103,7 @@ private:
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
 
 	SGD::Rectangle PlayerSelection = { 0, 0, 0, 0 };
+	SGD::Rectangle CompanionSelection = { 0, 0, 0, 0 };
 	SGD::Point SavePlayerPos = { 0, 0 };
 
 	int m_nCursor = 0;
