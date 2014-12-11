@@ -44,6 +44,7 @@ public:
 	unsigned int GetLength(){ return m_unlength; }
 	unsigned int GetNumCorrect( void ){ return m_unNumCorrect; }
 	bool GetIsOver( void ){ return m_bqtOver; }
+	
 
 	//mutators
 	void SetLength(unsigned int x);
