@@ -19,11 +19,11 @@ public:
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
 
-	//Textures
-	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 	bool GetTutorial() const {return m_bTutorial;}
 private:
+	//Textures
+	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 	MainMenuState() = default;
 	virtual ~MainMenuState() = default;
 

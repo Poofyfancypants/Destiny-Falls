@@ -22,6 +22,7 @@ SaveandLoadState* SaveandLoadState::GetInstance()
 void SaveandLoadState::Enter()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	m_hBackground = pGraphics->LoadTexture( L"resource/graphics/MenuBackgrounds/Tree_Elements.png" );
 
 }
 
@@ -30,7 +31,7 @@ void SaveandLoadState::Exit()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
-
+	pGraphics->UnloadTexture(m_hBackground);
 }
 
 bool SaveandLoadState::Input()

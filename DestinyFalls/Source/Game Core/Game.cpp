@@ -70,6 +70,17 @@ bool Game::Initialize( float width, float height )
 	SGD::MessageManager::GetInstance()->Initialize( &MessageProc );
 	SGD::EventManager::GetInstance()->Initialize();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
+	// - Loading Screen Loadins
+	m_hLoadingBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadingScreenBackground.png" );
+	m_hTextScroll = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadScreenScroll.png" );
+	m_pFonts = m_pFonts->GetInstance();
+	string fontName2 = "Other";
+	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
+	string xmlFile2 = "resource/XML/otherfont1.xml";
+	m_pFonts->Load( fontName2, imageName2, xmlFile2 );
+
 
 	// - Load options
 	std::ifstream load;
@@ -87,13 +98,15 @@ bool Game::Initialize( float width, float height )
 		load.close();
 	}
 
+	LoadingScreen( "Loading Settings." );
+
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
 
 	SGD::GraphicsManager::GetInstance()->Resize( { m_fScreenWidth, m_fScreenHeight }, m_bWindowed );
 
 	//set the font pointer to the BitmapFontManager Instance
-	m_pFonts = m_pFonts->GetInstance();
+	LoadingScreen( "Loading Fonts" );
 
 	//Load the Bernardo font
 	string fontName = "Bernardo";
@@ -106,10 +119,7 @@ bool Game::Initialize( float width, float height )
 	//string xmlFile1 = "resource/XML/Celticfont.xml";
 	//m_pFonts->Load( fontName1, imageName1, xmlFile1 );
 	//Load the other font
-	string fontName2 = "Other";
-	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
-	string xmlFile2 = "resource/XML/otherfont1.xml";
-	m_pFonts->Load( fontName2, imageName2, xmlFile2 );
+
 	//Load the dialog font
 	string fontName3 = "Dialog";
 	string imageName3 = "resource/graphics/Fonts/dialog.png";
@@ -120,6 +130,8 @@ bool Game::Initialize( float width, float height )
 	string imageName4 = "resource/graphics/Fonts/Goblinfont_0.png";
 	string xmlFile4 = "resource/XML/Goblinfont.xml";
 	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
+
+	LoadingScreen( "Loading Audio.." );
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -149,17 +161,7 @@ bool Game::Initialize( float width, float height )
 
 	LoadStrings();
 
-
-	m_hMainMenu = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/main.png" );
-	m_hOptions = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/Options.png" );
-	m_hHTP = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/4Elements.png" );
-	m_hSaveLoad = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/MenuBackgrounds/Tree_Elements.png" );
-
-
-	SaveandLoadState::GetInstance()->m_hBackground = m_hSaveLoad;
-	HowToPlayState::GetInstance()->m_hBackground = m_hHTP;
-	OptionsState::GetInstance()->m_hBackground = m_hOptions;
-	MainMenuState::GetInstance()->m_hBackground = m_hMainMenu;
+	LoadingScreen( "Loading Graphics..." );
 
 	m_hEarth1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Forest1.png" );
 	m_hEarth2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/CombatBackgrounds/Forest2.png" );
@@ -323,16 +325,15 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hFinal2 );
 	pGraphics->UnloadTexture( m_hFinal3 );
 
-	pGraphics->UnloadTexture( m_hMainMenu );
 	pGraphics->UnloadTexture( m_hSaveLoad );
-	pGraphics->UnloadTexture( m_hHTP );
-	pGraphics->UnloadTexture( m_hOptions );
 
 	pGraphics->UnloadTexture( m_hAirIcon );
 	pGraphics->UnloadTexture( m_hFireIcon );
 	pGraphics->UnloadTexture( m_hWaterIcon );
 	pGraphics->UnloadTexture( m_hEarthIcon );
 
+	pGraphics->UnloadTexture( m_hTextScroll );
+	pGraphics->UnloadTexture( m_hLoadingBackground );
 
 	pAudio->UnloadAudio( m_mMusic );
 	pAudio->UnloadAudio( m_mButton );
@@ -589,7 +590,16 @@ void Game::LoadStrings()
 		}
 		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
-
 	}
 
+}
+
+void Game::LoadingScreen( string _loading )
+{
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
+	pGraphics->DrawTexture( m_hLoadingBackground, { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
+	pFont->Render( "Other", _loading.c_str(), SGD::Point{ 255, 300 }, 1.5, SGD::Color{ 0, 0, 0} );
+	pGraphics->Update();
+	Sleep( 150 );
 }

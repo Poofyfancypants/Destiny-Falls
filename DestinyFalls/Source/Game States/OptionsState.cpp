@@ -24,6 +24,7 @@ void OptionsState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
+	m_hBackground = pGraphics->LoadTexture( L"resource/graphics/MenuBackgrounds/Options.png" );
 	m_hButton = pGraphics->LoadTexture( "resource/graphics/optionsButton.png" );
 	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
 	m_hBackMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );

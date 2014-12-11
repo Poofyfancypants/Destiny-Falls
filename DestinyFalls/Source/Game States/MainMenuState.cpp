@@ -48,6 +48,7 @@ void MainMenuState::Enter()
 
 
 	// - Load Selection
+	m_hBackground = pGraphics->LoadTexture("resource/graphics/MenuBackgrounds/main.png");
 	m_hPlay = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuPlay.png" );
 	m_hOptions = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuOptions.png" );
 	m_hCredit = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuCredit.png" );
@@ -61,6 +62,7 @@ void MainMenuState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hTutorial );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hCredit );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hOptions );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hBackground);
 	SGD::AudioManager::GetInstance()->UnloadAudio(m_hMusic);
 }
 

@@ -48,6 +48,7 @@ public:
 	float GetScreenWidth( void ) const { return m_fScreenWidth; }
 	float GetScreenHeight( void ) const { return m_fScreenHeight; }
 
+	void LoadingScreen(string _loading);
 	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
 	std::string GetString( int _type, int _string ) { return m_StringTable[_type][_string]; }
 
@@ -106,8 +107,6 @@ public:
 
 	int GetFrames() {return m_nFPS;}
 	// Menu backgrounds
-	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHTP = SGD::INVALID_HANDLE;
 
@@ -142,6 +141,7 @@ private:
 	AnimationManager* m_pAnimator;
 
 
+
 	/**********************************************************/
 	// Message Callback Function:
 	static void MessageProc( const SGD::Message* pMsg );
@@ -160,6 +160,10 @@ private:
 
 	// - Icelandic
 	bool m_bIcelandic = false;
+
+	// - Loading Screen
+	SGD::HTexture m_hLoadingBackground;
+	SGD::HTexture m_hTextScroll;
 };
 
 #endif //GAME_H
