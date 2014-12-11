@@ -38,6 +38,8 @@ void CombatState::Enter(void)
 	SavePlayerPos = player->GetPosition();
 	player->SetPosition({ Playerrect.left, Playerrect.bottom });
 	player->AddRef();
+	player->SetDeathAnimationTimer();
+	player->SetHealth( 2 );
 	m_pObjects.push_back(player);
 	m_pHeroes.push_back(player);
 
@@ -297,9 +299,18 @@ void CombatState::Update(float elapsedTime)
 	}
 	else
 	{
-		((Player*)m_pHeroes[0])->SetCombat(false);
-		Game::GetInstance()->RemoveState();
-		return;
+		if( ( ( Player* ) m_pHeroes[ 0 ] )->GetDeathAnimationTimer() <= 0.0f )
+		{
+			((Player*)m_pHeroes[0])->SetCombat(false);
+			Game::GetInstance()->RemoveState();
+			return;
+
+		}
+		else
+		{
+			( ( Player* ) m_pHeroes[ 0 ] )->Update(elapsedTime);
+			( ( Player* ) m_pHeroes[ 0 ] )->Render();
+		}
 	}
 
 	if (ActionTimer <= 0.0f)
@@ -376,28 +387,40 @@ void CombatState::Update(float elapsedTime)
 		switch (m_pObjects[CurrentTurn]->GetType())
 		{
 		case Object::ObjectType::OBJ_PLAYER:
-			//if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+			if (((Player*)m_pObjects[CurrentTurn])->GetHealth() > 0)
 		{
 											   if (ActionTimer <= 0)
 											   if (TakeTurn(((Player*)m_pObjects[CurrentTurn])))
 												   CurrentTurn++;
 		}
+			else
+			{
+				CurrentTurn++;
+			}
 			break;
 		case Object::ObjectType::OBJ_COMPANION:
-			//if (((Companion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+			if( ( ( Companion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
 		{
 												  if (ActionTimer <= 0)
 												  if (TakeTurn(((Companion*)m_pObjects[CurrentTurn])))
 													  CurrentTurn++;
 		}
+			else
+			{
+				CurrentTurn++;
+			}
 			break;
 		case Object::ObjectType::OBJ_MINION:
-			//if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+			if( ( ( Minion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
 		{
 											   if (ActionTimer <= 0)
 											   if (TakeTurn(((Minion*)m_pObjects[CurrentTurn])))
 												   CurrentTurn++;
 		}
+			else
+			{
+				CurrentTurn++;
+			}
 			break;
 		}
 
@@ -421,7 +444,16 @@ void CombatState::Update(float elapsedTime)
 			((Minion*)m_pEnemies[i])->Render(i);
 
 		}
+		for( size_t i = 1; i < m_pHeroes.size(); i++ )
+		{
+			if( ((Companion*)m_pHeroes[i])->GetDeathAnimationTimer() > 0.0f )
+			{
+				( ( Companion* ) m_pHeroes[ i ] )->Update( elapsedTime );
+				( ( Companion* ) m_pHeroes[ i ] )->CombatRender( i );
+			}
+			
 
+		}
 		if (m_bShake)
 		{
 			ShakeScreen(elapsedTime);
@@ -486,8 +518,15 @@ void CombatState::Render(void)
 
 	for (size_t j = 0; j < m_pEnemies.size(); j++)
 	{
-		if (((Minion*)m_pEnemies[j])->GetHealth() > 0)
-			((Minion*)m_pEnemies[j])->Render(j);
+		if( ( ( Minion* ) m_pEnemies[ j ] )->GetHealth() > 0 )
+		{
+			( ( Minion* ) m_pEnemies[ j ] )->Render( j );
+		}
+		else if( ( ( Minion* ) m_pEnemies[ j ] )->GetDeathAnimationTimer() > 0.0f )
+		{
+			( ( Minion* ) m_pEnemies[ j ] )->Render( j );
+		}
+
 	}
 
 	for (size_t j = 1; j < m_pHeroes.size(); j++)
@@ -1144,7 +1183,7 @@ Object* CombatState::AddCompanion(int _type)
 	default:
 		break;
 	}
-	temp->SetHealth(100);
+	temp->SetHealth(1/*00*/);
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	return temp;
