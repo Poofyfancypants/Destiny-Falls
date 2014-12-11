@@ -1985,6 +1985,18 @@ bool CombatState::TakeTurn(Object* _this)
 										{
 											entered = true;
 											((Player*)_this)->SetAttacking(true);
+											
+											int xx = 0;
+											for (int i = 0; i < InventoryState::GetInstance()->m_vSword.size(); i++)
+											{
+												if (InventoryState::GetInstance()->m_vSword[i].GetElement() != None)
+													xx++;
+											}
+											if (xx == 0)
+												xx = 1;
+
+											m_nQTLength = xx * 3 ;
+
 											Game::GetInstance()->AddState(QuickTimeState::GetInstance());
 										}
 										if (entered)
