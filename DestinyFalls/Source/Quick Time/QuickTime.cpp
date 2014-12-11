@@ -192,15 +192,15 @@ void QuickTime::Render()
 
 	if( m_bShowAlert )
 	{
-		pFonts->Render( "Other" , m_sAlert.c_str() , { 275 , 360 } , 1 , { 255 , 0 , 64, 128} );
+		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 275 , 360 } , 1 , { 255 , 0 , 64, 128} );
 	}
 	else
 	{
 		//timer.left = timer.left - ( )
 		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 64 , 128 ) );
 
-		pFonts->Render( "Other" , m_sRenderOutput.c_str() , { 295 , 340 } , 2 , { 255 , 0 , 64 , 128 } );
-		pFonts->Render( "Other" , m_sRenderInput.c_str() , { 295 , 355 } , 2 , { 255 , 0 , 43 , 0 } );
+		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 295 , 340 } , 2 , { 255 , 0 , 64 , 128 } );
+		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 295 , 355 } , 2 , { 255 , 0 , 43 , 0 } );
 	}
 	
 }
