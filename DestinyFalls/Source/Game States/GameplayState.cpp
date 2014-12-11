@@ -77,6 +77,9 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
+	m_pAnimator->Load( "resource/XML/DeathAnimationXML.xml" );
+
+
 	m_hTutorialRune = pGraphics->LoadTexture( L"resource/graphics/Firet2.png" );
 	m_hminiboss = pGraphics->LoadTexture( L"resource/graphics/testMB1.png" );
 	m_hlevelboss = pGraphics->LoadTexture( L"resource/graphics/testLB1.png" );
