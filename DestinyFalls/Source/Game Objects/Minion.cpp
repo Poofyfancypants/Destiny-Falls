@@ -15,8 +15,16 @@ Minion::~Minion()
 
 void Minion::Update(float elapsedTime)
 {
+
 	if (m_nHealth <= 0)
 		m_nHealth = 0;
+
+	if( m_nHealth <= 0 )
+	{
+		this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
+		this->GetTimeStamp()->SetCurrentFrame( 0 );
+		this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+	}
 
 	if (m_nHealth > 0)
 		Enemy1HB.right = Enemy1HB.left + m_nHealth;
