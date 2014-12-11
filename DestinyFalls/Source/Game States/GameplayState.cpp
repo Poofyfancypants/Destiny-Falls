@@ -113,6 +113,7 @@ void GameplayState::Enter()
 	ForgeButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 59 ), ( Game::GetInstance()->GetScreenHeight() ) } );
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
+
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
 	m_fWorldHeight = 600;
@@ -198,11 +199,11 @@ bool GameplayState::Input()
 	{
 		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
-	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	//{
-	//	NextLevel();
-	//	m_bChangeLevels = true;
-	//}
+	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{

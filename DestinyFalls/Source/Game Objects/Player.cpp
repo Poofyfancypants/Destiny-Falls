@@ -148,6 +148,7 @@ void Player::Render(void)
 	{
 		SGD::Vector vec = { (m_ptPosition.x), (m_ptPosition.y) };
 		SGD::Point point = { vec.x - GameplayState::GetInstance()->GetWorldCam().x, vec.y - GameplayState::GetInstance()->GetWorldCam().y };
+
 		if (GameplayState::GetInstance()->GetDebugState())
 		{
 			SGD::Rectangle rec = GetRect();

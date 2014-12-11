@@ -20,9 +20,7 @@ public:
 
 	struct EnemyMods
 	{
-		int AttackSpeed = 6; //Max Turn rotation is Default
-							 //Implementing this on the side or in sprint three could be great
-
+							
 		int DamageLevel = 10;// 0-20 scale
 		ElementAtt ElemResistance;
 		ElementAtt ElemAffinity;
@@ -93,7 +91,7 @@ public:
 	void SetAffinity(Elements x) { m_rAffinity = x; }
 
 	EnemyMods GetMods() { return Modifiers; }
-	void SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int _tier2);
+	void SetMods(int _damageLevel, int _type, int _tier1, int _tier2);
 
 	void SetString(int _region, int _AI);
 	int GetName(int _index = 1);

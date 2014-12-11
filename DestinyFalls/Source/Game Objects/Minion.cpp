@@ -314,9 +314,9 @@ void Minion::SetMinionAnimation(int region, int minionType)
 
 }
 
-void Minion::SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int _tier2)
+void Minion::SetMods(int _damageLevel, int _type, int _tier1, int _tier2)
 {
-	Modifiers.AttackSpeed = _atkSpeed;
+	
 	Modifiers.DamageLevel = _damageLevel;
 	Modifiers.ElemAffinity.ElementType = _type;
 	Modifiers.ElemResistance.ElementType = _type;

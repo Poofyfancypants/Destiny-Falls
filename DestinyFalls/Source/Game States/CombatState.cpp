@@ -33,7 +33,8 @@ void CombatState::Enter(void)
 
 	Player* player = (Player*)GameplayState::GetInstance()->GetPlayer();
 	player->CurrentTurn(&CurrentTurn);
-	player->SetInit(rand() % 10 + 10);
+	player->SetInit(rand() % 15 + 5);
+	player->SetAttckSpd(8);
 	SavePlayerPos = player->GetPosition();
 	player->SetPosition({ Playerrect.left, Playerrect.bottom });
 	player->AddRef();
@@ -73,6 +74,7 @@ void CombatState::Enter(void)
 
 				break;
 			}
+			//temp->AddRef();
 			m_pObjects.push_back(temp);
 			m_pEnemies.push_back(temp);
 		}
@@ -124,7 +126,8 @@ void CombatState::Enter(void)
 			m_pEnemies.push_back(temp2);
 			break;
 		}
-
+		//temp->AddRef();
+		//temp2->AddRef();
 	}
 	else if (player->CombatEnemyID == 3)
 	{
@@ -145,9 +148,9 @@ void CombatState::Enter(void)
 			break;
 		default:
 			temp = AddMinion(rand() % 4, player->CombatEnemyID);
-
 			break;
 		}
+		//temp->AddRef();
 		m_pObjects.push_back(temp);
 		m_pEnemies.push_back(temp);
 	}
@@ -155,7 +158,7 @@ void CombatState::Enter(void)
 	{
 		Object* temp;
 		temp = AddMinion(4, player->CombatEnemyID);
-
+		//temp->AddRef();
 		m_pObjects.push_back(temp);
 		m_pEnemies.push_back(temp);
 	}
@@ -175,6 +178,7 @@ void CombatState::Enter(void)
 		{
 			temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
 		}
+		//temp->AddRef();
 		m_pObjects.push_back(temp);
 		m_pHeroes.push_back(temp);
 	}
@@ -214,14 +218,21 @@ void CombatState::Enter(void)
 
 void CombatState::Exit(void)
 {
+	selected = false;
+	ActionSelected = false;
+
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
 	((Player*)m_pHeroes[0])->SetPosition(SavePlayerPos);
-
 	((Player*)m_pHeroes[0])->StopCombat();
-	for (size_t i = 0; i < m_pObjects.size(); i++)
-		m_pObjects[i]->Release();
+
+
+	for (size_t i = 0; i < m_pHeroes.size(); i++)
+		m_pHeroes[i]->Release();
+
+	for (size_t i = 0; i < m_pEnemies.size(); i++)
+		m_pEnemies[i]->Release();
 
 	m_pObjects.clear();
 	m_pEnemies.clear();
@@ -243,7 +254,10 @@ bool CombatState::Input(void)
 		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
 		Game::GetInstance()->RemoveState();
 	}
-
+	if (pInput->IsKeyPressed(SGD::Key::B))
+	{
+		selected = false;
+	}
 	return true;
 }
 
@@ -348,50 +362,45 @@ void CombatState::Update(float elapsedTime)
 				pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
 
 				Game::GetInstance()->RemoveState();
-				
+
 				return;
 			}
 		}
 
 
-		for (size_t i = 0; i < m_pObjects.size(); i++)
+		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0) //m_pObjects.size can be smaller or larger than the actual number of entities
 		{
-			switch (m_pObjects[i]->GetType())
-			{
-			case Object::ObjectType::OBJ_PLAYER:
-				if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-				{
-					if (ActionTimer <= 0)
-					{
-						//Attacker1 = 0; If we can make this work it might be cool
-						//Not sure why I wanted it other than that
-						if (TakeTurn(((Player*)m_pObjects[i])))
-						{
-							CurrentTurn++;
-						}
-					}
-				}
-				break;
-			case Object::ObjectType::OBJ_COMPANION:
-				if (((Companion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-				{
-					if (ActionTimer <= 0)
-					if (TakeTurn(((Companion*)m_pObjects[i])))
-						CurrentTurn++;
-				}
-				break;
-			case Object::ObjectType::OBJ_MINION:
-				if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
-				{
-					if (ActionTimer <= 0)
-					if (TakeTurn(((Minion*)m_pObjects[i])))
-						CurrentTurn++;
-				}
-				break;
-			}
-		}
-		if (CurrentTurn == m_pObjects.size() && ActionTimer <= 0)
+			SortTurnOrder();
 			CurrentTurn = 0;
+		}
+		switch (m_pObjects[CurrentTurn]->GetType())
+		{
+		case Object::ObjectType::OBJ_PLAYER:
+			//if (((Player*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+		{
+											   if (ActionTimer <= 0)
+											   if (TakeTurn(((Player*)m_pObjects[CurrentTurn])))
+												   CurrentTurn++;
+		}
+			break;
+		case Object::ObjectType::OBJ_COMPANION:
+			//if (((Companion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+		{
+												  if (ActionTimer <= 0)
+												  if (TakeTurn(((Companion*)m_pObjects[CurrentTurn])))
+													  CurrentTurn++;
+		}
+			break;
+		case Object::ObjectType::OBJ_MINION:
+			//if (((Minion*)m_pObjects[i])->GetTurnPos() == CurrentTurn)
+		{
+											   if (ActionTimer <= 0)
+											   if (TakeTurn(((Minion*)m_pObjects[CurrentTurn])))
+												   CurrentTurn++;
+		}
+			break;
+		}
+
 	}
 	else
 	{
@@ -427,6 +436,8 @@ void CombatState::Update(float elapsedTime)
 void CombatState::Render(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
+
 	//	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
@@ -452,7 +463,7 @@ void CombatState::Render(void)
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 180, 180 ,0 ));
+	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 180, 180, 0));
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
@@ -476,27 +487,280 @@ void CombatState::Render(void)
 	for (size_t j = 0; j < m_pEnemies.size(); j++)
 	{
 		if (((Minion*)m_pEnemies[j])->GetHealth() > 0)
-		{
 			((Minion*)m_pEnemies[j])->Render(j);
-		}
 	}
 
 	for (size_t j = 1; j < m_pHeroes.size(); j++)
 	{
 		if (((Companion*)m_pHeroes[j])->GetHealth() > 0)
-		{
 			((Companion*)m_pHeroes[j])->CombatRender(j);
-		}
 	}
+
 	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
 		HandleTutorial();
+
+	if (CurrentTurn < m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
+	{
+		switch (m_pObjects[CurrentTurn]->GetType())
+		{
+		case Object::ObjectType::OBJ_PLAYER:
+		{
+											   if (ActionTimer <= 0)
+											   if (!selected)
+											   {
+												   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 0, 0, 0));
+												   //pCombat->SetAction("Choose Action");
+
+												   if (CombatState::GetInstance()->GetCooldown())
+													   pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
+												   else
+													   pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
+
+												   if (PlayerSelection.left < PlayerSelection.right)
+													   pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
+											   }
+											   else
+											   {
+												   if (ActionSelected == 0) //Melee
+												   {//pCombat->SetAction("Choose Target");
+												   }
+												   else if (ActionSelected == 1)
+												   {
+													   if (spellSelect == -1)
+													   {
+														   //pCombat->SetAction("Choose Spell");
+														   InventoryState* pInventory = InventoryState::GetInstance();
+														   Runes temp1;
+														   temp1.SetElement(pInventory->m_vRing[0].GetElement());
+														   temp1.SetTier(pInventory->m_vRing[0].GetTier());
+
+														   Runes temp2;
+														   temp2.SetElement(pInventory->m_vRing[1].GetElement());
+														   temp2.SetTier(pInventory->m_vRing[1].GetTier());
+
+														   Runes temp3;
+														   temp3.SetElement(pInventory->m_vRing[2].GetElement());
+														   temp3.SetTier(pInventory->m_vRing[2].GetTier());
+#pragma region spells
+														   string spell1;
+														   switch (temp1.GetElement())
+														   {
+														   case Fire:
+														   {
+																		if (temp1.GetTier() == 1)
+																		{
+																			spell1 = "Fire Ball(1)";
+																		}
+																		if (temp1.GetTier() == 2)
+																		{
+																			spell1 = "Fire Ball(2)";
+																		}
+																		if (temp1.GetTier() == 3)
+																		{
+																			spell1 = "Fire Ball(3)";
+																		}
+														   }
+															   break;
+														   case Water:
+														   {
+																		 if (temp1.GetTier() == 1)
+																		 {
+																			 spell1 = "Water Blast(1)";
+																		 }
+																		 if (temp1.GetTier() == 2)
+																		 {
+																			 spell1 = "Water Blast(2)";
+																		 }
+																		 if (temp1.GetTier() == 3)
+																		 {
+																			 spell1 = "Water Blast(3)";
+																		 }
+														   }
+															   break;
+														   case Air:
+														   {
+																	   if (temp1.GetTier() == 1)
+																	   {
+																		   spell1 = "Wind Gust(1)";
+																	   }
+																	   if (temp1.GetTier() == 2)
+																	   {
+																		   spell1 = "Wind Gust(2)";
+																	   }
+																	   if (temp1.GetTier() == 3)
+																	   {
+																		   spell1 = "Wind Gust(3)";
+																	   }
+														   }
+															   break;
+														   case Earth:
+														   {
+																		 if (temp1.GetTier() == 1)
+																		 {
+																			 spell1 = "Rock Throw(1)";
+																		 }
+																		 if (temp1.GetTier() == 2)
+																		 {
+																			 spell1 = "Rock Throw(2)";
+																		 }
+																		 if (temp1.GetTier() == 3)
+																		 {
+																			 spell1 = "Rock Throw(3)";
+																		 }
+														   }
+															   break;
+														   case None:
+															   break;
+														   default:
+															   break;
+														   }
+														   string spell2;
+														   RuneManager rmanager;
+														   ComboElements firstCombo = rmanager.ElementCombination(temp1.GetElement(), temp2.GetElement());
+
+														   if (rmanager.ToString(firstCombo).length() > 0)
+														   {
+															   switch (firstCombo)
+															   {
+															   case Steam:
+																   spell2 = "Steam";
+																   break;
+															   case Ice:
+																   spell2 = "Ice";
+																   break;
+															   case Lightning:
+																   spell2 = "Lightning";
+																   break;
+															   case Magma:
+																   spell2 = "Magma";
+																   break;
+															   case Dust:
+																   spell2 = "Dust";
+																   break;
+															   case Mud:
+																   spell2 = "Mud";
+																   break;
+															   case Inferno:
+																   spell2 = "Inferno";
+																   break;
+															   case Wave:
+																   spell2 = "Wave";
+																   break;
+															   case Earthquake:
+																   spell2 = "Earthquake";
+																   break;
+															   case Whirlwind:
+																   spell2 = "Whirlwind";
+																   break;
+															   default:
+																   break;
+															   }
+
+														   }
+
+														   string spell3;
+
+														   ComboElements SecondCombo = rmanager.ElementCombination(temp2.GetElement(), temp3.GetElement());
+
+														   if (rmanager.ToString(firstCombo).length() > 0)
+														   {
+															   switch (SecondCombo)
+															   {
+															   case Steam:
+																   spell3 = "Steam";
+																   break;
+															   case Ice:
+																   spell3 = "Ice";
+																   break;
+															   case Lightning:
+																   spell3 = "Lightning";
+																   break;
+															   case Magma:
+																   spell3 = "Magma";
+																   break;
+															   case Dust:
+																   spell3 = "Dust";
+																   break;
+															   case Mud:
+																   spell3 = "Mud";
+																   break;
+															   case Inferno:
+																   spell3 = "Inferno";
+																   break;
+															   case Wave:
+																   spell3 = "Wave";
+																   break;
+															   case Earthquake:
+																   spell3 = "Earthquake";
+																   break;
+															   case Whirlwind:
+																   spell3 = "Whirlwind";
+																   break;
+															   default:
+																   break;
+															   }
+														   }
+														   for (size_t i = 0; i < pInventory->m_vRing.size(); i++)
+														   {
+															   switch (i)
+															   {
+															   case 0:
+																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell1Cool())
+																	   pFont->Render("Bernardo", spell1.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
+																   else
+																	   pFont->Render("Bernardo", spell1.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
+																   break;
+															   case 1:
+																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell2Cool())
+																	   pFont->Render("Bernardo", spell2.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
+																   else
+																	   pFont->Render("Bernardo", spell2.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
+																   break;
+															   case 2:
+																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell3Cool())
+																	   pFont->Render("Bernardo", spell3.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
+																   else
+																	   pFont->Render("Bernardo", spell3.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
+																   break;
+															   default:
+																   break;
+															   }
+														   }
+#pragma endregion spells
+													   }
+													   else
+													   {
+														   //pCombat->SetAction("Choose Target");
+													   }
+												   }
+												   if (PlayerSelection.left < PlayerSelection.right)
+													   pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0)); //
+											   }
+		}
+			break;
+		case Object::ObjectType::OBJ_COMPANION:
+		{
+												  if (ActionTimer <= 0)
+												  {
+												  }
+		}
+			break;
+		case Object::ObjectType::OBJ_MINION:
+		{
+											   if (ActionTimer <= 0)
+											   {
+											   }
+
+		}
+			break;
+		}
+	}
 }
 
 Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care
 {
 	Minion* temp = new Minion;
 	temp->SetSize({ 64, 64 });
-	temp->CurrentTurn(&CurrentTurn);
 
 	switch (EnemyID)
 	{
@@ -504,6 +768,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	{
 			  temp->SetInit(rand() % 20);
 			  temp->SetAffinity((Elements)_region);
+			  temp->SetAttckSpd(rand() % 3 + 4);
 
 			  if (m_pEnemies.size() == 0)
 			  {
@@ -524,7 +789,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 			  {
 			  case 0: // Minion
 				  randHealth = rand() % 50 + 50;
-				  temp->SetMods(6, 3, _region, 0, 0);
+				  temp->SetMods(3, _region, 0, 0);
 
 				  switch (_region)
 				  {
@@ -554,9 +819,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  randHealth = rand() % 45 + 55;
 
 				  if (randHealth > 50)
-					  temp->SetMods(6, 5, _region, 2, 1);
+					  temp->SetMods(5, _region, 2, 1);
 				  else
-					  temp->SetMods(6, 5, _region, 3, 1);
+					  temp->SetMods(5, _region, 3, 1);
+
+				  temp->SetAttckSpd(rand() % 3 + 4);
 
 				  switch (_region)
 				  {
@@ -587,9 +854,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  randHealth = rand() % 20 + 80;
 
 				  if (randHealth > 90)
-					  temp->SetMods(6, 2, _region, 1, 3);
+					  temp->SetMods(2, _region, 1, 3);
 				  else
-					  temp->SetMods(6, 2, _region, 2, 3);
+					  temp->SetMods(2, _region, 2, 3);
+
+				  temp->SetAttckSpd(rand() % 3 + 4);
 
 				  switch (_region)
 				  {
@@ -624,9 +893,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  randHealth = rand() % 45 + 55;
 
 				  if (randHealth > 60)
-					  temp->SetMods(6, 1, _region, 1, 2);
+					  temp->SetMods(1, _region, 1, 2);
 				  else
-					  temp->SetMods(6, 1, _region, 1, 3);
+					  temp->SetMods(1, _region, 1, 3);
+
+				  temp->SetAttckSpd(rand() % 3 + 4);
 
 				  switch (_region)
 				  {
@@ -657,9 +928,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  randHealth = rand() % 40 + 60;
 
 				  if (randHealth > 75)
-					  temp->SetMods(6, 4, _region, 2, 1);
+					  temp->SetMods(4, _region, 2, 1);
 				  else
-					  temp->SetMods(6, 4, _region, 3, 2);
+					  temp->SetMods(4, _region, 3, 2);
+
+				  temp->SetAttckSpd(rand() % 3 + 4);
 
 				  switch (_region)
 				  {
@@ -696,24 +969,28 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	{
 				temp->SetInit(rand() % 20);
 				temp->SetAffinity((Elements)_region);
+
+
 				if (m_pEnemies.size() == 0)
 				{
-					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
 				}
 				else if (m_pEnemies.size() == 1)
 				{
-					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
 				}
 				else if (m_pEnemies.size() == 2)
 				{
 					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
 				}
 
+				temp->SetAttckSpd(rand() % 4 + 5);
+
 				switch (_region)
 				{
 				case 0:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(_region, 5);
 						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
 						  temp->SetMinionAnimation(_region, 5);
@@ -721,7 +998,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				case 1:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(_region, 5);
 						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
 						  temp->SetMinionAnimation(_region, 5);
@@ -729,7 +1006,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				case 2:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(_region, 5);
 						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
 						  temp->SetMinionAnimation(_region, 5);
@@ -737,7 +1014,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				case 3:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(_region, 5);
 						  temp->SetAIType(Minion::AI_Type::Mini_Boss);
 						  temp->SetMinionAnimation(_region, 5);
@@ -768,11 +1045,13 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetInit(rand() % 20);
 				temp->SetAffinity((Elements)_region);
 
+				temp->SetAttckSpd(rand() % 4 + 6);
+
 				switch (_region)
 				{
 				case 0:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 6);
@@ -780,7 +1059,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				case 1:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 6);
@@ -788,7 +1067,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				case 2:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 6);
@@ -796,7 +1075,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				case 3:
 				{
-						  temp->SetMods(12, 5, _region, 3, 3);
+						  temp->SetMods(5, _region, 3, 3);
 						  temp->SetString(4, _region);
 						  temp->SetAIType(Minion::AI_Type::Level_Boss);
 						  temp->SetMinionAnimation(_region, 6);
@@ -813,11 +1092,13 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	case 4: //Final Boss
 	{
 				temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
-				temp->SetMods(12, 5, _region, 3, 3);
+				temp->SetMods(5, _region, 3, 3);
 				temp->SetString(4, _region);
 				temp->SetAIType(Minion::AI_Type::Final_Boss);
 				temp->SetMinionAnimation(_region, 0);
 				temp->SetAffinity(Earth);
+				temp->SetAttckSpd(rand() % 6 + 6);
+
 				temp->SetHealth(500);
 	}
 		break;
@@ -1155,7 +1436,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 				RuneManager rmtemp;
 				Total *= (int)(rmtemp.DamageReduction(InventoryState::GetInstance()->GetArmorSlot1(), ((Minion*)_From)->GetAffinity()));
 				((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
-				if (rand() % 20 > 13)
+				if (rand() % 20 > 15)
 				{
 					DealCounterDamage(_To, _From);
 					return 0;
@@ -1168,7 +1449,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 				((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
 				if (((Companion*)_To)->GetCoType() == Companion::Melee)
 				{
-					if (rand() % 20 > 13)
+					if (rand() % 20 > 15)
 					{
 						DealCounterDamage(_To, _From);
 						return 0;
@@ -1398,21 +1679,18 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		{
 		case 0:
 			Elements e1;
-
 			stuff += spell1.c_str();
 			e1 = InventoryState::GetInstance()->GetRingSlot1();
 			Total = (int)((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15));
 			break;
 		case 1:
 			ComboElements d1;
-
 			stuff += spell2.c_str();
 			d1 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
 			Total = (int)((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15));
 			break;
 		case 2:
 			ComboElements d2;
-
 			stuff += spell3.c_str();
 			d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot2(), InventoryState::GetInstance()->GetRingSlot3());
 			Total = (int)((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15));
@@ -1468,9 +1746,9 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 	{
 		Total = rand() % 15 + 30;
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
-		string message = "Your Ally attacks the ";
+		string message = "Your Ally counter the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
-		SetAction(message += "!");
+		SetAction(message += "'s attack!");
 		m_bShake = true;
 	}
 
@@ -1611,6 +1889,10 @@ int CombatState::DealAOEDamage(Object* _From, Object* _To)
 			DealMeleeDamage(_From, _To);
 			((Companion*)_From)->SetHealth(((Companion*)_From)->GetHealth() - (rand() % 15 + 10));
 		}
+
+		string message = "You Ally uses ";
+		SetAction(message += "Fury!");
+
 	}
 	return Total;
 }
@@ -1621,7 +1903,6 @@ bool CombatState::TakeTurn(Object* _this)
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	CombatState* pCombat = CombatState::GetInstance();
-	SGD::Rectangle PlayerSelection{ 0, 0, 0, 0 };
 
 	switch (_this->GetType())
 	{
@@ -1637,19 +1918,6 @@ bool CombatState::TakeTurn(Object* _this)
 								{
 									float posX = 200.0f;
 									PlayerSelection = { posX, (float)(420 + 50 * m_nCursor), posX + 40, (float)(430 + 50 * m_nCursor) };
-
-									pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255,0,0));
-
-									if (CombatState::GetInstance()->GetCooldown())
-									{
-										pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
-									}
-									else
-									{
-										pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
-									}
-
-									//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
 
 									pCombat->SetAction("Choose Action");
 									if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
@@ -1684,8 +1952,6 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nCursor = 0;
 										}
 									}
-									if (PlayerSelection.left < PlayerSelection.right)
-										pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
 								}
 								else //Action selected, now pick target
 								{
@@ -1693,27 +1959,26 @@ bool CombatState::TakeTurn(Object* _this)
 									{
 										PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 150, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 110, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
 										pCombat->SetAction("Choose Target");
+
+										int prevCursor = 0;
+
 										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-										{
 											m_nCursor--;
-										}
 										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-										{
 											m_nCursor++;
-										}
 
 										if (m_nCursor < 0)
-											m_nCursor = 0;
+											m_nCursor = m_pEnemies.size() - 1;
 										if (m_nCursor > pCombat->GetEnemies().size() - 1)
-											m_nCursor = pCombat->GetEnemies().size() - 1;
+											m_nCursor = 0;
 
 										if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 											m_nCursor++;
 
 										if (m_nCursor < 0)
-											m_nCursor = 0;
+											m_nCursor = m_pEnemies.size() - 1;
 										if (m_nCursor > pCombat->GetEnemies().size() - 1)
-											m_nCursor = pCombat->GetEnemies().size() - 1;
+											m_nCursor = 0;
 
 
 										if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
@@ -1735,30 +2000,44 @@ bool CombatState::TakeTurn(Object* _this)
 											}
 										}
 
-										if (PlayerSelection.left < PlayerSelection.right)
-											pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
-
 										((Player*)_this)->ResetAnimation();
 									}
 									else if (ActionSelected == 1) //Magic
 									{
 										if (spellSelect == -1)
 										{
+											//#pragma region spells
 											pCombat->SetAction("Choose Spell");
 
 											float posX = 250.0f + (m_nCursor * 100);
 											PlayerSelection = { posX, 500, posX + 60, 510 };
 
 											if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::W))
-											{
 												m_nCursor--;
-											}
 											if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::S))
-											{
 												m_nCursor++;
+
+											bool spellActive; //If no spell is active, selection needs to return as they cannot cast spells
+
+											if (((Player*)_this)->GetSpell1Cool())
+												m_nCursor++;
+											else
+												spellActive = true;
+											if (((Player*)_this)->GetSpell2Cool())
+												m_nCursor++;
+											else
+												spellActive = true;
+											if (((Player*)_this)->GetSpell3Cool())
+												m_nCursor++;
+											else
+												spellActive = true;
+
+											if (!spellActive)
+											{
+												selected = false;
+												ActionMessage = "All spells are on cooldown";
 											}
 
-#pragma region spells
 											InventoryState* pInventory = InventoryState::GetInstance();
 											Runes temp1;
 											temp1.SetElement(pInventory->m_vRing[0].GetElement());
@@ -1779,15 +2058,15 @@ bool CombatState::TakeTurn(Object* _this)
 											{
 														 if (temp1.GetTier() == 1)
 														 {
-															 spell1 = "FireBolt1";
+															 spell1 = "Fire Ball(1)";
 														 }
 														 if (temp1.GetTier() == 2)
 														 {
-															 spell1 = "FireBolt2";
+															 spell1 = "Fire Ball(2)";
 														 }
 														 if (temp1.GetTier() == 3)
 														 {
-															 spell1 = "FireBolt3";
+															 spell1 = "Fire Ball(3)";
 														 }
 											}
 												break;
@@ -1795,15 +2074,15 @@ bool CombatState::TakeTurn(Object* _this)
 											{
 														  if (temp1.GetTier() == 1)
 														  {
-															  spell1 = "WaterBolt1";
+															  spell1 = "Water Blast(1)";
 														  }
 														  if (temp1.GetTier() == 2)
 														  {
-															  spell1 = "WaterBolt2";
+															  spell1 = "Water Blast(2)";
 														  }
 														  if (temp1.GetTier() == 3)
 														  {
-															  spell1 = "WaterBolt3";
+															  spell1 = "Water Blast(3)";
 														  }
 											}
 												break;
@@ -1811,15 +2090,15 @@ bool CombatState::TakeTurn(Object* _this)
 											{
 														if (temp1.GetTier() == 1)
 														{
-															spell1 = "WindBolt1";
+															spell1 = "Wind Gust(1)";
 														}
 														if (temp1.GetTier() == 2)
 														{
-															spell1 = "WindBolt2";
+															spell1 = "Wind Gust(2)";
 														}
 														if (temp1.GetTier() == 3)
 														{
-															spell1 = "WindBolt3";
+															spell1 = "Wind Gust(3)";
 														}
 											}
 												break;
@@ -1827,15 +2106,15 @@ bool CombatState::TakeTurn(Object* _this)
 											{
 														  if (temp1.GetTier() == 1)
 														  {
-															  spell1 = "Rock Throw1";
+															  spell1 = "Rock Throw(1)";
 														  }
 														  if (temp1.GetTier() == 2)
 														  {
-															  spell1 = "Rock Throw2";
+															  spell1 = "Rock Throw(2)";
 														  }
 														  if (temp1.GetTier() == 3)
 														  {
-															  spell1 = "Rock Throw3";
+															  spell1 = "Rock Throw(3)";
 														  }
 											}
 												break;
@@ -1885,7 +2164,6 @@ bool CombatState::TakeTurn(Object* _this)
 												default:
 													break;
 												}
-
 											}
 
 											string spell3;
@@ -1930,50 +2208,6 @@ bool CombatState::TakeTurn(Object* _this)
 													break;
 												}
 											}
-
-
-											for (size_t i = 0; i < pInventory->m_vRing.size(); i++)
-											{
-												switch (i)
-												{
-												case 0:
-													if (((Player*)_this)->GetSpell1Cool())
-														pFont->Render("Bernardo", spell1.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
-													else
-														pFont->Render("Bernardo", spell1.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
-													break;
-												case 1:
-													if (((Player*)_this)->GetSpell2Cool())
-														pFont->Render("Bernardo", spell2.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
-													else
-														pFont->Render("Bernardo", spell2.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
-													break;
-												case 2:
-													if (((Player*)_this)->GetSpell3Cool())
-														pFont->Render("Bernardo", spell3.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
-													else
-														pFont->Render("Bernardo", spell3.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
-													break;
-												default:
-													break;
-												}
-											}
-#pragma endregion
-											bool spellActive; //If no spell is active, selection needs to return as they cannot cast spells
-
-											if (((Player*)_this)->GetSpell1Cool())
-												m_nCursor++;
-											else
-												spellActive = true;
-											if (((Player*)_this)->GetSpell2Cool())
-												m_nCursor++;
-											else
-												spellActive = true;
-											if (((Player*)_this)->GetSpell3Cool())
-												m_nCursor++;
-											else
-												spellActive = true;
-
 											if (m_nCursor < 0)
 												m_nCursor = 0;
 											if (m_nCursor > pInventory->m_vRing.size() - 1)
@@ -1984,13 +2218,14 @@ bool CombatState::TakeTurn(Object* _this)
 												spellSelect = m_nCursor;
 												m_nCursor = 0;
 											}
-											if (PlayerSelection.left < PlayerSelection.right && pInventory->m_vRing.size() > 0)
-												pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0)); //
 										}
+										//#pragma endregion
 										else // spellSelect is set, choose target
 										{
 											PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 150, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 110, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
 											pCombat->SetAction("Choose Target");
+
+											int prevCursor = m_nCursor;
 
 											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 											{
@@ -2002,18 +2237,17 @@ bool CombatState::TakeTurn(Object* _this)
 											}
 
 											if (m_nCursor < 0)
-												m_nCursor = 0;
+												m_nCursor = m_pEnemies.size() - 1;
 											if (m_nCursor > pCombat->GetEnemies().size() - 1)
-												m_nCursor = pCombat->GetEnemies().size() - 1;
+												m_nCursor = 0;
 
-											if (((Minion*)m_pEnemies[m_nCursor])->GetHealth() <= 0)
+											if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 												m_nCursor++;
 
 											if (m_nCursor < 0)
-												m_nCursor = 0;
+												m_nCursor = m_pEnemies.size() - 1;
 											if (m_nCursor > pCombat->GetEnemies().size() - 1)
-												m_nCursor = pCombat->GetEnemies().size() - 1;
-
+												m_nCursor = 0;
 											if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 											{
 												selected = false;
@@ -2023,15 +2257,13 @@ bool CombatState::TakeTurn(Object* _this)
 												m_nCursor = 0;
 												return true;
 											}
-											if (PlayerSelection.left < PlayerSelection.right)
-												pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0)); //
 										}
 									}
 								}
 								return false;
 								break;
-#pragma endregion
 	}
+#pragma endregion
 #pragma region CompTakeTurn
 	case iObject::OBJ_COMPANION:
 	{
@@ -2099,6 +2331,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				 pCombat->SetAction("Choose Target");
 																				 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x - 150, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y, ((Player*)m_pHeroes[m_nCursor])->GetPosition().x - 110, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 40 };
 
+																				 int prevCursor = m_nCursor;
+
 																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																				 {
 																					 m_nCursor++;
@@ -2116,13 +2350,19 @@ bool CombatState::TakeTurn(Object* _this)
 																					 if (m_nCursor > m_pHeroes.size() - 1)
 																						 m_nCursor = 0;
 
-																					 if (((Player*)m_pHeroes[m_nCursor])->GetHealth() <= 0)
-																						 m_nCursor++;
+																					 if (((Player*)pCombat->GetHeroes()[m_nCursor])->GetHealth() <= 0)
+																					 {
+																						 if (m_nCursor > prevCursor)
+																							 m_nCursor--;
+																						 else
+																							 m_nCursor++;
+																					 }
+
 																					 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x + 100, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y, ((Player*)m_pHeroes[m_nCursor])->GetPosition().x + 140, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 20 };
 
 																					 /*if (m_nCursor < 0)
 																						 m_nCursor = 0;
-																					 if (m_nCursor > m_pHeroes.size() - 1)
+																						 if (m_nCursor > m_pHeroes.size() - 1)
 																						 m_nCursor = m_pHeroes.size() - 1;*/
 
 																				 }
@@ -2130,18 +2370,18 @@ bool CombatState::TakeTurn(Object* _this)
 																				 {
 
 																					 if (m_nCursor < 0)
-																						 m_nCursor = 0;
-																					 if (m_nCursor > m_pEnemies.size() - 1)
 																						 m_nCursor = m_pEnemies.size() - 1;
+																					 if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																						 m_nCursor = 0;
 
 																					 if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 																						 m_nCursor++;
-																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x + 40, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
+
 
 																					 if (m_nCursor < 0)
-																						 m_nCursor = 0;
-																					 if (m_nCursor > m_pEnemies.size() - 1)
 																						 m_nCursor = m_pEnemies.size() - 1;
+																					 if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																						 m_nCursor = 0;
 
 																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 																				 }
@@ -2220,6 +2460,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			{
 																				pCombat->SetAction("Choose Target");
 
+																				int prevCursor = m_nCursor;
+
 																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																				{
 																					m_nCursor--;
@@ -2230,18 +2472,18 @@ bool CombatState::TakeTurn(Object* _this)
 																				}
 
 																				if (m_nCursor < 0)
-																					m_nCursor = 0;
-																				if (m_nCursor > m_pEnemies.size() - 1)
 																					m_nCursor = m_pEnemies.size() - 1;
+																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																					m_nCursor = 0;
 
 																				if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 																					m_nCursor++;
 																				CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
 																				if (m_nCursor < 0)
-																					m_nCursor = 0;
-																				if (m_nCursor > m_pEnemies.size() - 1)
 																					m_nCursor = m_pEnemies.size() - 1;
+																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																					m_nCursor = 0;
 
 																				if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 																				{
@@ -2316,6 +2558,9 @@ bool CombatState::TakeTurn(Object* _this)
 																		   else //Action selected, now pick target
 																		   {
 																			   pCombat->SetAction("Choose Target");
+
+																			   int prevCursor = m_nCursor;
+
 																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																			   {
 																				   m_nCursor--;
@@ -2325,10 +2570,17 @@ bool CombatState::TakeTurn(Object* _this)
 																				   m_nCursor++;
 																			   }
 																			   if (m_nCursor < 0)
-																				   m_nCursor = 0;
+																				   m_nCursor = m_pEnemies.size() - 1;
 																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
-																				   m_nCursor = pCombat->GetEnemies().size() - 1;
+																				   m_nCursor = 0;
 
+																			   if (((Minion*)m_pEnemies[m_nCursor])->GetHealth() <= 0)
+																				   m_nCursor++;
+
+																			   if (m_nCursor < 0)
+																				   m_nCursor = m_pEnemies.size() - 1;
+																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																				   m_nCursor = 0;
 
 																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 																			   {
@@ -2340,8 +2592,6 @@ bool CombatState::TakeTurn(Object* _this)
 																				   return true;
 																			   }
 																			   ((Companion*)_this)->SetAnimation(true);
-
-
 																			   ((Companion*)_this)->ResetAnimation();
 																		   }
 
@@ -2406,6 +2656,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   }
 
 																			   pCombat->SetAction("Choose Target");
+																			   int prevCursor = m_nCursor;
+
 																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																			   {
 																				   m_nCursor--;
@@ -2414,11 +2666,19 @@ bool CombatState::TakeTurn(Object* _this)
 																			   {
 																				   m_nCursor++;
 																			   }
-																			   if (m_nCursor < 0)
-																				   m_nCursor = 0;
-																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
-																				   m_nCursor = pCombat->GetEnemies().size() - 1;
 
+																			   if (m_nCursor < 0)
+																				   m_nCursor = m_pEnemies.size() - 1;
+																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																				   m_nCursor = 0;
+
+																			   if (((Minion*)m_pEnemies[m_nCursor])->GetHealth() <= 0)
+																				   m_nCursor++;
+
+																			   if (m_nCursor < 0)
+																				   m_nCursor = m_pEnemies.size() - 1;
+																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																				   m_nCursor = 0;
 
 																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 																			   {
@@ -2834,6 +3094,7 @@ void CombatState::HandleTutorial()
 	}
 }
 
+
 void CombatState::DrawBackground()
 {
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
@@ -2856,5 +3117,57 @@ void CombatState::DrawBackground()
 	default:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { 0, 0 }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.5f });
 		break;
+	}
+}
+
+void CombatState::SortTurnOrder()
+{
+	
+	m_pObjects.clear();
+
+	for (size_t i = 0; i < m_pHeroes.size(); i++)
+	{
+		m_pHeroes[i]->SetInit(m_pHeroes[i]->GetInit() + ((rand() % (m_pHeroes[i]->GetAttckSpd()) - 3) * 2));
+		m_pObjects.push_back(m_pHeroes[i]);
+		//m_pHeroes[i]->AddRef();
+	}
+	for (size_t i = 0; i < m_pEnemies.size(); i++)
+	{
+		m_pEnemies[i]->SetInit(m_pHeroes[i]->GetInit() + ((rand() % (m_pHeroes[i]->GetAttckSpd()) - 3) * 2));
+		m_pObjects.push_back(m_pEnemies[i]);
+		//m_pEnemies[i]->AddRef();
+	}
+	for (size_t i = 1; i < m_pObjects.size(); i++)
+	{
+		for (size_t j = 0; j < m_pObjects.size(); j++)
+		{
+			if (m_pObjects[i] != nullptr && m_pObjects[j] != nullptr)
+			{
+				if (m_pObjects[i]->GetInit() > m_pObjects[j]->GetInit())
+				{
+					swap(m_pObjects[i], m_pObjects[j]);
+				}
+			}
+		}
+	}
+
+	for (size_t i = 0; i < m_pObjects.size(); i++)
+	{
+		if (m_pObjects[i]->GetInit() < 0)
+		{
+			m_pObjects[i]->SetInit(10);
+			//m_pObjects[i]->Release();
+			m_pObjects.pop_back();
+		}
+	}
+	for (size_t j = 0; j < m_pObjects.size(); j++)
+	{
+		if (m_pObjects[j]->GetInit() > 20)
+		{
+			m_pObjects[j]->SetInit(10);
+			m_pObjects.push_back(m_pObjects[j]);
+			//m_pObjects[j]->AddRef();
+			break;
+		}
 	}
 }

@@ -70,7 +70,10 @@ public:
 
 	int GetQTLength() { return m_nQTLength; }
 
+	void SortTurnOrder();
+
 private:
+
 
 	CombatState() = default;
 	virtual ~CombatState() = default;
@@ -103,6 +106,7 @@ private:
 	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
 
+	SGD::Rectangle PlayerSelection = { 0, 0, 0, 0 };
 	SGD::Point SavePlayerPos = { 0, 0 };
 
 	int m_nCursor = 0;
