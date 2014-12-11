@@ -119,7 +119,7 @@ bool Game::Initialize( float width, float height )
 	string fontName4 = "Goblin";
 	string imageName4 = "resource/graphics/Fonts/Goblinfont_0.png";
 	string xmlFile4 = "resource/XML/Goblinfont.xml";
-	m_pFonts->Load(fontName4, imageName4, xmlFile4);
+	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -533,6 +533,11 @@ void Game::LoadStrings()
 		m_StringTable[10][5] = "plus the Forge will let you combine any spare Runes you have.";
 
 
+		if( m_pDialogs != nullptr )
+		{
+			m_pDialogs->DeleteInstance();
+			m_pDialogs = m_pDialogs->GetInstance();
+		}
 		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 	}
@@ -577,7 +582,11 @@ void Game::LoadStrings()
 		m_StringTable[10][4] = "Runir sem ad thu setur a thig hafa ahrif a abilites i bardaga,";
 		m_StringTable[10][5] = "og Forgeinn leyfir ther ad blanda saman Runeum sem ad thu tharf ekki ad nota.";
 
-
+		if( m_pDialogs != nullptr )
+		{
+			m_pDialogs->DeleteInstance();
+			m_pDialogs = m_pDialogs->GetInstance();
+		}
 		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
 
