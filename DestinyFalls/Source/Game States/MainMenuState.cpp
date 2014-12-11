@@ -29,8 +29,6 @@ void MainMenuState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	m_bTutorial = false;
-	
-
 
 	PlayGame = { 50, 50, 100, 80 };
 	LoadGame = { 50, 90, 100, 120 };

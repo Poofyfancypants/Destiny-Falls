@@ -68,7 +68,10 @@ public:
 	void HandleTutorial();
 	void DrawBackground();
 
+	void SortTurnOrder();
+
 private:
+
 
 	CombatState() = default;
 	virtual ~CombatState() = default;
@@ -78,6 +81,8 @@ private:
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
+
+	SGD::Rectangle PlayerSelection{ 0, 0, 0, 0 };
 
 	SGD::Rectangle Companion1HB	= { 50, 110, 150, 140 };
 	SGD::Rectangle Companion2HB	= { 50, 290, 150, 320 };
@@ -92,6 +97,7 @@ private:
 	SGD::Rectangle Enemy1rect		= { 561, 110, 625, 174 };
 	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
 	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
+
 
 	SGD::Point SavePlayerPos = { 0, 0 };
 

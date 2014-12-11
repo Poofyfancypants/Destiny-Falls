@@ -193,9 +193,6 @@ bool Game::Initialize( float width, float height )
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal2 );
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal3 );
 
-
-
-
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );
 
