@@ -78,7 +78,7 @@ void QuickTimeState::RunQuickTime()
 	if( currentQT == nullptr )
 	{
 		currentQT = new QuickTime;
-		currentQT->SetLength( 12 );
+		currentQT->SetLength( CombatState::GetInstance()->GetQTLength() );
 	}
 }
 void QuickTimeState::StopQuickTime()
