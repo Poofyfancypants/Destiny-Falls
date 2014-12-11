@@ -747,7 +747,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				}
 
-				temp->SetHealth(150);
+				temp->SetHealth(100);
 	}
 		break;
 	case 3: //Level Bosses
@@ -806,7 +806,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				}
 
-				temp->SetHealth(300);
+				temp->SetHealth(100);
 
 	}
 		break;
