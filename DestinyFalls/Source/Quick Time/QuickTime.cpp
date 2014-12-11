@@ -181,20 +181,26 @@ void QuickTime::Update( float elapsedTime )
 
 void QuickTime::Render()
 {
-	SGD::Rectangle rect = { 250 , 300 , 300 , 350 };
+	SGD::Rectangle rect = SGD::Rectangle( 250, 300 , 550 , 450) ;
 
-	//SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color { 255 , 100 , 100 , 100 } );
+	SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
 
-	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
+	SGD::Rectangle timer = SGD::Rectangle( 350 , 410 , 450 , 425 );
+
+	
 	BitmapFontManager* pFonts = pFonts->GetInstance();
+
 	if( m_bShowAlert )
 	{
-		pFonts->Render( "Other" , m_sAlert.c_str() , { 275 , 310 } , 1 , { 255 , 255 , 255 , 255 } );
+		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 275 , 360 } , 1 , { 255 , 0 , 64, 128} );
 	}
 	else
 	{
-		pFonts->Render( "Other" , m_sRenderOutput.c_str() , { 275 , 310 } , 2 , { 255 , 255 , 255 , 0 } );
-		pFonts->Render( "Other" , m_sRenderInput.c_str() , { 275 , 325 } , 2 , { 255 , 51 , 51 , 255 } );
+		//timer.left = timer.left - ( )
+		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 64 , 128 ) );
+
+		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 295 , 340 } , 2 , { 255 , 0 , 64 , 128 } );
+		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 295 , 355 } , 2 , { 255 , 0 , 43 , 0 } );
 	}
 	
 }
@@ -277,7 +283,7 @@ void QuickTime::GenerateRandomLetter()
 			break;
 		case SGD::Key::Two:
 		{
-			m_sOutput += "W";
+			m_sOutput += "2";
 		}
 			break;
 		case SGD::Key::Three:

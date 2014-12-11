@@ -3099,6 +3099,7 @@ void CombatState::HandleTutorial()
 	}
 }
 
+
 void CombatState::DrawBackground()
 {
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
