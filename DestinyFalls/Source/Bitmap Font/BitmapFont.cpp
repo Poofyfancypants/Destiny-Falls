@@ -85,7 +85,8 @@ void BitmapFont::Draw( string fontName, const char* output, SGD::Point position,
 				id = ch - 40;
 			}
 		}
-
+		if (fontName == "Goblin")
+			id = ch - 32;
 		if( fontName == "Bernardo" )
 			id = ch - 30;
 
