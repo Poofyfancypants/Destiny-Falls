@@ -260,7 +260,7 @@ void Player::TakeInput()
 		m_bUpdateAnimation = false;
 		return;
 	}
-	if( pInput->IsKeyDown( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) )
+	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->IsDPadDown(0, SGD::DPad::Up))
 	{
 		m_nDirection = 1;
 
@@ -272,7 +272,7 @@ void Player::TakeInput()
 		}
 
 	}
-	if( pInput->IsKeyDown( SGD::Key::Down ) || pInput->IsKeyDown( SGD::Key::S ) )
+	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->IsDPadDown(0, SGD::DPad::Down))
 	{
 		m_nDirection = 2;
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingDown" )
@@ -283,7 +283,7 @@ void Player::TakeInput()
 		}
 	}
 
-	if( pInput->IsKeyDown( SGD::Key::Left ) || pInput->IsKeyDown( SGD::Key::A ) )
+	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->IsDPadDown(0, SGD::DPad::Left))
 	{
 		m_nDirection = 3;
 
@@ -294,7 +294,7 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 	}
-	if( pInput->IsKeyDown( SGD::Key::Right ) || pInput->IsKeyDown( SGD::Key::D ) )
+	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->IsDPadDown(0, SGD::DPad::Right))
 	{
 		m_nDirection = 4;
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingRight" )
@@ -353,7 +353,7 @@ SGD::Rectangle Player::GetRect( void ) const
 void Player::HandleCollision( const iObject* pOther )
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-
+	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
 	if( pOther->GetType() == OBJ_ENEMY )
 	{
 		if( !m_bCombat )
@@ -366,7 +366,7 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_CHEST )
 	{
-		if( SGD::InputManager::GetInstance()->IsKeyPressed( SGD::Key::Q ) )
+		if (pInput->IsKeyPressed(SGD::Key::Q) || pInput->IsButtonDown(0, 4))
 		{
 			if( ( (Chest*)pOther )->IsTrapped() )
 			{
@@ -499,7 +499,8 @@ bool Player::TakeTurn( float elapsedTime )
 		if( m_nCursor > 1 )
 			m_nCursor = 1;
 
-		if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //First Selection >> Action
+			//First Selection >> Action
+		if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 		{
 			//if
 			if( m_nCursor == 0 )
@@ -549,7 +550,8 @@ bool Player::TakeTurn( float elapsedTime )
 			if( m_nCursor > pCombat->GetEnemies().size() - 1 )
 				m_nCursor = pCombat->GetEnemies().size() - 1;
 
-			if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //Second Selection >> Target
+				//Second Selection >> Target
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 			{
 				selected = false;
 				SetAttacking( true );
@@ -803,7 +805,8 @@ bool Player::TakeTurn( float elapsedTime )
 				if( m_nCursor > pInventory->m_vRing.size() - 1 )
 					m_nCursor = pInventory->m_vRing.size() - 1;
 
-				if( pInput->IsKeyPressed( SGD::Key::Enter ) )
+
+				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 				{
 					spellSelect = m_nCursor;
 					m_nCursor = 0;
@@ -838,7 +841,8 @@ bool Player::TakeTurn( float elapsedTime )
 				if( m_nCursor > pCombat->GetEnemies().size() - 1 )
 					m_nCursor = pCombat->GetEnemies().size() - 1;
 
-				if( pInput->IsKeyPressed( SGD::Key::Enter ) ) //Second Selection >> Target
+					//Second Selection >> Target
+				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 				{
 					selected = false;
 					SetAttacking( true );

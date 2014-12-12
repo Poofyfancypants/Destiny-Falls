@@ -113,6 +113,9 @@ private:
 	bool m_bShowToolTip10 = false;
 	bool m_bShowToolTip11 = false;
 	bool m_bShowToolTip12 = false;
+	
+	bool tabLock = false;
+	bool OnlyEquipEnter = true;
 
 	bool equipslot1selected = false;
 	bool equipslot2selected = false;

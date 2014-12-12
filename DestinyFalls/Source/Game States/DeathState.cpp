@@ -32,7 +32,7 @@ bool DeathState::Input(void)
 {
 	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0,6))
 	{
 		m_nCursor = PauseSelections::exit;
 	}
@@ -51,7 +51,7 @@ bool DeathState::Input(void)
 			m_nCursor++;
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::Enter))
+	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0,0))
 	{
 		switch (m_nCursor)
 		{
