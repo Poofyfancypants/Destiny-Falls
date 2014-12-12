@@ -75,6 +75,10 @@ bool Game::Initialize( float width, float height )
 	// - Loading Screen Loadins
 	m_hLoadingBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadingScreenBackground.png" );
 	m_hTextScroll = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadScreenScroll.png" );
+	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
+
+	SGD::AudioManager::GetInstance()->PlayAudio(m_hMusic, true);
+
 	m_pFonts = m_pFonts->GetInstance();
 	string fontName2 = "Other";
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";

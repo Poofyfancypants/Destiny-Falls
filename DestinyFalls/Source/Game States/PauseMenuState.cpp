@@ -68,7 +68,6 @@ bool PauseMenuState::Input( void )
 		case PauseSelections::exit:
 			Game::GetInstance()->ClearStates();
 			Game::GetInstance()->AddState( MainMenuState::GetInstance() );
-			pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
 			break;
 		default:
 			break;
