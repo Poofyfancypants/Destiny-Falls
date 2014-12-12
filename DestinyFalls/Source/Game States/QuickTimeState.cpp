@@ -15,6 +15,7 @@ QuickTimeState* QuickTimeState::GetInstance()
 
 void QuickTimeState::Enter()
 {
+	m_mQTMusic = SGD::AudioManager::GetInstance()->LoadAudio( "resource/audio/QuickTimeStarting.wav" );
 
 	RunQuickTime();
 }
@@ -80,6 +81,7 @@ void QuickTimeState::RunQuickTime()
 		currentQT = new QuickTime;
 		currentQT->SetLength( CombatState::GetInstance()->GetQTLength() );
 		CombatState::GetInstance()->MuteCombatMusic();
+		SGD::AudioManager::GetInstance()->PlayAudio( m_mQTMusic );
 
 	}
 }
