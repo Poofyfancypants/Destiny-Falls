@@ -12,7 +12,6 @@ public:
 	Companion();
 	~Companion();
 
-	virtual bool TakeTurn( float elapsedTime ) override;
 	virtual void Update( float elapsedTime );
 	virtual void Render();
 	virtual void CombatRender( int _posIndex = 0 );
@@ -43,6 +42,9 @@ public:
 
 	void ResetAnimation();
 	void SetAnimation(bool _update) { m_bUpdateAnimation = _update; }
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
+
 
 private:
 	int * m_CurrentTurn;
@@ -65,6 +67,8 @@ private:
 	AnimationManager* m_pAnimator;
 	bool m_bUpdateAnimation = false;
 
+
+	float m_fDeathAnimationTimer = 3.0f;
 
 	int ActionSelected = 0;
 	bool selected = false;

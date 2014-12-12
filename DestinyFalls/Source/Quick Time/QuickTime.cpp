@@ -85,7 +85,7 @@ void QuickTime::Update( float elapsedTime )
 		}
 	}
 	//if the number of seconds passed is less than 2 and the number of guessed letters is less than the number of letters in the qt event
-	else if( m_fSeconds < 2.0f && m_uncounter < m_unlength && m_bShowAlert == false)
+	else if( m_fSeconds < m_fLetterTimer && m_uncounter < m_unlength && m_bShowAlert == false )
 	{//if the user presses a button that is the same as the letter to be guessed
 		SGD::Key output = m_vOutput[ m_uncounter ];
 
@@ -98,6 +98,8 @@ void QuickTime::Update( float elapsedTime )
 			m_uncounter++;
 			//set the timer back to 0
 			m_fSeconds = 0.0f;
+
+			m_fLetterTimer -= 0.125f;
 		}//if there is any other button pressed the guess was wrong
 		else if( m_kLastKeyPressed != SGD::Key::None )
 		{
@@ -181,9 +183,8 @@ void QuickTime::Update( float elapsedTime )
 
 void QuickTime::Render()
 {
-	SGD::Rectangle rect = SGD::Rectangle( 250, 300 , 550 , 450) ;
 
-	SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
+	
 
 	SGD::Rectangle timer = SGD::Rectangle( 350 , 410 , 450 , 425 );
 
@@ -192,15 +193,21 @@ void QuickTime::Render()
 
 	if( m_bShowAlert )
 	{
-		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 275 , 360 } , 1 , { 255 , 0 , 64, 128} );
+		SGD::Rectangle rect = SGD::Rectangle( 150 , 300 , 615 , 450 );
+
+		SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
+		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 175 , 360 } , 1 , { 255 , 0 , 64, 128} );
 	}
 	else
 	{
-		//timer.left = timer.left - ( )
+		SGD::Rectangle rect = SGD::Rectangle( 250 , 300 , 550 , 450 );
+
+		SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
+		timer.right = timer.right - ( ( m_fSeconds / m_fLetterTimer ) * 100 );
 		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 64 , 128 ) );
 
-		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 295 , 340 } , 2 , { 255 , 0 , 64 , 128 } );
-		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 295 , 355 } , 2 , { 255 , 0 , 43 , 0 } );
+		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 275 , 325 } , 2 , { 255 , 0 , 64 , 128 } );
+		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 275 , 340 } , 2 , { 255 , 0 , 43 , 0 } );
 	}
 	
 }
@@ -233,11 +240,6 @@ void QuickTime::GenerateRandomLetter()
 
 	m_vOutput.push_back( m_vKeys[ temp ] );
 
-	//create a pointer to the input manager
-	/*SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	char l = *pInput->GetKeyName( m_vKeys[ temp ] );
-
-	m_sOutput += l;*/
 
 	switch( m_vKeys[ temp ] )
 	{

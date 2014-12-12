@@ -39,7 +39,7 @@ bool CreditState::Input()
 		Game::GetInstance()->ClearStates();
 		pAudio->StopAudio(Game::GetInstance()->m_mWinMusic);
 		Game::GetInstance()->AddState(MainMenuState::GetInstance());
-		pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
+		//pAudio->PlayAudio(Game::GetInstance()->m_mMusic);
 
 	}
 	return true;
@@ -60,7 +60,7 @@ void CreditState::Render()
 	float x = Game::GetInstance()->GetScreenWidth() / 1024;
 	float y = Game::GetInstance()->GetScreenHeight() / 512;
 
-	pFonts->Render("Celtic", "Credits:",{ 100, 25 }, 2, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Credits:",{ 100, 25 }, 2, { 255, 255, 255, 255 });
 
 	pFonts->Render("Other", "EP:", { 100, 100 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "John OLeske", { 125, 125 }, 1, { 255, 255, 255, 255 });
@@ -78,6 +78,8 @@ void CreditState::Render()
 	pFonts->Render("Other", "Thanks To", { 100, 425 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "Spencer Slaton", { 125, 450 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "Dave Olack", { 125, 475 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Riley Wood", { 125, 500 }, 1, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "Kidnapped Brick", { 125, 525 }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "esc to Exit", { 680, 550 }, 1, { 255, 255, 255, 255 });
 
 	m_particle.Render();

@@ -85,6 +85,21 @@ void BitmapFont::Draw( string fontName, const char* output, SGD::Point position,
 				id = ch - 40;
 			}
 		}
+		if (fontName == "InventoryFont")
+		{
+			if (ch >= 48 && ch <= 64)
+			{
+				id = ch - 48;
+			}
+			if (ch >= 65 && ch <= 90)
+			{
+				id = ch - 55;
+			}
+			if (ch >= 97 && ch <= 122)
+			{
+				id = ch - 61;
+			}
+		}
 		if( fontName == "Goblin")
 			id = ch - 32;
 		if( fontName == "Bernardo" )

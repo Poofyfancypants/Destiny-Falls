@@ -77,13 +77,16 @@ void GameplayState::Enter()
 	m_pAnimator->Load( "resource/XML/Companion1AttackXML.xml" );
 	m_pAnimator->Load( "resource/XML/GladiatorAttackXML.xml" );
 
+	m_pAnimator->Load( "resource/XML/DeathAnimationXML.xml" );
+
+
 	m_hTutorialRune = pGraphics->LoadTexture( L"resource/graphics/Firet2.png" );
 	m_hminiboss = pGraphics->LoadTexture( L"resource/graphics/testMB1.png" );
 	m_hlevelboss = pGraphics->LoadTexture( L"resource/graphics/testLB1.png" );
 	m_hFinalboss = pGraphics->LoadTexture( L"resource/graphics/testLB5.png" );
 	m_hRanger = pGraphics->LoadTexture( L"resource/graphics/testc.png" );
 	m_hCleric = pGraphics->LoadTexture( L"resource/graphics/testc2.png" );
-	m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
+	//m_hForge = pGraphics->LoadTexture( L"resource/graphics/Anvil1.png" );
 	m_hHealthPot = pGraphics->LoadTexture( L"resource/graphics/healthpot.png" );
 	m_hDialogImg = pGraphics->LoadTexture( L"resource/graphics/heroPortrait.png" );
 	m_hplayer = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
@@ -113,6 +116,7 @@ void GameplayState::Enter()
 	ForgeButton = SGD::Rectangle( SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Point{ ( Game::GetInstance()->GetScreenWidth() - 59 ), ( Game::GetInstance()->GetScreenHeight() ) } );
 	HealthPotionPosition = SGD::Rectangle( SGD::Point{ 10, ( Game::GetInstance()->GetScreenHeight() - 60 ) }, SGD::Size{ 60, 60 } );
 
+
 	m_ptWorldCam = { 0, 0 };
 	m_fWorldWidth = 800;
 	m_fWorldHeight = 600;
@@ -141,7 +145,7 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hminiboss );
 	pGraphics->UnloadTexture( m_hlevelboss );
 	pGraphics->UnloadTexture( m_hFinalboss );
-	pGraphics->UnloadTexture( m_hForge );
+	//pGraphics->UnloadTexture( m_hForge );
 	pGraphics->UnloadTexture( m_hplayer );
 	pGraphics->UnloadTexture( m_henemy );
 	pGraphics->UnloadTexture( m_hChest );
@@ -186,10 +190,10 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::F ) )
-	{
-		Game::GetInstance()->AddState( ForgeState::GetInstance() );
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F ) )
+	//{
+	//	Game::GetInstance()->AddState( ForgeState::GetInstance() );
+	//}
 
 	// - Toggle DebugMode with F2
 	if( pInput->IsKeyPressed( SGD::Key::F1 ) )
@@ -198,11 +202,11 @@ bool GameplayState::Input()
 	{
 		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
-	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	//{
-	//	NextLevel();
-	//	m_bChangeLevels = true;
-	//}
+	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
@@ -210,10 +214,10 @@ bool GameplayState::Input()
 		{
 			Game::GetInstance()->AddState( InventoryState::GetInstance() );
 		}
-		if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
+	/*	if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
 		{
 			Game::GetInstance()->AddState( ForgeState::GetInstance() );
-		}
+		}*/
 	}
 
 	m_bIcelandic = Game::GetInstance()->GetIcelandic();
@@ -301,7 +305,7 @@ void GameplayState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
-	pGraphics->DrawTexture( m_hForge, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.4f, 0.35f } );
+	//pGraphics->DrawTexture( m_hForge, SGD::Point( ( Game::GetInstance()->GetScreenWidth() - 120 ), ( Game::GetInstance()->GetScreenHeight() - 60 ) ), {}, {}, {}, { 0.4f, 0.35f } );
 
 	if( m_nCurrentLevel == 0 )
 	{

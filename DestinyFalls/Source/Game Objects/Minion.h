@@ -75,7 +75,6 @@ public:
 			   - If there is only one enemy, hits self for 10-15
 	*/
 
-	virtual bool TakeTurn();
 	virtual void Update(float elapsedTime);
 	virtual void Render(int _posIndex);
 	virtual int GetType(void) const { return OBJ_MINION; }
@@ -114,6 +113,10 @@ public:
 	void ResetAnimation();
 	void SetAnimation(bool _update) { m_bUpdateAnimation = _update; }
 
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
+
+
 private:
 	int * m_CurrentTurn;
 	int m_nHealth = 0;
@@ -136,6 +139,8 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	bool m_bUpdateAnimation = false;
+
+	float m_fDeathAnimationTimer = 3.0f;
 
 };
 

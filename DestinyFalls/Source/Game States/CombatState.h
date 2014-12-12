@@ -51,8 +51,6 @@ public:
 	Object* AddMinion(int _region = 0, int EnemyType = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
 	Object* AddCompanion(int _type); 
 
-	bool GetCooldown() { return m_bCoolDown; }
-	void SetCooldown(bool x) { m_bCoolDown = x; }
 	void SetActionTimer(float _time) { ActionTimer = _time; }
 	float GetActionTimer() const { return ActionTimer; }
 
@@ -66,7 +64,9 @@ public:
 	bool TakeTurn(Object*);
 
 	void HandleTutorial();
-	void DrawBackground();
+	void DrawBackground(SGD::Rectangle _shakeRect = { 0, 0, 0, 0 });
+
+	int GetQTLength() { return m_nQTLength; }
 
 	void SortTurnOrder();
 
@@ -78,6 +78,8 @@ private:
 
 	CombatState(const CombatState&) = delete;
 	CombatState& operator=(const CombatState&) = delete;
+
+	int m_nQTLength = 3;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
@@ -112,7 +114,6 @@ private:
 	int spellSelect = -1;
 
 	int CurrentTurn;
-	bool m_bCoolDown = false;
 	bool m_bShake = false;
 
 	bool entered = false;
@@ -163,6 +164,13 @@ private:
 	vector<SGD::HTexture> m_vBackgroundsFinal;
 
 	int m_nNumQtCorrect = 0;
+
+	//Spells
+	bool spellActive = false;
+
+	Runes Rune1;
+	Runes Rune2;
+	Runes Rune3;
 
 };
 

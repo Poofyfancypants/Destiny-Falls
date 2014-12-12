@@ -15,8 +15,33 @@ Minion::~Minion()
 
 void Minion::Update(float elapsedTime)
 {
+
 	if (m_nHealth <= 0)
 		m_nHealth = 0;
+
+	if( m_nHealth <= 0 )
+	{
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
+		else
+		{
+			m_fDeathAnimationTimer -= elapsedTime;
+
+			if( m_fDeathAnimationTimer < 0.0f )
+			{
+				m_fDeathAnimationTimer = 0.0f;
+			}
+			
+			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+			
+		}
+
+		
+	}
 
 	if (m_nHealth > 0)
 		Enemy1HB.right = Enemy1HB.left + m_nHealth;
@@ -57,6 +82,13 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
 			}
 		}
+		else if( GetDeathAnimationTimer() > 0.0f )		
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy2rect.right , Enemy2rect.bottom );
+			}
+		}
 		break;
 	case 1:  //Top 
 		if (m_nHealth > 0)
@@ -66,6 +98,14 @@ void Minion::Render(int _posIndex)
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
+			}
+
+		}
+		else if( GetDeathAnimationTimer() > 0.0f )
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy1rect.right , Enemy1rect.bottom );
 			}
 		}
 		break;
@@ -77,6 +117,13 @@ void Minion::Render(int _posIndex)
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
+			}
+		}
+		else if( GetDeathAnimationTimer() > 0.0f )
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy3rect.right , Enemy3rect.bottom );
 			}
 		}
 		break;
@@ -98,76 +145,6 @@ int Minion::GetName(int _index)
 	name[0] = RegionString;
 	name[1] = AIString;
 	return name[_index];
-}
-
-bool Minion::TakeTurn() //This will be even bigger, still don't care
-{
-	CombatState* pCombat = CombatState::GetInstance();
-	int target = 0;
-
-	switch (this->GetAIType())
-	{
-	case Minion_AI:
-		if (m_nHealth > 0)
-		{
-			target = rand() % pCombat->GetHeroes().size();
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case Off_AI:
-		if (m_nHealth > 0)
-		{
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case Def_AI:
-		if (m_nHealth > 0)
-		{
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case Heal_AI:
-		if (m_nHealth > 0)
-		{
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case AOE_AI:
-		if (m_nHealth > 0)
-		{
-			int AI = rand() % 20;
-			if (AI <= 15) //AOE attack
-				pCombat->TakeAction(CombatState::ActionType::AOE, this, target);
-			else
-				pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-
-		}
-		break;
-	default:
-		break;
-	}
-
-	return true;
 }
 
 void Minion::SetMinionAnimation(int region, int minionType)

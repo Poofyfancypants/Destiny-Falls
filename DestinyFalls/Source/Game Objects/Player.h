@@ -23,7 +23,6 @@ public:
 	virtual int GetType( void ) const { return OBJ_PLAYER; }
 	virtual SGD::Rectangle GetRect( void ) const override;
 	virtual void HandleCollision( const iObject* pOther ) override;
-	virtual bool TakeTurn( float elapsedTime );
 
 	void TakeInput();
 
@@ -64,20 +63,23 @@ public:
 	QuickTime* GetQT() const { return currentQT; }
 	bool m_bDoQt = false;
 
-	bool GetSpell1Cool() const { return m_bSpell1; }
-	bool GetSpell2Cool() const { return m_bSpell2; }
-	bool GetSpell3Cool() const { return m_bSpell3; }
+	int GetSpell1Cool() const { return m_bSpell1; }
+	int GetSpell2Cool() const { return m_bSpell2; }
+	int GetSpell3Cool() const { return m_bSpell3; }
 
-	void SetSpell1Cool(bool _Cool) { m_bSpell1 = _Cool; }
-	void SetSpell2Cool(bool _Cool) { m_bSpell2 = _Cool; }
-	void SetSpell3Cool(bool _Cool) { m_bSpell3 = _Cool; }
+	void SetSpell1Cool(int _Cool) { m_bSpell1 = _Cool; }
+	void SetSpell2Cool(int _Cool) { m_bSpell2 = _Cool; }
+	void SetSpell3Cool(int _Cool) { m_bSpell3 = _Cool; }
 
 	void SetRect(SGD::Rectangle pRect1) { playerRect = pRect1; }
 	
 	bool GetMapSwitch() const { return m_bMapSwitch; }
 	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
 
-	int CombatEnemyID = -1;
+	int CombatEnemyID = -1; //It says enemy, I know.
+
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
 
 private:
 
@@ -96,9 +98,9 @@ private:
 
 	bool m_bCombat = false;
 
-	bool m_bSpell1 = false; //False == not on cooldown
-	bool m_bSpell2 = false;
-	bool m_bSpell3 = false;
+	int m_bSpell1 = -1;
+	int m_bSpell2 = -1;
+	int m_bSpell3 = -1;
 
 	int ActionSelected = 0;
 
@@ -129,5 +131,6 @@ private:
 	bool m_bPreventDialog = false;
 	float m_fDialogTimer = 5.0f;
 	int m_nLineCounter = 1;
+	float m_fDeathAnimationTimer = 3.0f;
 
 };
