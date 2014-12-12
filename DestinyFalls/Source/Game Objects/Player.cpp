@@ -42,11 +42,26 @@ Player::~Player()
 void Player::Update( float elapsedTime )
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-	if( m_nHealth <= 0 )
+	if( m_nHealth <= 0 && m_fDeathAnimationTimer > 0.0f)
 	{
-		this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
-		this->GetTimeStamp()->SetCurrentFrame( 0 );
-		this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
+		else
+		{
+			m_fDeathAnimationTimer -= elapsedTime;
+
+			if( m_fDeathAnimationTimer < 0.0f )
+			{
+				m_fDeathAnimationTimer = 0.0f;
+			}
+
+			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+		}
+		return;
 	}
 	if( m_bPlayCombatAnimation )
 	{

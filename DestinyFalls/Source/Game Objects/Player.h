@@ -79,6 +79,9 @@ public:
 
 	int CombatEnemyID = -1;
 
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
+
 private:
 
 	SGD::Rectangle playerRect = { 225, 200, 289, 264 };
@@ -129,6 +132,7 @@ private:
 	bool m_bPreventDialog = false;
 	float m_fDialogTimer = 5.0f;
 	int m_nLineCounter = 1;
+	float m_fDeathAnimationTimer = 3.0f;
 
 	float p1, p2, v1;
 	bool m_PrintDMG = false;

@@ -37,7 +37,6 @@ void CreditState::Enter()
 	m_vCredits.push_back( "Dave Olack" );
 	m_vCredits.push_back( "Riley Wood" );
 	m_vCredits.push_back( "Kidnapped Brick" );
-	m_vCredits.push_back( "esc to Exit" );
 
 }
 
@@ -119,18 +118,22 @@ void CreditState::Render()
 
 	for( size_t i = 0; i < m_vCredits.size(); i++ )
 	{
-		float futureY = (float)( ( 650 + ( 25 * i ) ) - 5 * m_fScroll );
+		float futureY = (float)( ( 650 + ( 30 * i ) ) - 5 * m_fScroll );
 
 		if( i == m_vCredits.size() - 1 && futureY < 50.0f )
 		{
 			m_fScroll = 0;
-			futureY = (float)( ( 650 + ( 25 * i ) ) - 5 * m_fScroll );
+			futureY = (float)( ( 650 + ( 30 * i ) ) - 5 * m_fScroll );
 		}
-		if( i == 0 || i == 2 || i == 4 || i == 7 || i == 13 && futureY > 80.0f)
-			pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, SGD::Color() );
-		else if( futureY > 80.0f )
-			pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, SGD::Color() );
+		if( futureY > 80.0f )
+		{
+			if( i == 0 || i == 2 || i == 4 || i == 7 || i == 13 )
+				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, SGD::Color() );
+			else
+				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, SGD::Color() );
+		}
 
 	}
+
 	m_particle.Render();
 }
