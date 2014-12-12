@@ -74,7 +74,6 @@ bool Game::Initialize( float width, float height )
 
 	// - Loading Screen Loadins
 	m_hLoadingBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadingScreenBackground.png" );
-	m_hTextScroll = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadScreenScroll.png" );
 	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
 
 	SGD::AudioManager::GetInstance()->PlayAudio(m_hMusic, true);
@@ -142,7 +141,6 @@ bool Game::Initialize( float width, float height )
 
 	LoadingScreen( "Loading Audio.." );
 
-	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
 	m_mMeleeButton = pAudio->LoadAudio( L"resource/audio/Melee.wav" );
 	m_mMagicButton = pAudio->LoadAudio( L"resource/audio/Magic.wav" );
@@ -166,7 +164,6 @@ bool Game::Initialize( float width, float height )
 
 
 
-	//pAudio->PlayAudio( m_mMusic, true );
 
 	LoadStrings();
 
@@ -341,10 +338,9 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hWaterIcon );
 	pGraphics->UnloadTexture( m_hEarthIcon );
 
-	pGraphics->UnloadTexture( m_hTextScroll );
 	pGraphics->UnloadTexture( m_hLoadingBackground );
 
-	pAudio->UnloadAudio( m_mMusic );
+	pAudio->UnloadAudio( m_hMusic );
 	pAudio->UnloadAudio( m_mButton );
 	pAudio->UnloadAudio( m_mMagicButton );
 	pAudio->UnloadAudio( m_mMeleeButton );
@@ -365,7 +361,6 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mBoo );
 	pAudio->UnloadAudio( m_mCheer );
 	pAudio->UnloadAudio( m_mWinMusic );
-
 
 
 	SGD::AudioManager::GetInstance()->Terminate();

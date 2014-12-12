@@ -58,6 +58,7 @@ void OptionsState::Exit()
 	pGraphics->UnloadTexture( m_hButton );
 	pGraphics->UnloadTexture( m_hButtonHighlighted );
 	pGraphics->UnloadTexture( m_hArrow );
+	pGraphics->UnloadTexture(m_hBackground);
 
 	pAudio->UnloadAudio( m_hBackMusic );
 	pAudio->UnloadAudio( m_hEffectSound );
