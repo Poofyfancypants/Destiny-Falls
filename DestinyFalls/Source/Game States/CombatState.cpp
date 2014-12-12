@@ -3234,3 +3234,16 @@ void CombatState::SortTurnOrder()
 		}
 	}
 }
+
+void CombatState::MuteCombatMusic()
+{
+	m_nCombatMusicVolume = SGD::AudioManager::GetInstance()->GetAudioVolume( cMusic );
+	SGD::AudioManager::GetInstance()->SetAudioVolume( cMusic , 0 );
+	
+}
+
+void CombatState::UnMuteCombatMusic()
+{
+	SGD::AudioManager::GetInstance()->SetAudioVolume( cMusic , m_nCombatMusicVolume );
+
+}

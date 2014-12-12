@@ -24,7 +24,7 @@ private:
 	unsigned int m_unNumCorrect = 0;
 	unsigned int m_uncounter = 0;
 	float m_fSeconds = 0.0f;
-	float m_fAlertTimer = 2.0f;
+	float m_fAlertTimer = 3.0f;
 	float m_fLetterTimer = 2.0f;
 
 	bool m_bqtOver = false;
