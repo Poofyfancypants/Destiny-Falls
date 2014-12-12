@@ -164,7 +164,6 @@ private:
 
 	// - Loading Screen
 	SGD::HTexture m_hLoadingBackground;
-	SGD::HTexture m_hTextScroll;
 	SGD::HAudio m_hMusic;
 
 

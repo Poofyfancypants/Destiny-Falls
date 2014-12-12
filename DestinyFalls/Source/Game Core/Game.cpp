@@ -74,7 +74,6 @@ bool Game::Initialize( float width, float height )
 
 	// - Loading Screen Loadins
 	m_hLoadingBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadingScreenBackground.png" );
-	m_hTextScroll = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadScreenScroll.png" );
 	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
 
 	SGD::AudioManager::GetInstance()->PlayAudio(m_hMusic, true);
@@ -341,7 +340,6 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hWaterIcon );
 	pGraphics->UnloadTexture( m_hEarthIcon );
 
-	pGraphics->UnloadTexture( m_hTextScroll );
 	pGraphics->UnloadTexture( m_hLoadingBackground );
 
 	pAudio->UnloadAudio( m_mMusic );
