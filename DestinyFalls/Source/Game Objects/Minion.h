@@ -20,9 +20,7 @@ public:
 
 	struct EnemyMods
 	{
-		int AttackSpeed = 6; //Max Turn rotation is Default
-							 //Implementing this on the side or in sprint three could be great
-
+							
 		int DamageLevel = 10;// 0-20 scale
 		ElementAtt ElemResistance;
 		ElementAtt ElemAffinity;
@@ -93,7 +91,7 @@ public:
 	void SetAffinity(Elements x) { m_rAffinity = x; }
 
 	EnemyMods GetMods() { return Modifiers; }
-	void SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int _tier2);
+	void SetMods(int _damageLevel, int _type, int _tier1, int _tier2);
 
 	void SetString(int _region, int _AI);
 	int GetName(int _index = 1);
@@ -116,6 +114,10 @@ public:
 	void ResetAnimation();
 	void SetAnimation(bool _update) { m_bUpdateAnimation = _update; }
 
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
+
+
 private:
 	int * m_CurrentTurn;
 	int m_nHealth = 0;
@@ -129,7 +131,7 @@ private:
 	SGD::Color m_HealthColor = {0,0,0,0};
 
 	SGD::Rectangle Enemy1rect = { 531, 110, 605, 174 };
-	SGD::Rectangle Enemy1HB = { 670, 80, 795, 110 };
+	SGD::Rectangle Enemy1HB = { 670, 100, 795, 130 };
 
 	SGD::Rectangle Enemy2rect = { 436, 200, 500, 264 };
 	SGD::Rectangle Enemy2HB = { 605, 200, 730, 230 };
@@ -140,6 +142,8 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	bool m_bUpdateAnimation = false;
+
+	float m_fDeathAnimationTimer = 3.0f;
 
 };
 

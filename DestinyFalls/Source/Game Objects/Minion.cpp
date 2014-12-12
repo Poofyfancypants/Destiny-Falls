@@ -15,8 +15,33 @@ Minion::~Minion()
 
 void Minion::Update(float elapsedTime)
 {
+
 	if (m_nHealth <= 0)
 		m_nHealth = 0;
+
+	if( m_nHealth <= 0 )
+	{
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
+		else
+		{
+			m_fDeathAnimationTimer -= elapsedTime;
+
+			if( m_fDeathAnimationTimer < 0.0f )
+			{
+				m_fDeathAnimationTimer = 0.0f;
+			}
+			
+			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+			
+		}
+
+		
+	}
 
 	if (m_nHealth > 0)
 		Enemy1HB.right = Enemy1HB.left + m_nHealth;
@@ -57,6 +82,13 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
 			}
 		}
+		else if( GetDeathAnimationTimer() > 0.0f )		
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy2rect.right , Enemy2rect.bottom );
+			}
+		}
 		break;
 	case 1:  //Top 
 		if (m_nHealth > 0)
@@ -66,6 +98,14 @@ void Minion::Render(int _posIndex)
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
+			}
+
+		}
+		else if( GetDeathAnimationTimer() > 0.0f )
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy1rect.right , Enemy1rect.bottom );
 			}
 		}
 		break;
@@ -77,6 +117,13 @@ void Minion::Render(int _posIndex)
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
+			}
+		}
+		else if( GetDeathAnimationTimer() > 0.0f )
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy3rect.right , Enemy3rect.bottom );
 			}
 		}
 		break;
@@ -314,9 +361,9 @@ void Minion::SetMinionAnimation(int region, int minionType)
 
 }
 
-void Minion::SetMods(int _atkSpeed, int _damageLevel, int _type, int _tier1, int _tier2)
+void Minion::SetMods(int _damageLevel, int _type, int _tier1, int _tier2)
 {
-	Modifiers.AttackSpeed = _atkSpeed;
+	
 	Modifiers.DamageLevel = _damageLevel;
 	Modifiers.ElemAffinity.ElementType = _type;
 	Modifiers.ElemResistance.ElementType = _type;

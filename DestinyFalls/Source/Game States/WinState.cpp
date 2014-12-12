@@ -59,7 +59,7 @@ void WinState::Render()
 
 	//pGraphics->DrawTexture(m_htBackground, { 0, 0 }, {}, {}, {}, { x, y });
 
-	pFonts->Render("Celtic", "You Win", { { (width - (10 * 32)) / 2, 250 } }, 2, { 255, 255, 255, 255 });
+	pFonts->Render("Other", "You Win", { { (width - (10 * 32)) / 2, 250 } }, 2, { 255, 255, 255, 255 });
 
 	pFonts->Render("Other", "You have claimed your revenge", { { (width - (13 * 32)) / 2, 350 } }, 1, { 255, 255, 255, 255 });
 	pFonts->Render("Other", "Now all thats left is to rebuild the Moon Lit Isle", { { (width - (14 * 32)) / 2, 375 } }, 1, { 255, 255, 255, 255 });

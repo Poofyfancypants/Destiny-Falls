@@ -4,7 +4,6 @@
 #include <ctime>
 #include <cstdlib>
 #include <cassert>
-
 #include "../Messages/MessageID.h"
 #include "../Game States/IGameState.h"
 #include "../Game States/CombatState.h"
@@ -71,8 +70,27 @@ bool Game::Initialize( float width, float height )
 	SGD::MessageManager::GetInstance()->Initialize( &MessageProc );
 	SGD::EventManager::GetInstance()->Initialize();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+	// - Load options
+	std::ifstream load;
+	load.open( "resource/XML/Options.txt" );
+	if( load.is_open() )
+	{
+		int m_nMusic, m_nEffects, m_nScreen, m_nIcelandic;
+		load >> m_nMusic >> m_nEffects >> m_nScreen >> m_nIcelandic;
+		pAudio->SetMasterVolume( SGD::AudioGroup::Music, m_nMusic );
+		pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, m_nEffects );
+
+		m_bWindowed = ( m_nScreen ? true : false );
+		Game::GetInstance()->SetIcelandic( ( m_nIcelandic ? true : false ) );
+
+		load.close();
+	}
+
 	m_fScreenWidth = width;
 	m_fScreenHeight = height;
+
+	SGD::GraphicsManager::GetInstance()->Resize( { m_fScreenWidth, m_fScreenHeight }, m_bWindowed );
 
 	//set the font pointer to the BitmapFontManager Instance
 	m_pFonts = m_pFonts->GetInstance();
@@ -83,10 +101,10 @@ bool Game::Initialize( float width, float height )
 	string xmlFile = "resource/XML/newfont.xml";
 	m_pFonts->Load( fontName, imageName, xmlFile );
 	//Load the Bernardo font
-	string fontName1 = "Celtic";
-	string imageName1 = "resource/graphics/Fonts/Celticfont_0.png";
-	string xmlFile1 = "resource/XML/Celticfont.xml";
-	m_pFonts->Load( fontName1, imageName1, xmlFile1 );
+	//string fontName1 = "Celtic";
+	//string imageName1 = "resource/graphics/Fonts/CelticMD_0.png";
+	//string xmlFile1 = "resource/XML/Celticfont.xml";
+	//m_pFonts->Load( fontName1, imageName1, xmlFile1 );
 	//Load the other font
 	string fontName2 = "Other";
 	string imageName2 = "resource/graphics/Fonts/otherfont1_0.png";
@@ -97,6 +115,16 @@ bool Game::Initialize( float width, float height )
 	string imageName3 = "resource/graphics/Fonts/dialog.png";
 	string xmlFile3 = "resource/XML/newDialog.xml";
 	m_pFonts->Load( fontName3, imageName3, xmlFile3 );
+	//Load the dialog font
+	string fontName4 = "Goblin";
+	string imageName4 = "resource/graphics/Fonts/Goblinfont_0.png";
+	string xmlFile4 = "resource/XML/Goblinfont.xml";
+	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
+	//Load the dialog font
+	string fontName5 = "InventoryFont";
+	string imageName5 = "resource/graphics/Fonts/InventoryFont_0.png";
+	string xmlFile5 = "resource/XML/InventoryFont.xml";
+	m_pFonts->Load(fontName5, imageName5, xmlFile5);
 
 	m_mMusic = pAudio->LoadAudio( L"resource/audio/MenuMusic.wav" );
 	m_mButton = pAudio->LoadAudio( L"resource/audio/MenuButton.wav" );
@@ -122,7 +150,7 @@ bool Game::Initialize( float width, float height )
 
 
 
-	pAudio->PlayAudio( m_mMusic, true );
+	//pAudio->PlayAudio( m_mMusic, true );
 
 	LoadStrings();
 
@@ -193,14 +221,12 @@ bool Game::Initialize( float width, float height )
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal2 );
 	CombatState::GetInstance()->AddBackgroundsFinal( m_hFinal3 );
 
-
-
-
 	//Main menu state here
 	AddState( SplashScreenState::GetInstance() );
-
+	//AddState( OptionsState::GetInstance() );
 	//Set up Animation Manager
 	m_pAnimator = m_pAnimator->GetInstance();
+
 
 
 	return true;	// success!
@@ -496,6 +522,8 @@ void Game::LoadStrings()
 		m_StringTable[9][2] = "SFX Vol";
 		m_StringTable[9][3] = "Screen";
 		m_StringTable[9][4] = "Language";
+		m_StringTable[10][6] = "Options";
+
 
 		// - Combat Tutorial
 		m_StringTable[9][5] = "When it is your turn you get to select between your abilities.";
@@ -510,6 +538,11 @@ void Game::LoadStrings()
 		m_StringTable[10][5] = "plus the Forge will let you combine any spare Runes you have.";
 
 
+		if( m_pDialogs != nullptr )
+		{
+			m_pDialogs->DeleteInstance();
+			m_pDialogs = m_pDialogs->GetInstance();
+		}
 		m_pDialogs->Load( "resource/XML/CompanionDialog.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialog.xml" );
 	}
@@ -540,6 +573,7 @@ void Game::LoadStrings()
 		m_StringTable[9][2] = "SFX Vol";
 		m_StringTable[9][3] = "Skjar";
 		m_StringTable[9][4] = "Tungumal";
+		m_StringTable[10][6] = "Stillingar";
 
 		// - Combat Tutorial
 		m_StringTable[9][5] = "Thegar umferdin kemur ad ther faerdu ad velja ability til ad nota.";
@@ -553,7 +587,11 @@ void Game::LoadStrings()
 		m_StringTable[10][4] = "Runir sem ad thu setur a thig hafa ahrif a abilites i bardaga,";
 		m_StringTable[10][5] = "og Forgeinn leyfir ther ad blanda saman Runeum sem ad thu tharf ekki ad nota.";
 
-
+		if( m_pDialogs != nullptr )
+		{
+			m_pDialogs->DeleteInstance();
+			m_pDialogs = m_pDialogs->GetInstance();
+		}
 		m_pDialogs->Load( "resource/XML/CompanionDialogIS.xml" );
 		m_pDialogs->Load( "resource/XML/PlayerDialogIS.xml" );
 

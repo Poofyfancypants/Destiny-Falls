@@ -25,6 +25,8 @@ private:
 	unsigned int m_uncounter = 0;
 	float m_fSeconds = 0.0f;
 	float m_fAlertTimer = 2.0f;
+	float m_fLetterTimer = 2.0f;
+
 	bool m_bqtOver = false;
 	bool m_bShowAlert = true;
 
@@ -42,6 +44,7 @@ public:
 	unsigned int GetLength(){ return m_unlength; }
 	unsigned int GetNumCorrect( void ){ return m_unNumCorrect; }
 	bool GetIsOver( void ){ return m_bqtOver; }
+	
 
 	//mutators
 	void SetLength(unsigned int x);

@@ -68,13 +68,20 @@ public:
 	void HandleTutorial();
 	void DrawBackground();
 
+	int GetQTLength() { return m_nQTLength; }
+
+	void SortTurnOrder();
+
 private:
+
 
 	CombatState() = default;
 	virtual ~CombatState() = default;
 
 	CombatState(const CombatState&) = delete;
 	CombatState& operator=(const CombatState&) = delete;
+
+	int m_nQTLength = 3;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
@@ -90,7 +97,7 @@ private:
 	SGD::Rectangle Companion2HB = { 50, 280, 150, 310 };
 
 	SGD::Rectangle Enemy1rect = { 531, 110, 605, 174 };
-	SGD::Rectangle Enemy1HB = { 670, 80, 795, 110 };
+	SGD::Rectangle Enemy1HB = { 670, 100, 795, 130 };
 
 	SGD::Rectangle Enemy2rect = { 436, 200, 500, 264 };
 	SGD::Rectangle Enemy2HB = { 605, 200, 730, 230 };
@@ -99,6 +106,7 @@ private:
 	SGD::Rectangle Enemy3HB = { 670, 310, 795, 340 };
 
 
+	SGD::Rectangle PlayerSelection = { 0, 0, 0, 0 };
 	SGD::Point SavePlayerPos = { 0, 0 };
 
 	int m_nCursor = 0;

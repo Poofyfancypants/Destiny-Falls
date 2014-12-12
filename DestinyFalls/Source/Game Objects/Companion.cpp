@@ -19,6 +19,27 @@ void Companion::Update(float elapsedTime)
 	if (m_nHealth <= 0)
 		m_nHealth = 0;
 
+	if( m_nHealth <= 0 )
+	{
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
+		else
+		{
+			m_fDeathAnimationTimer -= elapsedTime;
+
+			if( m_fDeathAnimationTimer < 0.0f )
+			{
+				m_fDeathAnimationTimer = 0.0f;
+			}
+
+			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+		}
+	}
+
 	if (m_nHealth > 0)
 		Companion1HB.right = Companion1HB.left + m_nHealth;
 
@@ -59,12 +80,26 @@ void Companion::CombatRender(int _posIndex)
 		{
 			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Companion1rect.right, Companion1rect.bottom);
 		}
+		else if( GetDeathAnimationTimer() > 0.0f )
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion1rect.right , Companion1rect.bottom );
+			}
+		}
 		break;
 	case 2:
 		pGraphics->DrawRectangle(Companion2HB, m_HealthColor);
 		if (m_pAnimator->GetInstance()->CheckSize())
 		{
 			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Companion2rect.right, Companion2rect.bottom);
+		}
+		else if( GetDeathAnimationTimer() > 0.0f )
+		{
+			if( m_pAnimator->GetInstance()->CheckSize() )
+			{
+				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion2rect.right , Companion2rect.bottom );
+			}
 		}
 		break;
 

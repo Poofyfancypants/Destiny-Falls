@@ -98,8 +98,4 @@ public:
 	//push a new collision rect back into the collisionRects vector
 	void AddCollisionRect( SGD::Rectangle collisionRect );
 
-
-
-
 };
-

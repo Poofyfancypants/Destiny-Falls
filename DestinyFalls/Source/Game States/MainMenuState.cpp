@@ -29,40 +29,10 @@ void MainMenuState::Enter()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
 	m_bTutorial = false;
-	
 
+	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
+	pAudio->PlayAudio( m_hMusic, true );
 
-	PlayGame = { 50, 50, 100, 80 };
-	LoadGame = { 50, 90, 100, 120 };
-	Options = { 50, 130, 100, 160 };
-	HowToPlay = { 50, 170, 100, 200 };
-	Credit = { 50, 210, 100, 240 };
-	ExitGame = { 50, 250, 100, 280 };
-
-	TestAnimationSystem = { 300, 150, 350, 200 };
-
-	int nMusic, nEffects, nScreen;
-	std::ifstream load;
-	load.open( "Options.txt" );
-	if( load.is_open() )
-	{
-		load >> nMusic >> nEffects >> nScreen;
-		pAudio->SetMasterVolume( SGD::AudioGroup::Music, nMusic );
-		pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, nEffects );
-		load.close();
-
-		bool windowed;
-		if( nScreen != 0 )
-		{
-			windowed = true;
-		}
-		else
-			windowed = false;
-		pGraphics->Resize( { Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, windowed );
-	}
-
-
-	
 	InventoryState::GetInstance()->m_vSword.resize( 3 );
 	InventoryState::GetInstance()->SetSwordSlot1( None, 0 );
 	InventoryState::GetInstance()->SetSwordSlot2( None, 0 );
@@ -76,14 +46,22 @@ void MainMenuState::Enter()
 	InventoryState::GetInstance()->SetRingSlot2( None, 0 );
 	InventoryState::GetInstance()->SetRingSlot3( None, 0 );
 
+
+	// - Load Selection
+	m_hPlay = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuPlay.png" );
+	m_hOptions = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuOptions.png" );
+	m_hCredit = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuCredit.png" );
+	m_hTutorial = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuTutorial.png" );
+
 }
 
 void MainMenuState::Exit()
 {
-
-
-		
-
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hPlay );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hTutorial );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hCredit );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hOptions );
+	SGD::AudioManager::GetInstance()->UnloadAudio(m_hMusic);
 }
 
 bool MainMenuState::Input()
@@ -100,22 +78,46 @@ bool MainMenuState::Input()
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
-		if( m_nCursor <= 0 )
-			m_nCursor = MenuSelections::exit;
+		//if( m_nCursor <= 0 )
+		//	m_nCursor = MenuSelections::exit;
+		//else
+		//	m_nCursor--;
+		if( m_nCursor == howToPlay )
+			m_nCursor = exit;
 		else
-			m_nCursor--;
+			m_nCursor = howToPlay;
 	}
 	else if( pInput->IsKeyPressed( SGD::Key::Down ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
-		if( m_nCursor >= MenuSelections::exit )
-			m_nCursor = MenuSelections::play;
+		//if( m_nCursor >= MenuSelections::exit )
+		//	m_nCursor = MenuSelections::play;
+		//else
+		//	m_nCursor++;
+		if( m_nCursor == options )
+			m_nCursor = exit;
 		else
-			m_nCursor++;
+			m_nCursor = options;
+	}
+	else if( pInput->IsKeyPressed( SGD::Key::Left ) )
+	{
+		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
+		if( m_nCursor == play )
+			m_nCursor = exit;
+		else
+			m_nCursor = play;
+	}
+	else if( pInput->IsKeyPressed( SGD::Key::Right ) )
+	{
+		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
+		if( m_nCursor == credits )
+			m_nCursor = exit;
+		else
+			m_nCursor = credits;
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) )
+	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed(SGD::Key::MouseLeft) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
@@ -124,9 +126,6 @@ bool MainMenuState::Input()
 		case MenuSelections::play:
 			Game::GetInstance()->AddState( GameplayState::GetInstance() );
 			pAudio->StopAudio( Game::GetInstance()->m_mMusic );
-			break;
-		case MenuSelections::load:
-			Game::GetInstance()->AddState( SaveandLoadState::GetInstance() );
 			break;
 		case MenuSelections::options:
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
@@ -144,26 +143,22 @@ bool MainMenuState::Input()
 		default:
 			break;
 		}
+		pAudio->StopAudio(m_hMusic);
 
 	}
 
-
-	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y)
 	{
-		if( pInput->GetCursorPosition().IsPointInRectangle( PlayGame ) )
-		{
-			pAudio->PlayAudio( Game::GetInstance()->m_mButton );
-			Game::GetInstance()->AddState( GameplayState::GetInstance() );
-		}
+		if( pInput->GetCursorPosition().IsPointInRectangle( playRect ) )
+			m_nCursor = play;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( optionRect ) )
+			m_nCursor = options;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( tutorialRect ) )
+			m_nCursor = howToPlay;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( creditRect ) )
+			m_nCursor = credits;
 	}
-
-	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
-	{
-		if( pInput->GetCursorPosition().IsPointInRectangle( TestAnimationSystem ) )
-			Game::GetInstance()->AddState( AnimationTestState::GetInstance() );
-
-	}
-	return true;
+		return true;
 }
 
 void MainMenuState::Update( float elapsedTime )
@@ -197,18 +192,38 @@ void MainMenuState::Render()
 	}
 
 
-	pGraphics->SetClearColor({148,99,50});
-	
-	pGraphics->DrawTexture(m_hBackground, { 100, 0 }, 0, {}, {}, {0.3f, 0.3f});
-	
+	pGraphics->SetClearColor( { 148, 99, 50 } );
+
+	pGraphics->DrawTexture( m_hBackground, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+
 	BitmapFontManager * pFonts = pFonts->GetInstance();
 
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 2 ).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 4 ).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 5 ).c_str(), { Credit.left, Credit.top }, 1, { 255, 225, 255, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { ExitGame.left, ExitGame.top }, 1, { 255, 225, 255, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 2 ).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 4 ).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 5 ).c_str(), { Credit.left, Credit.top }, 1, { 255, 225, 255, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { ExitGame.left, ExitGame.top }, 1, { 255, 225, 255, 255 } );
 
-	pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );
+	//pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );
+
+	switch( m_nCursor )
+	{
+	case MainMenuState::play:
+		pGraphics->DrawTexture( m_hPlay, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+		break;
+	case MainMenuState::options:
+		pGraphics->DrawTexture( m_hOptions, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+		break;
+	case MainMenuState::howToPlay:
+		pGraphics->DrawTexture( m_hTutorial, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+		break;
+	case MainMenuState::credits:
+		pGraphics->DrawTexture( m_hCredit, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+		break;
+	case MainMenuState::exit:
+		break;
+	default:
+		break;
+	}
 }
