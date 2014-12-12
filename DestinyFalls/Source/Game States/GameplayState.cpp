@@ -79,6 +79,9 @@ void GameplayState::Enter()
 
 	m_pAnimator->Load( "resource/XML/DeathAnimationXML.xml" );
 
+	m_pAnimator->Load( "resource/XML/OverWorldEnemiesXML.xml" );
+
+
 
 	m_hTutorialRune = pGraphics->LoadTexture( L"resource/graphics/Firet2.png" );
 	m_hminiboss = pGraphics->LoadTexture( L"resource/graphics/testMB1.png" );
@@ -394,19 +397,24 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 	switch( _id )
 	{
 	case 0:
-		temp->SetImage( m_henemy );
+		//temp->SetImage( m_henemy );
+		temp->SetAnimation( 0 );
 		break;
 	case 1:
-		temp->SetImage( m_henemy );
+		//temp->SetImage( m_henemy );
+		temp->SetAnimation( 1 );
 		break;
 	case 2:
-		temp->SetImage( m_hminiboss );
+		//temp->SetImage( m_hminiboss );
+		temp->SetAnimation( 2 );
 		break;
 	case 3:
-		temp->SetImage( m_hlevelboss );
+		//temp->SetImage( m_hlevelboss );
+		temp->SetAnimation( 3 );
 		break;
 	case 4:
-		temp->SetImage( m_hFinalboss );
+		//temp->SetImage( m_hFinalboss );
+		temp->SetAnimation( 4 );
 		break;
 	default:
 		break;

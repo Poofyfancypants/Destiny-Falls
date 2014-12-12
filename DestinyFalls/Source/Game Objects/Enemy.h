@@ -2,6 +2,7 @@
 #include "AnimatedObject.h"
 #include "MovingObject.h"
 #include "../../SGD Wrappers/SGD_Listener.h"
+#include "../Managers/AnimationManager.h"
 
 class Enemy :
 	public AnimatedObject,
@@ -32,6 +33,8 @@ public:
 	int GetEnemyType() const { return m_nEnemyType; }
 	void SetEnemyType(int _id) { m_nEnemyType = _id; }
 
+	void SetAnimation(int _id);
+
 private:
 	// - Waypoint being chased
 	int m_nWaypointID = 1;
@@ -40,5 +43,8 @@ private:
 	SGD::Vector m_vPath;
 
 	int m_nEnemyType = -1;
+
+	AnimationManager* m_pAnimator = nullptr;
+	bool m_bAnimationSet = false;
 };
 
