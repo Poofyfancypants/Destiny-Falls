@@ -52,7 +52,6 @@ public:
 
 	//Audio
 	SGD::HAudio bmusic = SGD::INVALID_HANDLE;
-	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
 
 	Object* CreateChest( SGD::Point _pos, int _id );
@@ -61,6 +60,7 @@ public:
 	Object* CreateTrap( SGD::Point _pos, int _id );
 	Object* CreateBoulder( SGD::Point _pos );
 	Object* CreateCompanion( SGD::Point _pos, int _ID );
+
 	SGD::HTexture m_hInvButton = SGD::INVALID_HANDLE;
 	SGD::Rectangle InventoryButton = { 0, 0, 100, 100 };
 	SGD::Rectangle ForgeButton = { 0, 0, 100, 100 };

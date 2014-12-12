@@ -15,7 +15,6 @@ public:
 	virtual bool Input(void)				override;
 	virtual void Update(float elapsedTime)	override;
 	virtual void Render(void)				override;
-	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 
 private:
 	OptionsState() = default;
@@ -31,6 +30,7 @@ private:
 	std::map<std::string, SGD::Rectangle> m_mMouseoverRects;
 	SGD::HAudio m_hBackMusic;
 	SGD::HAudio m_hEffectSound;
+	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hButton = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hButtonHighlighted = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hArrow = SGD::INVALID_HANDLE;

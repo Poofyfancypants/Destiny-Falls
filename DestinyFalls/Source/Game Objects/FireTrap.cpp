@@ -67,9 +67,7 @@ void FireTrap::HandleCollision(const iObject* pOther)
 	if (pOther->GetType() == iObject::OBJ_PLAYER)
 	{
 		if (!m_bStartTimer)
-		{
 			m_bStartTimer = true;
-		}
 	}
 	
 

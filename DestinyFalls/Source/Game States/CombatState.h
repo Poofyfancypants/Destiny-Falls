@@ -72,6 +72,9 @@ public:
 
 	void SortTurnOrder();
 
+	void MuteCombatMusic();
+	void UnMuteCombatMusic();
+
 private:
 
 
@@ -166,6 +169,8 @@ private:
 	vector<SGD::HTexture> m_vBackgroundsFinal;
 
 	int m_nNumQtCorrect = 0;
+
+	int m_nCombatMusicVolume = 0;
 
 };
 

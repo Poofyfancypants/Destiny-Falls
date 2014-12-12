@@ -38,21 +38,21 @@ public:
 	virtual int GetHealth() const { return m_nHealth; }
 	int GetMaxHealth() const { return m_nMaxHealth; }
 
-	bool GetMoving() const {return m_bMoving;}
+	bool GetMoving() const { return m_bMoving; }
 	SGD::Point GetCheckpoint() { return m_ptCheckpoint; }
 	int GetDirection() const { return m_nDirection; }
 	bool GetCombat() const { return m_bCombat; }
-	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
+	void CurrentTurn( int * _CurrentTurn ) { m_CurrentTurn = _CurrentTurn; }
 	int GetNumPotions() const { return m_nPotions; }
 	int m_nPotions = 0;
 
 
-	void RunQuickTime(int length);
+	void RunQuickTime( int length );
 	void StopQuickTime();
 	QuickTime* GetQuickTime( void ){ return currentQT; }
 
-	int GetPrevDirection() const {return m_nPrevDirection;}
-	bool GetBoulderCollision() const {return m_bCollision;}
+	int GetPrevDirection() const { return m_nPrevDirection; }
+	bool GetBoulderCollision() const { return m_bCollision; }
 
 	void ResetAnimation();
 	void StartCombat();
@@ -68,16 +68,19 @@ public:
 	bool GetSpell2Cool() const { return m_bSpell2; }
 	bool GetSpell3Cool() const { return m_bSpell3; }
 
-	void SetSpell1Cool(bool _Cool) { m_bSpell1 = _Cool; }
-	void SetSpell2Cool(bool _Cool) { m_bSpell2 = _Cool; }
-	void SetSpell3Cool(bool _Cool) { m_bSpell3 = _Cool; }
+	void SetSpell1Cool( bool _Cool ) { m_bSpell1 = _Cool; }
+	void SetSpell2Cool( bool _Cool ) { m_bSpell2 = _Cool; }
+	void SetSpell3Cool( bool _Cool ) { m_bSpell3 = _Cool; }
 
-	void SetRect(SGD::Rectangle pRect1) { playerRect = pRect1; }
-	
+	void SetRect( SGD::Rectangle pRect1 ) { playerRect = pRect1; }
+
 	bool GetMapSwitch() const { return m_bMapSwitch; }
-	void SetMapSwitch(bool MS){ m_bMapSwitch = MS; }
+	void SetMapSwitch( bool MS ){ m_bMapSwitch = MS; }
 
 	int CombatEnemyID = -1;
+
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
 
 private:
 
@@ -129,5 +132,13 @@ private:
 	bool m_bPreventDialog = false;
 	float m_fDialogTimer = 5.0f;
 	int m_nLineCounter = 1;
+	float m_fDeathAnimationTimer = 3.0f;
 
+	float p1, p2, v1;
+	bool m_PrintDMG = false;
+
+	float		m_fScroll = 0;
+	float	m_fSecond = 0;
+
+	int m_ptTrapDmg;
 };

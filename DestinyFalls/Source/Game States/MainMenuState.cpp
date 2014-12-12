@@ -31,7 +31,8 @@ void MainMenuState::Enter()
 	m_bTutorial = false;
 
 	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
-	pAudio->PlayAudio( m_hMusic, true );
+	if( !pAudio->IsAudioPlaying( Game::GetInstance()->GetAudio() ))
+		pAudio->PlayAudio( m_hMusic, true );
 
 	InventoryState::GetInstance()->m_vSword.resize( 3 );
 	InventoryState::GetInstance()->SetSwordSlot1( None, 0 );
@@ -48,6 +49,7 @@ void MainMenuState::Enter()
 
 
 	// - Load Selection
+	m_hBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/main.png" );
 	m_hPlay = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuPlay.png" );
 	m_hOptions = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuOptions.png" );
 	m_hCredit = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuCredit.png" );
@@ -61,7 +63,8 @@ void MainMenuState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hTutorial );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hCredit );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hOptions );
-	SGD::AudioManager::GetInstance()->UnloadAudio(m_hMusic);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
+	SGD::AudioManager::GetInstance()->UnloadAudio( m_hMusic );
 }
 
 bool MainMenuState::Input()
@@ -74,7 +77,7 @@ bool MainMenuState::Input()
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 		m_nCursor = MenuSelections::exit;
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Up ) )
+	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ))
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
@@ -87,7 +90,7 @@ bool MainMenuState::Input()
 		else
 			m_nCursor = howToPlay;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Down ) )
+	else if( pInput->IsKeyPressed( SGD::Key::Down )|| pInput->IsKeyPressed( SGD::Key::S ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
@@ -100,7 +103,7 @@ bool MainMenuState::Input()
 		else
 			m_nCursor = options;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Left ) )
+	else if( pInput->IsKeyPressed( SGD::Key::Left ) || pInput->IsKeyPressed( SGD::Key::A ))
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 		if( m_nCursor == play )
@@ -108,7 +111,7 @@ bool MainMenuState::Input()
 		else
 			m_nCursor = play;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Right ) )
+	else if( pInput->IsKeyPressed( SGD::Key::Right ) || pInput->IsKeyPressed( SGD::Key::D ))
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 		if( m_nCursor == credits )
@@ -117,7 +120,7 @@ bool MainMenuState::Input()
 			m_nCursor = credits;
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed(SGD::Key::MouseLeft) )
+	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
@@ -125,7 +128,7 @@ bool MainMenuState::Input()
 		{
 		case MenuSelections::play:
 			Game::GetInstance()->AddState( GameplayState::GetInstance() );
-			pAudio->StopAudio( Game::GetInstance()->m_mMusic );
+			pAudio->StopAudio( Game::GetInstance()->GetAudio() );
 			break;
 		case MenuSelections::options:
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
@@ -143,11 +146,11 @@ bool MainMenuState::Input()
 		default:
 			break;
 		}
-		pAudio->StopAudio(m_hMusic);
+		//pAudio->StopAudio( m_hMusic );
 
 	}
 
-	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y)
+	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y )
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( playRect ) )
 			m_nCursor = play;
@@ -158,7 +161,7 @@ bool MainMenuState::Input()
 		else if( pInput->GetCursorPosition().IsPointInRectangle( creditRect ) )
 			m_nCursor = credits;
 	}
-		return true;
+	return true;
 }
 
 void MainMenuState::Update( float elapsedTime )

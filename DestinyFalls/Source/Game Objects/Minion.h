@@ -114,6 +114,10 @@ public:
 	void ResetAnimation();
 	void SetAnimation(bool _update) { m_bUpdateAnimation = _update; }
 
+	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
+	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
+
+
 private:
 	int * m_CurrentTurn;
 	int m_nHealth = 0;
@@ -136,6 +140,8 @@ private:
 	AnimationManager* m_pAnimator = nullptr;
 
 	bool m_bUpdateAnimation = false;
+
+	float m_fDeathAnimationTimer = 3.0f;
 
 };
 
