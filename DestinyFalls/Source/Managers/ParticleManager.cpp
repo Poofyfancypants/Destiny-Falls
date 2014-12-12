@@ -43,7 +43,7 @@ void ParticleManager::ReadXML(const char* filepath)
 	int particleSquare;
 	int particleLine;
 
-	for (unsigned int i = 0; i < numParticles; i++)
+	for (signed int i = 0; i < numParticles; i++)
 	{
 		Particle ptemp;
 		RootElement->Attribute("ParticleLifeTime", &ptemp.particleLifeTime);
@@ -69,9 +69,6 @@ void ParticleManager::ReadXML(const char* filepath)
 		RootElement->Attribute("EndColorG", &ptemp.endColorG);
 		RootElement->Attribute("EndColorB", &ptemp.endColorB);
 
-		ptemp.circle = (bool)particleCircle;
-		ptemp.square = (bool)particleSquare;
-		ptemp.line = (bool)particleLine;
 
 		particlevector.push_back(ptemp);
 	}
@@ -85,13 +82,13 @@ void ParticleManager::Render(Object * rhs)// add a point and a size, to place it
 	{
 		if (rhs != nullptr)
 		{
-			int x = rhs->GetPosition().x;		// min values
-			int y = rhs->GetPosition().y;		// min values
-			int width = particlevector[i].emitWidth;	// max values
+			float x = (float)(rhs->GetPosition().x);		// min values
+			float y = ((float)(rhs->GetPosition().y));		// min values
+			int width =  particlevector[i].emitWidth;	// max values
 			int height = particlevector[i].emitHeight;	// max values
 
-			particlevector[i].position.x = (x + rand() % (width - x) + x);
-			particlevector[i].position.y = (y + rand() % (height - y) + y);
+			particlevector[i].position.x = (x + rand() % (width - (int)x) + (int)x);
+			particlevector[i].position.y = (y + rand() % (height - (int)y) + (int)y);
 
 			pGraphics->DrawTexture(pImage, SGD::Point(x, y));
 		}
@@ -102,7 +99,7 @@ void ParticleManager::Render(Object * rhs)// add a point and a size, to place it
 			int RandomG = rand() % 256;
 			int RandomB = rand() % 256;
 
-			pGraphics->DrawTexture(pImage, SGD::Point(rand() % 100, rand() % 100), {}, {}, SGD::Color(particlevector[i].startColorA, (particlevector[i].startColorR + RandomR),( particlevector[i].startColorG + RandomG),( particlevector[i].startColorB) +RandomB));
+			pGraphics->DrawTexture(pImage, SGD::Point((float)(rand() % 100), (float)(rand() % 100)), {}, {}, SGD::Color(particlevector[i].startColorA, (particlevector[i].startColorR + RandomR), (particlevector[i].startColorG + RandomG), (particlevector[i].startColorB) + RandomB));
 		}
 	}
 }
@@ -116,20 +113,20 @@ void ParticleManager::RenderPoint(SGD::Point pt)// add a point and a size, to pl
 	{
 		if (pt.x > 0 && pt.y > 0)
 		{
-			int x = pt.x;		// min values
-			int y = pt.y;		// min values
+			float x =(float)pt.x;		// min values
+			float y =(float)pt.y;		// min values
 			int width = particlevector[i].emitWidth;	// max values
 			int height = particlevector[i].emitHeight;	// max values
 
 			/*x = (pt.x + i);
 			y = (pt.y + i);*/
 			
-			pGraphics->DrawTexture(pImage, SGD::Point(x , y), particlevector[i].rotation, {}, SGD::Color( particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB ));
+			pGraphics->DrawTexture(pImage, SGD::Point(x, y), (float)particlevector[i].rotation, {}, SGD::Color(particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB));
 		}
 		else
 		{
 
-			pGraphics->DrawTexture(pImage, SGD::Point(rand() % 100, rand() % 100), {}, {}, SGD::Color(particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB));
+			pGraphics->DrawTexture(pImage, SGD::Point((float)(rand() % 100), (float)(rand() % 100)), {}, {}, SGD::Color(particlevector[i].startColorA, particlevector[i].startColorR, particlevector[i].startColorG, particlevector[i].startColorB));
 		}
 	}
 }
