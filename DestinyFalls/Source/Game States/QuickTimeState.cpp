@@ -79,11 +79,15 @@ void QuickTimeState::RunQuickTime()
 	{
 		currentQT = new QuickTime;
 		currentQT->SetLength( CombatState::GetInstance()->GetQTLength() );
+		CombatState::GetInstance()->MuteCombatMusic();
+
 	}
 }
 void QuickTimeState::StopQuickTime()
 {
 	m_bDoQt = false;
+
+	CombatState::GetInstance()->UnMuteCombatMusic();
 	delete currentQT;
 	currentQT = nullptr;
 }
