@@ -48,10 +48,10 @@ public:
 	float GetScreenWidth( void ) const { return m_fScreenWidth; }
 	float GetScreenHeight( void ) const { return m_fScreenHeight; }
 
+	void LoadingScreen( string _loading );
 	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
 	std::string GetString( int _type, int _string ) { return m_StringTable[_type][_string]; }
 
-	SGD::HAudio m_mMusic = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mButton = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mMagicButton = SGD::INVALID_HANDLE;
 	SGD::HAudio m_mMeleeButton = SGD::INVALID_HANDLE;
@@ -80,20 +80,20 @@ public:
 	SGD::HTexture m_hEarth2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hEarth3 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hEarth4 = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hIce1	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hIce2	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hIce3	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hIce4	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hIce5	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hIce6	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAir1	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAir2	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAir3	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hAir4	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFire1	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFire2	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFire3	= SGD::INVALID_HANDLE;
-	SGD::HTexture m_hFire4	= SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce4 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce5 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hIce6 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hAir4 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire1 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire2 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire3 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hFire4 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFinal1 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFinal2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hFinal3 = SGD::INVALID_HANDLE;
@@ -104,21 +104,20 @@ public:
 	SGD::HTexture m_hEarthIcon = SGD::INVALID_HANDLE;
 
 
-	int GetFrames() {return m_nFPS;}
+	int GetFrames() { return m_nFPS; }
 	// Menu backgrounds
-	SGD::HTexture m_hMainMenu = SGD::INVALID_HANDLE;
-	SGD::HTexture m_hOptions = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hSaveLoad = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHTP = SGD::INVALID_HANDLE;
 
 	// - Accessor
-	bool GetWindowed() const {return m_bWindowed;}
-	void SetWindowd(bool _window) {m_bWindowed = _window;}
-
+	bool GetWindowed() const { return m_bWindowed; }
+	void SetWindowd( bool _window ) { m_bWindowed = _window; }
+	SGD::HAudio GetAudio() { return m_hMusic; }
 	// - Icelandic
-	bool GetIcelandic() const {return m_bIcelandic;}
-	void SetIcelandic(bool _that) {m_bIcelandic = _that;}
+	bool GetIcelandic() const { return m_bIcelandic; }
+	void SetIcelandic( bool _that ) { m_bIcelandic = _that; }
 	void LoadStrings();
+
 private:
 	/**********************************************************/
 	// Singleton Object:
@@ -142,6 +141,7 @@ private:
 	AnimationManager* m_pAnimator;
 
 
+
 	/**********************************************************/
 	// Message Callback Function:
 	static void MessageProc( const SGD::Message* pMsg );
@@ -160,6 +160,13 @@ private:
 
 	// - Icelandic
 	bool m_bIcelandic = false;
+
+	// - Loading Screen
+	SGD::HTexture m_hLoadingBackground;
+	SGD::HAudio m_hMusic;
+
+
 };
+
 
 #endif //GAME_H

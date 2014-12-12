@@ -189,7 +189,7 @@ HWND MakeWindow( HINSTANCE hInstance )
 					WS_EX_APPWINDOW,										// extended style flags
 					WINDOW_CLASS_NAME,										// window class Name
 					WINDOW_TITLE,											// title
-					dwWindowStyleFlags,										// window style flags
+					WS_POPUP,												// window style flags -> Makes the Borders Go Away from the Window.
 					(GetSystemMetrics(SM_CXSCREEN) - nWindowWidth)/2,		// position (x, y)
 					(GetSystemMetrics(SM_CYSCREEN) - nWindowHeight)/2,		//	- centered on the desktop
 					nWindowWidth,											// width
