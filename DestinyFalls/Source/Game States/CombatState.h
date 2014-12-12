@@ -70,6 +70,9 @@ public:
 
 	void SortTurnOrder();
 
+	void MuteCombatMusic();
+	void UnMuteCombatMusic();
+
 private:
 
 
@@ -84,25 +87,25 @@ private:
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
 
-//	SGD::Rectangle Companion1HB	= { 50, 20, 150, 50 };
-//	SGD::Rectangle Companion2HB	= { 50, 250, 150, 280 };
-	SGD::Rectangle PlayerHB		= { 75, 180, 200, 210 };
-	SGD::Rectangle Enemy1HB		= { 650, 110, 775, 140};
-	SGD::Rectangle Enemy2HB		= { 625, 200, 750, 230};
-	SGD::Rectangle Enemy3HB		= { 650, 290, 775, 320};
 
+	SGD::Rectangle Playerrect	= { 225, 200, 289, 264 };
+	SGD::Rectangle PlayerHB		= { 75, 200, 175, 230 };
 
 	SGD::Rectangle Companion1rect = { 100, 100, 164, 164 };
-	SGD::Rectangle Companion1HB = { 50, 60, 150, 90 };
-	SGD::Rectangle Companion2rect = { 100, 300, 164, 364 };
-	SGD::Rectangle Companion2HB = { 50, 260, 150, 290 };
+	SGD::Rectangle Companion1HB = { 50, 80, 150, 110 };
 
-//	SGD::Rectangle Companion1rect	= { 75, 110, 139, 174 };
-//	SGD::Rectangle Companion2rect	= { 75, 310, 139, 374 };
-	SGD::Rectangle Playerrect		= { 225, 200, 289, 264 };
-	SGD::Rectangle Enemy1rect		= { 561, 110, 625, 174 };
-	SGD::Rectangle Enemy2rect		= { 536, 200, 600, 264 };
-	SGD::Rectangle Enemy3rect		= { 561, 290, 625, 354 };
+	SGD::Rectangle Companion2rect = { 100, 300, 164, 364 };
+	SGD::Rectangle Companion2HB = { 50, 280, 150, 310 };
+
+	SGD::Rectangle Enemy1rect = { 531, 110, 605, 174 };
+	SGD::Rectangle Enemy1HB = { 670, 100, 795, 130 };
+
+	SGD::Rectangle Enemy2rect = { 436, 200, 500, 264 };
+	SGD::Rectangle Enemy2HB = { 605, 200, 730, 230 };
+
+	SGD::Rectangle Enemy3rect = { 531, 310, 605, 374 };
+	SGD::Rectangle Enemy3HB = { 670, 310, 795, 340 };
+
 
 	SGD::Rectangle PlayerSelection = { 0, 0, 0, 0 };
 	SGD::Rectangle CompanionSelection = { 0, 0, 0, 0 };
@@ -164,6 +167,8 @@ private:
 	vector<SGD::HTexture> m_vBackgroundsFinal;
 
 	int m_nNumQtCorrect = 0;
+
+	int m_nCombatMusicVolume = 0;
 
 	//Spells
 	bool spellActive = false;

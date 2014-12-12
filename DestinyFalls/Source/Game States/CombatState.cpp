@@ -38,7 +38,7 @@ void CombatState::Enter(void)
 	player->SetInit(rand() % 15 + 5);
 	player->SetAttckSpd(8);
 	SavePlayerPos = player->GetPosition();
-	player->SetPosition({ Playerrect.left, Playerrect.bottom });
+	player->SetPosition({ Playerrect.left, Playerrect.top });
 	player->AddRef();
 	player->SetDeathAnimationTimer();
 	//player->SetHealth( 2 );
@@ -472,6 +472,7 @@ void CombatState::Update(float elapsedTime)
 
 	if (ActionTimer <= 0.0f)
 	{
+		ResetRects();
 		DrawBackground();
 
 		m_bShake = false;
@@ -638,11 +639,9 @@ void CombatState::Update(float elapsedTime)
 				((Companion*)m_pHeroes[i])->Update(elapsedTime);
 				((Companion*)m_pHeroes[i])->CombatRender(i);
 			}
-
-
 		}
 
-			ShakeScreen(elapsedTime);
+		ShakeScreen(elapsedTime);
 	}
 
 }
@@ -665,13 +664,13 @@ void CombatState::Render(void)
 		{
 
 			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 40, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 		}
 	}
 
@@ -737,7 +736,7 @@ void CombatState::Render(void)
 											   if (ActionTimer <= 0)
 											   if (!selected)
 											   {
-												   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 0, 0, 0));
+												   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
 												   //pCombat->SetAction("Choose Action");
 
 												   if (spellActive)
@@ -1370,7 +1369,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				}
 
-				temp->SetHealth(300);
+				temp->SetHealth(100);
 
 	}
 		break;
@@ -1392,7 +1391,6 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	}
 	return temp;
 }
-
 Object* CombatState::AddCompanion(int _type)
 {
 	Companion* temp = new Companion;
@@ -1434,7 +1432,6 @@ Object* CombatState::AddCompanion(int _type)
 	temp->CurrentTurn(&CurrentTurn);
 	return temp;
 }
-
 bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _spell)
 //Can I Add An Object* for the target
 //I'm thinking about the order of actions here
@@ -2187,7 +2184,6 @@ int CombatState::DealAOEDamage(Object* _From, Object* _To)
 	}
 	return Total;
 }
-
 bool CombatState::TakeTurn(Object* _this)
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
@@ -2235,7 +2231,8 @@ bool CombatState::TakeTurn(Object* _this)
 										SetAction("No Spells Available!");
 									}
 
-									if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+									//First Selection >> Action
+									if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 									{
 										//if
 										if (m_nCursor == 0)
@@ -2280,7 +2277,8 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nCursor = 0;
 
 
-										if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+										//Second Selection >> Target
+										if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 										{
 											entered = true;
 											((Player*)_this)->SetAttacking(true);
@@ -2333,8 +2331,9 @@ bool CombatState::TakeTurn(Object* _this)
 											if (m_nCursor > pInventory->m_vRing.size() - 1)
 												m_nCursor = pInventory->m_vRing.size() - 1;
 
-											if (pInput->IsKeyPressed(SGD::Key::Enter))
+											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 											{
+
 												spellSelect = m_nCursor;
 												m_nCursor = 0;
 											}
@@ -2364,7 +2363,8 @@ bool CombatState::TakeTurn(Object* _this)
 												m_nCursor = m_pEnemies.size() - 1;
 											if (m_nCursor > pCombat->GetEnemies().size() - 1)
 												m_nCursor = 0;
-											if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+											//Second Selection >> Target
+											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 											{
 												selected = false;
 												((Player*)_this)->SetAttacking(true);
@@ -2427,7 +2427,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				 if (m_nCursor > 1)
 																					 m_nCursor = 0;
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																				 //First Selection >> Action
+																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				 {
 																					 if (m_nCursor == 0)
 																					 {
@@ -2494,7 +2495,8 @@ bool CombatState::TakeTurn(Object* _this)
 																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 																				 }
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																				 //Second Selection >> Target
+																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				 {
 																					 selected = false;
 																					 ((Companion*)_this)->SetAttacking(true);
@@ -2538,7 +2540,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				if (m_nCursor > 1)
 																					m_nCursor = 1;
 
-																				if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																				//First Selection >> Action
+																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				{
 																					//if
 																					if (m_nCursor == 0)
@@ -2581,7 +2584,8 @@ bool CombatState::TakeTurn(Object* _this)
 																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
 																					m_nCursor = 0;
 
-																				if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																				//Second Selection >> Target
+																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																				{
 																					selected = false;
 																					((Companion*)_this)->SetAttacking(true);
@@ -2613,7 +2617,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (m_nCursor > 1)
 																				   m_nCursor = 1;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																			   //First Selection >> Action
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   if (m_nCursor == 0)
 																				   {
@@ -2664,7 +2669,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
 																				   m_nCursor = 0;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																			   //Second Selection >> Target
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   selected = false;
 																				   ((Companion*)_this)->SetAttacking(true);
@@ -2698,7 +2704,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (m_nCursor > 1)
 																				   m_nCursor = 1;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //First Selection >> Action
+																			   //First Selection >> Action
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   //if
 																				   if (m_nCursor == 0)
@@ -2750,7 +2757,8 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
 																				   m_nCursor = 0;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
+																			   //Second Selection >> Target
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 																			   {
 																				   selected = false;
 																				   ((Companion*)_this)->SetAttacking(true);
@@ -2992,10 +3000,9 @@ void CombatState::ShakeScreen(float elapsedTime)
 
 	if (m_bShake)
 	{
-		tempShakeRect = { ((float)randX / 10.0f), ((float)randY / 10.0f), ((float)randX / 10.0f), ((float)randY / 10.0f) };
-
 		for (size_t i = 0; i < m_pObjects.size(); i++)
 		{
+			tempShakeRect = { ((float)randX / 10.0f), ((float)randY / 10.0f), ((float)randX / 10.0f), ((float)randY / 10.0f) };
 			if (m_pObjects[i]->GetType() == iObject::OBJ_PLAYER)
 			{
 				tempShakeRect.left += Playerrect.left;
@@ -3052,12 +3059,9 @@ void CombatState::ShakeScreen(float elapsedTime)
 			}
 		}
 	}
-	else
-		ResetRects();
 
-	DrawBackground(tempShakeRect);
+	DrawBackground(SGD::Rectangle{ (float)(rand() % 10 - 5), (float)(rand() % 10 - 5), (float)(rand() % 10 - 5), (float)(rand() % 10 - 5) });
 }
-
 void CombatState::ResetRects()
 {
 	for (size_t i = 0; i < m_pObjects.size(); i++)
@@ -3172,13 +3176,12 @@ void CombatState::HandleTutorial()
 		pFont->Render("Dialog", Game::GetInstance()->GetString(10, 3).c_str(), TextPositionTwo, .7f, SGD::Color(0, 0, 0));
 	}
 }
-
 void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 {
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
 	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.4f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { _shakeRect.left , _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.4f });
 		break;
 	case 2:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
@@ -3253,4 +3256,17 @@ void CombatState::SortTurnOrder()
 			break;
 		}
 	}
+}
+
+void CombatState::MuteCombatMusic()
+{
+	m_nCombatMusicVolume = SGD::AudioManager::GetInstance()->GetAudioVolume(cMusic);
+	SGD::AudioManager::GetInstance()->SetAudioVolume(cMusic, 0);
+
+}
+
+void CombatState::UnMuteCombatMusic()
+{
+	SGD::AudioManager::GetInstance()->SetAudioVolume(cMusic, m_nCombatMusicVolume);
+
 }

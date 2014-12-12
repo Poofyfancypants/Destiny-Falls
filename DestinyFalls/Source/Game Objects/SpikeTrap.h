@@ -3,10 +3,9 @@
 class SpikeTrap :
 	public Trap
 {
-	int m_nDamage = 1;
+	int m_nDamage = 5;
 	float m_fTimer = 0;
 	bool m_bStartTimer = false;
-
 public:
 	SpikeTrap();
 	~SpikeTrap();
@@ -18,5 +17,6 @@ public:
 	virtual int GetType( void ) const { return OBJ_TRAP; }
 	virtual SGD::Rectangle GetRect( void ) const override;
 	virtual void HandleCollision( const iObject* pOther ) override;
+
 };
 

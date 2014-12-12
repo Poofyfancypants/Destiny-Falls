@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Root>
+  <animation>
+    <animation_info name="SpearMoblin" numFrames="11" looping="1" hTexture="LOZ4_Enemies.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="1029" dTop="477" dRight="1069" dBottom="518" cLeft="1028" cTop="478" cRight="1069" cBottom="516" x="19" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1072" dTop="475" dRight="1103" dBottom="517" cLeft="1071" cTop="475" cRight="1104" cBottom="518" x="10" y="29" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1103" dTop="476" dRight="1138" dBottom="518" cLeft="1102" cTop="475" cRight="1137" cBottom="519" x="13" y="30" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1140" dTop="472" dRight="1175" dBottom="520" cLeft="1140" cTop="473" cRight="1175" cBottom="519" x="14" y="29" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1179" dTop="474" dRight="1216" dBottom="519" cLeft="1178" cTop="473" cRight="1217" cBottom="520" x="13" y="31" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1215" dTop="475" dRight="1252" dBottom="516" cLeft="1215" cTop="474" cRight="1253" cBottom="517" x="14" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1251" dTop="476" dRight="1288" dBottom="516" cLeft="1250" cTop="475" cRight="1289" cBottom="519" x="14" y="29" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1291" dTop="476" dRight="1327" dBottom="517" cLeft="1291" cTop="475" cRight="1327" cBottom="518" x="13" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1324" dTop="476" dRight="1360" dBottom="518" cLeft="1322" cTop="475" cRight="1361" cBottom="520" x="15" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1362" dTop="476" dRight="1398" dBottom="517" cLeft="1362" cTop="476" cRight="1398" cBottom="518" x="14" y="28" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1399" dTop="474" dRight="1432" dBottom="522" cLeft="1399" cTop="474" cRight="1433" cBottom="522" x="13" y="26" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="IronBall Soldier" numFrames="11" looping="1" hTexture="LOZ4_Enemies.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="404" dTop="311" dRight="438" dBottom="349" cLeft="403" cTop="310" cRight="438" cBottom="350" x="20" y="7" />
+      <frame duration="0.25" damage="0" event="none" dLeft="439" dTop="313" dRight="470" dBottom="344" cLeft="438" cTop="313" cRight="472" cBottom="344" x="15" y="5" />
+      <frame duration="0.25" damage="0" event="none" dLeft="472" dTop="309" dRight="507" dBottom="345" cLeft="471" cTop="309" cRight="507" cBottom="346" x="17" y="9" />
+      <frame duration="0.25" damage="0" event="none" dLeft="504" dTop="310" dRight="539" dBottom="345" cLeft="503" cTop="310" cRight="539" cBottom="344" x="18" y="8" />
+      <frame duration="0.25" damage="0" event="none" dLeft="538" dTop="311" dRight="572" dBottom="344" cLeft="537" cTop="310" cRight="572" cBottom="345" x="19" y="6" />
+      <frame duration="0.25" damage="0" event="none" dLeft="575" dTop="313" dRight="607" dBottom="344" cLeft="574" cTop="314" cRight="607" cBottom="344" x="16" y="4" />
+      <frame duration="0.25" damage="0" event="none" dLeft="609" dTop="308" dRight="637" dBottom="345" cLeft="607" cTop="307" cRight="636" cBottom="345" x="15" y="9" />
+      <frame duration="0.25" damage="0" event="none" dLeft="638" dTop="311" dRight="669" dBottom="344" cLeft="638" cTop="310" cRight="669" cBottom="343" x="18" y="7" />
+      <frame duration="0.25" damage="0" event="none" dLeft="672" dTop="313" dRight="705" dBottom="346" cLeft="671" cTop="312" cRight="705" cBottom="347" x="15" y="4" />
+      <frame duration="0.25" damage="0" event="none" dLeft="705" dTop="313" dRight="733" dBottom="345" cLeft="703" cTop="313" cRight="733" cBottom="346" x="13" y="6" />
+      <frame duration="0.25" damage="0" event="none" dLeft="734" dTop="310" dRight="761" dBottom="344" cLeft="734" cTop="310" cRight="763" cBottom="344" x="15" y="6" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="Eyegore" numFrames="10" looping="1" hTexture="LOZ4_Enemies.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="851" dTop="58" dRight="892" dBottom="97" cLeft="850" cTop="58" cRight="893" cBottom="97" x="21" y="35" />
+      <frame duration="0.25" damage="0" event="none" dLeft="892" dTop="57" dRight="931" dBottom="97" cLeft="891" cTop="56" cRight="932" cBottom="97" x="19" y="37" />
+      <frame duration="0.25" damage="0" event="none" dLeft="933" dTop="57" dRight="973" dBottom="98" cLeft="931" cTop="56" cRight="975" cBottom="98" x="19" y="36" />
+      <frame duration="0.25" damage="0" event="none" dLeft="972" dTop="58" dRight="1014" dBottom="100" cLeft="971" cTop="58" cRight="1016" cBottom="100" x="20" y="35" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1012" dTop="60" dRight="1054" dBottom="98" cLeft="1010" cTop="58" cRight="1056" cBottom="99" x="21" y="35" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1055" dTop="59" dRight="1100" dBottom="99" cLeft="1054" cTop="58" cRight="1100" cBottom="100" x="22" y="36" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1102" dTop="56" dRight="1142" dBottom="102" cLeft="1101" cTop="56" cRight="1143" cBottom="102" x="19" y="39" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1143" dTop="60" dRight="1184" dBottom="97" cLeft="1142" cTop="59" cRight="1184" cBottom="98" x="19" y="34" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1186" dTop="58" dRight="1227" dBottom="97" cLeft="1184" cTop="57" cRight="1229" cBottom="98" x="19" y="37" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1228" dTop="58" dRight="1274" dBottom="99" cLeft="1227" cTop="59" cRight="1275" cBottom="98" x="20" y="37" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="Wizzrobe" numFrames="12" looping="1" hTexture="LOZ4_Enemies.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="1070" dTop="298" dRight="1092" dBottom="340" cLeft="1069" cTop="297" cRight="1093" cBottom="341" x="13" y="31" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1094" dTop="299" dRight="1112" dBottom="342" cLeft="1093" cTop="299" cRight="1113" cBottom="342" x="9" y="30" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1114" dTop="298" dRight="1134" dBottom="340" cLeft="1113" cTop="298" cRight="1135" cBottom="340" x="10" y="31" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1134" dTop="302" dRight="1168" dBottom="343" cLeft="1133" cTop="302" cRight="1169" cBottom="344" x="18" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1168" dTop="300" dRight="1200" dBottom="341" cLeft="1167" cTop="300" cRight="1201" cBottom="341" x="16" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1200" dTop="300" dRight="1232" dBottom="341" cLeft="1199" cTop="299" cRight="1233" cBottom="342" x="16" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1233" dTop="302" dRight="1276" dBottom="341" cLeft="1232" cTop="302" cRight="1277" cBottom="341" x="22" y="26" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1278" dTop="299" dRight="1322" dBottom="341" cLeft="1277" cTop="299" cRight="1323" cBottom="341" x="22" y="29" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1323" dTop="300" dRight="1367" dBottom="342" cLeft="1322" cTop="300" cRight="1368" cBottom="342" x="22" y="27" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1369" dTop="297" dRight="1407" dBottom="340" cLeft="1368" cTop="296" cRight="1408" cBottom="342" x="21" y="30" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1408" dTop="298" dRight="1443" dBottom="340" cLeft="1408" cTop="299" cRight="1443" cBottom="340" x="18" y="29" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1444" dTop="297" dRight="1481" dBottom="341" cLeft="1444" cTop="297" cRight="1482" cBottom="341" x="18" y="31" />
+    </animation_info>
+  </animation>
+  <animation>
+    <animation_info name="Keese" numFrames="4" looping="1" hTexture="LOZ4_Enemies.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="1182" dTop="662" dRight="1199" dBottom="683" cLeft="1181" cTop="661" cRight="1201" cBottom="685" x="11" y="11" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1200" dTop="664" dRight="1223" dBottom="681" cLeft="1199" cTop="663" cRight="1224" cBottom="682" x="12" y="12" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1223" dTop="661" dRight="1247" dBottom="685" cLeft="1222" cTop="661" cRight="1248" cBottom="686" x="11" y="15" />
+      <frame duration="0.25" damage="0" event="none" dLeft="1249" dTop="661" dRight="1271" dBottom="681" cLeft="1248" cTop="660" cRight="1271" cBottom="682" x="10" y="14" />
+    </animation_info>
+  </animation>
+</Root>

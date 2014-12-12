@@ -10,6 +10,8 @@
 
 Enemy::Enemy() : Listener(this)
 {
+	m_pAnimator = m_pAnimator->GetInstance();
+
 }
 
 
@@ -33,6 +35,8 @@ void Enemy::Update(float elapsedTime)
 		velocity = (m_vPath / 10) * elapsedTime;
 		m_ptPosition += velocity;
 	}
+	m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+
 
 }
 
@@ -51,8 +55,9 @@ void Enemy::Render()
 		rec.Offset(-GameplayState::GetInstance()->GetWorldCam().x, -GameplayState::GetInstance()->GetWorldCam().y);
 		pGraphics->DrawRectangle(rec, SGD::Color(0, 0, 255));
 	}
+	m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , point.x,  point.y );
 
-	pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
+	//pGraphics->DrawTextureSection(m_hImage, point, SGD::Rectangle{ 0, 0, 100, 100 });
 }
 
 SGD::Rectangle Enemy::GetRect() const
@@ -76,4 +81,31 @@ void Enemy::HandleCollision(const iObject* pOther)
 void Enemy::HandleEvent(const SGD::Event* pEvent)
 {
 
+}
+
+void Enemy::SetAnimation( int _id )
+{
+	switch( _id )
+	{
+		case 0:
+			this->GetTimeStamp()->SetCurrentAnimation( "SpearMoblin" );
+			break;
+		case 1:
+			this->GetTimeStamp()->SetCurrentAnimation( "SpearMoblin" );
+			break;
+		case 2:
+			this->GetTimeStamp()->SetCurrentAnimation( "IronBall Soldier" );
+			break;	
+		case 3:
+			this->GetTimeStamp()->SetCurrentAnimation( "Wizzrobe" );
+			break;
+		case 4:
+			this->GetTimeStamp()->SetCurrentAnimation( "Eyegore" );
+			break;
+		default:
+			break;
+	}
+
+	this->GetTimeStamp()->SetCurrentFrame( 0 );
+	this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 }

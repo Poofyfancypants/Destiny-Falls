@@ -36,7 +36,7 @@ void WinState::Exit()
 bool WinState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::Escape))
+	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0, 0))
 	{
 		Game::GetInstance()->ClearStates();
 		Game::GetInstance()->AddState(CreditState::GetInstance());
