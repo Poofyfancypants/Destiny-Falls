@@ -16,9 +16,13 @@ InventoryState* InventoryState::GetInstance()
 
 void InventoryState::Enter()
 {
+	//1411_Turn5_runes1_earth1
 	m_hFiret1 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Firet1.png" );
 	m_hFiret2 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Firet2.png" );
 	m_hFiret3 = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Firet3.png" );
+	m_hEartht1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_earth1.png");
+	m_hEartht2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_earth2.png");
+	m_hEartht3= SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_earth3.png");
 	m_hHero = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Hero.png" );
 	m_hSword = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Sword.png" );
 	m_hGauntlet = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Gauntlet.jpg" );
@@ -39,6 +43,9 @@ void InventoryState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hFiret1 );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hFiret2 );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hFiret3 );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hEartht1);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hEartht2);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hEartht3);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hHero );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hSword );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hGauntlet );
@@ -1142,11 +1149,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vArmor[0].GetTier() == 1 )
-				pGraphics->DrawTexture( m_hFiret1, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht1, { 220, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[0].GetTier() == 2 )
-				pGraphics->DrawTexture( m_hFiret2, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht2, { 220, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[0].GetTier() == 3 )
-				pGraphics->DrawTexture( m_hFiret3, { 220, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht3, { 220, 70 }, {}, {}, {}, {1.0f, 1.0f });
 		}
 		pGraphics->DrawRectangle(RuneSet2, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
 		pFonts->Render("InventoryFont", "Tier 2", SGD::Point(300, 175), 1, SGD::Color{ 255, 0, 0, 0 });
@@ -1191,11 +1198,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vArmor[1].GetTier() == 1 )
-				pGraphics->DrawTexture( m_hFiret1, { 320, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht1, { 320, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[1].GetTier() == 2 )
-				pGraphics->DrawTexture( m_hFiret2, { 320, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht2, { 320, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[1].GetTier() == 3 )
-				pGraphics->DrawTexture( m_hFiret3, { 320, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht3, { 320, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 
@@ -1239,11 +1246,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vArmor[2].GetTier() == 1 )
-				pGraphics->DrawTexture( m_hFiret1, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht1, { 420, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[2].GetTier() == 2 )
-				pGraphics->DrawTexture( m_hFiret2, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht2, { 420, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[2].GetTier() == 3 )
-				pGraphics->DrawTexture( m_hFiret3, { 420, 70 }, {}, {}, {}, { 0.2f, 0.18f } );
+				pGraphics->DrawTexture(m_hEartht3, { 420, 70 }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if( m_nCursor == 0 )
@@ -1551,15 +1558,15 @@ void InventoryState::Render()
 
 
 		pGraphics->DrawRectangle( IventoryRect10, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture( m_hFiret1, { 260, 320 }, {}, {}, {}, { 0.1f, 0.1f } );
+		pGraphics->DrawTexture(m_hEartht1, { IventoryRect10.left, IventoryRect10.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 
 		pGraphics->DrawRectangle( IventoryRect11, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture( m_hFiret2, { 360, 320 }, {}, {}, {}, { 0.1f, 0.1f } );
+		pGraphics->DrawTexture(m_hEartht2, { IventoryRect11.left, IventoryRect11.top }, {}, {}, {}, { 0.1f, 0.1f });
 
 
 		pGraphics->DrawRectangle( IventoryRect12, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture( m_hFiret3, { 460, 320 }, {}, {}, {}, { 0.1f, 0.1f } );
+		pGraphics->DrawTexture(m_hEartht3, { IventoryRect12.left, IventoryRect12.top }, {}, {}, {}, { 0.1f, 0.1f });
 		//sword
 		pGraphics->DrawRectangle( Equip1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
 		pGraphics->DrawRectangle( Equip2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );

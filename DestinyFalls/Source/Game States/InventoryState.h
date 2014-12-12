@@ -150,21 +150,20 @@ private:
 
 	//Rune Images
 	//t1
-	SGD::Rectangle IventoryRect1 =  { 210, 240, 240, 280 };
+	SGD::Rectangle IventoryRect1 =  { 210, 240, 246, 280 };
 	SGD::Rectangle IventoryRect4 =  { 260, 240, 290, 280 };
-	SGD::Rectangle IventoryRect7 =  { 210, 320, 240, 360 };
-	SGD::Rectangle IventoryRect10 = { 260, 320, 290, 360 };
-	
+	SGD::Rectangle IventoryRect7 =  { 210, 320, 246, 360 };
+	SGD::Rectangle IventoryRect10 = { 260, 320, 296, 360 };
 	//t2
 	SGD::Rectangle IventoryRect2 =  { 310, 240, 340, 280 };
 	SGD::Rectangle IventoryRect5 =  { 360, 240, 390, 280 };
 	SGD::Rectangle IventoryRect8 =  { 310, 320, 340, 360 };
-	SGD::Rectangle IventoryRect11 = { 360, 320, 390, 360 };
+	SGD::Rectangle IventoryRect11 = { 360, 320, 396, 360 };
 	//t3
 	SGD::Rectangle IventoryRect3 =  { 410, 240, 440, 280 };
 	SGD::Rectangle IventoryRect6 =  { 460, 240, 490, 280 };
 	SGD::Rectangle IventoryRect9 =  { 410, 320, 440, 360 };
-	SGD::Rectangle IventoryRect12 = { 460, 320, 490, 360 };
+	SGD::Rectangle IventoryRect12 = { 460, 320, 496, 360 };
 
 	//Rune Rect Sized images for sword
 	SGD::Rectangle Equip1 = { 220, 70, 280, 150 };

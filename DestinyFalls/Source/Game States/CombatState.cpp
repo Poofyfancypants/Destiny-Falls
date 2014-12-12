@@ -1434,7 +1434,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
 				RuneManager rmtemp;
-				Total *= (int)(rmtemp.DamageReduction(InventoryState::GetInstance()->GetArmorSlot1(), ((Minion*)_From)->GetAffinity()));
+				Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot1()));
 				((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 				if (rand() % 20 > 15)
 				{
@@ -1720,7 +1720,7 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 	{
 		ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
-		Total = (int)((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
+		Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 15)));
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 		string message = "You Counter the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
@@ -2490,12 +2490,13 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
 																					m_nCursor++;
-																				CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
 																				if (m_nCursor < 0)
 																					m_nCursor = m_pEnemies.size() - 1;
 																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
 																					m_nCursor = 0;
+																				
+																				CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
 																				if (pInput->IsKeyPressed(SGD::Key::Enter)) //Second Selection >> Target
 																				{
@@ -2886,19 +2887,19 @@ bool CombatState::TakeTurn(Object* _this)
 
 									if (((Minion*)_this)->GetHealth() > 0)
 									{
-										if (((Minion*)_this)->GetHealth() >= 100 && ((Minion*)_this)->GetHealth() < 150)
+										if (((Minion*)_this)->GetHealth() >= 400 && ((Minion*)_this)->GetHealth() < 500)
 										{
 											((Minion*)_this)->SetAffinity(Water);
 										}
-										if (((Minion*)_this)->GetHealth() >= 75 && ((Minion*)_this)->GetHealth() < 100)
+										if (((Minion*)_this)->GetHealth() >= 300 && ((Minion*)_this)->GetHealth() < 400)
 										{
 											((Minion*)_this)->SetAffinity(Air);
 										}
-										if (((Minion*)_this)->GetHealth() >= 50 && ((Minion*)_this)->GetHealth() < 75)
+										if (((Minion*)_this)->GetHealth() >= 100 && ((Minion*)_this)->GetHealth() < 200)
 										{
 											((Minion*)_this)->SetAffinity(Fire);
 										}
-										if (((Minion*)_this)->GetHealth() >= 0 && ((Minion*)_this)->GetHealth() < 50)
+										if (((Minion*)_this)->GetHealth() >= 0 && ((Minion*)_this)->GetHealth() < 100)
 										{
 											((Minion*)_this)->SetAffinity(((Elements)(rand() % 4)));
 										}
