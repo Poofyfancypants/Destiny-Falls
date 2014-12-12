@@ -1,6 +1,7 @@
 #pragma once
 #include "../Quick Time/QuickTime.h"
 #include "IGameState.h"
+#include "../../SGD Wrappers/SGD_Handle.h"
 
 class QuickTimeState :
 	public IGameState
@@ -27,6 +28,7 @@ private:
 	virtual ~QuickTimeState() = default;
 
 
+	SGD::HAudio m_mQTMusic = SGD::INVALID_HANDLE;
 
 	QuickTime* currentQT = nullptr;
 	bool m_bDoQt = false;
