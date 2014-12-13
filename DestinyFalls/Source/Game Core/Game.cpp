@@ -76,7 +76,7 @@ bool Game::Initialize( float width, float height )
 	m_hLoadingBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/loadingScreenBackground.png" );
 	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
 
-	SGD::AudioManager::GetInstance()->PlayAudio(m_hMusic, true);
+	SGD::AudioManager::GetInstance()->PlayAudio( m_hMusic, true );
 
 	m_pFonts = m_pFonts->GetInstance();
 	string fontName2 = "Other";
@@ -137,7 +137,7 @@ bool Game::Initialize( float width, float height )
 	string fontName5 = "InventoryFont";
 	string imageName5 = "resource/graphics/Fonts/InventoryFont_0.png";
 	string xmlFile5 = "resource/XML/InventoryFont.xml";
-	m_pFonts->Load(fontName5, imageName5, xmlFile5);
+	m_pFonts->Load( fontName5, imageName5, xmlFile5 );
 
 	LoadingScreen( "Loading Audio.." );
 
@@ -194,7 +194,7 @@ bool Game::Initialize( float width, float height )
 	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/FireIcon.png" );
 	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/WaterIcon.png" );
 	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/EarthIcon.png" );
-	m_hLogo = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/1411_Turn5_logo.png");
+	m_hLogo = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/1411_Turn5_logo.png" );
 
 
 
@@ -437,15 +437,15 @@ void Game::LoadStrings()
 {
 	m_pDialogs = m_pDialogs->GetInstance();
 
-	m_StringTable[0][1] = "Play";
-	m_StringTable[0][2] = "Load Game";
-	m_StringTable[0][3] = "Options";
-	m_StringTable[0][4] = "How to Play";
-	m_StringTable[0][5] = "Credits";
-	m_StringTable[0][6] = "Exit";
-	m_StringTable[0][7] = "Resume";
-	m_StringTable[0][8] = "Save";
-	m_StringTable[0][9] = "You Died";
+	m_StringTable[0][0] = "Resume";
+	m_StringTable[0][1] = "Save Game";
+	m_StringTable[0][2] = "Options";
+	m_StringTable[0][3] = "Exit";
+
+	m_StringTable[0][4] = "Respawn";
+	m_StringTable[0][5] = "Load Game";
+	m_StringTable[0][6] = "Options";
+	m_StringTable[0][7] = "Exit";
 
 	//Earth
 	m_StringTable[1][1] = "Minion";
@@ -539,6 +539,8 @@ void Game::LoadStrings()
 		m_StringTable[10][4] = "Runes that you equip will affect your abilities in combat,";
 		m_StringTable[10][5] = "plus the Forge will let you combine any spare Runes you have.";
 
+		m_StringTable[11][0] = "You stepped in a trap!";
+		m_StringTable[11][1] = "You were defeated in combat!";
 
 		if( m_pDialogs != nullptr )
 		{
@@ -589,6 +591,9 @@ void Game::LoadStrings()
 		m_StringTable[10][4] = "Runir sem ad thu setur a thig hafa ahrif a abilites i bardaga,";
 		m_StringTable[10][5] = "og Forgeinn leyfir ther ad blanda saman Runeum sem ad thu tharf ekki ad nota.";
 
+
+		m_StringTable[11][0] = "Thu steygst a gildru!";
+		m_StringTable[11][1] = "Thu dost i bardaga!";
 		if( m_pDialogs != nullptr )
 		{
 			m_pDialogs->DeleteInstance();
@@ -605,7 +610,7 @@ void Game::LoadingScreen( string _loading )
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	pGraphics->DrawTexture( m_hLoadingBackground, { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
-	pFont->Render( "Other", _loading.c_str(), SGD::Point{ 255, 300 }, 1.5, SGD::Color{ 0, 0, 0} );
+	pFont->Render( "Other", _loading.c_str(), SGD::Point{ 255, 300 }, 1.5, SGD::Color{ 0, 0, 0 } );
 	pGraphics->Update();
 	Sleep( 150 );
 }

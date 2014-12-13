@@ -26,6 +26,7 @@ void CombatState::Enter(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	InventoryState* pInventory = InventoryState::GetInstance();
+	m_hTurnIndicator = pGraphics->LoadTexture( "resource/graphics/TurnIndicator.png" );
 
 	CurrentTurn = 0;
 	TurnIndex = 0;
@@ -732,10 +733,18 @@ void CombatState::Render(void)
 
 	if (CurrentTurn < m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
 	{
+		
+
 		switch (m_pObjects[CurrentTurn]->GetType())
 		{
 		case Object::ObjectType::OBJ_PLAYER:
 		{
+			if( ((Player*)m_pObjects[CurrentTurn])->GetHealth() > 0 )
+			{
+				SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
+				pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x , turnIndicator.y + 20 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
+			}
+			
 											   if (ActionTimer <= 0)
 											   if (!selected)
 											   {
@@ -966,6 +975,12 @@ void CombatState::Render(void)
 			break;
 		case Object::ObjectType::OBJ_COMPANION:
 		{
+			if( ( ( Companion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
+		{
+			SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
+			pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x - 50 , turnIndicator.y - 40 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
+		}
+			
 												  if (ActionTimer <= 0)
 												  {
 													  switch (((Companion*)m_pObjects[CurrentTurn])->GetCoType())
@@ -1035,6 +1050,11 @@ void CombatState::Render(void)
 			break;
 		case Object::ObjectType::OBJ_MINION:
 		{
+			if( ( ( Minion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
+			{
+				SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
+				pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x - 80 , turnIndicator.y - 40 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
+			}
 											   if (ActionTimer <= 0)
 											   {
 											   }
@@ -1043,6 +1063,7 @@ void CombatState::Render(void)
 			break;
 		}
 	}
+	
 }
 
 Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care

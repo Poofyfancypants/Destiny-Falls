@@ -165,6 +165,8 @@ bool MainMenuState::Input()
 			m_nCursor = howToPlay;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( creditRect ) )
 			m_nCursor = credits;
+		else 
+			m_nCursor = -1;
 	}
 	return true;
 }
