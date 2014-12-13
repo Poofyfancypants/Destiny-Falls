@@ -20,12 +20,22 @@ PauseMenuState* PauseMenuState::GetInstance( void )
 
 void PauseMenuState::Enter( void )
 {
+	m_hBackground = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/MenuBackgrounds/pauseScreen.png" );
+	m_hButton = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/MenuBackgrounds/pauseButton.png" );
+	m_hSelected = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/MenuBackgrounds/pauseSelected.png" );
 
+
+	m_mMenuOptions["Resume"] = SGD::Rectangle( 370, 190, 485, 225 );
+	m_mMenuOptions["Save"] = SGD::Rectangle( 370, 240, 485, 275 );
+	m_mMenuOptions["Options"] = SGD::Rectangle( 370, 280, 485, 315 );
+	m_mMenuOptions["Exit"] = SGD::Rectangle( 370, 320, 485, 355 );
 }
 
 void PauseMenuState::Exit( void )
 {
-
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hButton );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hSelected );
 }
 
 bool PauseMenuState::Input( void )
@@ -35,24 +45,40 @@ bool PauseMenuState::Input( void )
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
-		m_nCursor = PauseSelections::exit;
+		Game::GetInstance()->RemoveState();
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Up ) )
+	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) )
 	{
-		if( m_nCursor <= 0 )
-			m_nCursor = PauseSelections::exit;
+		if( m_nCursor <= resume )
+			m_nCursor = exit;
 		else
 			m_nCursor--;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Down ) )
+	else if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyDown( SGD::Key::S ) )
 	{
-		if( m_nCursor >= PauseSelections::exit )
-			m_nCursor = PauseSelections::resume;
+		if( m_nCursor >= exit )
+			m_nCursor = resume;
 		else
 			m_nCursor++;
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) )
+
+	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y )
+	{
+		if( pInput->GetCursorPosition().IsPointInRectangle( m_mMenuOptions["Resume"] ) )
+			m_nCursor = resume;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMenuOptions["Save"] ) )
+			m_nCursor = save;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMenuOptions["Options"] ) )
+			m_nCursor = options;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMenuOptions["Exit"] ) )
+			m_nCursor = exit;
+		else
+			m_nCursor = -1;
+	}
+
+
+	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
 		switch( m_nCursor )
 		{
@@ -64,6 +90,7 @@ bool PauseMenuState::Input( void )
 			break;
 		case PauseSelections::options:
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
+			m_pauseStage = true;
 			break;
 		case PauseSelections::exit:
 			Game::GetInstance()->ClearStates();
@@ -75,44 +102,7 @@ bool PauseMenuState::Input( void )
 
 	}
 
-	//Pause game rect
-	SGD::Rectangle rSaveRect = { 300.0f, 100.0f, 500.0f, 150.0f };
 
-	//Gameplay rect
-	SGD::Rectangle rResumeRect = { 300.0f, 200.0f, 500.0f, 250.0f };
-
-	//Options rect
-	SGD::Rectangle rOptionsRect = { 300.0f, 300.0f, 500.0f, 350.0f };
-
-	//Exit rect
-	SGD::Rectangle rExitRect = { 300.0f, 400.0f, 500.0f, 450.0f };
-
-	//Click on buttons
-	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
-	{
-		if( pInput->GetCursorPosition().IsPointInRectangle( rSaveRect ) )
-		{
-			Game::GetInstance()->AddState(SaveandLoadState::GetInstance());
-		}
-		//Clicked on Resume State button
-		if( pInput->GetCursorPosition().IsPointInRectangle( rResumeRect ) )
-		{
-			Game::GetInstance()->RemoveState();
-		}
-
-		//Clicked on the Options Game button
-		if( pInput->GetCursorPosition().IsPointInRectangle( rOptionsRect ) )
-		{
-			Game::GetInstance()->AddState( OptionsState::GetInstance() );
-		}
-
-		//Clicked on the Exit Game button
-		if( pInput->GetCursorPosition().IsPointInRectangle( rExitRect ) )
-		{
-			Game::GetInstance()->ClearStates();
-			Game::GetInstance()->AddState(MainMenuState::GetInstance());
-		}
-	}
 	return true;
 }
 
@@ -124,21 +114,30 @@ void PauseMenuState::Update( float elapsedTime )
 void PauseMenuState::Render( void )
 {
 	SGD::GraphicsManager * pGraphics = SGD::GraphicsManager::GetInstance();
-	pGraphics->SetClearColor();
-
-	//const BitmapFont* pFont = Game::GetInstance()->GetFont();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 
-	string cursor = ">>";
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 7 ).c_str(), { 350, 115 }, 2, { 255, 0, 0, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 8 ).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 } );
-	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 } );
+	GameplayState::GetInstance()->Render();
 
-	pFonts->Render( "Bernardo", cursor.c_str(), SGD::Point( 275, (float)(( m_nCursor * 100 ) + 100 )), 2, { 255, 255, 255, 0 } );
+	pGraphics->DrawTexture( m_hBackground, SGD::Point( 300, 125 ), {}, {}, {}, { 1, 1.3f } );
+	for( size_t i = 0; i < 4; i++ )
+	{
+		if( m_nCursor == i )
+			pGraphics->DrawTexture( m_hSelected, SGD::Point( 360, (float)( 180 + 50 * m_nCursor ) ), {}, {}, {}, { .5f, .7f } );
+		else
+			pGraphics->DrawTexture( m_hButton, SGD::Point( 360, (float)( 180 + 50 * i ) ), {}, {}, {}, { .5f, .7f } );
+
+
+		pFonts->Render( "Dialog", Game::GetInstance()->GetString( 0, i ).c_str(),
+		{ 380, (float)( 190 + 50 * i ) },
+		.7f, { 247, 180, 91 } );
+	}
+
+	//string cursor = ">>";
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 8 ).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 } );
+	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 } );
+
+	//pFonts->Render( "Bernardo", cursor.c_str(), SGD::Point( 275, ( m_nCursor * 100 ) + 100 ), 2, { 255, 255, 255, 0 } );
 	/*pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );*/
 }
 
-void PauseMenuState::SaveGame()
-{
-}

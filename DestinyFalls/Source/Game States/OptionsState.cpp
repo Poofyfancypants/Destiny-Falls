@@ -9,6 +9,8 @@
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Core/Game.h"
+#include "DeathState.h"
+#include "PauseMenuState.h"
 #include "GameplayState.h"
 #include "MainMenuState.h"
 #include <fstream>
@@ -72,8 +74,17 @@ bool OptionsState::Input()
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
-		Game::GetInstance()->ClearStates();
-		Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+		if( PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState() )
+		{
+			DeathState::GetInstance()->SetDeathState( false );
+			PauseMenuState::GetInstance()->SetPauseState( false );
+			Game::GetInstance()->RemoveState();
+		}
+		else
+		{
+			Game::GetInstance()->ClearStates();
+			Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+		}
 	}
 
 	if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
@@ -150,6 +161,8 @@ bool OptionsState::Input()
 			m_nCursor = 4;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Back"] ) )
 			m_nCursor = 5;
+		else
+			m_nCursor = -1;
 	}
 
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
@@ -205,8 +218,17 @@ bool OptionsState::Input()
 		}
 		if( m_nCursor == 5 )
 		{
-			Game::GetInstance()->ClearStates();
-			Game::GetInstance()->AddState(MainMenuState::GetInstance());
+			if( PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState() )
+			{
+				DeathState::GetInstance()->SetDeathState( false );
+				PauseMenuState::GetInstance()->SetPauseState( false );
+				Game::GetInstance()->RemoveState();
+			}
+			else
+			{
+				Game::GetInstance()->ClearStates();
+				Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+			}
 		}
 	}
 	return true;
@@ -229,12 +251,13 @@ void OptionsState::Render()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 
-	SGD::Color textColor = { 150,150,150 };
+	SGD::Color textColor = { 239, 208, 162 };
 	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
-	pGraphics->DrawTexture(Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f });
-	//pGraphics->DrawTexture( m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f } );
+	pGraphics->DrawTexture( Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 10 }, 2.0f, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 13 }, 2.0f, SGD::Color(0,0,0) );
+	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 13 }, 2.0f, textColor );
+
 	string MusicVolume;
 	string SFXVolume;
 	MusicVolume = to_string( pAudio->GetMasterVolume( SGD::AudioGroup::Music ) / 10 );

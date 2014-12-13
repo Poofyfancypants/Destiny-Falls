@@ -41,6 +41,7 @@ public:
 	SGD::Point GetCheckpoint() { return m_ptCheckpoint; }
 	int GetDirection() const { return m_nDirection; }
 	bool GetCombat() const { return m_bCombat; }
+	bool GetInTrap() const {return m_PrintDMG;}
 	void CurrentTurn( int * _CurrentTurn ) { m_CurrentTurn = _CurrentTurn; }
 	int GetNumPotions() const { return m_nPotions; }
 	int m_nPotions = 0;

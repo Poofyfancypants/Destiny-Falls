@@ -200,7 +200,7 @@ void QuickTime::Render()
 
 		//SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
 		SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hScroll , SGD::Point( 150.0f , 300.0f ) , SGD::Rectangle( 0.0f , 0.0f , 465.0f , 290.0f ) , 0.0f , { } , { } , SGD::Size( 1.0f , 0.5f ) );
-		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 175 , 360 } , 1 , { 255 , 255 , 255, 255} );
+		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 175 , 360 } , 1 , { 255 , 0 , 0, 0} );
 	}
 	else
 	{
@@ -212,11 +212,11 @@ void QuickTime::Render()
 
 		// draw timer rect
 		timer.right = timer.right - ( ( m_fSeconds / m_fLetterTimer ) * 100 );
-		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 255 , 255 , 255 ) );
+		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 0 , 0 ) );
 
 		//Draw text
-		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 275 , 325 } , 2 , { 255 , 255 , 255 , 255 } );
-		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 275 , 340 } , 2 , { 255 , 0 , 0 , 0 } );
+		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 275 , 325 } , 2 , { 255 , 0 , 0 , 0 } );
+		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 275 , 340 } , 2 , { 255 , 255 , 255 , 255 } );
 	}
 	
 }
