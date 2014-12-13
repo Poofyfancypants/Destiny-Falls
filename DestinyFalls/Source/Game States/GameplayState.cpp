@@ -620,9 +620,8 @@ void GameplayState::LoadNewLevel()
 		{
 		case GameplayState::TUTORIAL_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/Balencingtestmap.xml" );
-			m_sName = "Tutorial Level";
-			/*TutorialStage.xml*/
+			m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+			/*Balencingtestmap.xml*/
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -631,7 +630,6 @@ void GameplayState::LoadNewLevel()
 		case GameplayState::EARTH_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
-			m_sName = "Earth Level";
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -640,7 +638,6 @@ void GameplayState::LoadNewLevel()
 		case GameplayState::WATER_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/waterLevel.xml" );
-			m_sName = "Water Level";
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )

@@ -166,7 +166,6 @@ private:
 
 	// - Display Name
 	float m_fAlpha = 0;
-	string m_sName;
 	bool m_bIn, m_bOut;
 
 	SGD::HTexture m_htutorialFrame	 = SGD::INVALID_HANDLE;
