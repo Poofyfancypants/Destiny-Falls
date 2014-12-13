@@ -47,7 +47,7 @@ public:
 
 	float GetScreenWidth( void ) const { return m_fScreenWidth; }
 	float GetScreenHeight( void ) const { return m_fScreenHeight; }
-
+	 SGD::HTexture GetLoadingScreenBkGround() const {return m_hLoadingBackground;}
 	void LoadingScreen( string _loading );
 	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
 	std::string GetString( int _type, int _string ) { return m_StringTable[_type][_string]; }

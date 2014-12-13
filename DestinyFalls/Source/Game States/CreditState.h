@@ -24,8 +24,7 @@ private:
 	CreditState& operator=( const CreditState& ) = delete;
 
 
-	SGD::HAudio m_haBackground;
-	SGD::HTexture m_htBackground;
+	SGD::HTexture m_hBackground;
 	vector<string> m_vCredits;
 	vector<float> m_vScrollCount;
 	float Timer = 20.0f;

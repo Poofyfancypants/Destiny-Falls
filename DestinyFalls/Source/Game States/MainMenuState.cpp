@@ -31,7 +31,7 @@ void MainMenuState::Enter()
 	m_bTutorial = false;
 
 	m_hMusic = pAudio->LoadAudio( "resource/audio/MainMenuSong.xwm" );
-	if( !pAudio->IsAudioPlaying( Game::GetInstance()->GetAudio() ))
+	if( !pAudio->IsAudioPlaying( Game::GetInstance()->GetAudio() ) )
 		pAudio->PlayAudio( m_hMusic, true );
 
 	InventoryState::GetInstance()->m_vSword.resize( 3 );
@@ -51,10 +51,11 @@ void MainMenuState::Enter()
 	// - Load Selection
 	m_hBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/1411_Turn5_MenuBackground.png" );
 	m_hPlay = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuPlay.png" );
+	m_hLogo = pGraphics->LoadTexture( "resource/graphics/1411_Turn5_logo.png" );
+	FadeInMenu();
 	m_hOptions = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuOptions.png" );
 	m_hCredit = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuCredit.png" );
 	m_hTutorial = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuTutorial.png" );
-
 }
 
 void MainMenuState::Exit()
@@ -64,6 +65,7 @@ void MainMenuState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hCredit );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hOptions );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hLogo );
 	SGD::AudioManager::GetInstance()->UnloadAudio( m_hMusic );
 }
 
@@ -77,7 +79,7 @@ bool MainMenuState::Input()
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 		m_nCursor = MenuSelections::exit;
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ))
+	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
@@ -90,7 +92,7 @@ bool MainMenuState::Input()
 		else
 			m_nCursor = howToPlay;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Down )|| pInput->IsKeyPressed( SGD::Key::S ) )
+	else if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 
@@ -103,7 +105,7 @@ bool MainMenuState::Input()
 		else
 			m_nCursor = options;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Left ) || pInput->IsKeyPressed( SGD::Key::A ))
+	else if( pInput->IsKeyPressed( SGD::Key::Left ) || pInput->IsKeyPressed( SGD::Key::A ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 		if( m_nCursor == play )
@@ -111,7 +113,7 @@ bool MainMenuState::Input()
 		else
 			m_nCursor = play;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Right ) || pInput->IsKeyPressed( SGD::Key::D ))
+	else if( pInput->IsKeyPressed( SGD::Key::Right ) || pInput->IsKeyPressed( SGD::Key::D ) )
 	{
 		pAudio->PlayAudio( Game::GetInstance()->m_mButton );
 		if( m_nCursor == credits )
@@ -181,7 +183,6 @@ void MainMenuState::Update( float elapsedTime )
 void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	pGraphics->SetClearColor();
 
 	if( m_bDebug )
 	{
@@ -195,7 +196,9 @@ void MainMenuState::Render()
 	}
 
 
-	pGraphics->SetClearColor( { 148, 99, 50 } );
+	pGraphics->SetClearColor( { 64, 47, 25 } );
+	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
+	//pGraphics->SetClearColor( { 148, 99, 50 } );
 
 	pGraphics->DrawTexture( m_hBackground, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
 
@@ -229,4 +232,25 @@ void MainMenuState::Render()
 	default:
 		break;
 	}
+	pGraphics->DrawTexture( m_hLogo, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+
+}
+void MainMenuState::FadeInMenu()
+{
+
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+
+	pGraphics->SetClearColor( { 64, 47, 25 } );
+	for( size_t i = 0; i < 225; i++ )
+	{
+		pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
+		pGraphics->DrawTexture( m_hBackground, { 100, 0 }, 0, {}, SGD::Color{ (unsigned char)( i ), 255, 255, 255 }, { 0.3f, 0.3f } );
+		pGraphics->DrawTexture( m_hLogo, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+		pGraphics->Update();
+		Sleep( 5 );
+
+	}
+
+
+
 }

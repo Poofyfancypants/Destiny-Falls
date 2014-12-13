@@ -21,9 +21,12 @@ public:
 
 
 	bool GetTutorial() const {return m_bTutorial;}
+
+	void FadeInMenu();
 private:
 	//Textures
 	SGD::HTexture m_hBackground = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hLogo = SGD::INVALID_HANDLE;
 	MainMenuState() = default;
 	virtual ~MainMenuState() = default;
 
@@ -55,5 +58,6 @@ private:
 	
 	bool m_bDebug = false;
 	bool m_bTutorial = false;
+
 };
 
