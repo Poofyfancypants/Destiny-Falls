@@ -10,7 +10,7 @@
 #include "../Game States/GameplayState.h"
 #include "../Game States/MainMenuState.h"
 #include "../Game States/OptionsState.h"
-#include "../Game States/SaveandLoadState.h"
+#include "../Game States/SaveState.h"
 #include "../Game States/HowToPlayState.h"
 #include "../Game States/SplashScreenState.h"
 #include "../../SGD Wrappers/SGD_InputManager.h"
@@ -353,10 +353,13 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mWinMusic );
 
 
+	m_pDialogs->DeleteInstance();
+	m_pAnimator->DeleteInstance();
+	m_pFonts->DeleteInstance();
+
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
 
-	m_pFonts->DeleteInstance();
 	SGD::GraphicsManager::GetInstance()->Terminate();
 	SGD::GraphicsManager::DeleteInstance();
 
@@ -368,8 +371,6 @@ void Game::Terminate( void )
 
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
-	m_pAnimator->DeleteInstance();
-	m_pDialogs->DeleteInstance();
 
 
 }
