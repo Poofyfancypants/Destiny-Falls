@@ -194,6 +194,7 @@ bool Game::Initialize( float width, float height )
 	m_hFireIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/FireIcon.png" );
 	m_hWaterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/WaterIcon.png" );
 	m_hEarthIcon = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/EarthIcon.png" );
+	m_hLogo = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/1411_Turn5_logo.png");
 
 
 
@@ -339,6 +340,7 @@ void Game::Terminate( void )
 	pGraphics->UnloadTexture( m_hEarthIcon );
 
 	pGraphics->UnloadTexture( m_hLoadingBackground );
+	pGraphics->UnloadTexture( m_hLogo );
 
 	pAudio->UnloadAudio( m_hMusic );
 	pAudio->UnloadAudio( m_mButton );
