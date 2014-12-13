@@ -610,7 +610,7 @@ void CombatState::Update(float elapsedTime)
 
 		for (size_t i = 0; i < m_pHeroes.size(); i++)
 		{
-			m_pHeroes[i]->SetDeltaHPPosY(m_pHeroes[i]->GetDeltaHPPosY() + 100 * elapsedTime);
+ 			m_pHeroes[i]->SetDeltaHPPosY(m_pHeroes[i]->GetDeltaHPPosY() + 100 * elapsedTime);
 		}
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
@@ -728,7 +728,7 @@ void CombatState::Render(void)
 			pFont->Render("Bernardo", "-", { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y }, 3.0, SGD::Color{ 255, 255, 165, 0 });
 	}
 
-	if (CurrentTurn < m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
+	if (CurrentTurn < (int)m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
 	{
 		switch (m_pObjects[CurrentTurn]->GetType())
 		{
@@ -930,21 +930,21 @@ void CombatState::Render(void)
 															   {
 															   case 0:
 																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell1Cool())
-																	   pFont->Render("Bernardo", spell1.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
+																	   pFont->Render("Bernardo", spell1.c_str(), { (float)(175 + (i * 150)), 480 }, 1, { 100, 255, 255, 255 });
 																   else
-																	   pFont->Render("Bernardo", spell1.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
+																	   pFont->Render("Bernardo", spell1.c_str(), { (float)(175 + (i * 150)), 480 }, 1, { 255, 255, 255, 255 });
 																   break;
 															   case 1:
 																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell2Cool())
-																	   pFont->Render("Bernardo", spell2.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
+																	   pFont->Render("Bernardo", spell2.c_str(), { (float)(175 + (i * 150)), 480 }, 1, { 100, 255, 255, 255 });
 																   else
-																	   pFont->Render("Bernardo", spell2.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
+																	   pFont->Render("Bernardo", spell2.c_str(), { (float)(175 + (i * 150)), 480 }, 1, { 255, 255, 255, 255 });
 																   break;
 															   case 2:
 																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell3Cool())
-																	   pFont->Render("Bernardo", spell3.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 100, 255, 255, 255 });
+																	   pFont->Render("Bernardo", spell3.c_str(), { (float)(175 + (i * 150)), 480 }, 1, { 100, 255, 255, 255 });
 																   else
-																	   pFont->Render("Bernardo", spell3.c_str(), { (float)(250 + (i * 100)), 480 }, 1, { 255, 255, 255, 255 });
+																	   pFont->Render("Bernardo", spell3.c_str(), { (float)(175 + (i * 150)), 480 }, 1, { 255, 255, 255, 255 });
 																   break;
 															   default:
 																   break;
@@ -2266,7 +2266,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 										if (m_nCursor < 0)
 											m_nCursor = m_pEnemies.size() - 1;
-										if (m_nCursor > pCombat->GetEnemies().size() - 1)
+										if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 											m_nCursor = 0;
 
 										if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
@@ -2274,7 +2274,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 										if (m_nCursor < 0)
 											m_nCursor = m_pEnemies.size() - 1;
-										if (m_nCursor > pCombat->GetEnemies().size() - 1)
+										if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 											m_nCursor = 0;
 
 
@@ -2285,7 +2285,7 @@ bool CombatState::TakeTurn(Object* _this)
 											((Player*)_this)->SetAttacking(true);
 
 											int xx = 0;
-											for (int i = 0; i < InventoryState::GetInstance()->m_vSword.size(); i++)
+											for (int i = 0; i < (int)InventoryState::GetInstance()->m_vSword.size(); i++)
 											{
 												if (InventoryState::GetInstance()->m_vSword[i].GetElement() != None)
 													xx++;
@@ -2319,7 +2319,7 @@ bool CombatState::TakeTurn(Object* _this)
 											//#pragma region spells
 											pCombat->SetAction("Choose Spell");
 
-											float posX = 250.0f + (m_nCursor * 100);
+											float posX = 175.0f + (m_nCursor * 150);
 											PlayerSelection = { posX, 500, posX + 60, 510 };
 
 											if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::W))
@@ -2329,8 +2329,8 @@ bool CombatState::TakeTurn(Object* _this)
 
 											if (m_nCursor < 0)
 												m_nCursor = 0;
-											if (m_nCursor > pInventory->m_vRing.size() - 1)
-												m_nCursor = pInventory->m_vRing.size() - 1;
+											if (m_nCursor > (int)pInventory->m_vRing.size() - 1)
+												m_nCursor = (int)pInventory->m_vRing.size() - 1;
 
 											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 											{
@@ -2354,7 +2354,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 											if (m_nCursor < 0)
 												m_nCursor = m_pEnemies.size() - 1;
-											if (m_nCursor > pCombat->GetEnemies().size() - 1)
+											if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 												m_nCursor = 0;
 
 											if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
@@ -2362,7 +2362,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 											if (m_nCursor < 0)
 												m_nCursor = m_pEnemies.size() - 1;
-											if (m_nCursor > pCombat->GetEnemies().size() - 1)
+											if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 												m_nCursor = 0;
 											//Second Selection >> Target
 											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
@@ -2461,7 +2461,7 @@ bool CombatState::TakeTurn(Object* _this)
 																				 {
 																					 if (m_nCursor < 0)
 																						 m_nCursor = m_pHeroes.size() - 1;
-																					 if (m_nCursor > m_pHeroes.size() - 1)
+																					 if (m_nCursor > (int)m_pHeroes.size() - 1)
 																						 m_nCursor = 0;
 
 																					 if (((Player*)pCombat->GetHeroes()[m_nCursor])->GetHealth() <= 0)
@@ -2475,14 +2475,14 @@ bool CombatState::TakeTurn(Object* _this)
 
 																					 if (m_nCursor < 0)
 																						 m_nCursor = 0;
-																					 if (m_nCursor > m_pHeroes.size() - 1)
+																					 if (m_nCursor > (int)m_pHeroes.size() - 1)
 																						 m_nCursor = m_pHeroes.size() - 1;
 																				 }
 																				 else
 																				 {
 																					 if (m_nCursor < 0)
 																						 m_nCursor = m_pEnemies.size() - 1;
-																					 if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																					 if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																						 m_nCursor = 0;
 
 																					 if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
@@ -2490,7 +2490,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																					 if (m_nCursor < 0)
 																						 m_nCursor = m_pEnemies.size() - 1;
-																					 if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																					 if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																						 m_nCursor = 0;
 
 																					 CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
@@ -2573,7 +2573,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				if (m_nCursor < 0)
 																					m_nCursor = m_pEnemies.size() - 1;
-																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																				if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																					m_nCursor = 0;
 
 																				if (((Minion*)pCombat->GetEnemies()[m_nCursor])->GetHealth() <= 0)
@@ -2581,7 +2581,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				if (m_nCursor < 0)
 																					m_nCursor = m_pEnemies.size() - 1;
-																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																				if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																					m_nCursor = 0;
 																				
 																				CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
@@ -2660,7 +2660,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																			   if (m_nCursor < 0)
 																				   m_nCursor = m_pEnemies.size() - 1;
-																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																			   if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																				   m_nCursor = 0;
 
 																			   if (((Minion*)m_pEnemies[m_nCursor])->GetHealth() <= 0)
@@ -2668,7 +2668,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																			   if (m_nCursor < 0)
 																				   m_nCursor = m_pEnemies.size() - 1;
-																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																			   if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																				   m_nCursor = 0;
 
 																			   //Second Selection >> Target
@@ -2748,7 +2748,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																			   if (m_nCursor < 0)
 																				   m_nCursor = m_pEnemies.size() - 1;
-																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																			   if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																				   m_nCursor = 0;
 
 																			   if (((Minion*)m_pEnemies[m_nCursor])->GetHealth() <= 0)
@@ -2756,7 +2756,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 																			   if (m_nCursor < 0)
 																				   m_nCursor = m_pEnemies.size() - 1;
-																			   if (m_nCursor > pCombat->GetEnemies().size() - 1)
+																			   if (m_nCursor > (int)pCombat->GetEnemies().size() - 1)
 																				   m_nCursor = 0;
 
 																			   //Second Selection >> Target
