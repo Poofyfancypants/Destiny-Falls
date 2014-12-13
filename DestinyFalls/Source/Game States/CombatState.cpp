@@ -3511,7 +3511,7 @@ void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 1.0f, 1.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hAir2 , { _shakeRect.left , _shakeRect.top } , { 700.0f , 200.0f , 1500.0f , 800.0f }, 0.0f , { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );		
 		break;
 	case 4:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.3f });

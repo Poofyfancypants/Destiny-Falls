@@ -18,12 +18,12 @@ QuickTime::QuickTime()
 	if( SGD::InputManager::GetInstance()->IsControllerConnected( 0 ) || SGD::InputManager::GetInstance()->IsControllerConnected( 1 ) )
 	{
 		//push back buttons into the key vector
-		m_vKeys.push_back( SGD::Key::Zero );
-		m_vKeys.push_back( SGD::Key::One );
-		m_vKeys.push_back( SGD::Key::Two );
-		m_vKeys.push_back( SGD::Key::Three );
-		m_vKeys.push_back( SGD::Key::Four );
-		m_vKeys.push_back( SGD::Key::Five );
+		m_vKeys.push_back( SGD::Key::Zero	);
+		m_vKeys.push_back( SGD::Key::One	);
+		m_vKeys.push_back( SGD::Key::Two	);
+		m_vKeys.push_back( SGD::Key::Three	);
+		m_vKeys.push_back( SGD::Key::Four	);
+		m_vKeys.push_back( SGD::Key::Five	);
 	}
 	else
 	{
