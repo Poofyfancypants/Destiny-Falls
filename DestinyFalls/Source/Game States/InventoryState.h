@@ -3,7 +3,7 @@
 #include "../../SGD Wrappers/SGD_Handle.h"		
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
-
+#include "../Game Objects/Companion.h"
 #include "../Runes/Runes.h"
 #include <vector>
 
@@ -11,7 +11,7 @@ class InventoryState :
 	public IGameState
 {
 public:
-
+	
 	static InventoryState* GetInstance(void);
 
 	virtual void Enter(void)				override;
@@ -70,6 +70,7 @@ public:
 	std::vector<Runes> m_vArmor;
 	std::vector<Runes> m_vRunes;
 
+	std::vector<Companion> m_vCompanion;
 
 	void ClearInventory();
 
@@ -90,6 +91,7 @@ private:
 	InventoryState& operator=(const InventoryState&) = delete;
 	int m_ntabCursor = 0;
 	int m_nCursor = 0;
+	unsigned int CompanionSelect = 30;
 	bool m_bSelect = false;
 	bool m_bSwordSelect = false;
 	bool m_bArmorSelect = false;
@@ -113,9 +115,9 @@ private:
 	bool m_bShowToolTip10 = false;
 	bool m_bShowToolTip11 = false;
 	bool m_bShowToolTip12 = false;
-	
+
 	bool tabLock = false;
-	bool OnlyEquipEnter = true;
+	bool OnlyEquipEnter = false;
 
 	bool equipslot1selected = false;
 	bool equipslot2selected = false;
@@ -125,6 +127,7 @@ private:
 
 	int equipPos = 0;
 	Runes m_ptSelectedRune;
+
 	//full inventory rectangle
 	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };
 
@@ -167,6 +170,14 @@ private:
 	SGD::Rectangle IventoryRect6 =  { 458, 240, 494, 276 };
 	SGD::Rectangle IventoryRect9 =  { 408, 320, 444, 356 };
 	SGD::Rectangle IventoryRect12 = { 458, 320, 494, 356 };
+	//companions select rects
+	SGD::Rectangle CompanionTopLeft = { 200, 50, 350, 225 };
+	SGD::Rectangle CompanionTopRight = { 350, 50, 500, 225 };
+	SGD::Rectangle CompanionBottomLeft = { 200, 225, 350, 400 };
+	SGD::Rectangle CompanionBottomRight = { 350, 225, 500, 400 };
+	//companion Equip Rects
+	SGD::Rectangle Comp1Rect = { 600, 50, 700, 150 };
+	SGD::Rectangle Comp2Rect = { 700, 50, 800, 150 };
 
 	//Rune Rect Sized images for sword
 	SGD::Rectangle Equip1 = { 220, 70, 280, 150 };
@@ -204,6 +215,12 @@ protected:
 	SGD::HTexture m_hAirt2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hAirt3 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hHeroBackground = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hInventoryBackground = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hArmorBackground = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hWeaponBackground = SGD::INVALID_HANDLE;
+
+
 
 	// icons for companions
 	SGD::HTexture m_hHunterIcon = SGD::INVALID_HANDLE;
