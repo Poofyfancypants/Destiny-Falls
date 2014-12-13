@@ -956,13 +956,13 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color(255, 200, 92, 12));
 		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
 
-		pFonts->Render("InventoryFont", "Tank", SGD::Point(210, 50), 1, SGD::Color{ 255, 0, 0, 0 });
-		pFonts->Render("InventoryFont", "Cleric", SGD::Point(345, 50), 1, SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Other", "Tank", SGD::Point(210, 50), 1, SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Other", "Cleric", SGD::Point(345, 50), 1, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
 		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(345, 70), {}, {}, {}, { .3f, .28f });
 
-		pFonts->Render("InventoryFont", "Fighter", SGD::Point(210, 205), 1, SGD::Color{ 255, 0, 0, 0 });
-		pFonts->Render("InventoryFont", "Mage", SGD::Point(345, 205), 1, SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Other", "Fighter", SGD::Point(210, 205), 1, SGD::Color{ 255, 0, 0, 0 });
+		pFonts->Render("Other", "Mage", SGD::Point(345, 205), 1, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, { .35f, .35f });
 		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(330, 225), {}, {}, {}, { .35f, .35f });
 
@@ -972,9 +972,6 @@ void InventoryState::Render()
 
 		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
 		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
-
-		pFonts->Render("Other", "Tank", SGD::Point(210, 50), 1, SGD::Color{ 255, 0, 0, 0 });
-		pFonts->Render("Other", "Healer", SGD::Point(345, 50), 1, SGD::Color{ 255, 0, 0, 0 });
 
 		pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(200, 50), {}, {}, {}, { .592f, 1.37f });
 		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
@@ -1058,11 +1055,6 @@ void InventoryState::Render()
 		{
 			pGraphics->DrawRectangle(Comp2Rect, SGD::Color(0, 255, 255, 255), SGD::Color(255, 200, 92, 12));
 		}
-
-
-
-
-
 	}
 
 #pragma region SwordSlots
@@ -1332,11 +1324,11 @@ void InventoryState::Render()
 		{
 
 			if (m_vArmor[1].GetTier() == 1)
-				pGraphics->DrawTexture(m_hFiret1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[1].GetTier() == 2)
-				pGraphics->DrawTexture(m_hFiret2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[1].GetTier() == 3)
-				pGraphics->DrawTexture(m_hFiret3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[1].GetElement() == Water)
@@ -1344,22 +1336,22 @@ void InventoryState::Render()
 
 
 			if (m_vArmor[1].GetTier() == 1)
-				pGraphics->DrawTexture(m_hWatert1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[1].GetTier() == 2)
-				pGraphics->DrawTexture(m_hWatert2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[1].GetTier() == 3)
-				pGraphics->DrawTexture(m_hWatert3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[1].GetElement() == Air)
 		{
 
 			if (m_vArmor[1].GetTier() == 1)
-				pGraphics->DrawTexture(m_hAirt1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hAirt1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[1].GetTier() == 2)
-				pGraphics->DrawTexture(m_hAirt2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hAirt2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[1].GetTier() == 3)
-				pGraphics->DrawTexture(m_hAirt3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hAirt3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[1].GetElement() == Earth)
@@ -1381,33 +1373,33 @@ void InventoryState::Render()
 		{
 
 			if (m_vArmor[2].GetTier() == 1)
-				pGraphics->DrawTexture(m_hFiret1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[2].GetTier() == 2)
-				pGraphics->DrawTexture(m_hFiret2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[2].GetTier() == 3)
-				pGraphics->DrawTexture(m_hFiret3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[2].GetElement() == Water)
 		{
 
 			if (m_vArmor[2].GetTier() == 1)
-				pGraphics->DrawTexture(m_hWatert1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[2].GetTier() == 2)
-				pGraphics->DrawTexture(m_hWatert2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[2].GetTier() == 3)
-				pGraphics->DrawTexture(m_hWatert3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[2].GetElement() == Air)
 		{
 
 			if (m_vArmor[2].GetTier() == 1)
-				pGraphics->DrawTexture(m_hAirt1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hAirt1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[2].GetTier() == 2)
-				pGraphics->DrawTexture(m_hAirt2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hAirt2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vArmor[2].GetTier() == 3)
-				pGraphics->DrawTexture(m_hAirt3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hAirt3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[2].GetElement() == Earth)
@@ -1815,78 +1807,59 @@ void InventoryState::Render()
 #pragma region Add
 void InventoryState::AddRunesToInventoryfromWorld(Runes _addrune)
 {
-
 	m_vRunes.push_back(_addrune);
 }
 
-
 void InventoryState::AddRunesToSword0fromInventory(Runes _addrune)
 {
-
 	m_vSword[0].SetElement(_addrune.GetElement());
 	m_vSword[0].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToSword1fromInventory(Runes _addrune)
 {
-
 	m_vSword[1].SetElement(_addrune.GetElement());
 	m_vSword[1].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToSword2fromInventory(Runes _addrune)
 {
-
 	m_vSword[2].SetElement(_addrune.GetElement());
 	m_vSword[2].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToRing0fromInventory(Runes _addrune)
 {
-
 	m_vRing[0].SetElement(_addrune.GetElement());
 	m_vRing[0].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToRing1fromInventory(Runes _addrune)
 {
-
 	m_vRing[1].SetElement(_addrune.GetElement());
 	m_vRing[1].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToRing2fromInventory(Runes _addrune)
 {
-
 	m_vRing[2].SetElement(_addrune.GetElement());
 	m_vRing[2].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToArmor0fromInventory(Runes _addrune)
 {
-
 	m_vArmor[0].SetElement(_addrune.GetElement());
 	m_vArmor[0].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToArmor1fromInventory(Runes _addrune)
 {
-
 	m_vArmor[1].SetElement(_addrune.GetElement());
 	m_vArmor[1].SetTier(_addrune.GetTier());
 }
 
-
 void InventoryState::AddRunesToArmor2fromInventory(Runes _addrune)
 {
-
 	m_vArmor[2].SetElement(_addrune.GetElement());
 	m_vArmor[2].SetTier(_addrune.GetTier());
 }
@@ -1896,63 +1869,54 @@ void InventoryState::AddRunesToArmor2fromInventory(Runes _addrune)
 #pragma region Remove
 void InventoryState::AddRunesToInventoryfromSword0()
 {
-
 	m_vSword[0].SetElement(None);
 	m_vSword[0].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromSword1()
 {
-
 	m_vSword[1].SetElement(None);
 	m_vSword[1].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromSword2()
 {
-
 	m_vSword[2].SetElement(None);
 	m_vSword[2].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromRing0()
 {
-
 	m_vRing[0].SetElement(None);
 	m_vRing[0].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromRing1()
 {
-
 	m_vRing[1].SetElement(None);
 	m_vRing[1].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromRing2()
 {
-
 	m_vRing[2].SetElement(None);
 	m_vRing[2].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromArmor0()
 {
-
 	m_vArmor[0].SetElement(None);
 	m_vArmor[0].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromArmor1()
 {
-
 	m_vArmor[1].SetElement(None);
 	m_vArmor[1].SetTier(0);
 }
 
 void InventoryState::AddRunesToInventoryfromArmor2()
 {
-
 	m_vArmor[2].SetElement(None);
 	m_vArmor[2].SetTier(0);
 }
@@ -1961,31 +1925,9 @@ void InventoryState::AddRunesToInventoryfromArmor2()
 
 void InventoryState::ClearInventory()
 {
-
-	//for (unsigned int i = 0; i < m_vSword.size(); i++)
-	//{
-	////	if (m_vSword[i]->GetElement() == 4)
-	//	{
-	//	delete m_vSword[i];
-	//	}
-	//}
-
-	//for (unsigned int i = 0; i < m_vArmor.size(); i++)
-	//{
-	////	if (m_vArmor[i]->GetElement() == 4)
-	//		delete m_vArmor[i];
-	//}
-
-	//for (unsigned int i = 0; i < m_vRing.size(); i++)
-	//{
-	//	//if (m_vRing[i]->GetElement() == 4)
-	//		delete m_vRing[i];
-	//}
-
 	m_vArmor.clear();
 	m_vSword.clear();
 	m_vRing.clear();
-
 }
 
 void InventoryState::HandleTutorial()
