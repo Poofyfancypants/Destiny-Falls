@@ -48,6 +48,7 @@ public:
 	float GetScreenWidth( void ) const { return m_fScreenWidth; }
 	float GetScreenHeight( void ) const { return m_fScreenHeight; }
 	 SGD::HTexture GetLoadingScreenBkGround() const {return m_hLoadingBackground;}
+	 SGD::HTexture GetGameIcon() const {return m_hLogo;}
 	void LoadingScreen( string _loading );
 	//const BitmapFont*	GetFont(void) const	{ return m_pFont; }
 	std::string GetString( int _type, int _string ) { return m_StringTable[_type][_string]; }
@@ -162,6 +163,7 @@ private:
 	bool m_bIcelandic = false;
 
 	// - Loading Screen
+	SGD::HTexture m_hLogo;
 	SGD::HTexture m_hLoadingBackground;
 	SGD::HAudio m_hMusic;
 

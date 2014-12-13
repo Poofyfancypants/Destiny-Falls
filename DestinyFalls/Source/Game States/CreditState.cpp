@@ -38,13 +38,14 @@ void CreditState::Enter()
 	m_vCredits.push_back( "Riley Wood" );
 	m_vCredits.push_back( "Kidnapped Brick" );
 
-	m_hBackground = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/MenuBackgrounds/creditBackground.png");
+	m_hBackground = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/MenuBackgrounds/creditBackground.png" );
+	m_bExit = false;
 }
 
 void CreditState::Exit()
 {
 	m_particle.Exit();
-	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hBackground);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
 }
 
 bool CreditState::Input()
@@ -52,7 +53,7 @@ bool CreditState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0,6))
+	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown( 0, 6 ) || m_bExit )
 	{
 		Game::GetInstance()->ClearStates();
 		//pAudio->StopAudio(Game::GetInstance()->m_mWinMusic);
@@ -109,12 +110,14 @@ void CreditState::Render()
 	pGraphics->SetClearColor();
 
 	BitmapFontManager* pFonts = pFonts->GetInstance();
-
+	SGD::Color fontColor = SGD::Color( 0,0,0 );
+	//SGD::Color fontColor = SGD::Color( 12, 243, 215 );
 	float x = Game::GetInstance()->GetScreenWidth() / 1024;
 	float y = Game::GetInstance()->GetScreenHeight() / 512;
-	SGD::GraphicsManager::GetInstance()->DrawTexture(m_hBackground, {}, {}, {}, {}, {1.6f, 1.3f});
+	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
+	pGraphics->DrawTexture( Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
 
-	pFonts->Render( "Other", "Credits:", { 100, 25 }, 2, { 12, 243, 215} );
+	pFonts->Render( "Other", "Credits:", { 100, 25 }, 2, { 0,0,0 } );
 	// 0 , 2, 4, 7, 13
 
 	for( size_t i = 0; i < m_vCredits.size(); i++ )
@@ -123,15 +126,16 @@ void CreditState::Render()
 
 		if( i == m_vCredits.size() - 1 && futureY < 50.0f )
 		{
+			m_bExit = true;
 			m_fScroll = 0;
 			futureY = (float)( ( 650 + ( 30 * i ) ) - 5 * m_fScroll );
 		}
 		if( futureY > 80.0f )
 		{
 			if( i == 0 || i == 2 || i == 4 || i == 7 || i == 13 )
-				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, SGD::Color(12, 243, 215) );
+				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, fontColor );
 			else
-				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, SGD::Color(12, 243, 215) );
+				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, fontColor );
 		}
 
 	}
