@@ -3501,13 +3501,14 @@ void CombatState::HandleTutorial()
 }
 void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 {
-	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	switch( GameplayState::GetInstance()->GetCurrentLevel() )
 	{
-	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.4f });
+		case 1:
+			SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hEarth1 , { _shakeRect.left , _shakeRect.top } , { 0.0f , 300.0f , 800.0f , 1100.0f } , 0.0f ,
+			{ }, { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
 		break;
 	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 1.0f, 1.2f });
 		break;
 	case 3:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });

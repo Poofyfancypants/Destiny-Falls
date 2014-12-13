@@ -619,7 +619,8 @@ void GameplayState::LoadNewLevel()
 		{
 		case GameplayState::TUTORIAL_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+			//m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+			m_pMap->LoadLevel( "resource/XML/Balencingtestmap.xml" );
 			/*Balencingtestmap.xml*/
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
