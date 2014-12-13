@@ -90,6 +90,7 @@ private:
 	InventoryState& operator=(const InventoryState&) = delete;
 	int m_ntabCursor = 0;
 	int m_nCursor = 0;
+	unsigned int CompanionSelect = 0;
 	bool m_bSelect = false;
 	bool m_bSwordSelect = false;
 	bool m_bArmorSelect = false;
@@ -113,9 +114,9 @@ private:
 	bool m_bShowToolTip10 = false;
 	bool m_bShowToolTip11 = false;
 	bool m_bShowToolTip12 = false;
-	
+
 	bool tabLock = false;
-	bool OnlyEquipEnter = true;
+	bool OnlyEquipEnter = false;
 
 	bool equipslot1selected = false;
 	bool equipslot2selected = false;
@@ -153,21 +154,27 @@ private:
 
 	//Rune Images
 	//t1
-	SGD::Rectangle IventoryRect1 =  { 210, 240, 240, 280 };
-	SGD::Rectangle IventoryRect4 =  { 260, 240, 290, 280 };
-	SGD::Rectangle IventoryRect7 =  { 210, 320, 240, 360 };
+	SGD::Rectangle IventoryRect1 = { 210, 240, 240, 280 };
+	SGD::Rectangle IventoryRect4 = { 260, 240, 290, 280 };
+	SGD::Rectangle IventoryRect7 = { 210, 320, 240, 360 };
 	SGD::Rectangle IventoryRect10 = { 260, 320, 290, 360 };
-	
+
 	//t2
-	SGD::Rectangle IventoryRect2 =  { 310, 240, 340, 280 };
-	SGD::Rectangle IventoryRect5 =  { 360, 240, 390, 280 };
-	SGD::Rectangle IventoryRect8 =  { 310, 320, 340, 360 };
+	SGD::Rectangle IventoryRect2 = { 310, 240, 340, 280 };
+	SGD::Rectangle IventoryRect5 = { 360, 240, 390, 280 };
+	SGD::Rectangle IventoryRect8 = { 310, 320, 340, 360 };
 	SGD::Rectangle IventoryRect11 = { 360, 320, 390, 360 };
 	//t3
-	SGD::Rectangle IventoryRect3 =  { 410, 240, 440, 280 };
-	SGD::Rectangle IventoryRect6 =  { 460, 240, 490, 280 };
-	SGD::Rectangle IventoryRect9 =  { 410, 320, 440, 360 };
+	SGD::Rectangle IventoryRect3 = { 410, 240, 440, 280 };
+	SGD::Rectangle IventoryRect6 = { 460, 240, 490, 280 };
+	SGD::Rectangle IventoryRect9 = { 410, 320, 440, 360 };
 	SGD::Rectangle IventoryRect12 = { 460, 320, 490, 360 };
+	//companions select rects
+	SGD::Rectangle CompanionTopLeft = { 200, 50, 350, 225 };
+	SGD::Rectangle CompanionTopRight = { 350, 50, 500, 225 };
+	SGD::Rectangle CompanionBottomLeft = { 200, 225, 350, 400 };
+	SGD::Rectangle CompanionBottomRight = { 350, 225, 500, 400 };
+
 
 	//Rune Rect Sized images for sword
 	SGD::Rectangle Equip1 = { 220, 70, 280, 150 };
@@ -205,6 +212,9 @@ protected:
 	SGD::HTexture m_hAirt2 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hAirt3 = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hHeroBackground = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hInventoryBackground = SGD::INVALID_HANDLE;
+
 
 	// icons for companions
 	SGD::HTexture m_hHunterIcon = SGD::INVALID_HANDLE;

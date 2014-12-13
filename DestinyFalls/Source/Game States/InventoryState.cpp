@@ -28,6 +28,8 @@ void InventoryState::Enter()
 	m_hFighterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FighterIcon.png");
 	m_hHealerIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/HealerIcon.png");
 	m_hMageIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/MageIcon.png");
+	m_hHeroBackground = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/LinkBackground.jpg");
+	m_hInventoryBackground = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/InventoryBackground.jpg");
 
 	m_vSword.resize(3);
 	m_vRing.resize(3);
@@ -47,8 +49,8 @@ void InventoryState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hMageIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hHunterIcon);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hHealerIcon);
-
-
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hInventoryBackground);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hInventoryBackground);
 }
 
 bool InventoryState::Input()
@@ -149,12 +151,11 @@ bool InventoryState::Input()
 
 	if (tabLock)
 	{
-		if (m_bWeaponsTab && OnlyEquipEnter)
+		if (m_bCompanionsTab)
 		{
-			if (!pauseSelection)
+			if (!OnlyEquipEnter)
 			{
-				equipPos = 30;
-
+				CompanionSelect = 30;
 				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 					m_nCursor--;
 				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
@@ -167,319 +168,412 @@ bool InventoryState::Input()
 					m_nCursor = 0;
 			}
 
-			if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+			if (pInput->IsKeyPressed(SGD::Key::Enter) && !OnlyEquipEnter || pInput->IsKeyPressed(SGD::Key::MouseLeft))
 			{
-					pauseSelection = true;
-					return true;
-			}
-
-			if (pauseSelection)
-			{
-
-				if (equipPos == 30)
-					equipPos = 0;
-
-				if (equipPos == 12)
-					equipPos = 0;
-				else if (equipPos == -1)
-					equipPos = 11;
-
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-				{
-					equipPos++;
-				}
-				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-				{
-					equipPos--;
-				}
-				if (pInput->IsKeyPressed(SGD::Key::Enter)  || pInput->IsButtonDown(0, 2))
-				{
-					switch (m_nCursor)
-					{
-					case 0:
-						AddRunesToSword0fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
-						break;
-					case 1:
-						AddRunesToSword1fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
-						break;
-					case 2:
-						AddRunesToSword2fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
-						break;
-					default:
-						break;
-					}
-				}
-			}
-
-			if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
-			{
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(Equip1))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToSword0fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromSword0();
-				}
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(Equip2))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToSword1fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromSword1();
-				}
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(Equip3))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToSword2fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromSword2();
-				}
-			}
-		}
-
-
-		if (m_bArmorTab)
-		{
-			if (pauseSelection == false && OnlyEquipEnter )
-			{
-				equipPos = 30;
-
-				if (equipPos == 12)
-					equipPos = 0;
-				else if (equipPos == -1)
-					equipPos = 11;
-
-				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-				{
-					m_nCursor--;
-				}
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-				{
-					m_nCursor++;
-				}
-
-				// loop check
-				if (m_nCursor < 0)
-					m_nCursor = 2;
-				else if (m_nCursor > 2)
-					m_nCursor = 0;
-
-			}
-
-			if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2) && !pauseSelection)
-			{
-				pauseSelection = true;
+				OnlyEquipEnter = true;
 				return true;
 			}
-			if (pauseSelection)
-			{
-				if (equipPos == 30)
-					equipPos = 0;
 
-				if (equipPos == 12)
-					equipPos = 0;
-				else if (equipPos == -1)
-					equipPos = 11;
+			if (OnlyEquipEnter)
+			{
+				if (CompanionSelect == 30)
+					CompanionSelect = 0;
+
+				if (CompanionSelect == -1)
+					CompanionSelect = 3;
+				if (CompanionSelect == 4)
+					CompanionSelect = 0;
 
 				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 				{
-					equipPos++;
+					CompanionSelect++;
 				}
 				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
 				{
-					equipPos--;
+					CompanionSelect--;
 				}
 				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
 				{
 					switch (m_nCursor)
 					{
 					case 0:
-						AddRunesToArmor0fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
+						// Add companion to CombatState Selection
+						OnlyEquipEnter = false;
 						break;
 					case 1:
-						AddRunesToArmor1fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
+						// Add companion to CombatState Selection
+						OnlyEquipEnter = false;
 						break;
 					case 2:
-						AddRunesToArmor2fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
+						// Add companion to CombatState Selection
+						OnlyEquipEnter = false;
 						break;
 					default:
 						break;
 					}
-
 				}
 			}
 
 
-			if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+				if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
+				{
+					OnlyEquipEnter != OnlyEquipEnter;
+					if (pInput->GetCursorPosition().IsPointInRectangle(CompanionTopLeft))
+					{
+						CompanionSelect = 0;
+					}
+
+					if (pInput->GetCursorPosition().IsPointInRectangle(CompanionTopRight))
+					{
+						CompanionSelect = 1;
+
+					}
+
+					if (pInput->GetCursorPosition().IsPointInRectangle(CompanionBottomLeft))
+					{
+						CompanionSelect = 2;
+
+					}
+
+					if (pInput->GetCursorPosition().IsPointInRectangle(CompanionBottomRight))
+					{
+						CompanionSelect = 3;
+
+					}
+				}
+		}
+	}
+
+	if (m_bWeaponsTab)
+	{
+		if (!pauseSelection)
+		{
+			equipPos = 30;
+
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+				m_nCursor--;
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+				m_nCursor++;
+
+			// loop check
+			if (m_nCursor < 0)
+				m_nCursor = 2;
+			else if (m_nCursor > 2)
+				m_nCursor = 0;
+		}
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+		{
+			pauseSelection = true;
+			return true;
+		}
+
+		if (pauseSelection)
+		{
+
+			if (equipPos == 30)
+				equipPos = 0;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
 			{
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(EquipA1))
+				equipPos++;
+			}
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			{
+				equipPos--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			{
+				switch (m_nCursor)
 				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToArmor0fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromArmor0();
-				}
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(EquipA2))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToArmor1fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromArmor1();
-				}
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(EquipA3))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToArmor2fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromArmor2();
+				case 0:
+					AddRunesToSword0fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 1:
+					AddRunesToSword1fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 2:
+					AddRunesToSword2fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				default:
+					break;
 				}
 			}
 		}
 
-
-		if (m_bRunesTab)
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 		{
-			if (pauseSelection == false && OnlyEquipEnter == false)
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(Equip1))
 			{
-				equipPos = 30;
-
-				if (equipPos == 12)
-					equipPos = 0;
-				else if (equipPos == -1)
-					equipPos = 11;
-
-				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+				if (m_ptSelectedRune.GetElement() != None)
 				{
-					m_nCursor--;
-				}
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-				{
-					m_nCursor++;
-				}
 
-				// loop check
-				if (m_nCursor < 0)
-					m_nCursor = 2;
-				else if (m_nCursor > 2)
-					m_nCursor = 0;
-
+					AddRunesToSword0fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromSword0();
 			}
 
-			if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2))
+			if (pInput->GetCursorPosition().IsPointInRectangle(Equip2))
 			{
-				pauseSelection = true;
-				return true;
-			}
-			if (pauseSelection)
-			{
-				if (equipPos == 30)
-					equipPos = 0;
-
-				if (equipPos == 12)
-					equipPos = 0;
-				else if (equipPos == -1)
-					equipPos = 11;
-
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+				if (m_ptSelectedRune.GetElement() != None)
 				{
-					equipPos++;
-				}
-				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-				{
-					equipPos--;
-				}
-				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
-				{
-					switch (m_nCursor)
-					{
-					case 0:
-						AddRunesToRing0fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
-						break;
-					case 1:
-						AddRunesToRing1fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
-						break;
-					case 2:
-						AddRunesToRing2fromInventory(m_ptSelectedRune);
-						pauseSelection = false;
-						break;
-					default:
-						break;
-					}
 
+					AddRunesToSword1fromInventory(m_ptSelectedRune);
 				}
+				else
+					AddRunesToInventoryfromSword1();
 			}
 
-
-			if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			if (pInput->GetCursorPosition().IsPointInRectangle(Equip3))
 			{
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(EquipG1))
+				if (m_ptSelectedRune.GetElement() != None)
 				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
 
-						AddRunesToRing0fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromRing0();
+					AddRunesToSword2fromInventory(m_ptSelectedRune);
 				}
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(EquipG2))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToRing1fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromRing1();
-				}
-
-				if (pInput->GetCursorPosition().IsPointInRectangle(EquipG3))
-				{
-					if (m_ptSelectedRune.GetElement() != None)
-					{
-
-						AddRunesToRing2fromInventory(m_ptSelectedRune);
-					}
-					else
-						AddRunesToInventoryfromRing1();
-				}
+				else
+					AddRunesToInventoryfromSword2();
 			}
 		}
 	}
+
+
+	if (m_bArmorTab)
+	{
+		if (pauseSelection == false && OnlyEquipEnter)
+		{
+			equipPos = 30;
+
+			/*if (equipPos == 12)
+				equipPos = 0;
+				else if (equipPos == -1)
+				equipPos = 11;
+				*/
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			{
+				m_nCursor--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			{
+				m_nCursor++;
+			}
+			// loop check
+			if (m_nCursor < 0)
+				m_nCursor = 2;
+			else if (m_nCursor > 2)
+				m_nCursor = 0;
+
+		}
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2) && !pauseSelection)
+		{
+			pauseSelection = true;
+			return true;
+		}
+		if (pauseSelection)
+		{
+			if (equipPos == 30)
+				equipPos = 0;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			{
+				equipPos++;
+			}
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			{
+				equipPos--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			{
+				switch (m_nCursor)
+				{
+				case 0:
+					AddRunesToArmor0fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 1:
+					AddRunesToArmor1fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 2:
+					AddRunesToArmor2fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				default:
+					break;
+				}
+
+			}
+		}
+
+
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+		{
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(EquipA1))
+			{
+				if (m_ptSelectedRune.GetElement() != None)
+				{
+
+					AddRunesToArmor0fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromArmor0();
+			}
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(EquipA2))
+			{
+				if (m_ptSelectedRune.GetElement() != None)
+				{
+
+					AddRunesToArmor1fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromArmor1();
+			}
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(EquipA3))
+			{
+				if (m_ptSelectedRune.GetElement() != None)
+				{
+
+					AddRunesToArmor2fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromArmor2();
+			}
+		}
+	}
+
+
+	if (m_bRunesTab)
+	{
+		if (pauseSelection == false && OnlyEquipEnter == false)
+		{
+			equipPos = 30;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			{
+				m_nCursor--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			{
+				m_nCursor++;
+			}
+
+			// loop check
+			if (m_nCursor < 0)
+				m_nCursor = 2;
+			else if (m_nCursor > 2)
+				m_nCursor = 0;
+
+		}
+
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2))
+		{
+			pauseSelection = true;
+			return true;
+		}
+		if (pauseSelection)
+		{
+			if (equipPos == 30)
+				equipPos = 0;
+
+			if (equipPos == 12)
+				equipPos = 0;
+			else if (equipPos == -1)
+				equipPos = 11;
+
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			{
+				equipPos++;
+			}
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			{
+				equipPos--;
+			}
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			{
+				switch (m_nCursor)
+				{
+				case 0:
+					AddRunesToRing0fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 1:
+					AddRunesToRing1fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				case 2:
+					AddRunesToRing2fromInventory(m_ptSelectedRune);
+					pauseSelection = false;
+					break;
+				default:
+					break;
+				}
+
+			}
+		}
+
+
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+		{
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(EquipG1))
+			{
+				if (m_ptSelectedRune.GetElement() != None)
+				{
+
+					AddRunesToRing0fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromRing0();
+			}
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(EquipG2))
+			{
+				if (m_ptSelectedRune.GetElement() != None)
+				{
+
+					AddRunesToRing1fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromRing1();
+			}
+
+			if (pInput->GetCursorPosition().IsPointInRectangle(EquipG3))
+			{
+				if (m_ptSelectedRune.GetElement() != None)
+				{
+
+					AddRunesToRing2fromInventory(m_ptSelectedRune);
+				}
+				else
+					AddRunesToInventoryfromRing1();
+			}
+		}
+	}
+
 
 #pragma region click inventory
 
@@ -849,8 +943,7 @@ void InventoryState::Render()
 
 	if (m_bWeaponsTab == false && m_bArmorTab == false && m_bRunesTab == false)
 	{
-		pGraphics->DrawRectangle(ImageRect, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawTexture(m_hHero, SGD::Point(55, 100), {}, {}, {}, { 0.5f, 0.5f });
+		
 	}
 
 #pragma region SwordSlots
@@ -860,6 +953,8 @@ void InventoryState::Render()
 
 		m_bArmorTab = false;
 		m_bRunesTab = false;
+		m_bCompanionsTab = false;
+
 		//change tab color when selected
 		pGraphics->DrawRectangle(TabWeapons, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 0, 0 });
 
@@ -1041,24 +1136,54 @@ void InventoryState::Render()
 
 	if (m_bCompanionsTab)
 	{
+
+		pGraphics->DrawRectangle(ImageRect, SGD::Color{ 255, 0, 100, 200 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawTexture(m_hHeroBackground, SGD::Point(55, 100), {}, {}, {}, { 0.5f, 0.5f });
+		pGraphics->DrawTexture(m_hHero, SGD::Point(55, 100), {}, {}, {}, { 0.5f, 0.5f });
+
 		pGraphics->DrawRectangle(TabCompanions, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 255, 255, 0 });
 		pGraphics->DrawRectangle(CompanionRectSide, SGD::Color(255, 117, 92, 12), SGD::Color(0, 0, 0));
-		/*pGraphics->DrawString("Tank", SGD::Point(210, 50), SGD::Color(0, 0, 0));
-		pGraphics->DrawString("Healer", SGD::Point(345, 50), SGD::Color(0, 0, 0));*/
-		pFonts->Render("InventoryFont", "Tank", SGD::Point(210, 50), 1, SGD::Color{ 255, 0, 0, 0 });
-		pFonts->Render("InventoryFont", "Healer", SGD::Point(345, 50), 1, SGD::Color{ 255, 0, 0, 0 });
+
+		pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(200, 50), {}, {}, {}, { .592f, 1.37f });
 		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(210, 70), {}, {}, {}, { .25f, .25f });
-		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(345, 70), {}, {}, {}, { .3f, .28f });
-		/*	pGraphics->DrawString("Fighter", SGD::Point(210, 205), SGD::Color(0, 0, 0));
-			pGraphics->DrawString("Mage", SGD::Point(345, 205), SGD::Color(0, 0, 0));*/
-		pFonts->Render("InventoryFont", "Fighter", SGD::Point(210, 205), 1, SGD::Color{ 255, 0, 0, 0 });
-		pFonts->Render("InventoryFont", "Mage", SGD::Point(345, 205), 1, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 225), {}, {}, {}, { .35f, .35f });
-		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(330, 225), {}, {}, {}, { .35f, .35f });
+		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(355, 70), {}, {}, {}, { .28f, .28f });
+
+		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(180, 235), {}, {}, {}, { .33f, .33f });
+		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(345, 235), {}, {}, {}, { .31f, .33f });
 
 
 
+		if (CompanionSelect == 0)
+		{
+			pGraphics->DrawRectangle(CompanionTopLeft, { 0, 1, 1, 1 }, SGD::Color{ 255, 0, 255, 0 });
+			pFonts->Render("Other", "Tank", SGD::Point(210, 51), 1, SGD::Color{ 255, 0, 255, 0 });
+		}
+		else
+			pFonts->Render("Other", "Tank", SGD::Point(210, 51), 1, SGD::Color{ 255, 255, 255, 255 });
 
+		if (CompanionSelect == 1)
+		{
+			pGraphics->DrawRectangle(CompanionTopRight, { 0, 1, 1, 1 }, SGD::Color{ 255, 0, 255, 0 });
+			pFonts->Render("Other", "Healer", SGD::Point(365, 51), 1, SGD::Color{ 255, 0, 255, 0 });
+		}
+		else
+			pFonts->Render("Other", "Healer", SGD::Point(365, 51), 1, SGD::Color{ 255, 255, 255, 255 });
+
+		if (CompanionSelect == 2)
+		{
+			pGraphics->DrawRectangle(CompanionBottomLeft, { 0, 1, 1, 1 }, SGD::Color{ 255, 0, 255, 0 });
+			pFonts->Render("Other", "Fighter", SGD::Point(210, 226), 1, SGD::Color{ 255, 0, 255, 0 });
+		}
+		else
+			pFonts->Render("Other", "Fighter", SGD::Point(210, 226), 1, SGD::Color{ 255, 255, 255, 255 });
+
+		if (CompanionSelect == 3)
+		{
+			pGraphics->DrawRectangle(CompanionBottomRight, { 0, 1, 1, 1 }, SGD::Color{ 255, 0, 255, 0 });
+			pFonts->Render("Other", "Mage", SGD::Point(375, 226), 1, SGD::Color{ 255, 0, 255, 0 });
+		}
+		else
+			pFonts->Render("Other", "Mage", SGD::Point(375, 226), 1, SGD::Color{ 255, 255, 255, 255 });
 
 
 
@@ -1557,6 +1682,10 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(EquipG1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawRectangle(EquipG2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 		pGraphics->DrawRectangle(EquipG3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
+
+
+
+
 
 		//highlight selection
 		if (equipPos == 0)
