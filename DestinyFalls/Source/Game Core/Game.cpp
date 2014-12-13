@@ -449,14 +449,14 @@ void Game::LoadStrings()
 	m_StringTable[1][1] = "Minion";
 	m_StringTable[1][2] = "Behemoth";
 	m_StringTable[1][3] = "Rock Elemental";
-	m_StringTable[1][4] = "Green Sage";
+	m_StringTable[1][4] = "Plant Healer";
 	m_StringTable[1][5] = "Heavy Golem";
 	m_StringTable[1][6] = "Earth Mini Boss";
 	//Water
 	m_StringTable[2][1] = "Minion";
-	m_StringTable[2][2] = "Behemoth";
+	m_StringTable[2][2] = "doge";
 	m_StringTable[2][3] = "Water Elemental";
-	m_StringTable[2][4] = "Blue Sage";
+	m_StringTable[2][4] = "Plant Healer";
 	m_StringTable[2][5] = "Heavy Golem";
 	m_StringTable[2][6] = "Water Mini Boss";
 	//Air

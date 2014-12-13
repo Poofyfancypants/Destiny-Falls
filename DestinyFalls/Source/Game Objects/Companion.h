@@ -12,7 +12,6 @@ public:
 	Companion();
 	~Companion();
 
-	virtual bool TakeTurn( float elapsedTime ) override;
 	virtual void Update( float elapsedTime );
 	virtual void Render();
 	virtual void CombatRender( int _posIndex = 0 );
@@ -60,9 +59,9 @@ private:
 
 	SGD::Color m_HealthColor = { 0, 0, 0, 0 };
 
-	SGD::Rectangle Companion1rect = { 140 , 100 , 204 , 164 };
+	SGD::Rectangle Companion1rect = { 100 , 100 , 164 , 164 };
 	SGD::Rectangle Companion1HB = { 50 , 60 , 150 , 90 };
-	SGD::Rectangle Companion2rect = { 140 , 300 , 204 , 364 };
+	SGD::Rectangle Companion2rect = { 100 , 300 , 164 , 364 };
 	SGD::Rectangle Companion2HB = { 50 , 260 , 150 , 290 };
 
 	AnimationManager* m_pAnimator;
