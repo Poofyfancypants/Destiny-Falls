@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "../../SGD Wrappers/SGD_Handle.h"
 #include "../../SGD Wrappers/SGD_Key.h"
 #include <string>
 using namespace std;
@@ -34,7 +35,8 @@ private:
 	unsigned int m_unCurrentSet = 0;
 	int m_nLastSet = 0;
 
-	
+	SGD::HTexture m_hScroll = SGD::INVALID_HANDLE;
+
 
 public:
 	QuickTime();
