@@ -114,16 +114,16 @@ void Companion::SetCompanionAnimation(int companionType)
 
 	switch (companionType)
 	{
-	case 1:
+	case 0:
 		this->GetTimeStamp()->SetCurrentAnimation("ClericAttack");
 		break;
-	case 2:
+	case 1:
 		this->GetTimeStamp()->SetCurrentAnimation("Companion1Attack");
 		break;
-	case 3:
+	case 2:
 		this->GetTimeStamp()->SetCurrentAnimation("RangerAttack");
 		break;
-	case 4:
+	case 3:
 		this->GetTimeStamp()->SetCurrentAnimation("GladiatorAttack");
 		break;
 	default:

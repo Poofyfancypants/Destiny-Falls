@@ -45,7 +45,7 @@ public:
 	void SetDeltaHP(int _HP) { DeltaHP = _HP; }
 	int GetDeltaHP() const { return DeltaHP; }
 
-	void SetDeltaHPPosY(int _HP) { DeltaHPPosY = _HP; }
+	void SetDeltaHPPosY(float _HP) { DeltaHPPosY = _HP; }
 	float GetDeltaHPPosY() const { return DeltaHPPosY; }
 
 	void SetTurnID(int _id) { TurnID = _id; }

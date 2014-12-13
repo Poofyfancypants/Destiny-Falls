@@ -105,9 +105,7 @@ private:
 
 	int ActionSelected = 0;
 
-	bool selected = false;
 	int m_nCursor = 0;
-	int spellSelect = -1;
 	int counter = 0;
 
 	int * m_CurrentTurn;
