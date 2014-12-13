@@ -323,7 +323,7 @@ void TileManager::SpawnObjects()
 			//SGD::Point dest = { (float)( ( row*m_szGridSize.width ) - GameplayState::GetInstance()->GetWorldCam().x ), (float)( ( col*m_szGridSize.height ) - GameplayState::GetInstance()->GetWorldCam().y ) };
 			if( m_TileMap[row][col].m_nEnemyID != 0 )
 			{
-				// - MOER SPESIFIC WHEN WE HAVE MORE ENEMY TYPES
+				// - MORE SPECIFIC WHEN WE HAVE MORE ENEMY TYPES
 
 				Object* tempEnemy = nullptr;
 				tempEnemy = GameplayState::GetInstance()->CreateEnemy( dest, m_TileMap[row][col].m_nEnemyID );

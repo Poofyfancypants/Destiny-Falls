@@ -129,13 +129,15 @@ private:
 	EnemyMods Modifiers;
 
 	SGD::Color m_HealthColor = {0,0,0,0};
-	SGD::Rectangle Enemy1HB = { 650, 110, 775, 140 };
-	SGD::Rectangle Enemy2HB = { 625, 200, 750, 230 };
-	SGD::Rectangle Enemy3HB = { 650, 290, 775, 320 };
 
-	SGD::Rectangle Enemy1rect = { 561, 110, 625, 174 };
-	SGD::Rectangle Enemy2rect = { 536, 200, 600, 264 };
-	SGD::Rectangle Enemy3rect = { 561, 290, 625, 354 };
+	SGD::Rectangle Enemy1rect = { 531, 110, 605, 174 };
+	SGD::Rectangle Enemy1HB = { 670, 100, 795, 130 };
+
+	SGD::Rectangle Enemy2rect = { 436, 200, 500, 264 };
+	SGD::Rectangle Enemy2HB = { 605, 200, 730, 230 };
+
+	SGD::Rectangle Enemy3rect = { 531, 310, 605, 374 };
+	SGD::Rectangle Enemy3HB = { 670, 310, 795, 340 };
 
 	AnimationManager* m_pAnimator = nullptr;
 

@@ -113,6 +113,9 @@ private:
 	bool m_bShowToolTip10 = false;
 	bool m_bShowToolTip11 = false;
 	bool m_bShowToolTip12 = false;
+	
+	bool tabLock = false;
+	bool OnlyEquipEnter = true;
 
 	bool equipslot1selected = false;
 	bool equipslot2selected = false;
@@ -150,21 +153,20 @@ private:
 
 	//Rune Images
 	//t1
-	SGD::Rectangle IventoryRect1 =  { 210, 240, 240, 280 };
-	SGD::Rectangle IventoryRect4 =  { 260, 240, 290, 280 };
-	SGD::Rectangle IventoryRect7 =  { 210, 320, 240, 360 };
-	SGD::Rectangle IventoryRect10 = { 260, 320, 290, 360 };
-	
+	SGD::Rectangle IventoryRect1 =  { 208, 240, 244, 276 };
+	SGD::Rectangle IventoryRect4 =  { 258, 240, 294, 276 };
+	SGD::Rectangle IventoryRect7 =  { 208, 320, 244, 356 };
+	SGD::Rectangle IventoryRect10 = { 258, 320, 294, 356 };
 	//t2
-	SGD::Rectangle IventoryRect2 =  { 310, 240, 340, 280 };
-	SGD::Rectangle IventoryRect5 =  { 360, 240, 390, 280 };
-	SGD::Rectangle IventoryRect8 =  { 310, 320, 340, 360 };
-	SGD::Rectangle IventoryRect11 = { 360, 320, 390, 360 };
+	SGD::Rectangle IventoryRect2 =  { 308, 240, 344, 276 };
+	SGD::Rectangle IventoryRect5 =  { 358, 240, 394, 276 };
+	SGD::Rectangle IventoryRect8 =  { 308, 320, 344, 356 };
+	SGD::Rectangle IventoryRect11 = { 358, 320, 394, 356 };
 	//t3
-	SGD::Rectangle IventoryRect3 =  { 410, 240, 440, 280 };
-	SGD::Rectangle IventoryRect6 =  { 460, 240, 490, 280 };
-	SGD::Rectangle IventoryRect9 =  { 410, 320, 440, 360 };
-	SGD::Rectangle IventoryRect12 = { 460, 320, 490, 360 };
+	SGD::Rectangle IventoryRect3 =  { 408, 240, 444, 276 };
+	SGD::Rectangle IventoryRect6 =  { 458, 240, 494, 276 };
+	SGD::Rectangle IventoryRect9 =  { 408, 320, 444, 356 };
+	SGD::Rectangle IventoryRect12 = { 458, 320, 494, 356 };
 
 	//Rune Rect Sized images for sword
 	SGD::Rectangle Equip1 = { 220, 70, 280, 150 };

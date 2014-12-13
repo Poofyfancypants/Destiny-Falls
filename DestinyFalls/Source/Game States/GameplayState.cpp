@@ -79,6 +79,9 @@ void GameplayState::Enter()
 
 	m_pAnimator->Load( "resource/XML/DeathAnimationXML.xml" );
 
+	m_pAnimator->Load( "resource/XML/OverWorldEnemiesXML.xml" );
+
+
 
 	m_hTutorialRune = pGraphics->LoadTexture( L"resource/graphics/Firet2.png" );
 	m_hminiboss = pGraphics->LoadTexture( L"resource/graphics/testMB1.png" );
@@ -126,6 +129,7 @@ void GameplayState::Enter()
 	LoadNewLevel();
 
 
+	
 }
 
 void GameplayState::Exit()
@@ -167,6 +171,8 @@ void GameplayState::Exit()
 	delete m_pMap;
 	m_pMap = nullptr;
 	m_pAnimator->DeleteInstance();
+
+	//m_particle.Exit();
 }
 
 bool GameplayState::Input()
@@ -185,7 +191,7 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::E ) )
+	if (pInput->IsKeyPressed(SGD::Key::E)|| pInput->IsButtonDown(0,3))
 	{
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
@@ -229,6 +235,11 @@ void GameplayState::Update( float elapsedTime )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
+
+	
+	
+
+
 
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
@@ -335,6 +346,34 @@ void GameplayState::Render()
 		RenderDialog();
 	}
 
+	
+		/*if (LevelList::TUTORIAL_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test3.xml");
+		}
+		else if (LevelList::EARTH_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test2.xml");
+		}
+		else if (LevelList::WATER_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test3.xml");
+		}
+		else if (LevelList::AIR_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test4.xml");
+		}
+		else if (LevelList::FIRE_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test5.xml");
+		}
+		else if (LevelList::BOSS_LEVEL == m_nCurrentLevel)
+		{
+			m_particle.ReadXML("resource/XML/Test6.xml");
+		}
+		m_particle.Render();*/
+
+	
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
@@ -358,19 +397,24 @@ Object* GameplayState::CreateEnemy( SGD::Point _pos, int _id )
 	switch( _id )
 	{
 	case 0:
-		temp->SetImage( m_henemy );
+		//temp->SetImage( m_henemy );
+		temp->SetAnimation( 0 );
 		break;
 	case 1:
-		temp->SetImage( m_henemy );
+		//temp->SetImage( m_henemy );
+		temp->SetAnimation( 1 );
 		break;
 	case 2:
-		temp->SetImage( m_hminiboss );
+		//temp->SetImage( m_hminiboss );
+		temp->SetAnimation( 2 );
 		break;
 	case 3:
-		temp->SetImage( m_hlevelboss );
+		//temp->SetImage( m_hlevelboss );
+		temp->SetAnimation( 3 );
 		break;
 	case 4:
-		temp->SetImage( m_hFinalboss );
+		//temp->SetImage( m_hFinalboss );
+		temp->SetAnimation( 4 );
 		break;
 	default:
 		break;
