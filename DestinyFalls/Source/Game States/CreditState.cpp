@@ -38,13 +38,13 @@ void CreditState::Enter()
 	m_vCredits.push_back( "Riley Wood" );
 	m_vCredits.push_back( "Kidnapped Brick" );
 
+	m_hBackground = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/MenuBackgrounds/creditBackground.png");
 }
 
 void CreditState::Exit()
 {
-	SGD::AudioManager::GetInstance()->UnloadAudio( m_haBackground );
-	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_htBackground );
 	m_particle.Exit();
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hBackground);
 }
 
 bool CreditState::Input()
@@ -65,6 +65,7 @@ bool CreditState::Input()
 void CreditState::Update( float elapsedTime )
 {
 	Timer -= 1 * elapsedTime;
+
 
 	m_fSecond += elapsedTime;
 	if( m_fSecond >= .05f )
@@ -111,8 +112,9 @@ void CreditState::Render()
 
 	float x = Game::GetInstance()->GetScreenWidth() / 1024;
 	float y = Game::GetInstance()->GetScreenHeight() / 512;
+	SGD::GraphicsManager::GetInstance()->DrawTexture(m_hBackground, {}, {}, {}, {}, {1.6f, 1.3f});
 
-	pFonts->Render( "Other", "Credits:", { 100, 25 }, 2, { 255, 255, 255, 255 } );
+	pFonts->Render( "Other", "Credits:", { 100, 25 }, 2, { 12, 243, 215} );
 	// 0 , 2, 4, 7, 13
 
 	for( size_t i = 0; i < m_vCredits.size(); i++ )
@@ -127,12 +129,12 @@ void CreditState::Render()
 		if( futureY > 80.0f )
 		{
 			if( i == 0 || i == 2 || i == 4 || i == 7 || i == 13 )
-				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, SGD::Color() );
+				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, SGD::Color(12, 243, 215) );
 			else
-				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, SGD::Color() );
+				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, SGD::Color(12, 243, 215) );
 		}
 
 	}
 
-	m_particle.Render();
+	//m_particle.Render();
 }

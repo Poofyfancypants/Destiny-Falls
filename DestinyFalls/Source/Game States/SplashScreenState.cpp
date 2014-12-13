@@ -21,6 +21,7 @@ void SplashScreenState::Enter()
 
 void SplashScreenState::Exit()
 {
+	
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hImage );
 }
 
@@ -45,5 +46,11 @@ void SplashScreenState::Update( float elapsedTime )
 
 void SplashScreenState::Render()
 {
-	SGD::GraphicsManager::GetInstance()->DrawTexture(m_hImage, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f });
+	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	BitmapFontManager::GetInstance()->Render("Other", "Press Any Key To Continue.", SGD::Point(275,500), 1, SGD::Color(0,0,0));
+	//pGraphics->SetClearColor( { 148, 99, 50 } );
+	pGraphics->SetClearColor( { 64,47,25} );
+
+	pGraphics->DrawTexture(m_hImage, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f });
+
 }
