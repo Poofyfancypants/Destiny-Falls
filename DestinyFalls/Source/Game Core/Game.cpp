@@ -365,10 +365,13 @@ void Game::Terminate( void )
 	pAudio->UnloadAudio( m_mWinMusic );
 
 
+	m_pDialogs->DeleteInstance();
+	m_pAnimator->DeleteInstance();
+	m_pFonts->DeleteInstance();
+
 	SGD::AudioManager::GetInstance()->Terminate();
 	SGD::AudioManager::DeleteInstance();
 
-	m_pFonts->DeleteInstance();
 	SGD::GraphicsManager::GetInstance()->Terminate();
 	SGD::GraphicsManager::DeleteInstance();
 
@@ -380,8 +383,6 @@ void Game::Terminate( void )
 
 	SGD::EventManager::GetInstance()->Terminate();
 	SGD::EventManager::DeleteInstance();
-	m_pAnimator->DeleteInstance();
-	m_pDialogs->DeleteInstance();
 
 
 }
