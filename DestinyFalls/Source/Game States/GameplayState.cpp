@@ -102,6 +102,13 @@ void GameplayState::Enter()
 	m_hSpikeTrap = pGraphics->LoadTexture( L"resource/graphics/spikeTrap.png" );
 	m_hFireTrap = pGraphics->LoadTexture( L"resource/graphics/fireTrap.png" );
 
+	m_htutorialFrame = pGraphics->LoadTexture( L"resource/graphics/tutorialFrame.png" );
+	m_hearthFrame = pGraphics->LoadTexture( L"resource/graphics/earthFrame.png" );
+	m_hwaterFrame = pGraphics->LoadTexture( L"resource/graphics/waterFrame.png" );
+	m_hairFrame = pGraphics->LoadTexture( L"resource/graphics/airFrame.png" );
+	m_fireFrame = pGraphics->LoadTexture( L"resource/graphics/fireFrame.png" );
+	m_hfinalFrame = pGraphics->LoadTexture( L"resource/graphics/finalFrame.png" );
+
 	pAudio->PlayAudio( bmusic, true );
 
 	m_bSetSidePosition = false;
@@ -129,7 +136,7 @@ void GameplayState::Enter()
 	LoadNewLevel();
 
 
-	
+
 }
 
 void GameplayState::Exit()
@@ -163,6 +170,14 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture( m_hSpikeTrap );
 	pGraphics->UnloadTexture( m_hFireTrap );
 	pGraphics->UnloadTexture( m_hTutorialRune );
+	pGraphics->UnloadTexture( m_hearthFrame );
+
+	pGraphics->UnloadTexture( m_htutorialFrame );
+	pGraphics->UnloadTexture( m_hearthFrame );
+	pGraphics->UnloadTexture( m_hwaterFrame );
+	pGraphics->UnloadTexture( m_hairFrame );
+	pGraphics->UnloadTexture( m_fireFrame );
+	pGraphics->UnloadTexture( m_hfinalFrame );
 
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
@@ -191,7 +206,7 @@ bool GameplayState::Input()
 		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::E)|| pInput->IsButtonDown(0,3))
+	if( pInput->IsKeyPressed( SGD::Key::E ) || pInput->IsButtonDown( 0, 3 ) )
 	{
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
@@ -220,10 +235,12 @@ bool GameplayState::Input()
 		{
 			Game::GetInstance()->AddState( InventoryState::GetInstance() );
 		}
-	/*	if( pInput->GetCursorPosition().IsPointInRectangle( ForgeButton ) )
-		{
-			Game::GetInstance()->AddState( ForgeState::GetInstance() );
-		}*/
+	}
+
+	if( pInput->IsKeyPressed( SGD::Key::T ) )
+	{
+		m_fAlpha = 0;
+		m_bIn = true;
 	}
 
 	m_bIcelandic = Game::GetInstance()->GetIcelandic();
@@ -236,10 +253,27 @@ void GameplayState::Update( float elapsedTime )
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	
-	
 
 
+	// - Update Name
+	if( m_bIn )
+	{
+		if( m_fAlpha >= 200 )
+			m_fAlpha += .5f;
+		else
+			m_fAlpha += 2;
+		if( m_fAlpha >= 255 )
+		{
+			m_bIn = false;
+			m_bOut = true;
+		}
+	}
+	else if( m_bOut )
+	{
+		m_fAlpha -= 2;
+		if( m_fAlpha <= 0 )
+			m_bOut = false;
+	}
 
 	m_fFPSTime += elapsedTime;
 	m_nFrames++;
@@ -304,7 +338,6 @@ void GameplayState::Render()
 	pGraphics->SetClearColor();
 	m_pObjects->RenderAll();
 
-
 	if( m_bDebug )
 	{
 		SGD::OStringStream numEnt;
@@ -346,34 +379,60 @@ void GameplayState::Render()
 		RenderDialog();
 	}
 
-	
-		/*if (LevelList::TUTORIAL_LEVEL == m_nCurrentLevel)
+	// - Render Name
+	if( m_bIn || m_bOut )
+	{
+		switch( m_nCurrentLevel )
 		{
-			m_particle.ReadXML("resource/XML/Test3.xml");
+		case GameplayState::TUTORIAL_LEVEL:
+			pGraphics->DrawTexture( m_htutorialFrame, SGD::Point( 100, 100 ), {}, {}, { (unsigned char)m_fAlpha, 255, 255, 255 }, { 1.3f, .7f } );
+			break;
+		case GameplayState::EARTH_LEVEL:
+			pGraphics->DrawTexture( m_hearthFrame, SGD::Point( 100, 100 ), {}, {}, { (unsigned char)m_fAlpha, 255, 255, 255 }, { 1.3f, .7f } );
+			break;
+		case GameplayState::WATER_LEVEL:
+			pGraphics->DrawTexture( m_hwaterFrame, SGD::Point( 100, 100 ), {}, {}, { (unsigned char)m_fAlpha, 255, 255, 255 }, { 1.3f, .7f } );
+			break;
+		case GameplayState::AIR_LEVEL:
+			pGraphics->DrawTexture( m_hairFrame, SGD::Point( 100, 100 ), {}, {}, { (unsigned char)m_fAlpha, 255, 255, 255 }, { 1.3f, .7f } );
+			break;
+		case GameplayState::FIRE_LEVEL:
+			pGraphics->DrawTexture( m_fireFrame, SGD::Point( 100, 100 ), {}, {}, { (unsigned char)m_fAlpha, 255, 255, 255 }, { 1.3f, .7f } );
+			break;
+		case GameplayState::BOSS_LEVEL:
+			pGraphics->DrawTexture( m_hfinalFrame, SGD::Point( 100, 100 ), {}, {}, { (unsigned char)m_fAlpha, 255, 255, 255 }, { 1.3f, .7f } );
+			break;
 		}
-		else if (LevelList::EARTH_LEVEL == m_nCurrentLevel)
-		{
-			m_particle.ReadXML("resource/XML/Test2.xml");
-		}
-		else if (LevelList::WATER_LEVEL == m_nCurrentLevel)
-		{
-			m_particle.ReadXML("resource/XML/Test3.xml");
-		}
-		else if (LevelList::AIR_LEVEL == m_nCurrentLevel)
-		{
-			m_particle.ReadXML("resource/XML/Test4.xml");
-		}
-		else if (LevelList::FIRE_LEVEL == m_nCurrentLevel)
-		{
-			m_particle.ReadXML("resource/XML/Test5.xml");
-		}
-		else if (LevelList::BOSS_LEVEL == m_nCurrentLevel)
-		{
-			m_particle.ReadXML("resource/XML/Test6.xml");
-		}
-		m_particle.Render();*/
+		//pFont->Render("Other", m_sName.c_str(), SGD::Point(100,100), 3, SGD::Color(m_fAlpha, 0,255,0));
+	}
 
-	
+	/*if (LevelList::TUTORIAL_LEVEL == m_nCurrentLevel)
+	{
+	m_particle.ReadXML("resource/XML/Test3.xml");
+	}
+	else if (LevelList::EARTH_LEVEL == m_nCurrentLevel)
+	{
+	m_particle.ReadXML("resource/XML/Test2.xml");
+	}
+	else if (LevelList::WATER_LEVEL == m_nCurrentLevel)
+	{
+	m_particle.ReadXML("resource/XML/Test3.xml");
+	}
+	else if (LevelList::AIR_LEVEL == m_nCurrentLevel)
+	{
+	m_particle.ReadXML("resource/XML/Test4.xml");
+	}
+	else if (LevelList::FIRE_LEVEL == m_nCurrentLevel)
+	{
+	m_particle.ReadXML("resource/XML/Test5.xml");
+	}
+	else if (LevelList::BOSS_LEVEL == m_nCurrentLevel)
+	{
+	m_particle.ReadXML("resource/XML/Test6.xml");
+	}
+	m_particle.Render();*/
+
+
 }
 
 Object* GameplayState::CreatePlayer( SGD::Point _pos )
@@ -561,8 +620,9 @@ void GameplayState::LoadNewLevel()
 		{
 		case GameplayState::TUTORIAL_LEVEL:
 			UnloadAndCreate();
-			m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
-			/*BalencingtestmapTutorialStage.xml*/
+			m_pMap->LoadLevel( "resource/XML/Balencingtestmap.xml" );
+			m_sName = "Tutorial Level";
+			/*TutorialStage.xml*/
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -571,6 +631,7 @@ void GameplayState::LoadNewLevel()
 		case GameplayState::EARTH_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/earthLevel.xml" );
+			m_sName = "Earth Level";
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -579,6 +640,7 @@ void GameplayState::LoadNewLevel()
 		case GameplayState::WATER_LEVEL:
 			UnloadAndCreate();
 			m_pMap->LoadLevel( "resource/XML/waterLevel.xml" );
+			m_sName = "Water Level";
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
@@ -617,7 +679,8 @@ void GameplayState::LoadNewLevel()
 		}
 
 	}
-
+	m_fAlpha = 0;
+	m_bIn = true;
 	m_bChangeLevels = false;
 }
 void GameplayState::LoadNewSideLevel()
@@ -905,4 +968,3 @@ void GameplayState::RenderDialog()
 
 	}
 }
-

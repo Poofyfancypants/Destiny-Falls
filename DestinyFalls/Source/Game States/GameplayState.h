@@ -1,5 +1,5 @@
 #pragma once
-
+#include <map>
 #include "IGameState.h"
 #include "InventoryState.h"
 #include "../Managers/ObjectManager.h"
@@ -163,4 +163,16 @@ private:
 	bool m_bSigmundDialog = false;
 	bool m_bIcelandic = false;
 	bool m_bUpdateTutorial = true;
+
+	// - Display Name
+	float m_fAlpha = 0;
+	string m_sName;
+	bool m_bIn, m_bOut;
+
+	SGD::HTexture m_htutorialFrame	 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hearthFrame	 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hwaterFrame	 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hairFrame	 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_fireFrame	 = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hfinalFrame  = SGD::INVALID_HANDLE;
 };
