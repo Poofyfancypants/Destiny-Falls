@@ -3,11 +3,13 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "Player.h"
 
+
 class Companion :
 	/*public AnimatedObject,*/ public Player
 {
 public:
-	enum Companion_Type { Cleric = 1, Melee, Mage, Tank };
+
+enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
 
 	Companion();
 	~Companion();
@@ -45,6 +47,10 @@ public:
 	float GetDeathAnimationTimer( void ){ return m_fDeathAnimationTimer; }
 	void SetDeathAnimationTimer( float seconds = 3.0f ){ m_fDeathAnimationTimer = seconds; }
 
+	int GetSpell1Cool() const { return m_bSpell1; }
+	int GetSpell2Cool() const { return m_bSpell2; }
+	void SetSpell1Cool(int _Cool) { m_bSpell1 = _Cool; }
+	void SetSpell2Cool(int _Cool) { m_bSpell2 = _Cool; }
 
 private:
 	int * m_CurrentTurn;
@@ -54,6 +60,9 @@ private:
 	int m_nPosIndex = 0;
 	Companion_Type m_CoType;
 	int TypeString = 0;
+
+	int m_bSpell1 = -1; //Cooldowns
+	int m_bSpell2 = -1;
 
 	SGD::HTexture m_hCompanion = SGD::INVALID_HANDLE;
 

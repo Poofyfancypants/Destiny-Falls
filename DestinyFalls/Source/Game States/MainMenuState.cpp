@@ -46,6 +46,9 @@ void MainMenuState::Enter()
 	InventoryState::GetInstance()->SetRingSlot1( None, 0 );
 	InventoryState::GetInstance()->SetRingSlot2( None, 0 );
 	InventoryState::GetInstance()->SetRingSlot3( None, 0 );
+	InventoryState::GetInstance()->m_vCompanion.resize(2);
+	InventoryState::GetInstance()->m_vCompanion[0].SetC0Type(Companion::Companion_Type::Mage);
+	InventoryState::GetInstance()->m_vCompanion[1].SetC0Type(Companion::Companion_Type::Melee);
 
 
 	// - Load Selection
