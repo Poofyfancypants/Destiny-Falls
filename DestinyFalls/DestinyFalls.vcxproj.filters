@@ -229,9 +229,6 @@
     <ClInclude Include="Source\Engines\Emitter.h">
       <Filter>Engines</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Game States\SaveandLoadState.h">
-      <Filter>GameStates</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Game Objects\Boulder.h">
       <Filter>Game Objects</Filter>
     </ClInclude>
@@ -254,6 +251,9 @@
       <Filter>Managers</Filter>
     </ClInclude>
     <ClInclude Include="Source\Game States\QuickTimeState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Game States\SaveState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
@@ -421,9 +421,6 @@
     <ClCompile Include="Source\Engines\Particle.cpp">
       <Filter>Engines</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Game States\SaveandLoadState.cpp">
-      <Filter>GameStates</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Game Objects\Boulder.cpp">
       <Filter>Game Objects</Filter>
     </ClCompile>
@@ -446,6 +443,9 @@
       <Filter>Managers</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game States\QuickTimeState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\SaveState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>

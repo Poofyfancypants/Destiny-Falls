@@ -594,7 +594,6 @@ void GameplayState::UnloadAndCreate()
 	m_pMap->SetPrevPosition( prevPos );
 	m_pMap->SetPrevLevelPosition( prevLevelPos );
 
-
 	if( m_nCurrentLevel == 0 )
 	{
 		SGD::Point dest = { (float)( ( 3 * 32 ) - m_ptWorldCam.x ), (float)( ( 8 * 32 ) - m_ptWorldCam.y ) };
@@ -626,6 +625,7 @@ void GameplayState::LoadNewLevel()
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );
 			else  if( m_bSetLevelPosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevLevelPosition() );
+
 			break;
 		case GameplayState::EARTH_LEVEL:
 			UnloadAndCreate();

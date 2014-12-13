@@ -4,7 +4,7 @@
 #include "OptionsState.h"
 #include "CreditState.h"
 #include "HowToPlayState.h"
-#include "SaveandLoadState.h"
+#include "SaveState.h"
 #include "../Managers/ParticleManager.h"
 #include "../Managers/TileManager.h"
 #include "../Game Core/Game.h"
@@ -162,23 +162,19 @@ bool MainMenuState::Input()
 			m_nCursor = howToPlay;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( creditRect ) )
 			m_nCursor = credits;
-		else 
+		else
 			m_nCursor = -1;
 	}
+
+	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
+		m_bDebug = !m_bDebug;
 	return true;
 }
 
 void MainMenuState::Update( float elapsedTime )
 {
-	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-
-	if( pInput->IsKeyPressed( SGD::Key::F2 ) )
-		m_bDebug = !m_bDebug;
-
 
 	return;
-
-
 
 }
 

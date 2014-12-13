@@ -4,7 +4,7 @@
 #include "GameplayState.h"
 #include "PauseMenuState.h"
 #include "MainMenuState.h"
-#include "SaveandLoadState.h"
+#include "SaveState.h"
 #include "../Game Objects/Player.h"
 #include "../Game Core/Game.h"
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
@@ -84,7 +84,7 @@ bool DeathState::Input( void )
 			Game::GetInstance()->RemoveState();
 			break;
 		case PauseSelections::save:
-			Game::GetInstance()->AddState( SaveandLoadState::GetInstance() );
+			Game::GetInstance()->AddState( SaveState::GetInstance() );
 			break;
 		case PauseSelections::options:
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
