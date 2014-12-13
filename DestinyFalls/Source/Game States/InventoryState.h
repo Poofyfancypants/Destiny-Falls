@@ -3,7 +3,7 @@
 #include "../../SGD Wrappers/SGD_Handle.h"		
 #include "../../SGD Wrappers/SGD_Declarations.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
-
+#include "../Game Objects/Companion.h"
 #include "../Runes/Runes.h"
 #include <vector>
 
@@ -11,7 +11,7 @@ class InventoryState :
 	public IGameState
 {
 public:
-
+	
 	static InventoryState* GetInstance(void);
 
 	virtual void Enter(void)				override;
@@ -70,6 +70,7 @@ public:
 	std::vector<Runes> m_vArmor;
 	std::vector<Runes> m_vRunes;
 
+	std::vector<Companion> m_vCompanion;
 
 	void ClearInventory();
 
@@ -90,7 +91,7 @@ private:
 	InventoryState& operator=(const InventoryState&) = delete;
 	int m_ntabCursor = 0;
 	int m_nCursor = 0;
-	unsigned int CompanionSelect = 0;
+	unsigned int CompanionSelect = 30;
 	bool m_bSelect = false;
 	bool m_bSwordSelect = false;
 	bool m_bArmorSelect = false;
@@ -126,6 +127,7 @@ private:
 
 	int equipPos = 0;
 	Runes m_ptSelectedRune;
+
 	//full inventory rectangle
 	SGD::Rectangle Fullrect = { 50, 50, 500, 400 };
 

@@ -331,18 +331,20 @@ void CombatState::Enter(void)
 #pragma endregion
 #pragma region AddingCombatCompanions
 
-	for (unsigned int i = 1; i < 3; i++)
+	for (unsigned int i = 0; i < 2; i++)
 	{
-		int randAI = rand() % 4 + 1;
-		Object* temp = AddCompanion(randAI);
-		((Companion*)temp)->SetPosIndex(i);
+		if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
+		{
+			Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
+			((Companion*)temp)->SetPosIndex(i);
 
-		if (m_pHeroes.size() == 1)
-			temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-		else if (m_pEnemies.size() == 2)
-			temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-		m_pObjects.push_back(temp);
-		m_pHeroes.push_back(temp);
+			if (m_pHeroes.size() == 1)
+				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+			else if (m_pHeroes.size() == 2)
+				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+			m_pObjects.push_back(temp);
+			m_pHeroes.push_back(temp);
+		}
 	}
 #pragma endregion
 
@@ -1409,21 +1411,21 @@ Object* CombatState::AddCompanion(int _type)
 	Companion::Companion_Type coT = (Companion::Companion_Type)(_type);
 	switch (coT)
 	{
-	case 1:
+	case 0:
 		temp->SetC0Type(Companion::Companion_Type::Cleric);
+		temp->SetCompanionAnimation(0);
+		break;
+	case 1:
+		temp->SetC0Type(Companion::Companion_Type::Melee);
 		temp->SetCompanionAnimation(1);
 		break;
 	case 2:
-		temp->SetC0Type(Companion::Companion_Type::Melee);
+		temp->SetC0Type(Companion::Companion_Type::Mage);
 		temp->SetCompanionAnimation(2);
 		break;
 	case 3:
-		temp->SetC0Type(Companion::Companion_Type::Mage);
-		temp->SetCompanionAnimation(3);
-		break;
-	case 4:
 		temp->SetC0Type(Companion::Companion_Type::Tank);
-		temp->SetCompanionAnimation(4);
+		temp->SetCompanionAnimation(3);
 		break;
 	default:
 		break;
@@ -2583,7 +2585,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					m_nCursor = m_pEnemies.size() - 1;
 																				if (m_nCursor > pCombat->GetEnemies().size() - 1)
 																					m_nCursor = 0;
-																				
+
 																				CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
 																				//Second Selection >> Target
@@ -3183,7 +3185,7 @@ void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
 	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { _shakeRect.left , _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.4f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.4f });
 		break;
 	case 2:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
