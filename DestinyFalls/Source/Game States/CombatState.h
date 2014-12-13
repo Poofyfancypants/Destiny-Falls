@@ -177,5 +177,7 @@ private:
 	Runes Rune2;
 	Runes Rune3;
 
+	SGD::HTexture m_hTurnIndicator = SGD::INVALID_HANDLE;
+
 };
 
