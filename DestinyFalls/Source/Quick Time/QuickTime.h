@@ -2,6 +2,7 @@
 
 #include <vector>
 
+#include "../../SGD Wrappers/SGD_Handle.h"
 #include "../../SGD Wrappers/SGD_Key.h"
 #include <string>
 using namespace std;
@@ -24,7 +25,7 @@ private:
 	unsigned int m_unNumCorrect = 0;
 	unsigned int m_uncounter = 0;
 	float m_fSeconds = 0.0f;
-	float m_fAlertTimer = 3.0f;
+	float m_fAlertTimer = 1.0f;
 	float m_fLetterTimer = 2.0f;
 
 	bool m_bqtOver = false;
@@ -34,7 +35,8 @@ private:
 	unsigned int m_unCurrentSet = 0;
 	int m_nLastSet = 0;
 
-	
+	SGD::HTexture m_hScroll = SGD::INVALID_HANDLE;
+
 
 public:
 	QuickTime();

@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Root>
   <animation>
-    <animation_info name="HeroSwordSwing" numFrames="5" looping="0" hTexture="1009-ShadowKnight.png">
-      <frame duration="0.05" damage="0" event="none" dLeft="4" dTop="28" dRight="150" dBottom="216" cLeft="6" cTop="30" cRight="149" cBottom="216" x="109" y="172" />
-      <frame duration="0.05" damage="0" event="none" dLeft="143" dTop="6" dRight="350" dBottom="213" cLeft="145" cTop="8" cRight="347" cBottom="212" x="150" y="192" />
-      <frame duration="0.25" damage="0" event="none" dLeft="363" dTop="55" dRight="662" dBottom="210" cLeft="363" cTop="57" cRight="660" cBottom="207" x="119" y="144" />
-      <frame duration="0.05" damage="0" event="none" dLeft="143" dTop="6" dRight="350" dBottom="213" cLeft="145" cTop="8" cRight="347" cBottom="212" x="150" y="192" />
-      <frame duration="0.05" damage="0" event="none" dLeft="4" dTop="28" dRight="150" dBottom="216" cLeft="6" cTop="30" cRight="149" cBottom="216" x="109" y="172" />
+    <animation_info name="HeroSwordSwing" numFrames="7" looping="0" hTexture="HeroCombat.png">
+      <frame duration="0.25" damage="0" event="none" dLeft="3" dTop="77" dRight="45" dBottom="138" cLeft="2" cTop="77" cRight="44" cBottom="139" x="29" y="52" />
+      <frame duration="0.25" damage="0" event="none" dLeft="46" dTop="75" dRight="93" dBottom="135" cLeft="45" cTop="74" cRight="94" cBottom="136" x="27" y="54" />
+      <frame duration="0.25" damage="0" event="none" dLeft="92" dTop="70" dRight="139" dBottom="135" cLeft="91" cTop="70" cRight="138" cBottom="135" x="26" y="60" />
+      <frame duration="0.25" damage="0" event="none" dLeft="140" dTop="65" dRight="177" dBottom="136" cLeft="139" cTop="65" cRight="176" cBottom="136" x="21" y="64" />
+      <frame duration="0.25" damage="0" event="none" dLeft="180" dTop="59" dRight="243" dBottom="141" cLeft="179" cTop="59" cRight="242" cBottom="138" x="19" y="71" />
+      <frame duration="0.25" damage="0" event="none" dLeft="243" dTop="79" dRight="299" dBottom="136" cLeft="242" cTop="79" cRight="302" cBottom="136" x="23" y="49" />
+      <frame duration="0.25" damage="0" event="none" dLeft="3" dTop="77" dRight="45" dBottom="138" cLeft="2" cTop="77" cRight="44" cBottom="139" x="29" y="52" />
     </animation_info>
   </animation>
 </Root>

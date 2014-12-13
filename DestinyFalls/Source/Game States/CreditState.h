@@ -32,5 +32,7 @@ private:
 
 	float		m_fScroll = 0;
 	float	m_fSecond = 0;
+
+	bool m_bExit =false;
 };
 

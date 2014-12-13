@@ -9,7 +9,10 @@
 #include "../Game Objects/Player.h"
 #include "../Game Objects/Enemy.h"
 #include "../Game Core/Game.h"
+#include "DeathState.h"
+#include "PauseMenuState.h"
 #include "GameplayState.h"
+#include "MainMenuState.h"
 #include <fstream>
 #include <ostream>
 
@@ -58,7 +61,7 @@ void OptionsState::Exit()
 	pGraphics->UnloadTexture( m_hButton );
 	pGraphics->UnloadTexture( m_hButtonHighlighted );
 	pGraphics->UnloadTexture( m_hArrow );
-	pGraphics->UnloadTexture(m_hBackground);
+	pGraphics->UnloadTexture( m_hBackground );
 
 	pAudio->UnloadAudio( m_hBackMusic );
 	pAudio->UnloadAudio( m_hEffectSound );
@@ -71,8 +74,17 @@ bool OptionsState::Input()
 
 	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
 	{
-		Sleep( 200 );
-		Game::GetInstance()->RemoveState();
+		if( PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState() )
+		{
+			DeathState::GetInstance()->SetDeathState( false );
+			PauseMenuState::GetInstance()->SetPauseState( false );
+			Game::GetInstance()->RemoveState();
+		}
+		else
+		{
+			Game::GetInstance()->ClearStates();
+			Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+		}
 	}
 
 	if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
@@ -149,6 +161,8 @@ bool OptionsState::Input()
 			m_nCursor = 4;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Back"] ) )
 			m_nCursor = 5;
+		else
+			m_nCursor = -1;
 	}
 
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
@@ -203,7 +217,19 @@ bool OptionsState::Input()
 			}
 		}
 		if( m_nCursor == 5 )
-			Game::GetInstance()->RemoveState();
+		{
+			if( PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState() )
+			{
+				DeathState::GetInstance()->SetDeathState( false );
+				PauseMenuState::GetInstance()->SetPauseState( false );
+				Game::GetInstance()->RemoveState();
+			}
+			else
+			{
+				Game::GetInstance()->ClearStates();
+				Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+			}
+		}
 	}
 	return true;
 }
@@ -223,12 +249,15 @@ void OptionsState::Render()
 {
 	SGD::AudioManager *pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	pGraphics->SetClearColor();
 	BitmapFontManager* pFonts = pFonts->GetInstance();
 
-	pGraphics->DrawTexture( m_hBackground, { 0, 0 }, 0, {}, {}, { 0.8f, 0.6f } );
+	SGD::Color textColor = { 239, 208, 162 };
+	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
+	pGraphics->DrawTexture( Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+
 	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 10 }, 2.0f, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 13 }, 2.0f, { 50, 50, 200 } );
+	pFonts->Render( "Other", Game::GetInstance()->GetString( 10, 6 ).c_str(), { 340, 13 }, 2.0f, textColor );
+
 	string MusicVolume;
 	string SFXVolume;
 	MusicVolume = to_string( pAudio->GetMasterVolume( SGD::AudioGroup::Music ) / 10 );
@@ -241,30 +270,30 @@ void OptionsState::Render()
 		else
 			pGraphics->DrawTexture( m_hButton, { 130, (float)( 110 * i ) } );
 		pFonts->Render( "Other", Game::GetInstance()->GetString( 9, i ).c_str(), { 210, (float)( ( 110 * i ) + 15 ) }, 1, { 255, 0, 0, 0 } );
-		pFonts->Render( "Other", Game::GetInstance()->GetString( 9, i ).c_str(), { 210, (float)( ( 110 * i ) + 17 ) }, 1, { 50, 50, 200 } );
+		pFonts->Render( "Other", Game::GetInstance()->GetString( 9, i ).c_str(), { 210, (float)( ( 110 * i ) + 17 ) }, 1, textColor );
 
 		if( i == m_nCursor )
 		{
 			pGraphics->DrawTexture( m_hButtonHighlighted, { 500, (float)( 110 * i ) }, {}, {}, {}, { .6f, 1.0f } );
-			pGraphics->DrawTexture( m_hArrow, { 450, (float)( 110 * i ) }, {}, {}, {}, { 1, 1 } );
+			pGraphics->DrawTexture( m_hArrow, { 447, (float)( 110 * i ) }, {}, {}, {}, { 1, 1 } );
 		}
 		else
 			pGraphics->DrawTexture( m_hButton, { 500, (float)( 110 * i ) }, {}, {}, {}, { .6f, 1.0f } );
 
 	}
 
-	pFonts->Render( "Dialog", MusicVolume.c_str(), { 565, (float)( ( 110 ) + 5 ) }, 1.5f, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", MusicVolume.c_str(), { 565, (float)( ( 110 ) + 7 ) }, 1.5f, { 50, 50, 200 } );
+	pFonts->Render( "Other", MusicVolume.c_str(), { 565, (float)( ( 110 ) + 5 ) }, 1.5f, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", MusicVolume.c_str(), { 565, (float)( ( 110 ) + 7 ) }, 1.5f, textColor );
 
-	pFonts->Render( "Dialog", SFXVolume.c_str(), { 565, (float)( ( 220 ) + 5 ) }, 1.5f, { 255, 0, 0, 0 } );
-	pFonts->Render( "Dialog", SFXVolume.c_str(), { 565, (float)( ( 220 ) + 7 ) }, 1.5f, { 50, 50, 200 } );
+	pFonts->Render( "Other", SFXVolume.c_str(), { 565, (float)( ( 220 ) + 5 ) }, 1.5f, { 255, 0, 0, 0 } );
+	pFonts->Render( "Other", SFXVolume.c_str(), { 565, (float)( ( 220 ) + 7 ) }, 1.5f, textColor );
 
 
 	pFonts->Render( "Other", ( Game::GetInstance()->GetWindowed() ? "Windowed" : "Fullscreen" ), { 520, (float)( ( 340 ) + 5 ) }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", ( Game::GetInstance()->GetWindowed() ? "Windowed" : "Fullscreen" ), { 520, (float)( ( 340 ) + 7 ) }, 1, { 50, 50, 200 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetWindowed() ? "Windowed" : "Fullscreen" ), { 520, (float)( ( 340 ) + 7 ) }, 1, textColor );
 
 	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { 540, (float)( ( 450 ) + 5 ) }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { 540, (float)( ( 450 ) + 7 ) }, 1, { 50, 50, 200 } );
+	pFonts->Render( "Other", ( Game::GetInstance()->GetIcelandic() ? "Icelandic" : "English" ), { 540, (float)( ( 450 ) + 7 ) }, 1, textColor );
 
 	if( 5 == m_nCursor )
 		pGraphics->DrawTexture( m_hButtonHighlighted, { 595, 540.0f }, {}, {}, {}, { .6f, .6f } );
@@ -272,7 +301,7 @@ void OptionsState::Render()
 		pGraphics->DrawTexture( m_hButton, { 595, 540.0f }, {}, {}, {}, { .6f, .6f } );
 
 	pFonts->Render( "Other", "Back", { 645.0f, 542.0f }, 1, { 255, 0, 0, 0 } );
-	pFonts->Render( "Other", "Back", { 645.0f, 545.0f }, 1, { 50, 50, 200 } );
+	pFonts->Render( "Other", "Back", { 645.0f, 545.0f }, 1, textColor );
 
 
 }

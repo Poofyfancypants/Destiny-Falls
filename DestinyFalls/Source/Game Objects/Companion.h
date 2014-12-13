@@ -3,11 +3,13 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "Player.h"
 
+
 class Companion :
 	/*public AnimatedObject,*/ public Player
 {
 public:
-	enum Companion_Type { Cleric = 1, Melee, Mage, Tank };
+
+enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
 
 	Companion();
 	~Companion();

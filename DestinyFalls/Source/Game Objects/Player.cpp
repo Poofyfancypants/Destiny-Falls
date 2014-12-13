@@ -73,7 +73,7 @@ void Player::Update( float elapsedTime )
 			m_nHealth = 0;
 			Game::GetInstance()->AddState( DeathState::GetInstance() );
 
-			m_ptPosition = GetCheckpoint();
+			
 			m_nHealth = 100;
 		}
 	}
@@ -83,10 +83,9 @@ void Player::Update( float elapsedTime )
 		{
 			pAudio->PlayAudio( Game::GetInstance()->deathSound, false );
 			m_nHealth = 0;
-			Game::GetInstance()->AddState( DeathState::GetInstance() );
 			m_bSliding = false;
+			Game::GetInstance()->AddState( DeathState::GetInstance() );
 
-			m_ptPosition = GetCheckpoint();
 			//m_nHealth = 100;
 		}
 		if( !m_bSliding )
@@ -339,7 +338,10 @@ void Player::TakeInput()
 		}
 	}
 
-
+	if( pInput->IsKeyPressed(SGD::Key::X) )
+	{
+		m_nHealth = 1;
+	}
 }
 
 SGD::Rectangle Player::GetRect( void ) const

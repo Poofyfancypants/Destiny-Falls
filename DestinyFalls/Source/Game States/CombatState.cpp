@@ -26,6 +26,7 @@ void CombatState::Enter(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	InventoryState* pInventory = InventoryState::GetInstance();
+	m_hTurnIndicator = pGraphics->LoadTexture( "resource/graphics/TurnIndicator.png" );
 
 	CurrentTurn = 0;
 	TurnIndex = 0;
@@ -330,18 +331,20 @@ void CombatState::Enter(void)
 #pragma endregion
 #pragma region AddingCombatCompanions
 
-	for (unsigned int i = 1; i < 3; i++)
+	for (unsigned int i = 0; i < 2; i++)
 	{
-		int randAI = rand() % 4 + 1;
-		Object* temp = AddCompanion(randAI);
-		((Companion*)temp)->SetPosIndex(i);
+		if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
+		{
+			Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
+			((Companion*)temp)->SetPosIndex(i);
 
-		if (m_pHeroes.size() == 1)
-			temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-		else if (m_pEnemies.size() == 2)
-			temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-		m_pObjects.push_back(temp);
-		m_pHeroes.push_back(temp);
+			if (m_pHeroes.size() == 1)
+				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+			else if (m_pHeroes.size() == 2)
+				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+			m_pObjects.push_back(temp);
+			m_pHeroes.push_back(temp);
+		}
 	}
 #pragma endregion
 
@@ -722,10 +725,18 @@ void CombatState::Render(void)
 
 	if (CurrentTurn < (int)m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
 	{
+		
+
 		switch (m_pObjects[CurrentTurn]->GetType())
 		{
 		case Object::ObjectType::OBJ_PLAYER:
 		{
+			if( ((Player*)m_pObjects[CurrentTurn])->GetHealth() > 0 )
+			{
+				SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
+				pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x , turnIndicator.y + 20 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
+			}
+			
 											   if (ActionTimer <= 0)
 											   if (!selected)
 											   {
@@ -951,6 +962,12 @@ void CombatState::Render(void)
 			break;
 		case Object::ObjectType::OBJ_COMPANION:
 		{
+			if( ( ( Companion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
+		{
+			SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
+			pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x - 50 , turnIndicator.y - 40 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
+		}
+			
 												  if (ActionTimer <= 0)
 												  {
 													  switch (((Companion*)m_pObjects[CurrentTurn])->GetCoType())
@@ -1063,6 +1080,11 @@ void CombatState::Render(void)
 			break;
 		case Object::ObjectType::OBJ_MINION:
 		{
+			if( ( ( Minion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
+			{
+				SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
+				pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x - 80 , turnIndicator.y - 40 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
+			}
 											   if (ActionTimer <= 0)
 											   {
 											   }
@@ -1071,6 +1093,7 @@ void CombatState::Render(void)
 			break;
 		}
 	}
+	
 }
 
 Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care
@@ -1435,23 +1458,23 @@ Object* CombatState::AddCompanion(int _type)
 	Companion::Companion_Type coT = (Companion::Companion_Type)(_type);
 	switch (coT)
 	{
-	case 1:
+	case 0:
 		temp->SetC0Type(Companion::Companion_Type::Cleric);
+		temp->SetCompanionAnimation(0);
+		break;
+	case 1:
+		temp->SetC0Type(Companion::Companion_Type::Melee);
 		temp->SetCompanionAnimation(1);
 		break;
 	case 2:
-		temp->SetC0Type(Companion::Companion_Type::Melee);
+		temp->SetC0Type(Companion::Companion_Type::Mage);
 		temp->SetCompanionAnimation(2);
 		break;
 	case 3:
-		((Companion*)temp)->SetC0Type(Companion::Companion_Type::Mage);
+		((Companion*)temp)->SetC0Type(Companion::Companion_Type::Tank);
 		((Companion*)temp)->SetCompanionAnimation(3);
 		((Companion*)temp)->SetSpell1Cool(0);
 		((Companion*)temp)->SetSpell2Cool(0);
-		break;
-	case 4:
-		temp->SetC0Type(Companion::Companion_Type::Tank);
-		temp->SetCompanionAnimation(4);
 		break;
 	default:
 		break;
