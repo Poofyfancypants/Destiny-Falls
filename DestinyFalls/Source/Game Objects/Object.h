@@ -42,6 +42,15 @@ public:
 	virtual bool GetAttacking() const { return isAttacking; }
 	virtual void SetAttacking(bool _false = false) { isAttacking = _false; }
 
+	void SetDeltaHP(int _HP) { DeltaHP = _HP; }
+	int GetDeltaHP() const { return DeltaHP; }
+
+	void SetDeltaHPPosY(int _HP) { DeltaHPPosY = _HP; }
+	float GetDeltaHPPosY() const { return DeltaHPPosY; }
+
+	void SetTurnID(int _id) { TurnID = _id; }
+	int GetTurnID() const { return TurnID; }
+
 protected:
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
 	SGD::Point m_ptPosition = SGD::Point{ 0, 0 };
@@ -51,8 +60,11 @@ protected:
 private:
 	int Initiative = 0;
 	int AttackSpeed = 6; //Max Turn rotation is Default
+	int DeltaHP = 0;
+	float DeltaHPPosY = 0.0f;
 
 	int m_nTurnPos;
+	int TurnID = 0; //0: normal, 1: Gained a turn, 2: Lost a turn
 
 	unsigned int m_unRefCount = 1;
 	bool isAttacking = false;

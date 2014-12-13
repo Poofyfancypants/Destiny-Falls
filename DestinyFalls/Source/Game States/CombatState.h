@@ -12,7 +12,7 @@ class CombatState :
 	public IGameState
 {
 public:
-	enum ActionType{Melee, Magic, Armor, AOE, Heal};
+	enum ActionType{Melee, Magic, Block, AOE, Heal, };
 
 	static CombatState* GetInstance();
 
@@ -51,8 +51,6 @@ public:
 	Object* AddMinion(int _region = 0, int EnemyType = 0); //0->Earth, 1->Water, 2->Air, 3->Fire
 	Object* AddCompanion(int _type); 
 
-	bool GetCooldown() { return m_bCoolDown; }
-	void SetCooldown(bool x) { m_bCoolDown = x; }
 	void SetActionTimer(float _time) { ActionTimer = _time; }
 	float GetActionTimer() const { return ActionTimer; }
 
@@ -66,7 +64,7 @@ public:
 	bool TakeTurn(Object*);
 
 	void HandleTutorial();
-	void DrawBackground();
+	void DrawBackground(SGD::Rectangle _shakeRect = { 0, 0, 0, 0 });
 
 	int GetQTLength() { return m_nQTLength; }
 
@@ -110,6 +108,7 @@ private:
 
 
 	SGD::Rectangle PlayerSelection = { 0, 0, 0, 0 };
+	SGD::Rectangle CompanionSelection = { 0, 0, 0, 0 };
 	SGD::Point SavePlayerPos = { 0, 0 };
 
 	int m_nCursor = 0;
@@ -118,7 +117,6 @@ private:
 	int spellSelect = -1;
 
 	int CurrentTurn;
-	bool m_bCoolDown = false;
 	bool m_bShake = false;
 
 	bool entered = false;
@@ -171,6 +169,13 @@ private:
 	int m_nNumQtCorrect = 0;
 
 	int m_nCombatMusicVolume = 0;
+
+	//Spells
+	bool spellActive = false;
+
+	Runes Rune1;
+	Runes Rune2;
+	Runes Rune3;
 
 };
 

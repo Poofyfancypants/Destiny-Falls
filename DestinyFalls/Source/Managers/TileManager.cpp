@@ -231,25 +231,8 @@ bool TileManager::TileCollision( Object* _player, SGD::Point _futurePos )
 						GameplayState::GetInstance()->NextLevel();
 						GameplayState::GetInstance()->NextSideLevel();
 						GameplayState::GetInstance()->ChangeLevel( true );
-
-						switch( player->GetDirection() )
-						{
-						case 1:
-							m_ptPrevLevelPos = { (float)( i*m_szGridSize.width ), (float)( ( 1 + j )*m_szGridSize.height ) };
-							break;
-						case 2:
-							m_ptPrevLevelPos = { (float)( i*m_szGridSize.width ), (float)( ( j - 1 )*m_szGridSize.height ) };
-							break;
-						case 3:
-							m_ptPrevLevelPos = { (float)( ( i + 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
-							break;
-						case 4:
-							m_ptPrevLevelPos = { (float)( ( i - 1 )*m_szGridSize.width ), (float)( j*m_szGridSize.height ) };
-							break;
-						default:
-							m_ptPrevLevelPos = { (float)( i*m_szGridSize.width ), (float)( ( j - 1 )*m_szGridSize.height ) };
-							break;
-						}
+						
+						m_ptPrevLevelPos = player->GetCheckpoint();
 
 					}
 				}
@@ -350,7 +333,7 @@ void TileManager::SpawnObjects()
 			if( m_TileMap[row][col].PlayerSpawn )
 			{
 				GameplayState::GetInstance()->GetPlayer()->SetPosition( dest );
-				( (Player*)GameplayState::GetInstance()->GetPlayer() )->SetCheckPoint( dest );
+				//( (Player*)GameplayState::GetInstance()->GetPlayer() )->SetCheckPoint( dest );
 			}
 			if( m_TileMap[row][col].m_nChestID != 0 )
 			{
@@ -382,26 +365,26 @@ void TileManager::SpawnObjects()
 				GameplayState::GetInstance()->GetObjManager()->AddObject( tempComp, GameplayState::COMPANION_BUCKET );
 				tempComp->Release();
 			}
-			if( m_TileMap[row][col].NextLevel )
-			{
-				switch( dynamic_cast<Player*>( GameplayState::GetInstance()->GetPlayer() )->GetDirection() )
-				{
-				case 0:
-					break;
-				case 1:
-					m_ptPrevLevelPos = { (float)( row*m_szGridSize.width ), (float)( ( 1 + col )*m_szGridSize.height ) };
-					break;
-				case 2:
-					m_ptPrevLevelPos = { (float)( row*m_szGridSize.width ), (float)( ( col - 1 )*m_szGridSize.height ) };
-					break;
-				case 3:
-					m_ptPrevLevelPos = { (float)( ( row + 1 )*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
-					break;
-				case 4:
-					m_ptPrevLevelPos = { (float)( ( row - 1 )*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
-					break;
-				}
-			}
+			//if( m_TileMap[row][col].NextLevel )
+			//{
+			//	switch( dynamic_cast<Player*>( GameplayState::GetInstance()->GetPlayer() )->GetDirection() )
+			//	{
+			//	case 0:
+			//		break;
+			//	case 1:
+			//		m_ptPrevLevelPos = { (float)( row*m_szGridSize.width ), (float)( ( 1 + col )*m_szGridSize.height ) };
+			//		break;
+			//	case 2:
+			//		m_ptPrevLevelPos = { (float)( row*m_szGridSize.width ), (float)( ( col - 1 )*m_szGridSize.height ) };
+			//		break;
+			//	case 3:
+			//		m_ptPrevLevelPos = { (float)( ( row + 1 )*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
+			//		break;
+			//	case 4:
+			//		m_ptPrevLevelPos = { (float)( ( row - 1 )*m_szGridSize.width ), (float)( col*m_szGridSize.height ) };
+			//		break;
+			//	}
+			//}
 		}
 
 	}

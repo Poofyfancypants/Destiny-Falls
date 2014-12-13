@@ -22,7 +22,7 @@ void QuickTimeState::Enter()
 
 void QuickTimeState::Exit()
 {
-
+	SGD::AudioManager::GetInstance()->UnloadAudio(m_mQTMusic);
 }
 
 bool QuickTimeState::Input()
