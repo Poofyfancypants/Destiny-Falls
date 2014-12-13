@@ -135,7 +135,7 @@ void PauseMenuState::Render( void )
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 } );
 	pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 } );
 
-	pFonts->Render( "Bernardo", cursor.c_str(), SGD::Point( 275, ( m_nCursor * 100 ) + 100 ), 2, { 255, 255, 255, 0 } );
+	pFonts->Render( "Bernardo", cursor.c_str(), SGD::Point( 275, (float)(( m_nCursor * 100 ) + 100 )), 2, { 255, 255, 255, 0 } );
 	/*pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );*/
 }
 
