@@ -147,76 +147,6 @@ int Minion::GetName(int _index)
 	return name[_index];
 }
 
-bool Minion::TakeTurn() //This will be even bigger, still don't care
-{
-	CombatState* pCombat = CombatState::GetInstance();
-	int target = 0;
-
-	switch (this->GetAIType())
-	{
-	case Minion_AI:
-		if (m_nHealth > 0)
-		{
-			target = rand() % pCombat->GetHeroes().size();
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case Off_AI:
-		if (m_nHealth > 0)
-		{
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case Def_AI:
-		if (m_nHealth > 0)
-		{
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case Heal_AI:
-		if (m_nHealth > 0)
-		{
-			pCombat->SetActionTimer(1);
-			pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-		}
-		break;
-	case AOE_AI:
-		if (m_nHealth > 0)
-		{
-			int AI = rand() % 20;
-			if (AI <= 15) //AOE attack
-				pCombat->TakeAction(CombatState::ActionType::AOE, this, target);
-			else
-				pCombat->TakeAction(CombatState::ActionType::Melee, this, target);
-
-			m_bUpdateAnimation = true;
-			this->GetTimeStamp()->SetCurrentFrame(0);
-			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
-
-		}
-		break;
-	default:
-		break;
-	}
-
-	return true;
-}
-
 void Minion::SetMinionAnimation(int region, int minionType)
 {
 	m_pAnimator = m_pAnimator->GetInstance();
@@ -261,22 +191,22 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("OrcElementalAttack2");
 				   break;
 			   case 1:
-				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack3");
+				   this->GetTimeStamp()->SetCurrentAnimation("WaterEnemyAttack");
 				   break;
 			   case 2:
 				   this->GetTimeStamp()->SetCurrentAnimation("IceElementalAttack");
 				   break;
 			   case 3:
-				   this->GetTimeStamp()->SetCurrentAnimation("WaterEnemyAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("PlantAttack");
 				   break;
 			   case 4:
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack2");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("IceBossAttack");
 				   break;
 			   case 6:
-				   this->GetTimeStamp()->SetCurrentAnimation("IceBossAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("NagaAttack");
 				   break;
 			   default:
 				   break;
@@ -291,16 +221,16 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("OrcElementalAttack2");
 				   break;
 			   case 1:
-				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack2");
+				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack3");
 				   break;
 			   case 2:
-				   this->GetTimeStamp()->SetCurrentAnimation("GenieAttack");
-				   break;
-			   case 3:
 				   this->GetTimeStamp()->SetCurrentAnimation("AirElementalAttack");
 				   break;
+			   case 3:
+				   this->GetTimeStamp()->SetCurrentAnimation("GenieAttack");
+				   break;
 			   case 4:
-				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack3");
+				   this->GetTimeStamp()->SetCurrentAnimation("GolemAttack");
 				   break;
 			   case 5:
 				   this->GetTimeStamp()->SetCurrentAnimation("AirMiniBossAttack");
@@ -330,13 +260,13 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack1");
 				   break;
 			   case 4:
-				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("GolemAttack");
 				   break;
 			   case 5:
-				   this->GetTimeStamp()->SetCurrentAnimation("OrcSkeletonAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("BaronAttack");
 				   break;
 			   case 6:
-				   this->GetTimeStamp()->SetCurrentAnimation("NagaAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("OrcSkeletonAttack");
 				   break;
 			   default:
 				   break;

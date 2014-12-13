@@ -75,7 +75,6 @@ public:
 			   - If there is only one enemy, hits self for 10-15
 	*/
 
-	virtual bool TakeTurn();
 	virtual void Update(float elapsedTime);
 	virtual void Render(int _posIndex);
 	virtual int GetType(void) const { return OBJ_MINION; }
