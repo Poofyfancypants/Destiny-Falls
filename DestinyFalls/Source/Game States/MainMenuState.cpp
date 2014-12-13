@@ -49,7 +49,7 @@ void MainMenuState::Enter()
 
 
 	// - Load Selection
-	m_hBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/main.png" );
+	m_hBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/1411_Turn5_MenuBackground.png" );
 	m_hPlay = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuPlay.png" );
 	m_hOptions = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuOptions.png" );
 	m_hCredit = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuCredit.png" );
