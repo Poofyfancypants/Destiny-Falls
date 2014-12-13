@@ -197,6 +197,7 @@ void MainMenuState::Render()
 
 
 	pGraphics->SetClearColor( { 64, 47, 25 } );
+	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
 	//pGraphics->SetClearColor( { 148, 99, 50 } );
 
 	pGraphics->DrawTexture( m_hBackground, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
@@ -242,6 +243,7 @@ void MainMenuState::FadeInMenu()
 	pGraphics->SetClearColor( { 64, 47, 25 } );
 	for( size_t i = 0; i < 225; i++ )
 	{
+		pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
 		pGraphics->DrawTexture( m_hBackground, { 100, 0 }, 0, {}, SGD::Color{ (unsigned char)( i ), 255, 255, 255 }, { 0.3f, 0.3f } );
 		pGraphics->DrawTexture( m_hLogo, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
 		pGraphics->Update();
