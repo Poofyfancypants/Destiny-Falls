@@ -1469,12 +1469,12 @@ Object* CombatState::AddCompanion(int _type)
 	case 2:
 		temp->SetC0Type(Companion::Companion_Type::Mage);
 		temp->SetCompanionAnimation(2);
+		((Companion*)temp)->SetSpell1Cool(0);
+		((Companion*)temp)->SetSpell2Cool(0);
 		break;
 	case 3:
 		((Companion*)temp)->SetC0Type(Companion::Companion_Type::Tank);
 		((Companion*)temp)->SetCompanionAnimation(3);
-		((Companion*)temp)->SetSpell1Cool(0);
-		((Companion*)temp)->SetSpell2Cool(0);
 		break;
 	default:
 		break;
@@ -3142,6 +3142,7 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) // AOE ground slam, inherit to Boss
 										{
 											pCombat->SetActionTimer(1);
+											target = rand() % pCombat->GetHeroes().size();
 											int AI = rand() % 20;
 											if (AI <= 15) //AOE attack
 												TakeAction(CombatState::ActionType::AOE, _this, target);
@@ -3217,10 +3218,12 @@ bool CombatState::TakeTurn(Object* _this)
 									case Elements::Earth:
 										if (((Minion*)_this)->GetHealth() > 0) //Rock Throw
 										{
+											target = rand() % pCombat->GetHeroes().size();
+
 											int AI = rand() % 20;
-											if (AI <= 15) //AOE attack
+											if (AI <= 15 && AI > 9) //AOE attack
 												TakeAction(CombatState::ActionType::AOE, _this, target);
-											else if (AI < 0) //Disabled currently
+											else if (AI > 0 && AI <= 9)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
