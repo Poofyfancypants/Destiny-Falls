@@ -18,7 +18,7 @@ public:
 
 private:
 
-	string file = "resource/graphics/SplashScreen.png";
+	string file = "resource/graphics/1411_Turn5_logo.png";
 	SGD::HTexture m_hImage = SGD::INVALID_HANDLE;
 
 	SplashScreenState() = default;
