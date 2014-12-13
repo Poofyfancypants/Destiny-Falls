@@ -1016,6 +1016,8 @@ void InventoryState::Render()
 
 		if (m_vCompanion[0].GetCoType() != 4)
 		{
+			pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(600, 50), {}, {}, {}, { .2f, .4f });
+
 			if (m_vCompanion[0].GetCoType() == 0)
 				pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(600, 50), {}, {}, {}, { .18f, .18f });
 			if (m_vCompanion[0].GetCoType() == 1)
@@ -1025,11 +1027,11 @@ void InventoryState::Render()
 			if (m_vCompanion[0].GetCoType() == 3)
 				pGraphics->DrawTexture(m_hMageIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
 		}
-		else
-			pGraphics->DrawRectangle(Comp1Rect, SGD::Color(0, 255, 255, 255), SGD::Color(255, 117, 92, 12));
 
 		if (m_vCompanion[1].GetCoType() != 4)
 		{
+			pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(700, 50), {}, {}, {}, { .2f, .4f });
+
 			if (m_vCompanion[1].GetCoType() == 0)
 				pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(700, 50), {}, {}, {}, { .18f, .18f });
 			if (m_vCompanion[1].GetCoType() == 1)
@@ -1039,15 +1041,17 @@ void InventoryState::Render()
 			if (m_vCompanion[1].GetCoType() == 3)
 				pGraphics->DrawTexture(m_hMageIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
 		}
-		else
-			pGraphics->DrawRectangle(Comp2Rect, SGD::Color(0, 255, 255, 255), SGD::Color(255, 117, 92, 12));
 
 
-		if (m_nCursor == 0)
+		if (m_nCursor == 0 || m_nCursor == 30)
+		{
 			pGraphics->DrawRectangle(Comp1Rect, SGD::Color(0, 255, 255, 255), SGD::Color(255, 200, 92, 12));
+		}
 
 		if (m_nCursor == 1)
+		{
 			pGraphics->DrawRectangle(Comp2Rect, SGD::Color(0, 255, 255, 255), SGD::Color(255, 200, 92, 12));
+		}
 
 
 
@@ -1070,13 +1074,15 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 255, 0, 0 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hWeaponBackground, SGD::Point(51, 50), {}, {}, {}, { 0.58f, 1.368f });
 		pGraphics->DrawTexture(m_hSword, SGD::Point(80, 60), {}, {}, {}, { 0.65f, 0.65f });
+		pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(200, 50), {}, {}, {}, { .592f, 1.37f });
+
 		pGraphics->DrawRectangle(RuneSet1, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
 
 
 		// rune squares in the inventory
-		pGraphics->DrawRectangle(rect1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawRectangle(rect2, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawRectangle(rect3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect1, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect2, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect3, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect4, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect5, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect6, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
@@ -1257,12 +1263,13 @@ void InventoryState::Render()
 		pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 0, 255, 0 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hArmorBackground, SGD::Point(51, 50), {}, {}, {}, { 0.288f, 0.682f });
 		pGraphics->DrawTexture(m_hArmor, SGD::Point(52, 60), {}, {}, {}, { 0.2f, 0.3f });
+		pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(200, 50), {}, {}, {}, { .592f, 1.37f });
 		pGraphics->DrawRectangle(RuneSet1, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
 
 		// rune squares in the inventory
-		pGraphics->DrawRectangle(rect1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawRectangle(rect2, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawRectangle(rect3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect1, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect2, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect3, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect4, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect5, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect6, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
@@ -1442,12 +1449,13 @@ void InventoryState::Render()
 
 		pGraphics->DrawRectangle(Fullrect, SGD::Color{ 255, 0, 0, 255 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawTexture(m_hGauntlet, SGD::Point(51, 50), {}, {}, {}, { 0.287f, 0.341f });
+		pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(200, 50), {}, {}, {}, { .592f, 1.37f });
 		pGraphics->DrawRectangle(RuneSet1, SGD::Color{ 255, 200, 200, 200 }, SGD::Color{ 255, 0, 0, 0 });
 
 		// rune squares in the inventory
-		pGraphics->DrawRectangle(rect1, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawRectangle(rect2, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
-		pGraphics->DrawRectangle(rect3, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect1, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect2, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
+		pGraphics->DrawRectangle(rect3, SGD::Color{ 0, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect4, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect5, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
 		pGraphics->DrawRectangle(rect6, SGD::Color{ 200, 150, 150, 150 }, SGD::Color{ 255, 0, 0, 0 });
