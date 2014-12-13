@@ -656,14 +656,13 @@ void CombatState::Render(void)
 
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 0, 0, 0));
+	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 0, 0, 0));
 
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
 	{
 		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
 		{
-
 			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
 				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
@@ -1316,11 +1315,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	{
 				if (m_pEnemies.size() == 0)
 				{
-					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
+					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
 				}
 				else if (m_pEnemies.size() == 1)
 				{
-					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
 				}
 				else if (m_pEnemies.size() == 2)
 				{
@@ -1370,7 +1369,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					break;
 				}
 
-				temp->SetHealth(100);
+				temp->SetHealth(300);
 
 	}
 		break;
@@ -1681,7 +1680,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 			
-			Total = (int)((((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + ((m_nNumQtCorrect *  (((Minion*)_To)->GetMods().DamageLevel - 1)) / m_nQTLength)) * 10) + 20));
+			Total = (int)((((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + ((m_nNumQtCorrect *  (((Minion*)_To)->GetMods().DamageLevel - 1)) / m_nQTLength)) * 10) + 15));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			m_nNumQtCorrect = 0;
 
@@ -1718,7 +1717,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 		if (localBlock == false)
 		{
-			Total = rand() % (10 * ((Minion*)_From)->GetMods().DamageLevel) + ((Minion*)_From)->GetMods().DamageLevel;
+			Total = rand() % (15 * ((Minion*)_From)->GetMods().DamageLevel) + ((Minion*)_From)->GetMods().DamageLevel;
 
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{

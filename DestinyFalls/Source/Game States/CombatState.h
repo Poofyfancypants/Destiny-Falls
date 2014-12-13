@@ -121,7 +121,7 @@ private:
 
 	bool entered = false;
 
-	string ActionMessage;
+	string ActionMessage = " ";
 	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
 
 	float PlayerTimer = 0.0f;

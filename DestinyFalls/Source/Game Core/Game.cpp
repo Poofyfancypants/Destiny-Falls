@@ -116,13 +116,6 @@ bool Game::Initialize( float width, float height )
 	string imageName = "resource/graphics/Fonts/newfont_0.png";
 	string xmlFile = "resource/XML/newfont.xml";
 	m_pFonts->Load( fontName, imageName, xmlFile );
-	//Load the Bernardo font
-	//string fontName1 = "Celtic";
-	//string imageName1 = "resource/graphics/Fonts/CelticMD_0.png";
-	//string xmlFile1 = "resource/XML/Celticfont.xml";
-	//m_pFonts->Load( fontName1, imageName1, xmlFile1 );
-	//Load the other font
-
 	//Load the dialog font
 	string fontName3 = "Dialog";
 	string imageName3 = "resource/graphics/Fonts/dialog.png";
@@ -133,11 +126,6 @@ bool Game::Initialize( float width, float height )
 	string imageName4 = "resource/graphics/Fonts/Goblinfont_0.png";
 	string xmlFile4 = "resource/XML/Goblinfont.xml";
 	m_pFonts->Load( fontName4, imageName4, xmlFile4 );
-	//Load the dialog font
-	string fontName5 = "InventoryFont";
-	string imageName5 = "resource/graphics/Fonts/InventoryFont_0.png";
-	string xmlFile5 = "resource/XML/InventoryFont.xml";
-	m_pFonts->Load(fontName5, imageName5, xmlFile5);
 
 	LoadingScreen( "Loading Audio.." );
 

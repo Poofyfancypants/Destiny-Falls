@@ -964,11 +964,11 @@ void InventoryState::Render()
 		{
 
 			if (m_vSword[1].GetTier() == 1)
-				pGraphics->DrawTexture(m_hFiret1, { 320, 70 }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret1, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vSword[1].GetTier() == 2)
-				pGraphics->DrawTexture(m_hFiret2, { 320, 70 }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret2, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if (m_vSword[1].GetTier() == 3)
-				pGraphics->DrawTexture(m_hFiret3, { 320, 70 }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hFiret3, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vSword[1].GetElement() == Water)
@@ -1501,51 +1501,51 @@ void InventoryState::Render()
 #pragma endregion
 
 		pGraphics->DrawRectangle( IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret1, { IventoryRect1.left, IventoryRect1.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hFiret1, { IventoryRect1.left, IventoryRect1.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect2, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret2, { IventoryRect2.left, IventoryRect2.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hFiret2, { IventoryRect2.left, IventoryRect2.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret3, { IventoryRect3.left, IventoryRect3.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hFiret3, { IventoryRect3.left, IventoryRect3.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect4, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hFiret1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect5, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hFiret2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect6, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret3, { IventoryRect6.left, IventoryRect6.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hFiret3, { IventoryRect6.left, IventoryRect6.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect7, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hAirt1, { IventoryRect7.left, IventoryRect7.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hAirt1, { IventoryRect7.left, IventoryRect7.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect8, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hAirt2, { IventoryRect8.left, IventoryRect8.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hAirt2, { IventoryRect8.left, IventoryRect8.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect9, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hAirt3, { IventoryRect9.left, IventoryRect9.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hAirt3, { IventoryRect9.left, IventoryRect9.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect10, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hEartht1, { IventoryRect10.left, IventoryRect10.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hEartht1, { IventoryRect10.left, IventoryRect10.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect11, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hEartht2, { IventoryRect11.left, IventoryRect11.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hEartht2, { IventoryRect11.left, IventoryRect11.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect12, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hEartht3, { IventoryRect12.left, IventoryRect12.top }, {}, {}, {}, { 0.1f, 0.1f });
+		pGraphics->DrawTexture(m_hEartht3, { IventoryRect12.left, IventoryRect12.top }, {}, {}, {}, { 0.55f, 0.55f });
 		//sword
 		//pGraphics->DrawRectangle( Equip1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
 		//pGraphics->DrawRectangle( Equip2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
