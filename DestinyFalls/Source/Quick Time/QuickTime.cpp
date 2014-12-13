@@ -47,6 +47,9 @@ QuickTime::QuickTime()
 
 	//set the qtover bool to false
 	m_bqtOver = false;
+
+	m_hScroll = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Scroll.png" );
+
 }
 
 
@@ -195,19 +198,25 @@ void QuickTime::Render()
 	{
 		SGD::Rectangle rect = SGD::Rectangle( 150 , 300 , 615 , 450 );
 
-		SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
-		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 175 , 360 } , 1 , { 255 , 0 , 64, 128} );
+		//SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hScroll , SGD::Point( 150.0f , 300.0f ) , SGD::Rectangle( 0.0f , 0.0f , 465.0f , 290.0f ) , 0.0f , { } , { } , SGD::Size( 1.0f , 0.5f ) );
+		pFonts->Render( "Goblin" , m_sAlert.c_str() , { 175 , 360 } , 1 , { 255 , 0 , 0, 0} );
 	}
 	else
 	{
-		SGD::Rectangle rect = SGD::Rectangle( 250 , 300 , 550 , 450 );
+		//SGD::Rectangle rect = SGD::Rectangle( 250 , 300 , 550 , 450 );
+		//SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
 
-		SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
+		//Draw Scroll
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hScroll , SGD::Point( 150.0f , 300.0f ) , SGD::Rectangle( 0.0f , 0.0f , 465.0f , 290.0f ) , 0.0f , { } , { } , SGD::Size( 1.0f , 0.5f ) );
+
+		// draw timer rect
 		timer.right = timer.right - ( ( m_fSeconds / m_fLetterTimer ) * 100 );
-		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 64 , 128 ) );
+		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 0 , 0 ) );
 
-		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 275 , 325 } , 2 , { 255 , 0 , 64 , 128 } );
-		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 275 , 340 } , 2 , { 255 , 0 , 43 , 0 } );
+		//Draw text
+		pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 275 , 325 } , 2 , { 255 , 0 , 0 , 0 } );
+		pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 275 , 340 } , 2 , { 255 , 255 , 255 , 255 } );
 	}
 	
 }

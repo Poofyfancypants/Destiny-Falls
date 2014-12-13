@@ -16,7 +16,6 @@ QuickTimeState* QuickTimeState::GetInstance()
 void QuickTimeState::Enter()
 {
 	m_mQTMusic = SGD::AudioManager::GetInstance()->LoadAudio( "resource/audio/QuickTimeStarting.wav" );
-
 	RunQuickTime();
 }
 
