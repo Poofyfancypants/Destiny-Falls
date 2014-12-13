@@ -653,11 +653,11 @@ void CombatState::Render(void)
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	InventoryState* pInventory = InventoryState::GetInstance();
 
-	//	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
-
+	float width = Game::GetInstance()->GetScreenWidth();
+	float len = ActionMessage.length();
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
-	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 0, 0, 0));
+	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 0, 0, 0));
 
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
@@ -674,10 +674,6 @@ void CombatState::Render(void)
 				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
 		}
 	}
-
-	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
-	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left + 60, ActionRect.top + 5 }, SGD::Color(255, 180, 180, 0));
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)

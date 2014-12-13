@@ -26,9 +26,9 @@ void InventoryState::Enter()
 	m_hAirt1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air1.png");
 	m_hAirt2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air2.png");
 	m_hAirt3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air3.png");
-	//m_hWatert1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air1.png");
-	//m_hWatert2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air2.png");
-	//m_hWatert3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air3.png");
+	m_hWatert1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterRunet1.png");
+	m_hWatert2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterRunet2.png");
+	m_hWatert3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterRunet3.png");
 	m_hHero = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Hero.png" );
 	m_hSword = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Sword.png" );
 	m_hGauntlet = SGD::GraphicsManager::GetInstance()->LoadTexture( L"resource/graphics/Gauntlet.jpg" );
@@ -49,6 +49,9 @@ void InventoryState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hFiret1 );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hFiret2 );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hFiret3 );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hWatert1);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hWatert2);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hWatert3);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hEartht1);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hEartht2);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hEartht3);
@@ -926,11 +929,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vSword[0].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { Equip1.left, Equip1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { Equip1.left, Equip1.top }, {}, {}, {}, { 1.0f, 1.0f });
 			else if( m_vSword[0].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { Equip1.left, Equip1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { Equip1.left, Equip1.top }, {}, {}, {}, { 1.0f, 1.0f });
 			else if( m_vSword[0].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { Equip1.left, Equip1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { Equip1.left, Equip1.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vSword[0].GetElement() == Air)
@@ -975,11 +978,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vSword[1].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vSword[1].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vSword[1].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { Equip2.left, Equip2.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vSword[1].GetElement() == Air)
@@ -1023,11 +1026,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vSword[2].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { Equip3.left, Equip3.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { Equip3.left, Equip3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vSword[2].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { Equip3.left, Equip3.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { Equip3.left, Equip3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vSword[2].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { Equip3.left, Equip3.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { Equip3.left, Equip3.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vSword[2].GetElement() == Air)
@@ -1108,11 +1111,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vArmor[0].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { EquipA1.left, EquipA1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipA1.left, EquipA1.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[0].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { EquipA1.left, EquipA1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipA1.left, EquipA1.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vArmor[0].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { EquipA1.left, EquipA1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipA1.left, EquipA1.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vArmor[0].GetElement() == Air)
@@ -1157,11 +1160,11 @@ void InventoryState::Render()
 
 
 			if( m_vArmor[1].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
 			if( m_vArmor[1].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
 			if( m_vArmor[1].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipA2.left, EquipA2.top }, {}, {}, {}, { 0.2f, 0.18f });
 		}
 
 		if (m_vArmor[1].GetElement() == Air)
@@ -1205,11 +1208,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vArmor[2].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
 			if( m_vArmor[2].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
 			if( m_vArmor[2].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipA3.left, EquipA3.top }, {}, {}, {}, { 0.2f, 0.18f });
 		}
 
 		if (m_vArmor[2].GetElement() == Air)
@@ -1291,11 +1294,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vRing[0].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { EquipG1.left, EquipG1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipG1.left, EquipG1.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vRing[0].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { EquipG1.left, EquipG1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipG1.left, EquipG1.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vRing[0].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { EquipG1.left, EquipG1.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipG1.left, EquipG1.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vRing[0].GetElement() == Air)
@@ -1337,11 +1340,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vRing[1].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { EquipG2.left, EquipG2.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipG2.left, EquipG2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vRing[1].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { EquipG2.left, EquipG2.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipG2.left, EquipG2.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vRing[1].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { EquipG2.left, EquipG2.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipG2.left, EquipG2.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vRing[1].GetElement() == Air)
@@ -1386,11 +1389,11 @@ void InventoryState::Render()
 		{
 
 			if( m_vRing[2].GetTier() == 1 )
-				pGraphics->DrawTexture(m_hFiret1, { EquipG3.left, EquipG3.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert1, { EquipG3.left, EquipG3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vRing[2].GetTier() == 2 )
-				pGraphics->DrawTexture(m_hFiret2, { EquipG3.left, EquipG3.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert2, { EquipG3.left, EquipG3.top }, {}, {}, {}, { 1.0f, 1.0f });
 			if( m_vRing[2].GetTier() == 3 )
-				pGraphics->DrawTexture(m_hFiret3, { EquipG3.left, EquipG3.top }, {}, {}, {}, { 1.0f, 1.0f });
+				pGraphics->DrawTexture(m_hWatert3, { EquipG3.left, EquipG3.top }, {}, {}, {}, { 1.0f, 1.0f });
 		}
 
 		if (m_vRing[2].GetElement() == Air)
@@ -1513,15 +1516,15 @@ void InventoryState::Render()
 
 
 		pGraphics->DrawRectangle( IventoryRect4, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.55f, 0.55f });
+		pGraphics->DrawTexture(m_hWatert1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect5, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.55f, 0.55f });
+		pGraphics->DrawTexture(m_hWatert2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect6, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		pGraphics->DrawTexture(m_hFiret3, { IventoryRect6.left, IventoryRect6.top }, {}, {}, {}, { 0.55f, 0.55f });
+		pGraphics->DrawTexture(m_hWatert3, { IventoryRect6.left, IventoryRect6.top }, {}, {}, {}, { 0.55f, 0.55f });
 
 
 		pGraphics->DrawRectangle( IventoryRect7, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );

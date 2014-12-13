@@ -85,7 +85,7 @@ private:
 	int m_nQTLength = 3;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
-	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
+	SGD::Rectangle ActionRect = { 100, 10, 700, 50 };
 
 
 	SGD::Rectangle Playerrect	= { 225, 200, 289, 264 };
