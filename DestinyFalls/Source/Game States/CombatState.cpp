@@ -450,6 +450,8 @@ void CombatState::Exit(void)
 	m_pHeroes.clear();
 
 	pGraphics->UnloadTexture(m_hplayer);
+	pGraphics->UnloadTexture(m_hButton);
+	pGraphics->UnloadTexture(m_hTurnIndicator);
 	pAudio->UnloadAudio(cHealingAbility);
 	pAudio->UnloadAudio(cMusic);
 }

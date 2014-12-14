@@ -321,16 +321,19 @@ void SaveState::LoadNames()
 		name = new char[nameLength];
 		fin.read( name, nameLength );
 		m_sSlot1Name = name;
+		delete[] name;
 
 		fin.read( (char*)&nameLength, sizeof( int ) );
 		name = new char[nameLength];
 		fin.read( name, nameLength );
 		m_sSlot2Name = name;
+		delete[] name;
 
 		fin.read( (char*)&nameLength, sizeof( int ) );
 		name = new char[nameLength];
 		fin.read( name, nameLength );
 		m_sSlot3Name = name;
+		delete[] name;
 
 		fin.close();
 	}
