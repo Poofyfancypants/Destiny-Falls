@@ -2139,61 +2139,61 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		{
 		case 0: //Earth
 			message += "Wind Gust";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 1:
 			message += "Fire Ball";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 2: //Water																  
 			message += "Rock Throw";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 3:
 			message += "Wind Gust";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 4: //Air																  
 			message += "Fire Ball";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 5:
 			message += "Ice Blase";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 6: //Fire																  
 			message += "Ice Blase";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 7:
 			message += "Rock Throw";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 8:
 			message += "Ice Blase";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 9:
 			message += "Fire Ball";
-			Total = ((rand() % 15 * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+			Total = ((rand() % 15 * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
@@ -2201,14 +2201,14 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			if (_spell == 0)
 			{
 				message += "Ice Blase";
-				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 				Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			}
 			else
 			{
 				message += "Fire Ball";
-				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 2));
+				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
 				Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			}
