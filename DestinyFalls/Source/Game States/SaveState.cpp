@@ -463,92 +463,98 @@ void SaveState::Load(string path)
 
 
 	////Sword
-	//TiXmlElement* pSword = pPlayer->NextSiblingElement("Sword");
+	TiXmlElement* pSword = pPlayer->FirstChildElement("Sword");
 
-	//Runes temp2;
-	//pSword->Attribute("Tier", &tier);
-	//temp2.SetTier(tier);
-	//pSword->Attribute("Element", &element);
-	//temp2.SetElement((Elements)element);
-	//
+	Runes temp2;
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	
 
-	//tempS.push_back(temp2);
+	tempS.push_back(temp2);
 
-	//pSword = pPlayer->NextSiblingElement("Sword");
+	pSword = pSword->NextSiblingElement( "Sword" );
 
-	//pSword->Attribute("Element", &element);
-	//temp2.SetElement((Elements)element);
-	//pSword->Attribute("Tier", &tier);
-	//temp2.SetTier(tier);
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	//tempS.push_back(temp2);
+	tempS.push_back(temp2);
 
-	//pSword = pPlayer->NextSiblingElement("Sword");
+	pSword = pSword->NextSiblingElement( "Sword" );
 
-	//pSword->Attribute("Element", &element);
-	//temp2.SetElement((Elements)element);
-	//pSword->Attribute("Tier", &tier);
-	//temp2.SetTier(tier);
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	//tempS.push_back(temp2);
+	tempS.push_back(temp2);
 
-	////Armor
-	//TiXmlElement* pArmor = pSword->NextSiblingElement("Armor");
+	//Armor
+	TiXmlElement* pArmor = pSword->NextSiblingElement("Armor");
 
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	Runes temp3;
+	for (int i = 0; i < 3; i++)
+	{
+		Runes temp3;
 
-	//	pArmor->Attribute("Element", &element);
-	//	temp3.SetElement((Elements)element);
-	//	pArmor->Attribute("Tier", &tier);
-	//	temp3.SetTier(tier);
+		pArmor->Attribute("Element", &element);
+		temp3.SetElement((Elements)element);
+		pArmor->Attribute("Tier", &tier);
+		temp3.SetTier(tier);
 
-	//	tempA.push_back(temp3);
+		tempA.push_back(temp3);
+		if( i < 2 )
+		{
+			pArmor = pArmor->NextSiblingElement( "Armor" );
 
-	//	pArmor = pArmor->NextSiblingElement("Armor");
-	//}
+		}
+	}
 
-	////Ring
-	//TiXmlElement* pRing = pArmor->NextSiblingElement("Ring");
+	//Ring
+	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/);
 
-	//for (int i = 0; i < 3; i++)
-	//{
-	//	Runes temp4;
+	for (int i = 0; i < 3; i++)
+	{
+		Runes temp4;
 
-	//	pRing->Attribute("Element", &element);
-	//	temp4.SetElement((Elements)element);
-	//	pRing->Attribute("Tier", &tier);
-	//	temp4.SetTier(tier);
+		pRing->Attribute("Element", &element);
+		temp4.SetElement((Elements)element);
+		pRing->Attribute("Tier", &tier);
+		temp4.SetTier(tier);
 
-	//	tempG.push_back(temp4);
+		tempG.push_back(temp4);
+		if( i < 2 )
+		{
+			pRing = pRing->NextSiblingElement( "Ring" );
 
-	//	pRing = pRing->NextSiblingElement("Ring");
-	//}
+		}
+	}
 
-	////inventory
-	//TiXmlElement* pInv = pPlayer->NextSiblingElement("Inventory");
-	//pInv->Attribute("Size", &size);
+	//inventory
+	TiXmlElement* pInv = pRing->NextSiblingElement("Inventory");
+	pInv->Attribute("Size", &size);
 
-	//if (size != 0)
-	//{
-	//	TiXmlElement* pRunes = pInv->FirstChildElement("Rune");
+	if (size != 0)
+	{
+		TiXmlElement* pRunes = pInv->FirstChildElement("Rune");
 
-	//	while (pRunes != nullptr)
-	//	{
-	//		//Read in
-	//		Runes temp5;
+		while (pRunes != nullptr)
+		{
+			//Read in
+			Runes temp5;
 
-	//		pRunes->Attribute("Element", &element);
-	//		temp5.SetElement((Elements)element);
-	//		pRunes->Attribute("Tier", &tier);
-	//		temp5.SetTier(tier);
+			pRunes->Attribute("Element", &element);
+			temp5.SetElement((Elements)element);
+			pRunes->Attribute("Tier", &tier);
+			temp5.SetTier(tier);
 
-	//		tempInv.push_back(temp5);
+			tempInv.push_back(temp5);
 
-	//		pRunes = pRunes->NextSiblingElement();
-	//	}
-	//}
+			pRunes = pRunes->NextSiblingElement();
+		}
+	}
 
 
 	Game::GetInstance()->RemoveState();
