@@ -48,7 +48,7 @@ void InventoryState::Enter()
 	m_vSword.resize(3);
 	m_vRing.resize(3);
 	m_vArmor.resize(3);
-	m_vCompanion.reserve(2);
+	m_vCompanion.resize(2);
 
 }
 
