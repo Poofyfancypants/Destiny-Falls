@@ -70,6 +70,7 @@ void MainMenuState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hLogo );
 	SGD::AudioManager::GetInstance()->UnloadAudio( m_hMusic );
+
 }
 
 bool MainMenuState::Input()
