@@ -203,7 +203,6 @@ void MainMenuState::Render()
 		pGraphics->DrawString( fps.str().c_str(), SGD::Point( 10, 10 ), SGD::Color( 0, 255, 0 ) );
 	}
 
-
 	pGraphics->SetClearColor( { 64, 47, 25 } );
 	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
 
