@@ -345,6 +345,32 @@ void CombatState::Enter(void)
 			m_pObjects.push_back(temp);
 			m_pHeroes.push_back(temp);
 		}
+		else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() == Companion::Companion_Type::NonClass)
+		{
+
+			Object* temp = AddCompanion(0 );
+			((Companion*)temp)->SetPosIndex(i);
+
+			if (m_pHeroes.size() == 1)
+				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+			else if (m_pHeroes.size() == 2)
+				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+			m_pObjects.push_back(temp);
+			m_pHeroes.push_back(temp);
+		}
+		else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() == Companion::Companion_Type::NonClass)
+		{
+
+			Object* temp = AddCompanion(1);
+			((Companion*)temp)->SetPosIndex(i);
+
+			if (m_pHeroes.size() == 1)
+				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+			else if (m_pHeroes.size() == 2)
+				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+			m_pObjects.push_back(temp);
+			m_pHeroes.push_back(temp);
+		}
 	}
 #pragma endregion
 
