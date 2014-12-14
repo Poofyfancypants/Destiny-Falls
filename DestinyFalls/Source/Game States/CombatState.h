@@ -88,8 +88,8 @@ private:
 	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
 
 	SGD::Rectangle Spell1Rect = { 215, 420, 300, 440 };
-	SGD::Rectangle Spell2Rect = { 330, 420, 415, 440 };
-	SGD::Rectangle Spell3Rect = { 445, 420, 530, 440 };
+	SGD::Rectangle Spell2Rect = { 345, 420, 430, 440 };
+	SGD::Rectangle Spell3Rect = { 475, 420, 565, 440 };
 
 	SGD::Rectangle Playerrect	= { 225, 200, 289, 264 };
 	SGD::Rectangle PlayerHB		= { 75, 200, 175, 230 };
