@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<MangO>
-    <player_info Health="100" PosX="174.000000" PosY="185.000000" CurrLevel="0">
+<Save2>
+    <player_info Health="85" PosX="859.750000" PosY="97.500000" CurrLevel="1">
         <Sword Element="4" Tier="0" />
         <Sword Element="4" Tier="0" />
         <Sword Element="4" Tier="0" />
@@ -12,4 +12,4 @@
         <Ring Element="4" Tier="0" />
         <Inventory Size="0" />
     </player_info>
-</MangO>
+</Save2>

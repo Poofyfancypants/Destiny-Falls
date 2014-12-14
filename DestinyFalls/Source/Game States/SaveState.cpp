@@ -426,7 +426,7 @@ void SaveState::Save2()
 
 	doc.LinkEndChild( pDel );
 
-	TiXmlElement* pRoot = new TiXmlElement{ m_sSlot2Name.c_str() };
+	TiXmlElement* pRoot = new TiXmlElement{ "Save2" };
 
 	doc.LinkEndChild( pRoot );
 
@@ -500,7 +500,7 @@ void SaveState::Save3()
 
 	doc.LinkEndChild( pDel );
 
-	TiXmlElement* pRoot = new TiXmlElement{ m_sSlot3Name.c_str() };
+	TiXmlElement* pRoot = new TiXmlElement{ "Save3" };
 
 	doc.LinkEndChild( pRoot );
 
