@@ -58,7 +58,7 @@ private:
 
 	bool m_Block = false;
 	int m_nPosIndex = 0;
-	Companion_Type m_CoType;
+	Companion_Type m_CoType = Companion_Type::NonClass;
 	int TypeString = 0;
 
 	int m_bSpell1 = -1; //Cooldowns
