@@ -73,7 +73,6 @@ void ObjectManager::RemoveAll( unsigned int bucket )
 
 void ObjectManager::RemoveAll( void )
 {
-
 	// Lock the iterator
 	m_bIterating = true;
 	{

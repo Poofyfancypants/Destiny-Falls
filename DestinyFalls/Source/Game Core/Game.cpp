@@ -445,18 +445,18 @@ void Game::LoadStrings()
 	m_StringTable[1][6] = "Ogre";
 	//Water
 	m_StringTable[2][1] = "Minion";
-	m_StringTable[2][2] = "Ein";
+	m_StringTable[2][2] = "Polar Wolf";
 	m_StringTable[2][3] = "Water Elemental";
 	m_StringTable[2][4] = "Plant Monster";
 	m_StringTable[2][5] = "Water Spector";
-	m_StringTable[2][6] = "Water Mini Boss";
+	m_StringTable[2][6] = "Frozen Guard";
 	//Air
 	m_StringTable[3][1] = "Minion";
 	m_StringTable[3][2] = "Behemoth";
 	m_StringTable[3][3] = "Air Elemental";
 	m_StringTable[3][4] = "Wind Sage";
 	m_StringTable[3][5] = "Heavy Golem";
-	m_StringTable[3][6] = "Air Mini Boss";
+	m_StringTable[3][6] = "Draki";
 	//Fire
 	m_StringTable[4][1] = "Minion";
 	m_StringTable[4][2] = "Behemoth";
@@ -470,7 +470,7 @@ void Game::LoadStrings()
 	m_StringTable[5][2] = "Midgard Serpent";
 	m_StringTable[5][3] = "Sound Giant";
 	m_StringTable[5][4] = "Fire Giant Hel";
-	m_StringTable[5][5] = "Sigurd the Immortal";
+	m_StringTable[5][5] = "Immortal Sigurd";
 
 	//inventory
 	m_StringTable[6][5] = "Tier1:";
