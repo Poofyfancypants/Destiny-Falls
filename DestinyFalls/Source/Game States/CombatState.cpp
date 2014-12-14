@@ -210,7 +210,7 @@ void CombatState::Enter(void)
 	m_hplayer = pGraphics->LoadTexture("resource/graphics/ShadowKnight.png");
 	cMusic = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/combatMusic.wav");
 	cHealingAbility = SGD::AudioManager::GetInstance()->LoadAudio("resource/audio/HealAbility.wav");
-	m_hButton = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/MenuBackgrounds/pauseButton.png" );
+	m_hButton = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/MenuBackgrounds/pauseButton.png");
 	//minion Icons
 
 	//play combat music
@@ -334,42 +334,57 @@ void CombatState::Enter(void)
 
 	for (unsigned int i = 0; i < 2; i++)
 	{
-		//InventoryState::GetInstance()->m_vCompanion.resize(2);
-		if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
+		if (InventoryState::GetInstance()->m_vCompanion.size() != 0)
 		{
-			Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
-			((Companion*)temp)->SetPosIndex(i);
 
-			if (m_pHeroes.size() == 1)
-				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-			else if (m_pHeroes.size() == 2)
-				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-			m_pObjects.push_back(temp);
-			m_pHeroes.push_back(temp);
+			if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
+			{
+				Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
+				((Companion*)temp)->SetPosIndex(i);
+
+				if (m_pHeroes.size() == 1)
+					temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+				else if (m_pHeroes.size() == 2)
+					temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+				m_pObjects.push_back(temp);
+				m_pHeroes.push_back(temp);
+			}
+			else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Cleric ||
+				InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Mage ||
+				InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Tank ||
+				InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Melee)
+			{
+
+				Object* temp = AddCompanion(0);
+				((Companion*)temp)->SetPosIndex(i);
+
+				if (m_pHeroes.size() == 1)
+					temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+				else if (m_pHeroes.size() == 2)
+					temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+				m_pObjects.push_back(temp);
+				m_pHeroes.push_back(temp);
+			}
+			else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Cleric ||
+				InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Mage ||
+				InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Tank ||
+				InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Melee)
+			{
+
+				Object* temp = AddCompanion(1);
+				((Companion*)temp)->SetPosIndex(i);
+
+				if (m_pHeroes.size() == 1)
+					temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+				else if (m_pHeroes.size() == 2)
+					temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+				m_pObjects.push_back(temp);
+				m_pHeroes.push_back(temp);
+			}
 		}
-		else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Cleric || 
-					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Mage || 
-					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Tank || 
-					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Melee)
+		else
 		{
-
-			Object* temp = AddCompanion(0 );
-			((Companion*)temp)->SetPosIndex(i);
-
-			if (m_pHeroes.size() == 1)
-				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-			else if (m_pHeroes.size() == 2)
-				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-			m_pObjects.push_back(temp);
-			m_pHeroes.push_back(temp);
-		}
-		else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Cleric ||
-			InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Mage ||
-			InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Tank ||
-			InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Melee)
-		{
-
-			Object* temp = AddCompanion(1);
+			Object* temp = AddCompanion(i);
 			((Companion*)temp)->SetPosIndex(i);
 
 			if (m_pHeroes.size() == 1)
@@ -964,21 +979,21 @@ void CombatState::Render(void)
 															   {
 															   case 0:
 																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell1Cool())
-																	   pFont->Render( "Dialog" , spell1.c_str() , { Spell1Rect.left , Spell1Rect.top } , .7f , { 100 , 255 , 255 , 0 } );
+																	   pFont->Render("Dialog", spell1.c_str(), { Spell1Rect.left, Spell1Rect.top }, .7f, { 100, 255, 255, 0 });
 																   else
-																	   pFont->Render( "Dialog" , spell1.c_str() , { Spell1Rect.left , Spell1Rect.top } , .7f , { 255 , 255 , 255 , 255 } );
+																	   pFont->Render("Dialog", spell1.c_str(), { Spell1Rect.left, Spell1Rect.top }, .7f, { 255, 255, 255, 255 });
 																   break;
 															   case 1:
 																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell2Cool())
-																	   pFont->Render( "Dialog" , spell2.c_str() , { Spell2Rect.left , Spell2Rect.top } , .7f , { 100 , 255 , 255 , 0 } );
+																	   pFont->Render("Dialog", spell2.c_str(), { Spell2Rect.left, Spell2Rect.top }, .7f, { 100, 255, 255, 0 });
 																   else
-																	   pFont->Render( "Dialog" , spell2.c_str() , { Spell2Rect.left , Spell2Rect.top } , .7f , { 255 , 255 , 255 , 255 } );
+																	   pFont->Render("Dialog", spell2.c_str(), { Spell2Rect.left, Spell2Rect.top }, .7f, { 255, 255, 255, 255 });
 																   break;
 															   case 2:
 																   if (((Player*)m_pObjects[CurrentTurn])->GetSpell3Cool())
-																	   pFont->Render( "Dialog" , spell3.c_str() , { Spell3Rect.left , Spell3Rect.top } , .7f , { 100 , 255 , 255 , 0 } );
+																	   pFont->Render("Dialog", spell3.c_str(), { Spell3Rect.left, Spell3Rect.top }, .7f, { 100, 255, 255, 0 });
 																   else
-																	   pFont->Render( "Dialog" , spell3.c_str() , { Spell3Rect.left , Spell3Rect.top } , .7f , { 255 , 255 , 255 , 255 } );
+																	   pFont->Render("Dialog", spell3.c_str(), { Spell3Rect.left, Spell3Rect.top }, .7f, { 255, 255, 255, 255 });
 																   break;
 															   default:
 																   break;
@@ -1078,14 +1093,14 @@ void CombatState::Render(void)
 																						  }
 
 																						  if (((Companion*)m_pObjects[CurrentTurn])->GetSpell1Cool() > 0)
-																							  pFont->Render( "Dialog" , spell1.c_str() , { Spell1Rect.left , Spell1Rect.top } , .7f , SGD::Color( 255 , 255 , 255 , 0 ) );
+																							  pFont->Render("Dialog", spell1.c_str(), { Spell1Rect.left, Spell1Rect.top }, .7f, SGD::Color(255, 255, 255, 0));
 																						  else
-																							  pFont->Render( "Dialog" , spell1.c_str() , { Spell1Rect.left , Spell1Rect.top } , .7f , SGD::Color( 255 , 255 , 255 , 255 ) );
+																							  pFont->Render("Dialog", spell1.c_str(), { Spell1Rect.left, Spell1Rect.top }, .7f, SGD::Color(255, 255, 255, 255));
 
 																						  if (((Companion*)m_pObjects[CurrentTurn])->GetSpell2Cool() > 0)
-																							  pFont->Render( "Dialog" , spell2.c_str() , { Spell2Rect.left , Spell2Rect.top } , .7f , SGD::Color( 255 , 255 , 255 , 0 ) );
+																							  pFont->Render("Dialog", spell2.c_str(), { Spell2Rect.left, Spell2Rect.top }, .7f, SGD::Color(255, 255, 255, 0));
 																						  else
-																							  pFont->Render( "Dialog" , spell2.c_str() , { Spell2Rect.left , Spell2Rect.top } , .7f , SGD::Color( 255 , 255 , 255 , 255 ) );
+																							  pFont->Render("Dialog", spell2.c_str(), { Spell2Rect.left, Spell2Rect.top }, .7f, SGD::Color(255, 255, 255, 255));
 																					  }
 																				  }
 																			  }
@@ -1816,7 +1831,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-			
+
 			Total = (int)((((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + ((m_nNumQtCorrect *  (((Minion*)_To)->GetMods().DamageLevel - 1)) / m_nQTLength)) * 10) + 15));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			m_nNumQtCorrect = 0;
@@ -3734,26 +3749,26 @@ void CombatState::HandleTutorial()
 }
 void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 {
-	switch( GameplayState::GetInstance()->GetCurrentLevel() )
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
-		case 1:
-			SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hEarth1 , { _shakeRect.left , _shakeRect.top } , { 0.0f , 300.0f , 800.0f , 1100.0f } , 0.0f ,
-			{ }, { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth1, { _shakeRect.left, _shakeRect.top }, { 0.0f, 300.0f, 800.0f, 1100.0f }, 0.0f,
+		{}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 2:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 1.0f, 1.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hAir2 , { _shakeRect.left , _shakeRect.top } , { 700.0f , 200.0f , 1500.0f , 800.0f }, 0.0f , { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );		
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hAir2, { _shakeRect.left, _shakeRect.top }, { 700.0f, 200.0f, 1500.0f, 800.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {100.0f, 100.0f, 900.0f, 700.0f}, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, { 100.0f, 100.0f, 900.0f, 700.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hFinal1 , { _shakeRect.left , _shakeRect.top } , { 300.0f , 100.0f , 1100.0f , 700.0f } ,0.0f, { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFinal1, { _shakeRect.left, _shakeRect.top }, { 300.0f, 100.0f, 1100.0f, 700.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	default:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, {0.0f, 300.0f, 800.0f, 900.0f },0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, { 0.0f, 300.0f, 800.0f, 900.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	}
 }
