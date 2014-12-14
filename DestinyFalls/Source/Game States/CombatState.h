@@ -157,6 +157,7 @@ private:
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
 	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hButton = SGD::INVALID_HANDLE;
 	SGD::HAudio cHealingAbility = SGD::INVALID_HANDLE;
 
 
