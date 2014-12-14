@@ -223,11 +223,12 @@ bool GameplayState::Input()
 	{
 		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
-	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	{
-		NextLevel();
-		m_bChangeLevels = true;
-	}
+	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	//{
+	//	NextLevel();
+	//	m_bChangeLevels = true;
+	//}
+
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
