@@ -28,7 +28,7 @@ void SplashScreenState::Exit()
 bool SplashScreenState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if( pInput->IsAnyKeyDown() )
+	if( pInput->IsAnyKeyDown() || pInput->IsButtonDown(0,0) || pInput->IsButtonDown(0,1) || pInput->IsButtonDown(0,3))
 	{
 		//Main menu state here
 		Game::GetInstance()->RemoveState();

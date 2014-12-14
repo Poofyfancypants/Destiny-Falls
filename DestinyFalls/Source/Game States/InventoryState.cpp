@@ -91,17 +91,17 @@ bool InventoryState::Input()
 	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0, 6))
 		tabLock = false;
 
-	if (pInput->IsKeyPressed(SGD::Key::UpArrow) || pInput->IsDPadUp(0, SGD::DPad::Up))
+	if (pInput->IsKeyPressed(SGD::Key::UpArrow) || pInput->GetLeftJoystick(0).y == -1)
 		tabLock = false;
 
 
-	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonDown(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonDown(0, 3))
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
 
 
-	if (pInput->IsKeyPressed(SGD::Key::RightArrow) && tabLock == false || pInput->IsDPadDown(0, SGD::DPad::Right))
+	if (pInput->IsKeyPressed(SGD::Key::RightArrow) && tabLock == false || pInput->GetLeftJoystick(0).x == 1 && tabLock == false)
 	{
 		m_ntabCursor++;
 		if (m_ntabCursor == -1)
@@ -110,7 +110,7 @@ bool InventoryState::Input()
 			m_ntabCursor = 0;
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::LeftArrow) && tabLock == false || pInput->IsDPadDown(0, SGD::DPad::Left))
+	if (pInput->IsKeyPressed(SGD::Key::LeftArrow) && tabLock == false || pInput->GetLeftJoystick(0).x == -1 && tabLock == false)
 	{
 		m_ntabCursor--;
 		if (m_ntabCursor == -1)
@@ -164,7 +164,7 @@ bool InventoryState::Input()
 
 	if (tabLock == false)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Enter))
+		if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0,0))
 			tabLock = true;
 	}
 
@@ -175,9 +175,9 @@ bool InventoryState::Input()
 			if (!OnlyEquipEnter)
 			{
 
-				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 					m_nCursor--;
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 					m_nCursor++;
 
 				// loop check
@@ -187,7 +187,7 @@ bool InventoryState::Input()
 					m_nCursor = 0;
 			}
 
-			if (pInput->IsKeyPressed(SGD::Key::Enter) && !OnlyEquipEnter || pInput->IsKeyPressed(SGD::Key::MouseLeft))
+			if (pInput->IsKeyPressed(SGD::Key::Enter) && !OnlyEquipEnter || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonDown(0,0))
 			{
 				OnlyEquipEnter = true;
 				return true;
@@ -203,15 +203,15 @@ bool InventoryState::Input()
 				if (CompanionSelect == 4)
 					CompanionSelect = 0;
 
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 				{
 					CompanionSelect++;
 				}
-				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 				{
 					CompanionSelect--;
 				}
-				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 				{
 					switch (m_nCursor)
 					{
@@ -267,9 +267,9 @@ bool InventoryState::Input()
 		{
 			equipPos = 30;
 
-			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 				m_nCursor--;
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 				m_nCursor++;
 
 			// loop check
@@ -279,7 +279,7 @@ bool InventoryState::Input()
 				m_nCursor = 0;
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0,0) && !pauseSelection)
 		{
 			pauseSelection = true;
 			return true;
@@ -296,15 +296,15 @@ bool InventoryState::Input()
 			else if (equipPos == -1)
 				equipPos = 11;
 
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 			{
 				equipPos++;
 			}
-			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 			{
 				equipPos--;
 			}
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 			{
 				switch (m_nCursor)
 				{
@@ -372,11 +372,11 @@ bool InventoryState::Input()
 			equipPos = 30;
 
 
-			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 			{
 				m_nCursor--;
 			}
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 			{
 				m_nCursor++;
 			}
@@ -388,7 +388,7 @@ bool InventoryState::Input()
 
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2) && !pauseSelection)
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 0) && !pauseSelection)
 		{
 			pauseSelection = true;
 			return true;
@@ -403,15 +403,15 @@ bool InventoryState::Input()
 			else if (equipPos == -1)
 				equipPos = 11;
 
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 			{
 				equipPos++;
 			}
-			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 			{
 				equipPos--;
 			}
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 			{
 				switch (m_nCursor)
 				{
@@ -435,7 +435,7 @@ bool InventoryState::Input()
 		}
 
 
-		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 		{
 
 			if (pInput->GetCursorPosition().IsPointInRectangle(EquipA1))
@@ -485,11 +485,11 @@ bool InventoryState::Input()
 			else if (equipPos == -1)
 				equipPos = 11;
 
-			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 			{
 				m_nCursor--;
 			}
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 			{
 				m_nCursor++;
 			}
@@ -502,7 +502,7 @@ bool InventoryState::Input()
 
 		}
 
-		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2))
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 0))
 		{
 			pauseSelection = true;
 			return true;
@@ -517,11 +517,11 @@ bool InventoryState::Input()
 			else if (equipPos == -1)
 				equipPos = 11;
 
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
 			{
 				equipPos++;
 			}
-			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
 			{
 				equipPos--;
 			}
@@ -592,7 +592,7 @@ bool InventoryState::Input()
 
 
 
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pauseSelection || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pauseSelection || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 	{
 		m_bShowToolTip1 = false;
 		m_bShowToolTip2 = false;

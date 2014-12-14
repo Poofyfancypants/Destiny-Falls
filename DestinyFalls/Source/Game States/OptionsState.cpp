@@ -72,7 +72,7 @@ bool OptionsState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
+	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown(0,6))
 	{
 		if( PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState() )
 		{
@@ -87,20 +87,20 @@ bool OptionsState::Input()
 		}
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
+	if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 	{
 		++m_nCursor;
 		if( m_nCursor > 5 )
 			m_nCursor = 1;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )
+	else if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 	{
 		--m_nCursor;
 		if( m_nCursor < 1 )
 			m_nCursor = 5;
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::Left ) || pInput->IsKeyPressed( SGD::Key::A ) )
+	if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 	{
 		switch( m_nCursor )
 		{
@@ -123,7 +123,7 @@ bool OptionsState::Input()
 			break;
 		}
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Right ) || pInput->IsKeyPressed( SGD::Key::D ) )
+	if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
 	{
 		switch( m_nCursor )
 		{
@@ -146,7 +146,7 @@ bool OptionsState::Input()
 			break;
 		}
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) && m_nCursor == 5 )
+	if( pInput->IsKeyPressed( SGD::Key::Enter ) && m_nCursor == 5 || pInput->IsButtonDown(0,0) && m_nCursor == 5 )
 		Game::GetInstance()->RemoveState();
 
 	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y )

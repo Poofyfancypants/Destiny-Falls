@@ -46,27 +46,27 @@ bool DeathState::Input( void )
 	{
 		m_nCursor = PauseSelections::exit;
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )
+	if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1 )
 	{
 		if( m_nCursor <= 0 )
 			m_nCursor = PauseSelections::exit;
 		else
 			m_nCursor--;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
+	else if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 	{
 		if( m_nCursor >= PauseSelections::exit )
 			m_nCursor = PauseSelections::resume;
 		else
 			m_nCursor++;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Left ) || pInput->IsKeyPressed( SGD::Key::A ) )
+	else if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 	{
 		m_nCursor -= 2;
 		if( m_nCursor < 0 )
 			m_nCursor += 4;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Right ) || pInput->IsKeyPressed( SGD::Key::D ) )
+	else if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1 )
 	{
 		m_nCursor += 2;
 		if( m_nCursor > PauseSelections::exit )

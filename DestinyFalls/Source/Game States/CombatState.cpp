@@ -336,76 +336,76 @@ void CombatState::Enter(void)
 	{
 		/*if (InventoryState::GetInstance()->m_vCompanion.size() != 0)
 		{
-			if (InventoryState::GetInstance()->m_vCompanion.size() == 2)
-			{
-				if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
-				{
-					Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
-					((Companion*)temp)->SetPosIndex(i);
+		if (InventoryState::GetInstance()->m_vCompanion.size() == 2)
+		{
+		if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
+		{
+		Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
+		((Companion*)temp)->SetPosIndex(i);
 
-					if (m_pHeroes.size() == 1)
-						temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-					else if (m_pHeroes.size() == 2)
-						temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-					m_pObjects.push_back(temp);
-					m_pHeroes.push_back(temp);
-				}
-				else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Cleric ||
-					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Mage ||
-					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Tank ||
-					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Melee)
-				{
-					Object* temp = AddCompanion(0);
-					((Companion*)temp)->SetPosIndex(i);
+		if (m_pHeroes.size() == 1)
+		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+		else if (m_pHeroes.size() == 2)
+		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+		m_pObjects.push_back(temp);
+		m_pHeroes.push_back(temp);
+		}
+		else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Cleric ||
+		InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Mage ||
+		InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Tank ||
+		InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Melee)
+		{
+		Object* temp = AddCompanion(0);
+		((Companion*)temp)->SetPosIndex(i);
 
-					if (m_pHeroes.size() == 1)
-						temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-					else if (m_pHeroes.size() == 2)
-						temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-					m_pObjects.push_back(temp);
-					m_pHeroes.push_back(temp);
-				}
-				else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Cleric ||
-					InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Mage ||
-					InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Tank ||
-					InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Melee)
-				{
+		if (m_pHeroes.size() == 1)
+		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+		else if (m_pHeroes.size() == 2)
+		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+		m_pObjects.push_back(temp);
+		m_pHeroes.push_back(temp);
+		}
+		else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Cleric ||
+		InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Mage ||
+		InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Tank ||
+		InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Melee)
+		{
 
-					Object* temp = AddCompanion(1);
-					((Companion*)temp)->SetPosIndex(i);
+		Object* temp = AddCompanion(1);
+		((Companion*)temp)->SetPosIndex(i);
 
-					if (m_pHeroes.size() == 1)
-						temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-					else if (m_pHeroes.size() == 2)
-						temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-					m_pObjects.push_back(temp);
-					m_pHeroes.push_back(temp);
-				}
-			}
-			else
-			{
-				Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
-				((Companion*)temp)->SetPosIndex(i);
+		if (m_pHeroes.size() == 1)
+		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+		else if (m_pHeroes.size() == 2)
+		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+		m_pObjects.push_back(temp);
+		m_pHeroes.push_back(temp);
+		}
+		}
+		else
+		{
+		Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
+		((Companion*)temp)->SetPosIndex(i);
 
-				if (m_pHeroes.size() == 1)
-					temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-				else if (m_pHeroes.size() == 2)
-					temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-				m_pObjects.push_back(temp);
-				m_pHeroes.push_back(temp);
-			}
+		if (m_pHeroes.size() == 1)
+		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+		else if (m_pHeroes.size() == 2)
+		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+		m_pObjects.push_back(temp);
+		m_pHeroes.push_back(temp);
+		}
 		}
 		else
 		{*/
-			Object* temp = AddCompanion(i);
-			((Companion*)temp)->SetPosIndex(i);
+		Object* temp = AddCompanion(i);
+		((Companion*)temp)->SetPosIndex(i);
 
-			if (m_pHeroes.size() == 1)
-				temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-			else if (m_pHeroes.size() == 2)
-				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-			m_pObjects.push_back(temp);
-			m_pHeroes.push_back(temp);
+		if (m_pHeroes.size() == 1)
+			temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
+		else if (m_pHeroes.size() == 2)
+			temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
+		m_pObjects.push_back(temp);
+		m_pHeroes.push_back(temp);
 		//}
 	}
 #pragma endregion
@@ -482,7 +482,7 @@ bool CombatState::Input(void)
 		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
 		Game::GetInstance()->RemoveState();
 	}
-	if (pInput->IsKeyPressed(SGD::Key::B))
+	if (pInput->IsKeyPressed(SGD::Key::B) || pInput->IsButtonDown(0, 5))
 	{
 		selected = false;
 		spellSelect = -1;
@@ -720,21 +720,7 @@ void CombatState::Render(void)
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
 	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 0, 0, 0));
 
-	//Enemy Icons
-	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
-	{
-		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
-		{
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-		}
-	}
+
 
 	SGD::Color pHcolor;
 	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
@@ -767,6 +753,41 @@ void CombatState::Render(void)
 		if (((Companion*)m_pHeroes[j])->GetHealth() > 0)
 			((Companion*)m_pHeroes[j])->CombatRender(j);
 	}
+	//Enemy Icons
+	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
+	{
+		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+		{
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		}
+	}
+	
+		if (CombatToolTip == 0)
+		{
+			pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+			pFont->Render("Other", "Tier 1 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+			pFont->Render("Other", "1 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+		}
+		if (CombatToolTip == 1)
+		{
+			pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+			pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+			pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+		}
+		if (CombatToolTip == 2)
+		{
+			pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+			pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+			pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+		}
+	
 
 	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
 		HandleTutorial();
@@ -2653,9 +2674,9 @@ bool CombatState::TakeTurn(Object* _this)
 									if (spellActive)
 									{
 										pCombat->SetAction("Choose Action");
-										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 											m_nCursor--;
-										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 											m_nCursor++;
 
 										if (m_nCursor < 0)
@@ -2695,9 +2716,9 @@ bool CombatState::TakeTurn(Object* _this)
 
 										int prevCursor = 0;
 
-										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 											m_nCursor--;
-										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 											m_nCursor++;
 
 										if (m_nCursor < 0)
@@ -2756,15 +2777,25 @@ bool CombatState::TakeTurn(Object* _this)
 											pCombat->SetAction("Choose Spell");
 
 											if (m_nCursor == 0)
+											{
 												PlayerSelection = { Spell1Rect.left, Spell1Rect.top + 50, Spell1Rect.right, Spell1Rect.bottom + 50 };
+												CombatToolTip = 0;
+											}
 											else if (m_nCursor == 1)
+											{
 												PlayerSelection = { Spell2Rect.left, Spell2Rect.top + 50, Spell2Rect.right, Spell3Rect.bottom + 50 };
-											else if (m_nCursor == 2)
-												PlayerSelection = { Spell3Rect.left, Spell3Rect.top + 50, Spell3Rect.right, Spell3Rect.bottom + 50 };
+												CombatToolTip = 1;
 
-											if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::W))
+											}
+											else if (m_nCursor == 2)
+											{
+												PlayerSelection = { Spell3Rect.left, Spell3Rect.top + 50, Spell3Rect.right, Spell3Rect.bottom + 50 };
+												CombatToolTip = 2;
+											}
+
+											if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 												m_nCursor--;
-											if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::S))
+											if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
 												m_nCursor++;
 
 											if (m_nCursor < 0)
@@ -2807,9 +2838,9 @@ bool CombatState::TakeTurn(Object* _this)
 											int prevCursor = m_nCursor;
 											PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 150, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 110, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
 
-											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 												m_nCursor--;
-											if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+											if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 												m_nCursor++;
 
 											if (m_nCursor < 0)
@@ -2881,10 +2912,10 @@ bool CombatState::TakeTurn(Object* _this)
 																			 if (!selected) //Pick an action (melee magic or armor)
 																			 {
 																				 pCombat->SetAction("Choose Action");
-																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																					 m_nCursor--;
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																				 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																					 m_nCursor++;
 
 																				 if (m_nCursor < 0)
@@ -2916,9 +2947,9 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				 int prevCursor = m_nCursor;
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																					 m_nCursor++;
-																				 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																				 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																					 m_nCursor--;
 
 																				 if (ActionSelected == CombatState::ActionType::Heal)
@@ -2983,9 +3014,9 @@ bool CombatState::TakeTurn(Object* _this)
 																			if (selected == false) //Pick an action (melee magic or armor)
 																			{
 																				pCombat->SetAction("Choose Action");
-																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																					m_nCursor--;
-																				if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																				if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																					m_nCursor++;
 
 																				if (m_nCursor < 0)
@@ -3018,9 +3049,9 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				int prevCursor = m_nCursor;
 
-																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																					m_nCursor--;
-																				if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																				if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																					m_nCursor++;
 
 																				if (m_nCursor < 0)
@@ -3068,10 +3099,10 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (spellActive)
 																			   {
 																				   pCombat->SetAction("Choose Action");
-																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																					   m_nCursor--;
 
-																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																					   m_nCursor++;
 
 																				   if (m_nCursor < 0)
@@ -3120,9 +3151,9 @@ bool CombatState::TakeTurn(Object* _this)
 																					   else if (m_nCursor == 1)
 																						   CompanionSelection = { Spell2Rect.left, Spell2Rect.top + 50, Spell2Rect.right, Spell2Rect.bottom + 50 };
 
-																					   if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::W))
+																					   if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 																						   m_nCursor--;
-																					   if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::S))
+																					   if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
 																						   m_nCursor++;
 
 																					   if (m_nCursor < 0)
@@ -3157,9 +3188,9 @@ bool CombatState::TakeTurn(Object* _this)
 
 																					   CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
-																					   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																					   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																						   m_nCursor--;
-																					   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																					   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																						   m_nCursor++;
 
 																					   if (m_nCursor < 0)
@@ -3213,9 +3244,9 @@ bool CombatState::TakeTurn(Object* _this)
 
 																				   CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
-																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																					   m_nCursor--;
-																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																					   m_nCursor++;
 
 																				   if (m_nCursor < 0)
@@ -3256,10 +3287,10 @@ bool CombatState::TakeTurn(Object* _this)
 																		   if (selected == false) //Pick an action (melee magic or armor)
 																		   {
 																			   pCombat->SetAction("Choose Action");
-																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																				   m_nCursor--;
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																			   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																				   m_nCursor++;
 
 																			   if (m_nCursor < 0)
@@ -3302,9 +3333,9 @@ bool CombatState::TakeTurn(Object* _this)
 
 																			   CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
+																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 																				   m_nCursor--;
-																			   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
+																			   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 																				   m_nCursor++;
 
 																			   if (m_nCursor < 0)

@@ -121,6 +121,11 @@ private:
 	SGD::HTexture m_hHealthPot = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hForge = SGD::INVALID_HANDLE;
 
+	SGD::HAudio bLevel1Music = SGD::INVALID_HANDLE;
+	SGD::HAudio bLevel2Music = SGD::INVALID_HANDLE;
+	SGD::HAudio bLevel3Music = SGD::INVALID_HANDLE;
+	SGD::HAudio bLevel4Music = SGD::INVALID_HANDLE;
+
 	Object* m_pPlayer = nullptr;
 	ObjectManager* m_pObjects;
 	TileManager* m_pMap;

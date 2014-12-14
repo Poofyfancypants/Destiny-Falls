@@ -160,6 +160,7 @@ private:
 	SGD::HTexture m_hButton = SGD::INVALID_HANDLE;
 	SGD::HAudio cHealingAbility = SGD::INVALID_HANDLE;
 
+	int CombatToolTip = 10;
 
 	int numPots;
 	int numRunes;

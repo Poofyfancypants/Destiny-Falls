@@ -43,18 +43,18 @@ bool PauseMenuState::Input( void )
 	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
+	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown(0,6))
 	{
 		Game::GetInstance()->RemoveState();
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) )
+	if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 	{
 		if( m_nCursor <= resume )
 			m_nCursor = exit;
 		else
 			m_nCursor--;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyDown( SGD::Key::S ) )
+	else if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 	{
 		if( m_nCursor >= exit )
 			m_nCursor = resume;
@@ -78,7 +78,7 @@ bool PauseMenuState::Input( void )
 	}
 
 
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
+	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed( SGD::Key::MouseLeft ) || pInput->IsButtonDown(0,0))
 	{
 		switch( m_nCursor )
 		{

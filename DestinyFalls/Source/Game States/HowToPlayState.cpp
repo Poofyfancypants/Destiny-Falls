@@ -22,7 +22,7 @@ void HowToPlayState::Exit()
 bool HowToPlayState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0,6))
 	{
 		Game::GetInstance()->RemoveState();
 	}

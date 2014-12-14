@@ -99,6 +99,12 @@ void GameplayState::Enter()
 	m_hInvButton = pGraphics->LoadTexture( L"resource/graphics/NewInventory.png" );
 	m_hHero = pGraphics->LoadTexture( L"resource/graphics/testhero.png" );
 	bmusic = pAudio->LoadAudio( L"resource/audio/backgroundMusic.wav" );
+	bLevel1Music = pAudio->LoadAudio(L"resource/audio/Level1Music.xwm");
+	bLevel2Music = pAudio->LoadAudio(L"resource/audio/Level2Music.xwm");
+	bLevel3Music = pAudio->LoadAudio(L"resource/audio/Level3Music.xwm");
+	bLevel4Music = pAudio->LoadAudio(L"resource/audio/Level4Music.xwm");
+
+
 	m_hSpikeTrap = pGraphics->LoadTexture( L"resource/graphics/spikeTrap.png" );
 	m_hFireTrap = pGraphics->LoadTexture( L"resource/graphics/fireTrap.png" );
 
@@ -151,6 +157,10 @@ void GameplayState::Exit()
 	}
 
 	pAudio->UnloadAudio( bmusic );
+	pAudio->UnloadAudio(bLevel1Music )  ;
+	pAudio->UnloadAudio(bLevel2Music ) ;
+	pAudio->UnloadAudio(bLevel3Music ) ;
+	pAudio->UnloadAudio(bLevel4Music ) ;
 
 	//unload images
 	pGraphics->UnloadTexture( m_hminiboss );
@@ -200,13 +210,13 @@ bool GameplayState::Input()
 	//	Game::GetInstance()->AddState( MainMenuState::GetInstance() );
 	//}
 
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) )
+	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown(0,6))
 	{
 		m_bPaused = !m_bPaused;
 		Game::GetInstance()->AddState( PauseMenuState::GetInstance() );
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::E ) || pInput->IsButtonDown( 0, 3 ) )
+	if( pInput->IsKeyPressed( SGD::Key::E ) || pInput->IsButtonDown( 0, 3 ) || pInput->IsKeyPressed(SGD::Key::MouseRight))
 	{
 		Game::GetInstance()->AddState( InventoryState::GetInstance() );
 	}
@@ -252,7 +262,6 @@ void GameplayState::Update( float elapsedTime )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
-
 
 
 	// - Update Name
@@ -323,11 +332,13 @@ void GameplayState::Update( float elapsedTime )
 		LoadNewLevel();
 	else if( m_bChangeSideLevels )
 		LoadNewSideLevel();
+
+
 }
 
 void GameplayState::Render()
 {
-
+	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	m_pMap->DrawLevel( m_ptWorldCam, m_pPlayer->GetPosition() );
@@ -402,6 +413,31 @@ void GameplayState::Render()
 		}
 		//pFont->Render("Other", m_sName.c_str(), SGD::Point(100,100), 3, SGD::Color(m_fAlpha, 0,255,0));
 	}
+
+	//switch (m_nCurrentLevel)
+	//{
+	//case GameplayState::TUTORIAL_LEVEL:
+
+	//	break;
+	//case GameplayState::EARTH_LEVEL:
+	//	pAudio->StopAudio(bmusic);
+	//	pAudio->PlayAudio(bLevel1Music, false);
+	//	break;
+	//case GameplayState::WATER_LEVEL:
+	//	pAudio->StopAudio(bLevel1Music);
+	//	pAudio->PlayAudio(bLevel2Music, false);
+	//	break;
+	//case GameplayState::AIR_LEVEL:
+	//	pAudio->StopAudio(bLevel2Music);
+	//	pAudio->PlayAudio(bLevel3Music, false);
+	//	break;
+	//case GameplayState::FIRE_LEVEL:
+	//	pAudio->StopAudio(bLevel3Music);
+	//	pAudio->PlayAudio(bLevel4Music, true);
+	//	break;
+
+	//}
+
 
 	/*if (LevelList::TUTORIAL_LEVEL == m_nCurrentLevel)
 	{
