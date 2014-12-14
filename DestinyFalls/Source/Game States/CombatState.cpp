@@ -334,6 +334,7 @@ void CombatState::Enter(void)
 
 	for (unsigned int i = 0; i < 2; i++)
 	{
+		//InventoryState::GetInstance()->m_vCompanion.resize(2);
 		if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
 		{
 			Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
@@ -346,7 +347,10 @@ void CombatState::Enter(void)
 			m_pObjects.push_back(temp);
 			m_pHeroes.push_back(temp);
 		}
-		else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() == Companion::Companion_Type::NonClass)
+		else if (InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Cleric || 
+					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Mage || 
+					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Tank || 
+					InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Melee)
 		{
 
 			Object* temp = AddCompanion(0 );
@@ -359,7 +363,10 @@ void CombatState::Enter(void)
 			m_pObjects.push_back(temp);
 			m_pHeroes.push_back(temp);
 		}
-		else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() == Companion::Companion_Type::NonClass)
+		else if (InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Cleric ||
+			InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Mage ||
+			InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Tank ||
+			InventoryState::GetInstance()->m_vCompanion[1].GetCoType() != Companion::Companion_Type::Melee)
 		{
 
 			Object* temp = AddCompanion(1);
