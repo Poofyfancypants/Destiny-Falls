@@ -443,7 +443,7 @@ void Game::LoadStrings()
 	m_StringTable[1][3] = "Rock Elemental";
 	m_StringTable[1][4] = "Plant Monster";
 	m_StringTable[1][5] = "Heavy Golem";
-	m_StringTable[1][6] = "Earth Mini Boss";
+	m_StringTable[1][6] = "Ogre";
 	//Water
 	m_StringTable[2][1] = "Minion";
 	m_StringTable[2][2] = "Ein";
@@ -463,17 +463,17 @@ void Game::LoadStrings()
 	m_StringTable[4][2] = "Behemoth";
 	m_StringTable[4][3] = "Fire Elemental";
 	m_StringTable[4][4] = "Fire Spector";
-	m_StringTable[4][5] = "Fire Baron";
-	m_StringTable[4][6] = "Fire Mini Boss";
+	m_StringTable[4][5] = "Heavy Golem";
+	m_StringTable[4][6] = "Fire Baron";
 	//Level Bosses/Final Boss
 
-	m_StringTable[5][1] = "Earth Boss";
-	m_StringTable[5][2] = "Water Boss";
-	m_StringTable[5][3] = "Air Boss";
-	m_StringTable[5][4] = "Fire Boss";
+	m_StringTable[5][1] = "Tremor";
+	m_StringTable[5][2] = "Midgard Serpent";
+	m_StringTable[5][3] = "Sound Giant";
+	m_StringTable[5][4] = "Fire Giant Hel";
+	m_StringTable[5][5] = "Sigurd the Immortal";
 
 	//inventory
-
 	m_StringTable[6][5] = "Tier1:";
 	m_StringTable[6][6] = "Tier2:";
 	m_StringTable[6][7] = "Tier3:";
@@ -481,9 +481,6 @@ void Game::LoadStrings()
 	m_StringTable[6][9] = "Healer:";
 	m_StringTable[6][10] = "Fighter:";
 	m_StringTable[6][11] = "Mage:";
-
-
-
 
 	// - Tutorial Strings
 
