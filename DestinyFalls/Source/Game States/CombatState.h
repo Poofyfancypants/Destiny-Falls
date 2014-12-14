@@ -85,7 +85,7 @@ private:
 	int m_nQTLength = 3;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
-	SGD::Rectangle ActionRect = { 200, 10, 600, 50 };
+	SGD::Rectangle ActionRect = { 100, 10, 700, 50 };
 
 	SGD::Rectangle Spell1Rect = { 215, 420, 300, 440 };
 	SGD::Rectangle Spell2Rect = { 345, 420, 430, 440 };
@@ -124,7 +124,7 @@ private:
 
 	bool entered = false;
 
-	string ActionMessage;
+	string ActionMessage = " ";
 	float ActionTimer = 0.0f; //Reset the action string to null after time, update turn order
 
 	float PlayerTimer = 0.0f;

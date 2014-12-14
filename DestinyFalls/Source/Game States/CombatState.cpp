@@ -650,11 +650,11 @@ void CombatState::Render(void)
 	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	InventoryState* pInventory = InventoryState::GetInstance();
 
-	//	pGraphics->DrawTexture(Game::GetInstance()->m_hEarth1, SGD::Point(0, 0), {}, {}, {}, { 2.0f, 2.0f });
-
+	float width = Game::GetInstance()->GetScreenWidth();
+	int len = ActionMessage.length();
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
-	pGraphics->DrawString(ActionMessage.c_str(), SGD::Point{ ActionRect.left, ActionRect.top + 5 }, SGD::Color(255, 180, 180, 0));
+	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 0, 0, 0));
 
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
@@ -1358,9 +1358,9 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	case 3: //Level Bosses
 	{
 				if (m_pEnemies.size() == 0)
-					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
-				else if (m_pEnemies.size() == 1)
 					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
+				else if (m_pEnemies.size() == 1)
+					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
 				else if (m_pEnemies.size() == 2)
 					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
 
@@ -1782,8 +1782,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-
-			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + (m_nNumQtCorrect / m_nQTLength)) * 15));
+			
+			Total = (int)((((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + ((m_nNumQtCorrect *  (((Minion*)_To)->GetMods().DamageLevel - 1)) / m_nQTLength)) * 10) + 15));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			m_nNumQtCorrect = 0;
 
@@ -1819,7 +1819,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 		if (localBlock == false)
 		{
-			Total = rand() % (10 * ((Minion*)_From)->GetMods().DamageLevel) + ((Minion*)_From)->GetMods().DamageLevel;
+			Total = rand() % (15 * ((Minion*)_From)->GetMods().DamageLevel) + ((Minion*)_From)->GetMods().DamageLevel;
 
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
@@ -3700,25 +3700,26 @@ void CombatState::HandleTutorial()
 }
 void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 {
-	switch (GameplayState::GetInstance()->GetCurrentLevel())
+	switch( GameplayState::GetInstance()->GetCurrentLevel() )
 	{
-	case 1:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.4f });
+		case 1:
+			SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hEarth1 , { _shakeRect.left , _shakeRect.top } , { 0.0f , 300.0f , 800.0f , 1100.0f } , 0.0f ,
+			{ }, { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
 		break;
 	case 2:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 1.0f, 1.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hAir2 , { _shakeRect.left , _shakeRect.top } , { 700.0f , 200.0f , 1500.0f , 800.0f }, 0.0f , { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );		
 		break;
 	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.3f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {100.0f, 100.0f, 900.0f, 700.0f}, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hFinal1 , { _shakeRect.left , _shakeRect.top } , { 300.0f , 100.0f , 1100.0f , 700.0f } ,0.0f, { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
 		break;
 	default:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.5f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, {0.0f, 300.0f, 800.0f, 900.0f },0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	}
 }

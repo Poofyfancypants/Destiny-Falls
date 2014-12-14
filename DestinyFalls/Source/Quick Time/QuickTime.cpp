@@ -18,12 +18,12 @@ QuickTime::QuickTime()
 	if( SGD::InputManager::GetInstance()->IsControllerConnected( 0 ) || SGD::InputManager::GetInstance()->IsControllerConnected( 1 ) )
 	{
 		//push back buttons into the key vector
-		m_vKeys.push_back( SGD::Key::Zero );
-		m_vKeys.push_back( SGD::Key::One );
-		m_vKeys.push_back( SGD::Key::Two );
-		m_vKeys.push_back( SGD::Key::Three );
-		m_vKeys.push_back( SGD::Key::Four );
-		m_vKeys.push_back( SGD::Key::Five );
+		m_vKeys.push_back( SGD::Key::Zero	);
+		m_vKeys.push_back( SGD::Key::One	);
+		m_vKeys.push_back( SGD::Key::Two	);
+		m_vKeys.push_back( SGD::Key::Three	);
+		m_vKeys.push_back( SGD::Key::Four	);
+		m_vKeys.push_back( SGD::Key::Five	);
 	}
 	else
 	{
@@ -408,7 +408,7 @@ void QuickTime::ChangeRenderSet( int set )
 	m_sRenderOutput.clear();
 
 	
-	for( unsigned int i = ( set * 3 ); i < (( set * 3 )+3); i++ )
+	for( int i = ( set * 3 ); i < (( set * 3 )+3); i++ )
 	{
 		m_sRenderOutput += " ";
 		m_sRenderOutput += m_sOutput[ i ];

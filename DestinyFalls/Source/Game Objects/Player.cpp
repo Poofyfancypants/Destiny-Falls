@@ -198,7 +198,7 @@ void Player::Render( void )
 
 	if( m_bPlayCombatAnimation )
 	{
-		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), playerRect.right, playerRect.bottom );
+		m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)playerRect.right, (int)playerRect.bottom);
 	}
 	else
 	{
@@ -380,7 +380,7 @@ void Player::HandleCollision( const iObject* pOther )
 			switch( ( (Chest*)pOther )->GetTier() )
 			{
 			case 1:
-				for( size_t i = 0; i < ( (Chest*)pOther )->GetNumRunes(); i++ )
+				for( int i = 0; i < ( (Chest*)pOther )->GetNumRunes(); i++ )
 				{
 					Runes tempRune;
 					tempRune.SetElement( (Elements)( rand() % 4 ) );
@@ -389,7 +389,7 @@ void Player::HandleCollision( const iObject* pOther )
 				}
 				break;
 			case 2:
-				for( size_t i = 0; i < ( (Chest*)pOther )->GetNumRunes(); i++ )
+				for( int i = 0; i < ( (Chest*)pOther )->GetNumRunes(); i++ )
 				{
 					Runes tempRune;
 					tempRune.SetElement( (Elements)( rand() % 4 ) );
@@ -398,7 +398,7 @@ void Player::HandleCollision( const iObject* pOther )
 				}
 				break;
 			case 3:
-				for( size_t i = 0; i < ( (Chest*)pOther )->GetNumRunes(); i++ )
+				for( int i = 0; i < ( (Chest*)pOther )->GetNumRunes(); i++ )
 				{
 					Runes tempRune;
 					tempRune.SetElement( (Elements)( rand() % 4 ) );
