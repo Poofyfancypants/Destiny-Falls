@@ -6,11 +6,11 @@
 #include <fstream>
 #include <string>
 
-class SaveState :
+class LoadState :
 	public IGameState
 {
 public:
-	static SaveState* GetInstance( void );
+	static LoadState* GetInstance( void );
 
 	virtual void Enter( void )				override;
 	virtual void Exit( void )					override;
@@ -18,29 +18,27 @@ public:
 	virtual void Update( float elapsedTime )	override;
 	virtual void Render( void )				override;
 private:
-	SaveState() = default;
-	virtual ~SaveState() = default;
+	LoadState() = default;
+	virtual ~LoadState() = default;
 
-	SaveState( const SaveState& ) = delete;
-	SaveState& operator=( const SaveState& ) = delete;
+	LoadState( const LoadState& ) = delete;
+	LoadState& operator=( const LoadState& ) = delete;
 
-	int m_nRenameCursor = 0;
 	int m_nCursor = 0;
 	bool m_bSelect = false;
-	bool m_bGetKey = false;
-	bool m_bRename = false;
-	void Save();
-	void Save2();
-	void Save3();
+
 
 	void SlotName();
 	void LoadNames();
-
+	void Load( std::string path );
+	void Load2( std::string path );
+	void Load3( std::string path );
 
 	std::string m_sSlot1Name = "slot1";
 	std::string m_sSlot2Name = "slot2";
 	std::string m_sSlot3Name = "slot3";
 
+	SGD::Rectangle newRect = { 280, 130, 530, 180 };
 	SGD::Rectangle saveslot1 = { 20, 300, 270, 350 };
 	SGD::Rectangle saveslot2 = { 525, 300, 775, 350 };
 	SGD::Rectangle saveslot3 = { 285, 470, 535, 520 };

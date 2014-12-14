@@ -4,6 +4,7 @@
 #include "OptionsState.h"
 #include "CreditState.h"
 #include "HowToPlayState.h"
+#include "LoadState.h"
 #include "SaveState.h"
 #include "../Managers/ParticleManager.h"
 #include "../Managers/TileManager.h"
@@ -55,7 +56,9 @@ void MainMenuState::Enter()
 	m_hBackground = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/1411_Turn5_MenuBackground.png" );
 	m_hPlay = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuPlay.png" );
 	m_hLogo = pGraphics->LoadTexture( "resource/graphics/1411_Turn5_logo.png" );
+	m_hButton = pGraphics->LoadTexture( "resource/graphics/optionsButton.png" );
 	FadeInMenu();
+	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
 	m_hOptions = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuOptions.png" );
 	m_hCredit = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuCredit.png" );
 	m_hTutorial = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/menuTutorial.png" );
@@ -69,6 +72,8 @@ void MainMenuState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hOptions );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hLogo );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hButton );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hButtonHighlighted );
 	SGD::AudioManager::GetInstance()->UnloadAudio( m_hMusic );
 }
 
@@ -132,8 +137,9 @@ bool MainMenuState::Input()
 		switch( m_nCursor )
 		{
 		case MenuSelections::play:
-			Game::GetInstance()->AddState( GameplayState::GetInstance() );
-			pAudio->StopAudio( Game::GetInstance()->GetAudio() );
+			Game::GetInstance()->AddState(LoadState::GetInstance());
+			//Game::GetInstance()->AddState( GameplayState::GetInstance() );
+			//pAudio->StopAudio( Game::GetInstance()->GetAudio() );
 			break;
 		case MenuSelections::options:
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
@@ -165,6 +171,8 @@ bool MainMenuState::Input()
 			m_nCursor = howToPlay;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( creditRect ) )
 			m_nCursor = credits;
+		else if( pInput->GetCursorPosition().IsPointInRectangle( exitRect ) )
+			m_nCursor = exit;
 		else
 			m_nCursor = -1;
 	}
@@ -176,7 +184,6 @@ bool MainMenuState::Input()
 
 void MainMenuState::Update( float elapsedTime )
 {
-
 	return;
 
 }
@@ -184,7 +191,7 @@ void MainMenuState::Update( float elapsedTime )
 void MainMenuState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-
+	BitmapFontManager* pFont = BitmapFontManager::GetInstance();
 	if( m_bDebug )
 	{
 		//SGD::OStringStream numEnt;
@@ -199,20 +206,12 @@ void MainMenuState::Render()
 
 	pGraphics->SetClearColor( { 64, 47, 25 } );
 	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
-	//pGraphics->SetClearColor( { 148, 99, 50 } );
 
 	pGraphics->DrawTexture( m_hBackground, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+	pGraphics->DrawTexture( m_hButton, SGD::Point( 630, 530 ), {}, {}, {}, { .5f, 1 } );
+	pFont->Render( "Other", "Exit", SGD::Point( 655, 545 ), 1, SGD::Color( 0, 0, 0 ) );
 
 	BitmapFontManager * pFonts = pFonts->GetInstance();
-
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 1 ).c_str(), { PlayGame.left, PlayGame.top }, 1, { 255, 225, 255, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 2 ).c_str(), { LoadGame.left, LoadGame.top }, 1, { 255, 225, 255, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { Options.left, Options.top }, 1, { 255, 225, 255, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 4 ).c_str(), { HowToPlay.left, HowToPlay.top }, 1, { 255, 225, 255, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 5 ).c_str(), { Credit.left, Credit.top }, 1, { 255, 225, 255, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { ExitGame.left, ExitGame.top }, 1, { 255, 225, 255, 255 } );
-
-	//pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );
 
 	switch( m_nCursor )
 	{
@@ -229,11 +228,14 @@ void MainMenuState::Render()
 		pGraphics->DrawTexture( m_hCredit, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
 		break;
 	case MainMenuState::exit:
+		pGraphics->DrawTexture( m_hButtonHighlighted, SGD::Point( 630, 530 ), {}, {}, {}, { .5f, 1 } );
+		pFont->Render( "Other", "Exit", SGD::Point( 655, 545 ), 1, SGD::Color( 0, 0, 0 ) );
 		break;
 	default:
 		break;
 	}
 	pGraphics->DrawTexture( m_hLogo, { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+
 
 }
 void MainMenuState::FadeInMenu()

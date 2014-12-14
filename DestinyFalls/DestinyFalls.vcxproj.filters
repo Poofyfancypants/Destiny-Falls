@@ -256,6 +256,9 @@
     <ClInclude Include="Source\Game States\SaveState.h">
       <Filter>GameStates</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Game States\LoadState.h">
+      <Filter>GameStates</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SGD Wrappers\SGD_AudioManager.cpp">
@@ -446,6 +449,9 @@
       <Filter>GameStates</Filter>
     </ClCompile>
     <ClCompile Include="Source\Game States\SaveState.cpp">
+      <Filter>GameStates</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Game States\LoadState.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
