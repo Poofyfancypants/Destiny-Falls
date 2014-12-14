@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<level 3>
+    <player_info Health="1" PosX="803.500000" PosY="473.000000" CurrLevel="2">
+        <Sword Element="4" Tier="0" />
+        <Sword Element="4" Tier="0" />
+        <Sword Element="4" Tier="0" />
+        <Armor Element="4" Tier="0" />
+        <Armor Element="4" Tier="0" />
+        <Armor Element="4" Tier="0" />
+        <Ring Element="4" Tier="0" />
+        <Ring Element="4" Tier="0" />
+        <Ring Element="4" Tier="0" />
+        <Inventory Size="0" />
+    </player_info>
+</level 3>

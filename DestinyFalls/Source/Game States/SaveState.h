@@ -35,9 +35,7 @@ private:
 
 	void SlotName();
 	void LoadNames();
-	void Load( std::string path );
-	void Load2( std::string path );
-	void Load3( std::string path );
+
 
 	std::string m_sSlot1Name = "slot1";
 	std::string m_sSlot2Name = "slot2";

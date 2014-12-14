@@ -4,6 +4,7 @@
 #include "OptionsState.h"
 #include "CreditState.h"
 #include "HowToPlayState.h"
+#include "LoadState.h"
 #include "SaveState.h"
 #include "../Managers/ParticleManager.h"
 #include "../Managers/TileManager.h"
@@ -136,8 +137,9 @@ bool MainMenuState::Input()
 		switch( m_nCursor )
 		{
 		case MenuSelections::play:
-			Game::GetInstance()->AddState( GameplayState::GetInstance() );
-			pAudio->StopAudio( Game::GetInstance()->GetAudio() );
+			Game::GetInstance()->AddState(LoadState::GetInstance());
+			//Game::GetInstance()->AddState( GameplayState::GetInstance() );
+			//pAudio->StopAudio( Game::GetInstance()->GetAudio() );
 			break;
 		case MenuSelections::options:
 			Game::GetInstance()->AddState( OptionsState::GetInstance() );
@@ -182,7 +184,6 @@ bool MainMenuState::Input()
 
 void MainMenuState::Update( float elapsedTime )
 {
-	//Game::GetInstance()->AddState(SaveState::GetInstance());
 	return;
 
 }
