@@ -29,6 +29,8 @@ void SaveState::Enter()
 	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
 	m_hNameFrame = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/saveScroll.png" );
 
+	m_bGetKey = false;
+	m_bRename = false;
 	LoadNames();
 }
 
@@ -41,6 +43,8 @@ void SaveState::Exit()
 	pGraphics->UnloadTexture( m_hButtonHighlighted );
 	pGraphics->UnloadTexture( m_hBackground );
 	pGraphics->UnloadTexture( m_hNameFrame );
+	m_bGetKey = false;
+	m_bRename = false;
 	SlotName();
 }
 
@@ -85,12 +89,15 @@ bool SaveState::Input()
 				{
 				case 0:
 					Save();
+					Game::GetInstance()->RemoveState();
 					break;
 				case 1:
 					Save2();
+					Game::GetInstance()->RemoveState();
 					break;
 				case 2:
 					Save3();
+					Game::GetInstance()->RemoveState();
 					break;
 				}
 			}
@@ -131,6 +138,21 @@ bool SaveState::Input()
 			if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 			{
 				m_bGetKey = false;
+				switch( m_nCursor )
+				{
+				case 0:
+					Save();
+					Game::GetInstance()->RemoveState();
+					break;
+				case 1:
+					Save2();
+					Game::GetInstance()->RemoveState();
+					break;
+				case 2:
+					Save3();
+					Game::GetInstance()->RemoveState();
+					break;
+				}
 			}
 		}
 	}
