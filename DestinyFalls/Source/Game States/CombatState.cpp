@@ -648,7 +648,7 @@ void CombatState::Render(void)
 	InventoryState* pInventory = InventoryState::GetInstance();
 
 	float width = Game::GetInstance()->GetScreenWidth();
-	float len = ActionMessage.length();
+	int len = ActionMessage.length();
 	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
 	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 0, 0, 0));

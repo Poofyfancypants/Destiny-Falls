@@ -78,13 +78,13 @@ void Companion::CombatRender(int _posIndex)
 		pGraphics->DrawRectangle(Companion1HB, m_HealthColor);
 		if (m_pAnimator->GetInstance()->CheckSize())
 		{
-			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Companion1rect.right, Companion1rect.bottom);
+			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion1rect.right, (int)Companion1rect.bottom);
 		}
 		else if( GetDeathAnimationTimer() > 0.0f )
 		{
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion1rect.right , Companion1rect.bottom );
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion1rect.right, (int)Companion1rect.bottom);
 			}
 		}
 		break;
@@ -92,13 +92,13 @@ void Companion::CombatRender(int _posIndex)
 		pGraphics->DrawRectangle(Companion2HB, m_HealthColor);
 		if (m_pAnimator->GetInstance()->CheckSize())
 		{
-			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Companion2rect.right, Companion2rect.bottom);
+			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion2rect.right, (int)Companion2rect.bottom);
 		}
 		else if( GetDeathAnimationTimer() > 0.0f )
 		{
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Companion2rect.right , Companion2rect.bottom );
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion2rect.right, (int)Companion2rect.bottom);
 			}
 		}
 		break;

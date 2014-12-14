@@ -79,14 +79,14 @@ void Minion::Render(int _posIndex)
 			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
-				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy2rect.right, Enemy2rect.bottom);
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy2rect.right, (int)Enemy2rect.bottom);
 			}
 		}
 		else if( GetDeathAnimationTimer() > 0.0f )		
 		{
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy2rect.right , Enemy2rect.bottom );
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy2rect.right, (int)Enemy2rect.bottom);
 			}
 		}
 		break;
@@ -97,7 +97,7 @@ void Minion::Render(int _posIndex)
 			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
-				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy1rect.right, Enemy1rect.bottom);
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy1rect.right, (int)Enemy1rect.bottom);
 			}
 
 		}
@@ -105,7 +105,7 @@ void Minion::Render(int _posIndex)
 		{
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy1rect.right , Enemy1rect.bottom );
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy1rect.right, (int)Enemy1rect.bottom);
 			}
 		}
 		break;
@@ -116,14 +116,14 @@ void Minion::Render(int _posIndex)
 			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 255 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
-				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), Enemy3rect.right, Enemy3rect.bottom);
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy3rect.right, (int)Enemy3rect.bottom);
 			}
 		}
 		else if( GetDeathAnimationTimer() > 0.0f )
 		{
 			if( m_pAnimator->GetInstance()->CheckSize() )
 			{
-				m_pAnimator->GetInstance()->Render( *this->GetTimeStamp() , Enemy3rect.right , Enemy3rect.bottom );
+				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy3rect.right, (int)Enemy3rect.bottom);
 			}
 		}
 		break;

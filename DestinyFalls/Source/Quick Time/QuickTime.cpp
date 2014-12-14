@@ -408,7 +408,7 @@ void QuickTime::ChangeRenderSet( int set )
 	m_sRenderOutput.clear();
 
 	
-	for( unsigned int i = ( set * 3 ); i < (( set * 3 )+3); i++ )
+	for( int i = ( set * 3 ); i < (( set * 3 )+3); i++ )
 	{
 		m_sRenderOutput += " ";
 		m_sRenderOutput += m_sOutput[ i ];

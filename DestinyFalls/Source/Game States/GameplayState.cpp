@@ -297,14 +297,11 @@ void GameplayState::Update( float elapsedTime )
 
 	if( m_bScreenShake )
 	{
-		int randY = 0;
-		int randX = 0;
+		float randY = 0;
+		float randX = 0;
 
-		randX = rand() % 6 - 3;
-		randY = rand() % 6 - 3;
-
-		randX = (float)randX;
-		randY = (float)randY;
+		randX = (float)(rand() % 6 - 3);
+		randY = (float)(rand() % 6 - 3);
 
 		if( m_fShakeTimer <= 0.0f )
 		{
@@ -619,8 +616,8 @@ void GameplayState::LoadNewLevel()
 		{
 		case GameplayState::TUTORIAL_LEVEL:
 			UnloadAndCreate();
-			//m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
-			m_pMap->LoadLevel( "resource/XML/Balencingtestmap.xml" );
+			m_pMap->LoadLevel( "resource/XML/TutorialStage.xml" );
+			//m_pMap->LoadLevel( "resource/XML/Balencingtestmap.xml" );
 			/*Balencingtestmap.xml*/
 			if( m_bSetSidePosition )
 				m_pPlayer->SetPosition( m_pMap->GetPrevPosition() );

@@ -167,8 +167,8 @@ bool OptionsState::Input()
 
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
 	{
-		SGD::Rectangle LeftArrow = SGD::Rectangle{ SGD::Point( 440, 110 * m_nCursor ), SGD::Size( 60, 60 ) };
-		SGD::Rectangle RightArrow = SGD::Rectangle( SGD::Point( 650, 110 * m_nCursor ), SGD::Size( 60, 60 ) );
+		SGD::Rectangle LeftArrow = SGD::Rectangle{ SGD::Point( 440, 110 * (float)m_nCursor ), SGD::Size( 60, 60 ) };
+		SGD::Rectangle RightArrow = SGD::Rectangle(SGD::Point(650, 110 * (float)m_nCursor), SGD::Size(60, 60));
 		if( pInput->GetCursorPosition().IsPointInRectangle( LeftArrow ) )
 		{
 			switch( m_nCursor )

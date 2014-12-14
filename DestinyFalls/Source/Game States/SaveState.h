@@ -4,6 +4,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 #include "../../SGD Wrappers/SGD_Geometry.h"
 #include <fstream>
+#include <string>
 
 class SaveState :
 	public IGameState
@@ -31,9 +32,11 @@ private:
 	void Save2();
 	void Save3();
 
-	void Load();
-	void Load2();
-	void Load3();
+	void SlotName();
+
+	void Load(std::string path);
+	void Load2(std::string path);
+	void Load3(std::string path);
 
 	std::string m_sSlot1Name = "slot1";
 	std::string m_sSlot2Name = "slot2";
