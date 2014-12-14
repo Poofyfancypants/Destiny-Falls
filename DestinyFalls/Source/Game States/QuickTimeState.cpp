@@ -33,11 +33,51 @@ bool QuickTimeState::Input()
 		Game::GetInstance()->RemoveState();
 	}
 
-	if( currentQT != nullptr )
+	if( SGD::InputManager::GetInstance()->IsControllerConnected( 0 ) || SGD::InputManager::GetInstance()->IsControllerConnected( 1 ) )
 	{
-		currentQT->m_kLastKeyPressed = pInput->GetAnyKeyPressed();
-	}
+		if( currentQT != nullptr )
+		{
+			if( pInput->IsButtonDown( 0 , 0 ) )
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::Zero;
+			}
+			else if( pInput->IsButtonDown( 0 , 1 ) )
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::One;
 
+			}
+			else if( pInput->IsButtonDown( 0 , 2 ) )
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::Two;
+
+			}
+			else if( pInput->IsButtonDown( 0 , 3 ) )
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::Three;
+
+			}
+			else if( pInput->IsButtonDown( 0 , 4 ) )
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::Four;
+
+			}
+			else if( pInput->IsButtonDown( 0 , 5 ) )
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::Five;
+			}
+			else
+			{
+				currentQT->m_kLastKeyPressed = SGD::Key::None;
+			}
+		}
+	}
+	else
+	{
+		if( currentQT != nullptr )
+		{
+			currentQT->m_kLastKeyPressed = pInput->GetAnyKeyPressed();
+		}
+	}
 
 	return true;
 }

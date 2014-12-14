@@ -3506,16 +3506,16 @@ void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 1.0f, 1.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hAir2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hAir2 , { _shakeRect.left , _shakeRect.top } , { 700.0f , 200.0f , 1500.0f , 800.0f }, 0.0f , { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );		
 		break;
 	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.3f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {100.0f, 100.0f, 900.0f, 700.0f}, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hFinal1, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.2f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hFinal1 , { _shakeRect.left , _shakeRect.top } , { 300.0f , 100.0f , 1100.0f , 700.0f } ,0.0f, { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
 		break;
 	default:
-		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 2.0f, 2.5f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, {0.0f, 300.0f, 800.0f, 900.0f },0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	}
 }
