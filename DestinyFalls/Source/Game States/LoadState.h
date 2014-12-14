@@ -6,11 +6,11 @@
 #include <fstream>
 #include <string>
 
-class SaveState :
+class LoadState :
 	public IGameState
 {
 public:
-	static SaveState* GetInstance( void );
+	static LoadState* GetInstance( void );
 
 	virtual void Enter( void )				override;
 	virtual void Exit( void )					override;
@@ -18,11 +18,11 @@ public:
 	virtual void Update( float elapsedTime )	override;
 	virtual void Render( void )				override;
 private:
-	SaveState() = default;
-	virtual ~SaveState() = default;
+	LoadState() = default;
+	virtual ~LoadState() = default;
 
-	SaveState( const SaveState& ) = delete;
-	SaveState& operator=( const SaveState& ) = delete;
+	LoadState( const LoadState& ) = delete;
+	LoadState& operator=( const LoadState& ) = delete;
 
 	int m_nRenameCursor = 0;
 	int m_nCursor = 0;

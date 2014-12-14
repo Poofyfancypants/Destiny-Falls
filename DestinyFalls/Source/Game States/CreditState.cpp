@@ -46,7 +46,9 @@ void CreditState::Exit()
 {
 	m_particle.Exit();
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
+	m_vCredits.clear();
 }
+
 
 bool CreditState::Input()
 {

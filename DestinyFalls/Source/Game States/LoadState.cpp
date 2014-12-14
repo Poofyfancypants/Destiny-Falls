@@ -1,5 +1,5 @@
 #include "stdafx.h"
-#include "SaveState.h"
+#include "LoadState.h"
 #include "MainMenuState.h"
 #include "PauseMenuState.h"
 #include "../Game Core/Game.h"
@@ -15,13 +15,13 @@
 #include "../TinyXML/tinyxml.h"
 
 
-SaveState* SaveState::GetInstance()
+LoadState* LoadState::GetInstance()
 {
-	static SaveState s_Instance;
+	static LoadState s_Instance;
 	return &s_Instance;
 }
 
-void SaveState::Enter()
+void LoadState::Enter()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	m_hBackground = pGraphics->LoadTexture( L"resource/graphics/MenuBackgrounds/Options.png" );
@@ -32,7 +32,7 @@ void SaveState::Enter()
 	LoadNames();
 }
 
-void SaveState::Exit()
+void LoadState::Exit()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
@@ -44,7 +44,7 @@ void SaveState::Exit()
 	SlotName();
 }
 
-bool SaveState::Input()
+bool LoadState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
@@ -195,12 +195,12 @@ bool SaveState::Input()
 	return true;
 }
 
-void SaveState::Update( float elapsedTime )
+void LoadState::Update( float elapsedTime )
 {
 	return;
 }
 
-void SaveState::Render()
+void LoadState::Render()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	BitmapFontManager* pFont = pFont->GetInstance();
@@ -285,7 +285,7 @@ void SaveState::Render()
 
 }
 
-void SaveState::SlotName()
+void LoadState::SlotName()
 {
 	fstream fout;
 	fout.open( "resource/Save/Names.txt", ios_base::out | ios_base::binary );
@@ -308,7 +308,7 @@ void SaveState::SlotName()
 
 }
 
-void SaveState::LoadNames()
+void LoadState::LoadNames()
 {
 	fstream fin;
 	fin.open( "resource/Save/Names.txt", ios_base::in | ios_base::binary );
@@ -336,7 +336,7 @@ void SaveState::LoadNames()
 	}
 }
 
-void SaveState::Save()
+void LoadState::Save()
 {
 	int health = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
 	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
@@ -410,7 +410,7 @@ void SaveState::Save()
 
 }
 
-void SaveState::Save2()
+void LoadState::Save2()
 {
 	int health = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
 	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
@@ -484,7 +484,7 @@ void SaveState::Save2()
 
 }
 
-void SaveState::Save3()
+void LoadState::Save3()
 {
 	int health = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
 	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
@@ -556,7 +556,7 @@ void SaveState::Save3()
 	doc.SaveFile( "resource/Save/Save3.xml" );
 }
 
-void SaveState::Load( string path )
+void LoadState::Load( string path )
 {
 	int health, currLevel;
 	//, size;
@@ -708,7 +708,7 @@ void SaveState::Load( string path )
 
 }
 
-void SaveState::Load2( string path )
+void LoadState::Load2( string path )
 {
 	/*fstream fin;
 	fin.open("resource/Save/Save2.txt", ios_base::in | ios_base::binary);
@@ -885,7 +885,7 @@ void SaveState::Load2( string path )
 
 }
 
-void SaveState::Load3( string path )
+void LoadState::Load3( string path )
 {
 	//fstream fin;
 	//fin.open("resource/Save/Save3.txt", ios_base::in | ios_base::binary);

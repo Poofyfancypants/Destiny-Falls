@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Save1>
-    <player_info Health="100" PosX="661.750000" PosY="270.250000" CurrLevel="0">
-        <Sword Element="2" Tier="2" />
-        <Sword Element="2" Tier="2" />
-        <Sword Element="2" Tier="2" />
-        <Armor Element="2" Tier="1" />
-        <Armor Element="2" Tier="1" />
-        <Armor Element="2" Tier="1" />
-        <Ring Element="2" Tier="3" />
-        <Ring Element="2" Tier="3" />
-        <Ring Element="2" Tier="3" />
+    <player_info Health="100" PosX="96.000000" PosY="64.000000" CurrLevel="0">
+        <Sword Element="4" Tier="0" />
+        <Sword Element="4" Tier="0" />
+        <Sword Element="4" Tier="0" />
+        <Armor Element="4" Tier="0" />
+        <Armor Element="4" Tier="0" />
+        <Armor Element="4" Tier="0" />
+        <Ring Element="4" Tier="0" />
+        <Ring Element="4" Tier="0" />
+        <Ring Element="4" Tier="0" />
         <Inventory Size="0" />
     </player_info>
 </Save1>
