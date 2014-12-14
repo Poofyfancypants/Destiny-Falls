@@ -337,11 +337,6 @@ void Player::TakeInput()
 			UpdateDialog();
 		}
 	}
-
-	if( pInput->IsKeyPressed(SGD::Key::X) )
-	{
-		m_nHealth = 1;
-	}
 }
 
 SGD::Rectangle Player::GetRect( void ) const
