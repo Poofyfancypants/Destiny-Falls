@@ -334,7 +334,7 @@ void CombatState::Enter(void)
 
 	for (unsigned int i = 0; i < 2; i++)
 	{
-		if (InventoryState::GetInstance()->m_vCompanion.size() != 0)
+		/*if (InventoryState::GetInstance()->m_vCompanion.size() != 0)
 		{
 			if (InventoryState::GetInstance()->m_vCompanion.size() == 2)
 			{
@@ -396,7 +396,7 @@ void CombatState::Enter(void)
 			}
 		}
 		else
-		{
+		{*/
 			Object* temp = AddCompanion(i);
 			((Companion*)temp)->SetPosIndex(i);
 
@@ -406,7 +406,7 @@ void CombatState::Enter(void)
 				temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
 			m_pObjects.push_back(temp);
 			m_pHeroes.push_back(temp);
-		}
+		//}
 	}
 #pragma endregion
 
