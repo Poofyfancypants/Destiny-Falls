@@ -336,7 +336,6 @@ void CombatState::Enter(void)
 	{
 		if (InventoryState::GetInstance()->m_vCompanion.size() != 0)
 		{
-
 			if (InventoryState::GetInstance()->m_vCompanion[i].GetCoType() != Companion::Companion_Type::NonClass)
 			{
 				Object* temp = AddCompanion(InventoryState::GetInstance()->m_vCompanion[i].GetCoType());
@@ -354,7 +353,6 @@ void CombatState::Enter(void)
 				InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Tank ||
 				InventoryState::GetInstance()->m_vCompanion[0].GetCoType() != Companion::Companion_Type::Melee)
 			{
-
 				Object* temp = AddCompanion(0);
 				((Companion*)temp)->SetPosIndex(i);
 
@@ -787,12 +785,13 @@ void CombatState::Render(void)
 											   if (ActionTimer <= 0)
 											   if (!selected)
 											   {
-												   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
+												   pFont->Render("Other", "Melee", SGD::Point{ 250, 420 }, 1, SGD::Color(255, 255, 0, 0));
 
 												   if (spellActive)
-													   pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
+													   pFont->Render("Other", "Magic", SGD::Point{ 250, 470 }, 1, SGD::Color(255, 0, 255, 0));
 												   else
-													   pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
+													   pFont->Render("Other", "Magic", SGD::Point{ 250, 470 }, 1, SGD::Color(150, 0, 255, 0));
+
 
 												   if (PlayerSelection.left < PlayerSelection.right)
 													   pGraphics->DrawRectangle(PlayerSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
@@ -1023,11 +1022,8 @@ void CombatState::Render(void)
 													  {
 																				if (!selected) //Pick an action (melee magic or armor)
 																				{
-																					pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
-																					if (false) //cooldown
-																						pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
-																					else
-																						pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
+																					pFont->Render("Other", "Melee", SGD::Point{ 250, 420 }, 1, SGD::Color(255, 255, 0, 0));
+																					pFont->Render("Other", "Heal", SGD::Point{ 250, 470 }, 1, SGD::Color(255, 0, 0, 255));
 																				}
 																				if (CompanionSelection.left < CompanionSelection.right)
 																					pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
@@ -1037,11 +1033,8 @@ void CombatState::Render(void)
 													  {
 																			   if (selected == false) //Pick an action (melee magic or armor)
 																			   {
-																				   pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
-																				   if (false)
-																					   pGraphics->DrawString("Fury", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 0, 255)); //AOE attack
-																				   else
-																					   pGraphics->DrawString("Fury", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 0, 255));
+																				   pFont->Render("Other", "Melee", SGD::Point{ 250, 420 }, 1, SGD::Color(255, 255, 0, 0));
+																				   pFont->Render("Other", "Fury", SGD::Point{ 250, 470 }, 1, SGD::Color(255, 0, 0, 255));
 																			   }
 																			   if (CompanionSelection.left < CompanionSelection.right)
 																				   pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
@@ -1052,8 +1045,8 @@ void CombatState::Render(void)
 													  {
 																			  if (selected == false) //Pick an action (melee magic or armor)
 																			  {
-																				  pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
-																				  pGraphics->DrawString("Magic", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 100, 200));
+																				  pFont->Render("Other", "Melee", SGD::Point{ 250, 420 }, 1, SGD::Color(255, 255, 0, 0));
+																				  pFont->Render("Other", "Magic", SGD::Point{ 250, 470 }, 1, SGD::Color(255, 0, 0, 255));
 																			  }
 																			  else
 																			  {
@@ -1113,8 +1106,9 @@ void CombatState::Render(void)
 													  {
 																			  if (selected == false) //Pick an action (melee magic or armor)
 																			  {
-																				  pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
-																				  pGraphics->DrawString("Block", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 100, 200));
+
+																				  pFont->Render("Other", "Melee", SGD::Point{ 250, 420 }, 1, SGD::Color(255, 255, 0, 0));
+																				  pFont->Render("Other", "Block", SGD::Point{ 250, 470 }, 1, SGD::Color(255, 0, 0, 255));
 																			  }
 																			  if (CompanionSelection.left < CompanionSelection.right)
 																				  pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
@@ -1469,7 +1463,6 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetMinionAnimation(_region, 0);
 				temp->SetAffinity(Earth);
 				temp->SetAttckSpd(12);
-
 				temp->SetHealth(500);
 	}
 		break;
@@ -1484,13 +1477,9 @@ Object* CombatState::AddCompanion(int _type)
 	temp->SetInit(rand() % 20);
 
 	if (m_pHeroes.size() == 1)
-	{
 		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-	}
 	else if (m_pHeroes.size() == 2)
-	{
 		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-	}
 
 	Companion::Companion_Type coT = (Companion::Companion_Type)(_type);
 	switch (coT)
@@ -2178,6 +2167,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		stuff += " on the ";
 		SetAction(stuff += Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
+		_To->SetDeltaHP(Total);
 		m_nNumQtCorrect = 0;
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
@@ -2188,61 +2178,61 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		{
 		case 0: //Earth
 			message += "Wind Gust";
-			Total = (((rand() % 5 + 10) * 5) - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = (((rand() % 5 + 7) * 5) - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 1:
 			message += "Fire Ball";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 2: //Water																  
 			message += "Rock Throw";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 3:
 			message += "Wind Gust";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 4: //Air																  
 			message += "Fire Ball";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 5:
 			message += "Ice Blase";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 6: //Fire																  
 			message += "Ice Blase";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 7:
 			message += "Rock Throw";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 8:
 			message += "Ice Blase";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 9:
 			message += "Fire Ball";
-			Total = ((rand() % 5 + 10) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
@@ -2250,14 +2240,14 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			if (_spell == 0)
 			{
 				message += "Ice Blase";
-				Total = (((rand() % 5 + 10) * 5 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+				Total = (((rand() % 5 + 7) * 5 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 				Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			}
 			else
 			{
 				message += "Fire Ball";
-				Total = (((rand() % 5 + 10) * 5 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+				Total = (((rand() % 5 + 7) * 5 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 				Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			}
@@ -2283,25 +2273,30 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			switch (((Minion*)_From)->GetAIType())
 			{
 			case Minion::AI_Type::Mini_Boss: // Low level spell of that region
+				Total = rand() % 20 + 35;
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
 					message += "Rock Throw";
-					//Total = (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement() + (rand() % 15)*3);
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
+
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::WATER_LEVEL:
 					message += "Water Blast";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::AIR_LEVEL:
 					message += "Wind Gust";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::FIRE_LEVEL:
 					message += "Fire Ball";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
@@ -2310,22 +2305,27 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 				}
 				break;
 			case Minion::AI_Type::Level_Boss: // High level spell of that region
+				Total = rand() % 20 + 35;
+
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
 					message += "Rock Throw";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 
 					break;
 				case GameplayState::WATER_LEVEL:
 					message += "Water Blast";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 
 					break;
 				case GameplayState::AIR_LEVEL:
 					message += "Wind Gust";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 
@@ -2334,16 +2334,20 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 					if (_spell == 0)
 					{
 						message += "Fire Ball";
+						//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 						((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					}
 					else if (_spell == 1) //Inferno AOE
 					{
 						message += "Inferno";
+						//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 						((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 						for (size_t i = 1; i < (int)m_pHeroes.size(); i++)
+						{
 							((Companion*)m_pHeroes[i])->SetHealth(((Companion*)_To)->GetHealth() - Total);
+						}
 					}
 
 					break;
@@ -2363,10 +2367,12 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			switch (((Minion*)_From)->GetAIType())
 			{
 			case Minion::AI_Type::Mini_Boss: // Low level spell of that region
+				Total = rand() % 20 + 35;
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
 					message += "Rock Throw";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::WATER_LEVEL:
 					message += "Water Blast";
@@ -2385,6 +2391,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 				}
 				break;
 			case Minion::AI_Type::Level_Boss: // High level spell of that region
+				Total = rand() % 25 + 40;
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
