@@ -120,13 +120,13 @@ bool SaveState::Input()
 					m_sSlot1Name.push_back( (char)pInput->GetAnyCharPressed() );
 				break;
 			case 1:
-				if( pInput->IsKeyPressed( SGD::Key::Backspace ) && m_sSlot1Name.length() >= 1 )
+				if( pInput->IsKeyPressed( SGD::Key::Backspace ) && m_sSlot2Name.length() >= 1 )
 					m_sSlot2Name.pop_back();
 				else if( m_sSlot2Name.length() <= 15 )
 					m_sSlot2Name.push_back( (char)pInput->GetAnyCharPressed() );
 				break;
 			case 2:
-				if( pInput->IsKeyPressed( SGD::Key::Backspace ) && m_sSlot1Name.length() >= 1 )
+				if( pInput->IsKeyPressed( SGD::Key::Backspace ) && m_sSlot3Name.length() >= 1 )
 					m_sSlot3Name.pop_back();
 				else if( m_sSlot3Name.length() <= 15 )
 					m_sSlot3Name.push_back( (char)pInput->GetAnyCharPressed() );
