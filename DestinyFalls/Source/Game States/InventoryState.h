@@ -70,7 +70,7 @@ public:
 	std::vector<Runes> m_vArmor;
 	std::vector<Runes> m_vRunes;
 
-	std::vector<Companion> m_vCompanion;
+	//std::vector<Companion> m_vCompanion;
 
 	void ClearInventory();
 

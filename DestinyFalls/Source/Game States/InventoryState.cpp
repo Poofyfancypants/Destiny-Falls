@@ -48,7 +48,7 @@ void InventoryState::Enter()
 	m_vSword.resize(3);
 	m_vRing.resize(3);
 	m_vArmor.resize(3);
-	m_vCompanion.resize(2);
+	//m_vCompanion.resize(2);
 
 }
 
@@ -214,12 +214,12 @@ bool InventoryState::Input()
 					{
 					case 0:
 						// Add companion to CombatState Selection
-						m_vCompanion[0].SetC0Type((Companion::Companion_Type)(CompanionSelect));
+						//m_vCompanion[0].SetC0Type((Companion::Companion_Type)(CompanionSelect));
 						OnlyEquipEnter = false;
 						break;
 					case 1:
 						// Add companion to CombatState Selection
-						m_vCompanion[1].SetC0Type((Companion::Companion_Type)(CompanionSelect));
+						//m_vCompanion[1].SetC0Type((Companion::Companion_Type)(CompanionSelect));
 						CompanionSelect = m_nCursor;
 						OnlyEquipEnter = false;
 						break;
@@ -1017,33 +1017,33 @@ void InventoryState::Render()
 
 		// Companion drawing to equip slot
 
-		if (m_vCompanion[0].GetCoType() != Companion::NonClass)
-		{
-			pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(600, 50), {}, {}, {}, { .2f, .4f });
-
-			if (m_vCompanion[0].GetCoType() == Companion::Tank)
-				pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(600, 50), {}, {}, {}, { .18f, .18f });
-			if (m_vCompanion[0].GetCoType() == Companion::Cleric)
-				pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
-			if (m_vCompanion[0].GetCoType() == Companion::Melee)
-				pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
-			if (m_vCompanion[0].GetCoType() == Companion::Mage)
-				pGraphics->DrawTexture(m_hMageIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
-		}
-
-		if (m_vCompanion[1].GetCoType() != Companion::NonClass)
-		{
-			pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(700, 50), {}, {}, {}, { .2f, .4f });
-
-			if (m_vCompanion[1].GetCoType() == Companion::Tank)
-				pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(700, 50), {}, {}, {}, { .18f, .18f });
-			if (m_vCompanion[1].GetCoType() == Companion::Cleric)
-				pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
-			if (m_vCompanion[1].GetCoType() == Companion::Melee)
-				pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
-			if (m_vCompanion[1].GetCoType() == Companion::Mage)
-				pGraphics->DrawTexture(m_hMageIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
-		}
+		//if (m_vCompanion[0].GetCoType() != Companion::NonClass)
+		//{
+		//	pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(600, 50), {}, {}, {}, { .2f, .4f });
+		//
+		//	if (m_vCompanion[0].GetCoType() == Companion::Tank)
+		//		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(600, 50), {}, {}, {}, { .18f, .18f });
+		//	if (m_vCompanion[0].GetCoType() == Companion::Cleric)
+		//		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
+		//	if (m_vCompanion[0].GetCoType() == Companion::Melee)
+		//		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
+		//	if (m_vCompanion[0].GetCoType() == Companion::Mage)
+		//		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(600, 50), {}, {}, {}, { .2f, .2f });
+		//}
+		//
+		//if (m_vCompanion[1].GetCoType() != Companion::NonClass)
+		//{
+		//	pGraphics->DrawTexture(m_hInventoryBackground, SGD::Point(700, 50), {}, {}, {}, { .2f, .4f });
+		//
+		//	if (m_vCompanion[1].GetCoType() == Companion::Tank)
+		//		pGraphics->DrawTexture(m_hFighterIcon, SGD::Point(700, 50), {}, {}, {}, { .18f, .18f });
+		//	if (m_vCompanion[1].GetCoType() == Companion::Cleric)
+		//		pGraphics->DrawTexture(m_hHealerIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
+		//	if (m_vCompanion[1].GetCoType() == Companion::Melee)
+		//		pGraphics->DrawTexture(m_hHunterIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
+		//	if (m_vCompanion[1].GetCoType() == Companion::Mage)
+		//		pGraphics->DrawTexture(m_hMageIcon, SGD::Point(700, 50), {}, {}, {}, { .2f, .2f });
+		//}
 
 
 		if (m_nCursor == 0 || m_nCursor == 30)
