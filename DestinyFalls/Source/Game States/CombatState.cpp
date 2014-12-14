@@ -26,7 +26,7 @@ void CombatState::Enter(void)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	InventoryState* pInventory = InventoryState::GetInstance();
-	m_hTurnIndicator = pGraphics->LoadTexture( "resource/graphics/TurnIndicator.png" );
+	m_hTurnIndicator = pGraphics->LoadTexture("resource/graphics/TurnIndicator.png");
 
 	CurrentTurn = 0;
 	TurnIndex = 0;
@@ -430,7 +430,8 @@ bool CombatState::Input(void)
 void CombatState::Update(float elapsedTime)
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-	DrawBackground();
+	// Draw the bckgrnd here if you don't have screen shake reasons
+	// DrawBackground();
 
 	ActionTimer -= elapsedTime;
 	if (ActionTimer <= 0.0f)
@@ -478,7 +479,8 @@ void CombatState::Update(float elapsedTime)
 	if (ActionTimer <= 0.0f)
 	{
 		ResetRects();
-		//DrawBackground(); place here if you have weird screen shake reasons
+		//place here if you have weird screen shake reasons
+		DrawBackground();
 
 		m_bShake = false;
 
@@ -638,7 +640,8 @@ void CombatState::Update(float elapsedTime)
 				((Companion*)m_pHeroes[i])->CombatRender(i);
 			}
 		}
-		//ShakeScreen(elapsedTime); weird screen shake reasons
+		//weird screen shake reasons
+		ShakeScreen(elapsedTime);
 	}
 
 }
@@ -721,18 +724,18 @@ void CombatState::Render(void)
 
 	if (CurrentTurn < (int)m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
 	{
-		
+
 
 		switch (m_pObjects[CurrentTurn]->GetType())
 		{
 		case Object::ObjectType::OBJ_PLAYER:
 		{
-			if( ((Player*)m_pObjects[CurrentTurn])->GetHealth() > 0 )
-			{
-				SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
-				pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x , turnIndicator.y + 20 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
-			}
-			
+											   if (((Player*)m_pObjects[CurrentTurn])->GetHealth() > 0)
+											   {
+												   SGD::Point turnIndicator = m_pObjects[CurrentTurn]->GetPosition();
+												   pGraphics->DrawTexture(m_hTurnIndicator, SGD::Point(turnIndicator.x, turnIndicator.y + 20), 0.0f, {}, {}, { 2.0, 2.0 });
+											   }
+
 											   if (ActionTimer <= 0)
 											   if (!selected)
 											   {
@@ -958,12 +961,12 @@ void CombatState::Render(void)
 			break;
 		case Object::ObjectType::OBJ_COMPANION:
 		{
-			if( ( ( Companion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
-		{
-			SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
-			pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x - 50 , turnIndicator.y - 40 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
-		}
-			
+												  if (((Companion*)m_pObjects[CurrentTurn])->GetHealth() > 0)
+												  {
+													  SGD::Point turnIndicator = m_pObjects[CurrentTurn]->GetPosition();
+													  pGraphics->DrawTexture(m_hTurnIndicator, SGD::Point(turnIndicator.x - 50, turnIndicator.y - 40), 0.0f, {}, {}, { 2.0, 2.0 });
+												  }
+
 												  if (ActionTimer <= 0)
 												  {
 													  switch (((Companion*)m_pObjects[CurrentTurn])->GetCoType())
@@ -1025,17 +1028,19 @@ void CombatState::Render(void)
 																							  break;
 																						  case GameplayState::AIR_LEVEL:
 																							  spell1 = "Fire Ball";
-																							  spell2 = "Water Blase";
+																							  spell2 = "Ice Blase";
 																							  break;
 																						  case GameplayState::FIRE_LEVEL:
-																							  spell1 = "Water Blase";
+																							  spell1 = "Ice Blase";
 																							  spell2 = "Rock Throw";
 																							  break;
 																						  case GameplayState::BOSS_LEVEL: //Bobby wants random, I agree but it'll make things harder
-																							  spell1 = "Water Blase";
+																							  spell1 = "Ice Blase";
 																							  spell2 = "Fire Ball";
 																							  break;
 																						  default:
+																							  spell1 = "Ice Blase";
+																							  spell2 = "Fire Ball";
 																							  break;
 																						  }
 
@@ -1076,11 +1081,11 @@ void CombatState::Render(void)
 			break;
 		case Object::ObjectType::OBJ_MINION:
 		{
-			if( ( ( Minion* ) m_pObjects[ CurrentTurn ] )->GetHealth() > 0 )
-			{
-				SGD::Point turnIndicator = m_pObjects[ CurrentTurn ]->GetPosition();
-				pGraphics->DrawTexture( m_hTurnIndicator , SGD::Point( turnIndicator.x - 80 , turnIndicator.y - 40 ) , 0.0f , { } , { } , { 2.0 , 2.0 } );
-			}
+											   if (((Minion*)m_pObjects[CurrentTurn])->GetHealth() > 0)
+											   {
+												   SGD::Point turnIndicator = m_pObjects[CurrentTurn]->GetPosition();
+												   pGraphics->DrawTexture(m_hTurnIndicator, SGD::Point(turnIndicator.x - 80, turnIndicator.y - 40), 0.0f, {}, {}, { 2.0, 2.0 });
+											   }
 											   if (ActionTimer <= 0)
 											   {
 											   }
@@ -1089,7 +1094,7 @@ void CombatState::Render(void)
 			break;
 		}
 	}
-	
+
 }
 
 Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big, don't care
@@ -1158,7 +1163,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  else
 					  temp->SetMods(5, _region, 3, 1);
 
-				  temp->SetAttckSpd(rand() % 3 + 4);
+				  temp->SetAttckSpd(rand() % 3 + 6);
 
 				  switch (_region)
 				  {
@@ -1193,7 +1198,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  else
 					  temp->SetMods(2, _region, 2, 3);
 
-				  temp->SetAttckSpd(rand() % 3 + 4);
+				  temp->SetAttckSpd(rand() % 3 + 2);
 
 				  switch (_region)
 				  {
@@ -1263,7 +1268,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  else
 					  temp->SetMods(4, _region, 3, 2);
 
-				  temp->SetAttckSpd(rand() % 3 + 4);
+				  temp->SetAttckSpd(rand() % 3 + 5);
 
 				  switch (_region)
 				  {
@@ -1302,17 +1307,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetAffinity((Elements)_region);
 
 				if (m_pEnemies.size() == 0)
-				{
 					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
-				}
 				else if (m_pEnemies.size() == 1)
-				{
 					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
-				}
 				else if (m_pEnemies.size() == 2)
-				{
 					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
-				}
 
 				temp->SetAttckSpd(rand() % 4 + 5);
 
@@ -1360,17 +1359,11 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 	case 3: //Level Bosses
 	{
 				if (m_pEnemies.size() == 0)
-				{
 					temp->SetPosition({ Enemy2rect.right, Enemy2rect.bottom });
-				}
 				else if (m_pEnemies.size() == 1)
-				{
 					temp->SetPosition({ Enemy1rect.right, Enemy1rect.bottom });
-				}
 				else if (m_pEnemies.size() == 2)
-				{
 					temp->SetPosition({ Enemy3rect.right, Enemy3rect.bottom });
-				}
 
 				temp->SetInit(rand() % 20);
 				temp->SetAffinity((Elements)_region);
@@ -1427,7 +1420,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetAIType(Minion::AI_Type::Final_Boss);
 				temp->SetMinionAnimation(_region, 0);
 				temp->SetAffinity(Earth);
-				temp->SetAttckSpd(rand() % 6 + 6);
+				temp->SetAttckSpd(12);
 
 				temp->SetHealth(500);
 	}
@@ -1731,14 +1724,13 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 
 int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 {
-	int Total;
+	int Total = 0;
 	bool localBlock = false;
 
 	RuneManager mag;
 
 	if (_From->GetType() == iObject::OBJ_PLAYER)
 	{
-
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
 			if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Def_AI)
@@ -1749,6 +1741,41 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 					localBlock = ((Minion*)m_pEnemies[i])->m_Block;
 					((Minion*)m_pEnemies[i])->m_Block = false;
 					return 0;
+				}
+			}
+			else if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Mini_Boss || ((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Level_Boss)
+			{
+				if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::AIR_LEVEL) //Dodge
+				{
+					if (rand() % 20 < 10)
+					{
+						localBlock = true;
+						string message = "The ";
+						message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+						SetAction(message += " Dodges the Attack!");
+						_To->SetInit(25);
+					}
+				}
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::WATER_LEVEL) //Repel
+				{
+					if (rand() % 20 < 10)
+					{
+						localBlock = true;
+						string message = "The ";
+						message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+						SetAction(message += " Repels your Attack!");
+						_From->SetInit(-5);
+					}
+				}
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::EARTH_LEVEL) // ???
+				{
+					if (rand() % 20 < 10)
+					{
+						localBlock = true;
+						string message = "The ";
+						message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+						SetAction(message += " Blocks your Attack!");
+					}
 				}
 			}
 		}
@@ -1773,7 +1800,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			string message = "You Attack the ";
 			message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 			SetAction(message);
-			m_bShake = true;
 		}
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)// _From == Minion
@@ -1806,7 +1832,6 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 					DealCounterDamage(_To, _From);
 					return 0;
 				}
-				m_bShake = true;
 
 			}
 			if (_To->GetType() == iObject::OBJ_COMPANION)
@@ -1838,6 +1863,46 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 					return 0;
 				}
 			}
+			else if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Mini_Boss || ((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Level_Boss)
+			{
+				if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::AIR_LEVEL) //Dodge
+				{
+					if (rand() % 20 < 10)
+					{
+						localBlock = true;
+						string message = "The ";
+						message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+						SetAction(message += " Dodges the Attack!");
+						_To->SetInit(25);
+
+					}
+				}
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::WATER_LEVEL) //Repel
+				{
+					if (rand() % 20 < 10)
+					{
+						localBlock = true;
+						string message = "The ";
+						message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+						SetAction(message += " Repels your Ally's Attack!");
+						_From->SetInit(-5);
+					}
+				}
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::EARTH_LEVEL) // ???
+				{
+					if (rand() % 20 < 10)
+					{
+						localBlock = true;
+						string message = "The ";
+						message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
+						SetAction(message += " Blocks your Ally's Attack!");
+					}
+				}
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::FIRE_LEVEL) // Burn?
+				{
+
+				}
+			}
 		}
 
 		if (!localBlock)
@@ -1847,10 +1912,9 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			string message = "Your Ally attacks the ";
 			message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 			SetAction(message += "!");
-			m_bShake = true;
 		}
 	}
-
+	m_bShake = true;
 	_To->SetDeltaHP(-Total);
 	return Total;
 }
@@ -2076,39 +2140,79 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		{
 		case 0: //Earth
 			message += "Wind Gust";
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 1:
 			message += "Fire Ball";
-
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
-		case 2: //Water
+		case 2: //Water																  
 			message += "Rock Throw";
-
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 3:
 			message += "Wind Gust";
-
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
-		case 4: //Air
+		case 4: //Air																  
 			message += "Fire Ball";
-
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 5:
 			message += "Ice Blase";
-
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
-		case 6: //Fire
+		case 6: //Fire																  
 			message += "Ice Blase";
-
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 7:
 			message += "Rock Throw";
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 8:
+			message += "Ice Blase";
+			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 9:
+			message += "Fire Ball";
+			Total = ((rand() % 15 * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		default:
+			if (_spell == 0)
+			{
+				message += "Ice Blase";
+				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+				Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
+				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
+			}
+			else
+			{
+				message += "Fire Ball";
+				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+				Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
+				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
+			}
 			break;
 		}
 
@@ -2123,45 +2227,148 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
 	{
-
-		switch (((Minion*)_From)->GetAIType())
+		string message = "The ";
+		message += (Game::GetInstance()->GetString(((Minion*)_From)->GetName(0), ((Minion*)_From)->GetName(1)).c_str());
+		message += " Casts ";
+		if (_To->GetType() == iObject::OBJ_PLAYER)
 		{
-		case Minion::AI_Type::Mini_Boss: // Low level spell of that region
-			switch (GameplayState::GetInstance()->GetCurrentLevel())
+			switch (((Minion*)_From)->GetAIType())
 			{
-			case GameplayState::EARTH_LEVEL:
+			case Minion::AI_Type::Mini_Boss: // Low level spell of that region
+				switch (GameplayState::GetInstance()->GetCurrentLevel())
+				{
+				case GameplayState::EARTH_LEVEL:
+					message += "Rock Throw";
+					//Total = (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement() + (rand() % 15)*3);
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::WATER_LEVEL:
+					message += "Water Blast";
+
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::AIR_LEVEL:
+					message += "Wind Gust";
+
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::FIRE_LEVEL:
+					message += "Fire Ball";
+
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+					break;
+				default:
+					break;
+				}
 				break;
-			case GameplayState::WATER_LEVEL:
+			case Minion::AI_Type::Level_Boss: // High level spell of that region
+				switch (GameplayState::GetInstance()->GetCurrentLevel())
+				{
+				case GameplayState::EARTH_LEVEL:
+					message += "Rock Throw";
+
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+
+					break;
+				case GameplayState::WATER_LEVEL:
+					message += "Water Blast";
+
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+
+					break;
+				case GameplayState::AIR_LEVEL:
+					message += "Wind Gust";
+
+					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+
+					break;
+				case GameplayState::FIRE_LEVEL:
+					if (_spell == 0)
+					{
+						message += "Fire Ball";
+
+						((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+					}
+					else if (_spell == 1) //Inferno AOE
+					{
+						message += "Inferno";
+
+						((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
+						for (size_t i = 1; i < (int)m_pHeroes.size(); i++)
+							((Companion*)m_pHeroes[i])->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					}
+
+					break;
+				default:
+					break;
+				}
 				break;
-			case GameplayState::AIR_LEVEL:
-				break;
-			case GameplayState::FIRE_LEVEL:
+			case Minion::AI_Type::Final_Boss: // idfk
 				break;
 			default:
 				break;
 			}
-			break;
-		case Minion::AI_Type::Level_Boss: // High level spell of that region
-			switch (GameplayState::GetInstance()->GetCurrentLevel())
+			SetAction(message += " on You!");
+		}
+		else if (_To->GetType() == iObject::OBJ_COMPANION)
+		{
+			switch (((Minion*)_From)->GetAIType())
 			{
-			case GameplayState::EARTH_LEVEL:
+			case Minion::AI_Type::Mini_Boss: // Low level spell of that region
+				switch (GameplayState::GetInstance()->GetCurrentLevel())
+				{
+				case GameplayState::EARTH_LEVEL:
+					message += "Rock Throw";
+					break;
+				case GameplayState::WATER_LEVEL:
+					message += "Water Blast";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::AIR_LEVEL:
+					message += "Wind Gust";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::FIRE_LEVEL:
+					message += "Fire Ball";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				default:
+					break;
+				}
 				break;
-			case GameplayState::WATER_LEVEL:
+			case Minion::AI_Type::Level_Boss: // High level spell of that region
+				switch (GameplayState::GetInstance()->GetCurrentLevel())
+				{
+				case GameplayState::EARTH_LEVEL:
+					message += "Rock Throw";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::WATER_LEVEL:
+					message += "Water Blast";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::AIR_LEVEL:
+					message += "Wind Gust";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				case GameplayState::FIRE_LEVEL:
+					message += "Fire Ball";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
+					break;
+				default:
+					break;
+				}
 				break;
-			case GameplayState::AIR_LEVEL:
-				break;
-			case GameplayState::FIRE_LEVEL:
+			case Minion::AI_Type::Final_Boss: // idfk
 				break;
 			default:
 				break;
 			}
-			break;
-		case Minion::AI_Type::Final_Boss: // idfk
-			break;
-		default:
-			break;
+
+			SetAction(message += " on your Ally!");
 		}
 	}
+	m_bShake = true;
 	_To->SetDeltaHP(-Total);
 	return Total;
 }
@@ -2179,7 +2386,6 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 		string message = "You Counter the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		SetAction(message += "'s Attack!");
-		m_bShake = true;
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
 	{
@@ -2192,7 +2398,6 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 		string message = "The ";
 		message += (Game::GetInstance()->GetString(((Minion*)_From)->GetName(0), ((Minion*)_From)->GetName(1)).c_str());
 		SetAction(message += " Counters!");
-		m_bShake = true;
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
@@ -2201,7 +2406,6 @@ int CombatState::DealCounterDamage(Object* _From, Object* _To)
 		string message = "Your Ally counter the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		SetAction(message += "'s attack!");
-		m_bShake = true;
 	}
 
 	_To->SetDeltaHP(-Total);
@@ -2217,7 +2421,6 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 		string message = "The ";
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		SetAction(message += " Intercepts your Attack!");
-		m_bShake = true;
 
 		ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
 
@@ -2233,7 +2436,6 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 		string message = "Your Ally Intercepts the ";
 		message += (Game::GetInstance()->GetString(((Minion*)_From)->GetName(0), ((Minion*)_From)->GetName(1)).c_str());
 		SetAction(message += "'s  Attack!");
-		m_bShake = true;
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
@@ -2243,9 +2445,8 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 
 		Total = rand() % 15 + 20; // make this half minion's damage
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
-		m_bShake = true;
 	}
-
+	m_bShake = true;
 	_To->SetDeltaHP(-Total);
 	return Total;
 }
@@ -2344,6 +2545,8 @@ int CombatState::DealAOEDamage(Object* _From, Object* _To)
 			((Minion*)m_pEnemies[i])->SetHealth(((Minion*)m_pEnemies[i])->GetHealth() - Total);
 		}
 	}
+	m_bShake = true;
+
 	return Total;
 }
 bool CombatState::TakeTurn(Object* _this)
@@ -2442,8 +2645,8 @@ bool CombatState::TakeTurn(Object* _this)
 										//Second Selection >> Target
 										if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 										{
-											entered = true;
 											((Player*)_this)->SetAttacking(true);
+											entered = true;
 
 											int xx = 0;
 											for (int i = 0; i < (int)InventoryState::GetInstance()->m_vSword.size(); i++)
@@ -2553,12 +2756,34 @@ bool CombatState::TakeTurn(Object* _this)
 											//Second Selection >> Target
 											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
 											{
-												selected = false;
-												((Player*)_this)->SetAttacking(true);
-												TakeAction(ActionSelected, _this, m_nCursor, spellSelect);
-												spellSelect = -1;
-												m_nCursor = 0;
-												return true;
+
+												entered = true;
+
+												int xx = 0;
+												for (int i = 0; i < (int)InventoryState::GetInstance()->m_vSword.size(); i++)
+												{
+													if (InventoryState::GetInstance()->m_vSword[i].GetElement() != None)
+														xx++;
+												}
+												if (xx == 0)
+													xx = 1;
+
+												m_nQTLength = xx * 3;
+												Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+											}
+											if (entered)
+											{
+												if (QuickTimeState::GetInstance()->GetCurrentQT()->GetIsOver())
+												{
+													entered = false;
+													selected = false;
+													QuickTimeState::GetInstance()->StopQuickTime();
+													((Player*)_this)->SetAttacking(true);
+													TakeAction(ActionSelected, _this, m_nCursor, spellSelect);
+													spellSelect = -1;
+													m_nCursor = 0;
+													return true;
+												}
 											}
 										}
 									}
@@ -2583,16 +2808,6 @@ bool CombatState::TakeTurn(Object* _this)
 								   {
 																			 if (!selected) //Pick an action (melee magic or armor)
 																			 {
-																				 //pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
-																				 if (false) //cooldown
-																				 {
-																					 //pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(150, 0, 255, 0));
-																				 }
-																				 else
-																				 {
-																					 //pGraphics->DrawString("Heal", SGD::Point{ 250, 470 }, SGD::Color(255, 0, 255, 0));
-																				 }
-
 																				 pCombat->SetAction("Choose Action");
 																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																					 m_nCursor--;
@@ -2695,18 +2910,6 @@ bool CombatState::TakeTurn(Object* _this)
 								   {
 																			if (selected == false) //Pick an action (melee magic or armor)
 																			{
-																				//pGraphics->DrawString("Melee", SGD::Point{ 250, 420 }, SGD::Color(255, 255, 0, 0));
-																				if (false)
-																				{
-																					//pGraphics->DrawString("Fury", SGD::Point{ 250, 470 }, SGD::Color(150, 255, 0, 255)); //AOE attack
-																				}
-																				else
-																				{
-																					//pGraphics->DrawString("Fury", SGD::Point{ 250, 470 }, SGD::Color(255, 255, 0, 255));
-																				}
-																				//pGraphics->DrawString("Armor", SGD::Point{ 250, 520 }, SGD::Color(255, 255, 255, 255));
-																				//pGraphics->DrawRectangle(CompanionSelection, SGD::Color(255, 0, 255, 0), SGD::Color(255, 0, 255, 0));
-
 																				pCombat->SetAction("Choose Action");
 																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
 																					m_nCursor--;
@@ -2784,8 +2987,6 @@ bool CombatState::TakeTurn(Object* _this)
 								   {
 																		   if (selected == false) //Pick an action (melee magic or armor)
 																		   {
-
-
 																			   spellActive = false;
 																			   if (((Companion*)_this)->GetSpell1Cool() != -1)
 																				   spellActive = true;
@@ -3140,9 +3341,9 @@ bool CombatState::TakeTurn(Object* _this)
 											pCombat->SetActionTimer(1);
 											target = rand() % pCombat->GetHeroes().size();
 											int AI = rand() % 20;
-											if (AI <= 15) //AOE attack
+											if (AI <= 15 && AI > 9) //AOE attack
 												TakeAction(CombatState::ActionType::AOE, _this, target);
-											else if (AI < 0) //Disabled currently
+											else if (AI > 0 && AI <= 9)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
@@ -3157,7 +3358,7 @@ bool CombatState::TakeTurn(Object* _this)
 											target = rand() % pCombat->GetHeroes().size();
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
-											if (AI < 0) //Disabled currently
+											if (AI > 0 && AI <= 10)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
@@ -3172,7 +3373,7 @@ bool CombatState::TakeTurn(Object* _this)
 											pCombat->SetActionTimer(1);
 
 											int AI = rand() % 20;
-											if (AI < 0) //Disabled currently
+											if (AI > 0 && AI <= 10)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
@@ -3186,8 +3387,8 @@ bool CombatState::TakeTurn(Object* _this)
 											target = rand() % pCombat->GetHeroes().size();
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
-											if (AI < 0) //Disabled currently
-												TakeAction(CombatState::ActionType::Magic, _this, target);
+											if (AI > 0 && AI <= 10)
+												TakeAction(CombatState::ActionType::Magic, _this, target, 0); //FireBall
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
 											((Minion*)_this)->SetAnimation(true);
@@ -3234,7 +3435,7 @@ bool CombatState::TakeTurn(Object* _this)
 											target = rand() % pCombat->GetHeroes().size();
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
-											if (AI < 0) //Disabled currently
+											if (AI > 0 && AI <= 9)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
@@ -3246,7 +3447,7 @@ bool CombatState::TakeTurn(Object* _this)
 											target = rand() % pCombat->GetHeroes().size();
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
-											if (AI < 0) //Disabled currently
+											if (AI > 0 && AI <= 9)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
@@ -3258,8 +3459,11 @@ bool CombatState::TakeTurn(Object* _this)
 											target = rand() % pCombat->GetHeroes().size();
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
-											if (AI < 0) //Disabled currently
-												TakeAction(CombatState::ActionType::Magic, _this, target);
+											if (AI > 0 && AI <= 7)
+												TakeAction(CombatState::ActionType::Magic, _this, target, 0);
+											else if (AI > 7 && AI < 15) //Inferno (AOE Magic)
+												TakeAction(CombatState::ActionType::Magic, _this, target, 1);
+
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
 										}
