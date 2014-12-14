@@ -1420,7 +1420,6 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetMinionAnimation(_region, 0);
 				temp->SetAffinity(Earth);
 				temp->SetAttckSpd(12);
-
 				temp->SetHealth(500);
 	}
 		break;
@@ -1435,13 +1434,9 @@ Object* CombatState::AddCompanion(int _type)
 	temp->SetInit(rand() % 20);
 
 	if (m_pHeroes.size() == 1)
-	{
 		temp->SetPosition({ Companion1rect.right, Companion1rect.bottom });
-	}
 	else if (m_pHeroes.size() == 2)
-	{
 		temp->SetPosition({ Companion2rect.right, Companion2rect.bottom });
-	}
 
 	Companion::Companion_Type coT = (Companion::Companion_Type)(_type);
 	switch (coT)
@@ -1782,7 +1777,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 		if (localBlock == false)
 		{
 			ComboElements d1 = mag.ElementCombination(InventoryState::GetInstance()->GetSwordSlot1(), InventoryState::GetInstance()->GetSwordSlot2());
-			
+
 			Total = (int)((((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + ((m_nNumQtCorrect *  (((Minion*)_To)->GetMods().DamageLevel - 1)) / m_nQTLength)) * 10) + 15));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			m_nNumQtCorrect = 0;
@@ -2129,6 +2124,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		stuff += " on the ";
 		SetAction(stuff += Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
+		_To->SetDeltaHP(Total);
 		m_nNumQtCorrect = 0;
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
@@ -2139,61 +2135,61 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		{
 		case 0: //Earth
 			message += "Wind Gust";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 1:
 			message += "Fire Ball";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 2: //Water																  
 			message += "Rock Throw";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 3:
 			message += "Wind Gust";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 1) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 4: //Air																  
 			message += "Fire Ball";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 5:
 			message += "Ice Blase";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 1) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 6: //Fire																  
 			message += "Ice Blase";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 7:
 			message += "Rock Throw";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 1) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Earth, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 8:
 			message += "Ice Blase";
-			Total = ((rand() % 15) * 3 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
 		case 9:
 			message += "Fire Ball";
-			Total = ((rand() % 15 * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+			Total = ((rand() % 2 + 2) * 15 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
@@ -2201,14 +2197,14 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			if (_spell == 0)
 			{
 				message += "Ice Blase";
-				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+				Total = ((rand() % 2 + 1) * 15 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15));
 				Total *= (int)(mag.DamagetoBaseElement(Elements::Water, ((Minion*)_To)->GetAffinity()));
 				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			}
 			else
 			{
 				message += "Fire Ball";
-				Total = (((rand() % 15) * 3 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3));
+				Total = ((rand() % 2 + 1) * 15 - (rand() % ((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + ((rand() % 2 + 1) * 15));
 				Total *= (int)(mag.DamagetoBaseElement(Elements::Fire, ((Minion*)_To)->GetAffinity()));
 				((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			}
@@ -2234,25 +2230,30 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			switch (((Minion*)_From)->GetAIType())
 			{
 			case Minion::AI_Type::Mini_Boss: // Low level spell of that region
+				Total = rand() % 20 + 35;
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
 					message += "Rock Throw";
-					//Total = (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement() + (rand() % 15)*3);
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
+					
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::WATER_LEVEL:
 					message += "Water Blast";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::AIR_LEVEL:
 					message += "Wind Gust";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::FIRE_LEVEL:
 					message += "Fire Ball";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					break;
@@ -2261,22 +2262,27 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 				}
 				break;
 			case Minion::AI_Type::Level_Boss: // High level spell of that region
+				Total = rand() % 20 + 35;
+
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
 					message += "Rock Throw";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 
 					break;
 				case GameplayState::WATER_LEVEL:
 					message += "Water Blast";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 
 					break;
 				case GameplayState::AIR_LEVEL:
 					message += "Wind Gust";
+					//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 					((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 
@@ -2285,16 +2291,20 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 					if (_spell == 0)
 					{
 						message += "Fire Ball";
+						//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 						((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 					}
 					else if (_spell == 1) //Inferno AOE
 					{
 						message += "Inferno";
+						//Total *= (int)((mag.DamagetoBaseElement(Elements::Earth, InventoryState::m_vArmor[0].GetElement());
 
 						((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 						for (size_t i = 1; i < (int)m_pHeroes.size(); i++)
+						{
 							((Companion*)m_pHeroes[i])->SetHealth(((Companion*)_To)->GetHealth() - Total);
+						}
 					}
 
 					break;
@@ -2314,10 +2324,12 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			switch (((Minion*)_From)->GetAIType())
 			{
 			case Minion::AI_Type::Mini_Boss: // Low level spell of that region
+				Total = rand() % 20 + 35;
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
 					message += "Rock Throw";
+					((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() - Total);
 					break;
 				case GameplayState::WATER_LEVEL:
 					message += "Water Blast";
@@ -2336,6 +2348,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 				}
 				break;
 			case Minion::AI_Type::Level_Boss: // High level spell of that region
+				Total = rand() % 25 + 40;
 				switch (GameplayState::GetInstance()->GetCurrentLevel())
 				{
 				case GameplayState::EARTH_LEVEL:
@@ -3700,26 +3713,26 @@ void CombatState::HandleTutorial()
 }
 void CombatState::DrawBackground(SGD::Rectangle _shakeRect)
 {
-	switch( GameplayState::GetInstance()->GetCurrentLevel() )
+	switch (GameplayState::GetInstance()->GetCurrentLevel())
 	{
-		case 1:
-			SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hEarth1 , { _shakeRect.left , _shakeRect.top } , { 0.0f , 300.0f , 800.0f , 1100.0f } , 0.0f ,
-			{ }, { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
+	case 1:
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth1, { _shakeRect.left, _shakeRect.top }, { 0.0f, 300.0f, 800.0f, 1100.0f }, 0.0f,
+		{}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 2:
 		SGD::GraphicsManager::GetInstance()->DrawTexture(Game::GetInstance()->m_hIce2, { _shakeRect.left, _shakeRect.top }, {}, {}, { 255, 255, 255, 255 }, { 1.0f, 1.2f });
 		break;
 	case 3:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hAir2 , { _shakeRect.left , _shakeRect.top } , { 700.0f , 200.0f , 1500.0f , 800.0f }, 0.0f , { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );		
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hAir2, { _shakeRect.left, _shakeRect.top }, { 700.0f, 200.0f, 1500.0f, 800.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 4:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, {100.0f, 100.0f, 900.0f, 700.0f}, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFire1, { _shakeRect.left, _shakeRect.top }, { 100.0f, 100.0f, 900.0f, 700.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	case 5:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection( Game::GetInstance()->m_hFinal1 , { _shakeRect.left , _shakeRect.top } , { 300.0f , 100.0f , 1100.0f , 700.0f } ,0.0f, { } , { 255 , 255 , 255 , 255 } , { 1.0f , 1.0f } );
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hFinal1, { _shakeRect.left, _shakeRect.top }, { 300.0f, 100.0f, 1100.0f, 700.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	default:
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, {0.0f, 300.0f, 800.0f, 900.0f },0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
+		SGD::GraphicsManager::GetInstance()->DrawTextureSection(Game::GetInstance()->m_hEarth2, { _shakeRect.left, _shakeRect.top }, { 0.0f, 300.0f, 800.0f, 900.0f }, 0.0f, {}, { 255, 255, 255, 255 }, { 1.0f, 1.0f });
 		break;
 	}
 }
