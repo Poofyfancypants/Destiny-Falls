@@ -17,6 +17,8 @@ public:
 	virtual void Render(void)				override;
 
 private:
+	float m_fArcadeTimer = 0.0f;
+
 	OptionsState() = default;
 	virtual ~OptionsState() = default;
 

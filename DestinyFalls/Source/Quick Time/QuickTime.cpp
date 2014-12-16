@@ -50,13 +50,13 @@ QuickTime::QuickTime()
 
 	m_hScroll = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Scroll.png" );
 	m_hArcadeButtons = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/ArcadeControlsIcons.png" );
-
 }
 
 
 QuickTime::~QuickTime()
 {
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hScroll );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hArcadeButtons);
 }
 
 void QuickTime::Update( float elapsedTime )

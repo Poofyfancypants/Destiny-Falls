@@ -1,21 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Save2>
-<<<<<<< HEAD
-    <player_info Health="100" PosX="96.000000" PosY="64.000000" CurrLevel="0">
-=======
-    <player_info Health="100" PosX="150.500000" PosY="188.750000" CurrLevel="0" CheckpointX="160.000000" CheckpointY="192.000000">
->>>>>>> 549700338e342ad4d57794d5d92fbe440bcb91a1
+    <player_info Health="100" PosX="588.250000" PosY="41.000000" CurrLevel="5" CheckpointX="288.000000" CheckpointY="352.000000">
+        <Sword Element="3" Tier="3" />
         <Sword Element="4" Tier="0" />
-        <Sword Element="4" Tier="0" />
-        <Sword Element="4" Tier="0" />
+        <Sword Element="3" Tier="3" />
         <Armor Element="4" Tier="0" />
         <Armor Element="4" Tier="0" />
         <Armor Element="4" Tier="0" />
         <Ring Element="4" Tier="0" />
-        <Ring Element="4" Tier="0" />
+        <Ring Element="3" Tier="3" />
         <Ring Element="4" Tier="0" />
         <Inventory Size="1">
-            <Rune Element="2" Tier="1" />
+            <Rune Element="3" Tier="3" />
         </Inventory>
     </player_info>
 </Save2>
