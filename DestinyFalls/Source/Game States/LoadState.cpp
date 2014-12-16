@@ -30,6 +30,7 @@ void LoadState::Enter()
 	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
 	m_hNameFrame = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/saveScroll.png" );
 
+	//SlotName();
 	LoadNames();
 }
 
