@@ -512,7 +512,7 @@ void Game::LoadStrings()
 		m_StringTable[8][3] = "Look, There he is! Get behind me!";
 		m_StringTable[8][4] = "If you are low on health already, chests can drop health potions,";
 		m_StringTable[8][5] = "that will restore your health once aquiered by pressing P";
-		m_StringTable[8][6] = "*Run into the boulders and press R repeatedly until it moves*";
+		m_StringTable[8][6] = "*Run into the boulders and hold R repeatedly until it moves*";
 
 		m_StringTable[9][1] = "Music Vol";
 		m_StringTable[9][2] = "SFX Vol";
@@ -565,7 +565,7 @@ void Game::LoadStrings()
 		m_StringTable[8][3] = "Tharna! Vertu fyrir aftan mig!";
 		m_StringTable[8][4] = "Kysstur geta gefid ther Health Potion, ef thu hefur meidst geturu ";
 		m_StringTable[8][5] = "drukkid Health Potion med tvhi ad yta a P";
-		m_StringTable[8][6] = "*Hlauptu a tha og yttu a R oft thangad til hann hreyfist*";
+		m_StringTable[8][6] = "*Hlauptu a tha og haltu R inni thangad til hann hreyfist*";
 
 		m_StringTable[9][1] = "Tonlist Vol";
 		m_StringTable[9][2] = "SFX Vol";
