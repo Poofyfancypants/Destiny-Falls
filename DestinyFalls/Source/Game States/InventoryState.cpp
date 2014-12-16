@@ -2027,6 +2027,7 @@ void InventoryState::ClearInventory()
 	m_vArmor.clear();
 	m_vSword.clear();
 	m_vRing.clear();
+	m_vRunes.clear();
 }
 
 void InventoryState::HandleTutorial()
