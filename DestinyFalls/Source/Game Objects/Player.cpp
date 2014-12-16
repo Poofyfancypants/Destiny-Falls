@@ -79,6 +79,12 @@ void Player::Update( float elapsedTime )
 	}
 	else
 	{
+		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingUp" && this->GetTimeStamp()->GetCurrentAnimation() != "WalkingDown" && this->GetTimeStamp()->GetCurrentAnimation() != "WalkingLeft" && this->GetTimeStamp()->GetCurrentAnimation() != "WalkingRight" )
+		{
+			this->GetTimeStamp()->SetCurrentAnimation( "WalkingDown" );
+			this->GetTimeStamp()->SetCurrentFrame( 0 );
+			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+		}
 		if( m_nHealth <= 0 )
 		{
 			pAudio->PlayAudio( Game::GetInstance()->deathSound, false );
@@ -259,9 +265,11 @@ void Player::TakeInput()
 		m_bUpdateAnimation = false;
 		return;
 	}
+
 	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->IsDPadDown(0, SGD::DPad::Up))
 	{
 		m_nDirection = 1;
+		m_bUpdateAnimation = true;
 
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingUp" )
 		{
@@ -271,8 +279,9 @@ void Player::TakeInput()
 		}
 
 	}
-	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->IsDPadDown(0, SGD::DPad::Down))
+	else if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->IsDPadDown(0, SGD::DPad::Down))
 	{
+		m_bUpdateAnimation = true;
 		m_nDirection = 2;
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingDown" )
 		{
@@ -281,10 +290,10 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 	}
-
-	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->IsDPadDown(0, SGD::DPad::Left))
+	else if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->IsDPadDown(0, SGD::DPad::Left))
 	{
 		m_nDirection = 3;
+		m_bUpdateAnimation = true;
 
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingLeft" )
 		{
@@ -293,8 +302,9 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 	}
-	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->IsDPadDown(0, SGD::DPad::Right))
+	else if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->IsDPadDown(0, SGD::DPad::Right))
 	{
+		m_bUpdateAnimation = true;
 		m_nDirection = 4;
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingRight" )
 		{
@@ -302,6 +312,10 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetCurrentFrame( 0 );
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
+	}
+	else
+	{
+		m_bUpdateAnimation = false;
 	}
 
 	if( pInput->IsKeyPressed( SGD::Key::P ) && m_nPotions > 0 && m_nHealth < 100 )
@@ -328,7 +342,7 @@ void Player::TakeInput()
 		}
 	}
 
-	m_bUpdateAnimation = pInput->IsAnyKeyDown();
+	//m_bUpdateAnimation = pInput->IsAnyKeyDown();
 
 	if( m_bRunDialog && !m_bPreventDialog )
 	{
