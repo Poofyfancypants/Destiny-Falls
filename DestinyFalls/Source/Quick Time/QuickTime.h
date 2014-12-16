@@ -36,6 +36,7 @@ private:
 	int m_nLastSet = 0;
 
 	SGD::HTexture m_hScroll = SGD::INVALID_HANDLE;
+	SGD::HTexture m_hArcadeButtons = SGD::INVALID_HANDLE;
 
 
 public:

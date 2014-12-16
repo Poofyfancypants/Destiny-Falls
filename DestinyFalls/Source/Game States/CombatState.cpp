@@ -744,7 +744,7 @@ void CombatState::Render(void)
 	else
 		pHcolor = { 255, 255, 0, 0 };
 
-	if (PlayerHB.right > PlayerHB.left)
+	if (PlayerHB.right > PlayerHB.left && ((Player*)m_pHeroes[0])->GetHealth() > 0)
 		pGraphics->DrawRectangle(PlayerHB, pHcolor);
 
 	((Player*)m_pHeroes[0])->Render();

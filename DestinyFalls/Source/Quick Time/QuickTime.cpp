@@ -49,6 +49,7 @@ QuickTime::QuickTime()
 	m_bqtOver = false;
 
 	m_hScroll = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/Scroll.png" );
+	m_hArcadeButtons = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/ArcadeControlsIcons.png" );
 
 }
 
@@ -208,16 +209,177 @@ void QuickTime::Render()
 		//SGD::Rectangle rect = SGD::Rectangle( 250 , 300 , 550 , 450 );
 		//SGD::GraphicsManager::GetInstance()->DrawRectangle( rect , SGD::Color( 220 , 215 , 143 ) );
 
-		//Draw Scroll
-		SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hScroll, SGD::Point( 150.0f, 300.0f ), SGD::Rectangle( 0.0f, 0.0f, 465.0f, 290.0f ), 0.0f, {}, {}, SGD::Size( 1.0f, 0.5f ) );
+		if( SGD::InputManager::GetInstance()->IsControllerConnected( 0 ) || SGD::InputManager::GetInstance()->IsControllerConnected( 1 ) )
+		{
+			//Draw Scroll
+			SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hScroll , SGD::Point( 150.0f , 300.0f ) , SGD::Rectangle( 0.0f , 0.0f , 465.0f , 290.0f ) , 0.0f , { } , { } , SGD::Size( 1.0f , 0.5f ) );
 
-		// draw timer rect
-		timer.right = timer.right - ( ( m_fSeconds / m_fLetterTimer ) * 100 );
-		SGD::GraphicsManager::GetInstance()->DrawRectangle( timer, SGD::Color( 255, 0, 0, 0 ) );
+			// draw timer rect
+			timer.right = timer.right - ( ( m_fSeconds / m_fLetterTimer ) * 100 );
+			SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 0 , 0 ) );
+			if( m_sRenderOutput.size() )
+			{
 
-		//Draw text
-		pFonts->Render( "Goblin", m_sRenderOutput.c_str(), { 275, 325 }, 2, { 255, 0, 0, 0 } );
-		pFonts->Render( "Goblin", m_sRenderInput.c_str(), { 275, 340 }, 2, { 255, 255, 255, 255 } );
+
+				switch( m_sRenderOutput[ 1 ] )
+				{
+					case '1':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 325 ) , SGD::Rectangle( 0 , 32 , 29 , 54 ) );
+						break;
+					case '2':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 325 ) , SGD::Rectangle( 0 , 64 , 29 , 85 ) );
+						break;
+					case '3':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 325 ) , SGD::Rectangle( 0 , 95 , 29 , 116 ) );
+						break;
+					case '4':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 325 ) , SGD::Rectangle( 32 , 32 , 60 , 54 ) );
+						break;
+					case '5':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 325 ) , SGD::Rectangle( 32 , 64 , 60 , 85 ) );
+						break;
+					case '6':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 325 ) , SGD::Rectangle( 32 , 95 , 60 , 116 ) );
+						break;
+					default:
+						break;
+				}
+				switch( m_sRenderOutput[ 4 ] )
+				{
+					case '1':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 325 ) , SGD::Rectangle( 0 , 32 , 29 , 54 ) );
+						break;
+					case '2':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 325 ) , SGD::Rectangle( 0 , 64 , 29 , 85 ) );
+						break;
+					case '3':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 325 ) , SGD::Rectangle( 0 , 95 , 29 , 116 ) );
+						break;
+					case '4':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 325 ) , SGD::Rectangle( 32 , 32 , 60 , 54 ) );
+						break;
+					case '5':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 325 ) , SGD::Rectangle( 32 , 64 , 60 , 85 ) );
+						break;
+					case '6':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 325 ) , SGD::Rectangle( 32 , 95 , 60 , 116 ) );
+						break;
+					default:
+						break;
+				}
+				switch( m_sRenderOutput[ 7 ] )
+				{
+					case '1':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 325 ) , SGD::Rectangle( 0 , 32 , 29 , 54 ) );
+						break;
+					case '2':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 325 ) , SGD::Rectangle( 0 , 64 , 29 , 85 ) );
+						break;
+					case '3':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 325 ) , SGD::Rectangle( 0 , 95 , 29 , 116 ) );
+						break;
+					case '4':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 325 ) , SGD::Rectangle( 32 , 32 , 60 , 54 ) );
+						break;
+					case '5':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 325 ) , SGD::Rectangle( 32 , 64 , 60 , 85 ) );
+						break;
+					case '6':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 325 ) , SGD::Rectangle( 32 , 95 , 60 , 116 ) );
+						break;
+					default:
+						break;
+				}
+			}
+			////
+			if( m_sRenderInput.size() )
+			{
+
+
+				switch( m_sRenderInput[ 1 ] )
+				{
+					case '1':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 340 ) , SGD::Rectangle( 0 , 32 , 29 , 54 ) );
+						break;
+					case '2':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 340 ) , SGD::Rectangle( 0 , 64 , 29 , 87 ) );
+						break;
+					case '3':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 340 ) , SGD::Rectangle( 0 , 95 , 29 , 116 ) );
+						break;
+					case '4':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 340 ) , SGD::Rectangle( 32 , 32 , 60 , 54 ) );
+						break;
+					case '5':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 340 ) , SGD::Rectangle( 32 , 64 , 60 , 87 ) );
+						break;
+					case '6':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 275 , 340 ) , SGD::Rectangle( 32 , 95 , 60 , 116 ) );
+						break;
+					default:
+						break;
+				}
+				switch( m_sRenderInput[ 4 ] )
+				{
+					case '1':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 340 ) , SGD::Rectangle( 0 , 32 , 29 , 54 ) );
+						break;
+					case '2':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 340 ) , SGD::Rectangle( 0 , 64 , 29 , 87 ) );
+						break;
+					case '3':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 340 ) , SGD::Rectangle( 0 , 95 , 29 , 116 ) );
+						break;
+					case '4':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 340 ) , SGD::Rectangle( 32 , 32 , 60 , 54 ) );
+						break;
+					case '5':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 340 ) , SGD::Rectangle( 32 , 64 , 60 , 87 ) );
+						break;
+					case '6':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 307 , 340 ) , SGD::Rectangle( 32 , 95 , 60 , 116 ) );
+						break;
+					default:
+						break;
+				}
+				switch( m_sRenderInput[ 7 ] )
+				{
+					case '1':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 340 ) , SGD::Rectangle( 0 , 32 , 29 , 54 ) );
+						break;
+					case '2':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 340 ) , SGD::Rectangle( 0 , 64 , 29 , 87 ) );
+						break;
+					case '3':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 340 ) , SGD::Rectangle( 0 , 95 , 29 , 116 ) );
+						break;
+					case '4':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 340 ) , SGD::Rectangle( 32 , 32 , 60 , 54 ) );
+						break;
+					case '5':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 340 ) , SGD::Rectangle( 32 , 64 , 60 , 87 ) );
+						break;
+					case '6':
+						SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hArcadeButtons , SGD::Point( 339 , 340 ) , SGD::Rectangle( 32 , 95 , 60 , 116 ) );
+						break;
+					default:
+						break;
+				}
+			}
+		}
+		else
+		{
+			//Draw Scroll
+			SGD::GraphicsManager::GetInstance()->DrawTextureSection( m_hScroll , SGD::Point( 150.0f , 300.0f ) , SGD::Rectangle( 0.0f , 0.0f , 465.0f , 290.0f ) , 0.0f , { } , { } , SGD::Size( 1.0f , 0.5f ) );
+
+			// draw timer rect
+			timer.right = timer.right - ( ( m_fSeconds / m_fLetterTimer ) * 100 );
+			SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 0 , 0 ) );
+
+			//Draw text
+			pFonts->Render( "Goblin" , m_sRenderOutput.c_str() , { 275 , 325 } , 2 , { 255 , 0 , 0 , 0 } );
+			pFonts->Render( "Goblin" , m_sRenderInput.c_str() , { 275 , 340 } , 2 , { 255 , 255 , 255 , 255 } );
+		}
 	}
 
 }
@@ -285,32 +447,32 @@ void QuickTime::GenerateRandomLetter()
 		break;
 	case SGD::Key::Zero:
 	{
-						   m_sOutput += "0";
+						   m_sOutput += "1";
 	}
 		break;
 	case SGD::Key::One:
 	{
-						  m_sOutput += "1";
+						  m_sOutput += "2";
 	}
 		break;
 	case SGD::Key::Two:
 	{
-						  m_sOutput += "2";
+						  m_sOutput += "3";
 	}
 		break;
 	case SGD::Key::Three:
 	{
-							m_sOutput += "3";
+							m_sOutput += "4";
 	}
 		break;
 	case SGD::Key::Four:
 	{
-						   m_sOutput += "4";
+						   m_sOutput += "5";
 	}
 		break;
 	case SGD::Key::Five:
 	{
-						   m_sOutput += "5";
+						   m_sOutput += "6";
 	}
 		break;
 
@@ -364,39 +526,39 @@ void QuickTime::AddGuess( SGD::Key x )
 		break;
 	case SGD::Key::Zero:
 	{
-						   m_sInput += "0";
-						   m_sRenderInput += " 0 ";
+						   m_sInput += "1";
+						   m_sRenderInput += " 1 ";
 
 	}
 		break;
 	case SGD::Key::One:
 	{
-						  m_sInput += "1";
-						  m_sRenderInput += " 1 ";
-	}
-		break;
-	case SGD::Key::Two:
-	{
 						  m_sInput += "2";
 						  m_sRenderInput += " 2 ";
 	}
 		break;
+	case SGD::Key::Two:
+	{
+						  m_sInput += "3";
+						  m_sRenderInput += " 3 ";
+	}
+		break;
 	case SGD::Key::Three:
 	{
-							m_sInput += "3";
-							m_sRenderInput += " 3 ";
+							m_sInput += "4";
+							m_sRenderInput += " 4 ";
 	}
 		break;
 	case SGD::Key::Four:
 	{
-						   m_sInput += "4";
-						   m_sRenderInput += " 4 ";
+						   m_sInput += "5";
+						   m_sRenderInput += " 5 ";
 	}
 		break;
 	case SGD::Key::Five:
 	{
-						   m_sInput += "5";
-						   m_sRenderInput += " 5 ";
+						   m_sInput += "6";
+						   m_sRenderInput += " 6 ";
 	}
 	default:
 		break;
