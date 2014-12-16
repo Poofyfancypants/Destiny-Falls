@@ -174,8 +174,8 @@ bool OptionsState::Input()
 			m_nCursor = 4;
 		else if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Back"] ) )
 			m_nCursor = 5;
-		else
-			m_nCursor = -1;
+		//else
+			//m_nCursor = -1;
 	}
 
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
@@ -254,7 +254,10 @@ void OptionsState::Update( float elapsedTime )
 		pAudio->PlayAudio( m_hBackMusic, true );
 
 	if( Game::GetInstance()->GetWindowed() != m_hWindow )
+	{
 		SGD::GraphicsManager::GetInstance()->Resize( { Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, Game::GetInstance()->GetWindowed() );
+		m_nCursor = 3;
+	}
 	m_hWindow = Game::GetInstance()->GetWindowed();
 
 

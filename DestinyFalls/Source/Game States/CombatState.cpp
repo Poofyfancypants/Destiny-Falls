@@ -768,24 +768,24 @@ void CombatState::Render(void)
 		}
 	}
 
-	if (CombatToolTip == 0)
-	{
-		pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
-		pFont->Render("Other", "Tier 1 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
-		pFont->Render("Other", "1 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
-	}
-	if (CombatToolTip == 1)
-	{
-		pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
-		pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
-		pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
-	}
-	if (CombatToolTip == 2)
-	{
-		pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
-		pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
-		pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
-	}
+	//if (CombatToolTip == 0)
+	//{
+	//	pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+	//	pFont->Render("Other", "Tier 1 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//	pFont->Render("Other", "1 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//}
+	//if (CombatToolTip == 1)
+	//{
+	//	pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+	//	pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//	pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//}
+	//if (CombatToolTip == 2)
+	//{
+	//	pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+	//	pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//	pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//}
 
 
 	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)

@@ -156,7 +156,7 @@ void GameplayState::Exit()
 		m_pPlayer->Release();
 		m_pPlayer = nullptr;
 	}
-
+	pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
 	pAudio->UnloadAudio(bmusic);
 	pAudio->UnloadAudio(bLevel1Music);
 	pAudio->UnloadAudio(bLevel2Music);
@@ -190,6 +190,8 @@ void GameplayState::Exit()
 	pGraphics->UnloadTexture(m_fireFrame);
 	pGraphics->UnloadTexture(m_hfinalFrame);
 
+	InventoryState::GetInstance()->ClearInventory();
+
 	m_pObjects->RemoveAll();
 	delete m_pObjects;
 	m_pObjects = nullptr;
@@ -197,7 +199,6 @@ void GameplayState::Exit()
 	delete m_pMap;
 	m_pMap = nullptr;
 	m_pAnimator->DeleteInstance();
-
 	//m_particle.Exit();
 }
 
@@ -725,7 +726,8 @@ void GameplayState::LoadNewLevel()
 
 			break;
 		case GameplayState::WIN_LEVEL:
-			Game::GetInstance()->AddState(WinState::GetInstance());
+			Game::GetInstance()->RemoveState();
+			Game::GetInstance()->AddState( WinState::GetInstance() );
 			m_nCurrentLevel = 1;
 
 			break;
