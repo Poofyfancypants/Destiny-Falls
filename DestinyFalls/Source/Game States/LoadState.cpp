@@ -24,10 +24,10 @@ LoadState* LoadState::GetInstance()
 void LoadState::Enter()
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
-	m_hBackground = pGraphics->LoadTexture( L"resource/graphics/MenuBackgrounds/Options.png" );
-	m_hButton = pGraphics->LoadTexture( "resource/graphics/optionsButton.png" );
-	m_hButtonHighlighted = pGraphics->LoadTexture( "resource/graphics/optionHighlighted.png" );
-	m_hNameFrame = pGraphics->LoadTexture( "resource/graphics/MenuBackgrounds/saveScroll.png" );
+	m_hBackground = pGraphics->LoadTexture(L"resource/graphics/MenuBackgrounds/Options.png");
+	m_hButton = pGraphics->LoadTexture("resource/graphics/optionsButton.png");
+	m_hButtonHighlighted = pGraphics->LoadTexture("resource/graphics/optionHighlighted.png");
+	m_hNameFrame = pGraphics->LoadTexture("resource/graphics/MenuBackgrounds/saveScroll.png");
 
 	LoadNames();
 }
@@ -37,10 +37,10 @@ void LoadState::Exit()
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
-	pGraphics->UnloadTexture( m_hButton );
-	pGraphics->UnloadTexture( m_hButtonHighlighted );
-	pGraphics->UnloadTexture( m_hBackground );
-	pGraphics->UnloadTexture( m_hNameFrame );
+	pGraphics->UnloadTexture(m_hButton);
+	pGraphics->UnloadTexture(m_hButtonHighlighted);
+	pGraphics->UnloadTexture(m_hBackground);
+	pGraphics->UnloadTexture(m_hNameFrame);
 	SlotName();
 }
 
@@ -48,67 +48,81 @@ bool LoadState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown(0,6))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0, 6))
 	{
 		Game::GetInstance()->RemoveState();
 	}
 
-	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y )
+	if (pInput->GetCursorMovement().x || pInput->GetCursorMovement().y)
 	{
-		if( pInput->GetCursorPosition().IsPointInRectangle( newRect ) )
+		if (pInput->GetCursorPosition().IsPointInRectangle(newRect))
 			m_nCursor = 0;
-		else if( pInput->GetCursorPosition().IsPointInRectangle( saveslot1 ) )
+		else if (pInput->GetCursorPosition().IsPointInRectangle(saveslot1))
 			m_nCursor = 1;
-		else if( pInput->GetCursorPosition().IsPointInRectangle( saveslot2 ) )
+		else if (pInput->GetCursorPosition().IsPointInRectangle(saveslot2))
 			m_nCursor = 2;
-		else if( pInput->GetCursorPosition().IsPointInRectangle( saveslot3 ) )
+		else if (pInput->GetCursorPosition().IsPointInRectangle(saveslot3))
 			m_nCursor = 3;
-		else if( pInput->GetCursorPosition().IsPointInRectangle( exit ) )
+		else if (pInput->GetCursorPosition().IsPointInRectangle(exit))
 			m_nCursor = 4;
 		else
 			m_nCursor = -1;
 	}
-	
-	if( pInput->IsKeyPressed( SGD::Key::Left ) || pInput->IsKeyPressed( SGD::Key::A ) || pInput->GetLeftJoystick(0).x == -1)
+	if (m_fArcadeTimer >= 1.0f)
 	{
-		m_nCursor--;
-		if( m_nCursor < 0 )
-			m_nCursor = 4;
-	}
-	else if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
-	{
-		m_nCursor++;
-		if( m_nCursor > 4 )
-			m_nCursor = 0;
-	}
-	else if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
-	{
-		m_nCursor--;
-		if( m_nCursor < 0 )
-			m_nCursor = 4;
-	}
-	else if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
-	{
-		m_nCursor++;
-		if( m_nCursor > 4 )
-			m_nCursor = 0;
+		if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
+		{
+			m_nCursor--;
+			if (m_nCursor < 0)
+				m_nCursor = 4;
+
+			m_fArcadeTimer = 0.0f;
+
+		}
+		else if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
+		{
+			m_nCursor++;
+			if (m_nCursor > 4)
+				m_nCursor = 0;
+
+			m_fArcadeTimer = 0.0f;
+
+		}
+		else if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+		{
+			m_nCursor--;
+			if (m_nCursor < 0)
+				m_nCursor = 4;
+
+			m_fArcadeTimer = 0.0f;
+
+		}
+		else if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+		{
+			m_nCursor++;
+			if (m_nCursor > 4)
+				m_nCursor = 0;
+
+			m_fArcadeTimer = 0.0f;
+
+		}
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) || pInput->IsKeyPressed( SGD::Key::MouseLeft ) || pInput->IsButtonDown(0,0))
+	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonDown(0, 0))
 	{
-		switch( m_nCursor )
+		switch (m_nCursor)
 		{
 		case 0:
-			Game::GetInstance()->AddState( GameplayState::GetInstance() );
+			Game::GetInstance()->AddState(GameplayState::GetInstance());
 			break;
 		case 1:
-			Load( "resource/Save/Save.xml" );
+			Load("resource/Save/Save.xml");
 			break;
 		case 2:
-			Load2( "resource/Save/Save2.xml" );
+			Load2("resource/Save/Save2.xml");
 			break;
 		case 3:
-			Load3( "resource/Save/Save3.xml" );
+			Load3("resource/Save/Save3.xml");
 			break;
 		case 4:
 			Game::GetInstance()->RemoveState();
@@ -121,8 +135,10 @@ bool LoadState::Input()
 	return true;
 }
 
-void LoadState::Update( float elapsedTime )
+void LoadState::Update(float elapsedTime)
 {
+	m_fArcadeTimer += elapsedTime;
+
 	return;
 }
 
@@ -132,43 +148,43 @@ void LoadState::Render()
 	BitmapFontManager* pFont = pFont->GetInstance();
 	SGD::Color textColor = { 239, 208, 162 };
 
-	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
-	pGraphics->DrawTexture( Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
-	pFont->Render( "Other", "Select a Slot to Load", SGD::Point( 250, 50 ), 1.5f, SGD::Color( 0, 0, 0 ) );
+	pGraphics->DrawTexture(Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f });
+	pGraphics->DrawTexture(Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f });
+	pFont->Render("Other", "Select a Slot to Load", SGD::Point(250, 50), 1.5f, SGD::Color(0, 0, 0));
 
 
-	pGraphics->DrawTexture( m_hButton, SGD::Point( 280, 130 ) );
-	pFont->Render( "Other", "New Game", SGD::Point( 310, 145 ), 1, textColor );
-	pGraphics->DrawTexture( m_hButton, SGD::Point( 20, 300 ) );
-	pFont->Render( "Other", m_sSlot1Name.c_str(), SGD::Point( 50, 315 ), 1, textColor );
-	pGraphics->DrawTexture( m_hButton, SGD::Point( 525, 300 ) );
-	pFont->Render( "Other", m_sSlot2Name.c_str(), SGD::Point( 555, 315 ), 1, textColor );
-	pGraphics->DrawTexture( m_hButton, SGD::Point( 285, 470 ) );
-	pFont->Render( "Other", m_sSlot3Name.c_str(), SGD::Point( 315, 485 ), 1, textColor );
-	pGraphics->DrawTexture( m_hButton, SGD::Point( 630, 530 ), {}, {}, {}, { .5f, 1 } );
-	pFont->Render( "Other", "Exit", SGD::Point( 655, 545 ), 1, textColor );
+	pGraphics->DrawTexture(m_hButton, SGD::Point(280, 130));
+	pFont->Render("Other", "New Game", SGD::Point(310, 145), 1, textColor);
+	pGraphics->DrawTexture(m_hButton, SGD::Point(20, 300));
+	pFont->Render("Other", m_sSlot1Name.c_str(), SGD::Point(50, 315), 1, textColor);
+	pGraphics->DrawTexture(m_hButton, SGD::Point(525, 300));
+	pFont->Render("Other", m_sSlot2Name.c_str(), SGD::Point(555, 315), 1, textColor);
+	pGraphics->DrawTexture(m_hButton, SGD::Point(285, 470));
+	pFont->Render("Other", m_sSlot3Name.c_str(), SGD::Point(315, 485), 1, textColor);
+	pGraphics->DrawTexture(m_hButton, SGD::Point(630, 530), {}, {}, {}, { .5f, 1 });
+	pFont->Render("Other", "Exit", SGD::Point(655, 545), 1, textColor);
 
-	switch( m_nCursor )
+	switch (m_nCursor)
 	{
 	case 0:
-		pGraphics->DrawTexture( m_hButtonHighlighted, SGD::Point( 280, 130 ) );
-		pFont->Render( "Other", "New Game", SGD::Point( 310, 145 ), 1, textColor );
+		pGraphics->DrawTexture(m_hButtonHighlighted, SGD::Point(280, 130));
+		pFont->Render("Other", "New Game", SGD::Point(310, 145), 1, textColor);
 		break;
 	case 1:
-		pGraphics->DrawTexture( m_hButtonHighlighted, SGD::Point( 20, 300 ) );
-		pFont->Render( "Other", m_sSlot1Name.c_str(), SGD::Point( 50, 315 ), 1, textColor );
+		pGraphics->DrawTexture(m_hButtonHighlighted, SGD::Point(20, 300));
+		pFont->Render("Other", m_sSlot1Name.c_str(), SGD::Point(50, 315), 1, textColor);
 		break;
 	case 2:
-		pGraphics->DrawTexture( m_hButtonHighlighted, SGD::Point( 525, 300 ) );
-		pFont->Render( "Other", m_sSlot2Name.c_str(), SGD::Point( 555, 315 ), 1, textColor );
+		pGraphics->DrawTexture(m_hButtonHighlighted, SGD::Point(525, 300));
+		pFont->Render("Other", m_sSlot2Name.c_str(), SGD::Point(555, 315), 1, textColor);
 		break;
 	case 3:
-		pGraphics->DrawTexture( m_hButtonHighlighted, SGD::Point( 285, 470 ) );
-		pFont->Render( "Other", m_sSlot3Name.c_str(), SGD::Point( 315, 485 ), 1, textColor );
+		pGraphics->DrawTexture(m_hButtonHighlighted, SGD::Point(285, 470));
+		pFont->Render("Other", m_sSlot3Name.c_str(), SGD::Point(315, 485), 1, textColor);
 		break;
 	case 4:
-		pGraphics->DrawTexture( m_hButtonHighlighted, SGD::Point( 630, 530 ), {}, {}, {}, { .5f, 1 } );
-		pFont->Render( "Other", "Exit", SGD::Point( 655, 545 ), 1, textColor );
+		pGraphics->DrawTexture(m_hButtonHighlighted, SGD::Point(630, 530), {}, {}, {}, { .5f, 1 });
+		pFont->Render("Other", "Exit", SGD::Point(655, 545), 1, textColor);
 		break;
 	}
 
@@ -177,20 +193,20 @@ void LoadState::Render()
 void LoadState::SlotName()
 {
 	fstream fout;
-	fout.open( "resource/Save/Names.txt", ios_base::out | ios_base::binary );
-	if( fout.is_open() )
+	fout.open("resource/Save/Names.txt", ios_base::out | ios_base::binary);
+	if (fout.is_open())
 	{
 		int len = m_sSlot1Name.length() + 1;
-		fout.write( (char*)&len, sizeof( len ) );
-		fout.write( m_sSlot1Name.c_str(), len );
+		fout.write((char*)&len, sizeof(len));
+		fout.write(m_sSlot1Name.c_str(), len);
 
 		len = m_sSlot2Name.length() + 1;
-		fout.write( (char*)&len, sizeof( len ) );
-		fout.write( m_sSlot2Name.c_str(), len );
+		fout.write((char*)&len, sizeof(len));
+		fout.write(m_sSlot2Name.c_str(), len);
 
 		len = m_sSlot3Name.length() + 1;
-		fout.write( (char*)&len, sizeof( len ) );
-		fout.write( m_sSlot3Name.c_str(), len );
+		fout.write((char*)&len, sizeof(len));
+		fout.write(m_sSlot3Name.c_str(), len);
 
 		fout.close();
 	}
@@ -200,29 +216,29 @@ void LoadState::SlotName()
 void LoadState::LoadNames()
 {
 	fstream fin;
-	fin.open( "resource/Save/Names.txt", ios_base::in | ios_base::binary );
+	fin.open("resource/Save/Names.txt", ios_base::in | ios_base::binary);
 	char* name;
 	int nameLength;
-	if( fin.is_open() )
+	if (fin.is_open())
 	{
 
-		fin.read( (char*)&nameLength, sizeof( int ) );
+		fin.read((char*)&nameLength, sizeof(int));
 		name = new char[nameLength];
-		fin.read( name, nameLength );
+		fin.read(name, nameLength);
 		m_sSlot1Name = name;
 		delete[] name;
 
 
-		fin.read( (char*)&nameLength, sizeof( int ) );
+		fin.read((char*)&nameLength, sizeof(int));
 		name = new char[nameLength];
-		fin.read( name, nameLength );
+		fin.read(name, nameLength);
 		m_sSlot2Name = name;
 		delete[] name;
 
 
-		fin.read( (char*)&nameLength, sizeof( int ) );
+		fin.read((char*)&nameLength, sizeof(int));
 		name = new char[nameLength];
-		fin.read( name, nameLength );
+		fin.read(name, nameLength);
 		m_sSlot3Name = name;
 		delete[] name;
 
@@ -231,7 +247,7 @@ void LoadState::LoadNames()
 	}
 }
 
-void LoadState::Load( string path )
+void LoadState::Load(string path)
 {
 	int health, currLevel, size;
 	double posx, posy;
@@ -243,115 +259,115 @@ void LoadState::Load( string path )
 
 	TiXmlDocument doc;
 
-	if( doc.LoadFile( path.c_str() ) == false )
+	if (doc.LoadFile(path.c_str()) == false)
 	{
 		return;
 	}
 
 	TiXmlElement* pRoot = doc.RootElement();
 
-	if( pRoot == nullptr )
+	if (pRoot == nullptr)
 	{
 		return;
 	}
 
 	TiXmlElement* pPlayer = pRoot->FirstChildElement();
 
-	pPlayer->Attribute( "Health", &health );
-	pPlayer->Attribute( "PosX", &posx );
-	pPlayer->Attribute( "PosY", &posy );
-	pPlayer->Attribute( "CurrLevel", &currLevel );
+	pPlayer->Attribute("Health", &health);
+	pPlayer->Attribute("PosX", &posx);
+	pPlayer->Attribute("PosY", &posy);
+	pPlayer->Attribute("CurrLevel", &currLevel);
 
 
 	////Sword
-	TiXmlElement* pSword = pPlayer->FirstChildElement( "Sword" );
+	TiXmlElement* pSword = pPlayer->FirstChildElement("Sword");
 
 	Runes temp2;
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
 
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
-	pSword = pSword->NextSiblingElement( "Sword" );
+	pSword = pSword->NextSiblingElement("Sword");
 
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
-	pSword = pSword->NextSiblingElement( "Sword" );
+	pSword = pSword->NextSiblingElement("Sword");
 
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
 	//Armor
-	TiXmlElement* pArmor = pSword->NextSiblingElement( "Armor" );
+	TiXmlElement* pArmor = pSword->NextSiblingElement("Armor");
 
-	for( int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; i++)
 	{
 		Runes temp3;
 
-		pArmor->Attribute( "Element", &element );
-		temp3.SetElement( (Elements)element );
-		pArmor->Attribute( "Tier", &tier );
-		temp3.SetTier( tier );
+		pArmor->Attribute("Element", &element);
+		temp3.SetElement((Elements)element);
+		pArmor->Attribute("Tier", &tier);
+		temp3.SetTier(tier);
 
-		tempA.push_back( temp3 );
-		if( i < 2 )
+		tempA.push_back(temp3);
+		if (i < 2)
 		{
-			pArmor = pArmor->NextSiblingElement( "Armor" );
+			pArmor = pArmor->NextSiblingElement("Armor");
 
 		}
 	}
 
 	//Ring
-	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/ );
+	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/);
 
-	for( int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; i++)
 	{
 		Runes temp4;
 
-		pRing->Attribute( "Element", &element );
-		temp4.SetElement( (Elements)element );
-		pRing->Attribute( "Tier", &tier );
-		temp4.SetTier( tier );
+		pRing->Attribute("Element", &element);
+		temp4.SetElement((Elements)element);
+		pRing->Attribute("Tier", &tier);
+		temp4.SetTier(tier);
 
-		tempG.push_back( temp4 );
-		if( i < 2 )
+		tempG.push_back(temp4);
+		if (i < 2)
 		{
-			pRing = pRing->NextSiblingElement( "Ring" );
+			pRing = pRing->NextSiblingElement("Ring");
 
 		}
 	}
 
 	//inventory
-	TiXmlElement* pInv = pRing->NextSiblingElement( "Inventory" );
-	pInv->Attribute( "Size", &size );
+	TiXmlElement* pInv = pRing->NextSiblingElement("Inventory");
+	pInv->Attribute("Size", &size);
 
-	if( size != 0 )
+	if (size != 0)
 	{
-		TiXmlElement* pRunes = pInv->FirstChildElement( "Rune" );
+		TiXmlElement* pRunes = pInv->FirstChildElement("Rune");
 
-		while( pRunes != nullptr )
+		while (pRunes != nullptr)
 		{
 			//Read in
 			Runes temp5;
 
-			pRunes->Attribute( "Element", &element );
-			temp5.SetElement( (Elements)element );
-			pRunes->Attribute( "Tier", &tier );
-			temp5.SetTier( tier );
+			pRunes->Attribute("Element", &element);
+			temp5.SetElement((Elements)element);
+			pRunes->Attribute("Tier", &tier);
+			temp5.SetTier(tier);
 
-			tempInv.push_back( temp5 );
+			tempInv.push_back(temp5);
 
 			pRunes = pRunes->NextSiblingElement();
 		}
@@ -359,36 +375,36 @@ void LoadState::Load( string path )
 
 
 	Game::GetInstance()->RemoveState();
-	Game::GetInstance()->AddState( GameplayState::GetInstance() );
+	Game::GetInstance()->AddState(GameplayState::GetInstance());
 
-	GameplayState::GetInstance()->SetLevel( currLevel );
+	GameplayState::GetInstance()->SetLevel(currLevel);
 	GameplayState::GetInstance()->LoadNewLevel();
 
-	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( health );
-	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
-	pInventory->AddRunesToSword0fromInventory( tempS[0] );
-	pInventory->AddRunesToSword1fromInventory( tempS[1] );
-	pInventory->AddRunesToSword2fromInventory( tempS[2] );
+	pInventory->AddRunesToSword0fromInventory(tempS[0]);
+	pInventory->AddRunesToSword1fromInventory(tempS[1]);
+	pInventory->AddRunesToSword2fromInventory(tempS[2]);
 
-	pInventory->AddRunesToArmor0fromInventory( tempA[0] );
-	pInventory->AddRunesToArmor1fromInventory( tempA[1] );
-	pInventory->AddRunesToArmor2fromInventory( tempA[2] );
+	pInventory->AddRunesToArmor0fromInventory(tempA[0]);
+	pInventory->AddRunesToArmor1fromInventory(tempA[1]);
+	pInventory->AddRunesToArmor2fromInventory(tempA[2]);
 
-	pInventory->AddRunesToRing0fromInventory( tempG[0] );
-	pInventory->AddRunesToRing1fromInventory( tempG[1] );
-	pInventory->AddRunesToRing2fromInventory( tempG[2] );
+	pInventory->AddRunesToRing0fromInventory(tempG[0]);
+	pInventory->AddRunesToRing1fromInventory(tempG[1]);
+	pInventory->AddRunesToRing2fromInventory(tempG[2]);
 
-	for( unsigned int i = 0; i < tempInv.size(); i++ )
+	for (unsigned int i = 0; i < tempInv.size(); i++)
 	{
-		pInventory->AddRunesToInventoryfromWorld( tempInv[i] );
+		pInventory->AddRunesToInventoryfromWorld(tempInv[i]);
 	}
 
 }
 
-void LoadState::Load2( string path )
+void LoadState::Load2(string path)
 {
 	/*fstream fin;
 	fin.open("resource/Save/Save2.txt", ios_base::in | ios_base::binary);
@@ -425,115 +441,115 @@ void LoadState::Load2( string path )
 
 	TiXmlDocument doc;
 
-	if( doc.LoadFile( path.c_str() ) == false )
+	if (doc.LoadFile(path.c_str()) == false)
 	{
 		return;
 	}
 
 	TiXmlElement* pRoot = doc.RootElement();
 
-	if( pRoot == nullptr )
+	if (pRoot == nullptr)
 	{
 		return;
 	}
 
 	TiXmlElement* pPlayer = pRoot->FirstChildElement();
 
-	pPlayer->Attribute( "Health", &health );
-	pPlayer->Attribute( "PosX", &posx );
-	pPlayer->Attribute( "PosY", &posy );
-	pPlayer->Attribute( "CurrLevel", &currLevel );
+	pPlayer->Attribute("Health", &health);
+	pPlayer->Attribute("PosX", &posx);
+	pPlayer->Attribute("PosY", &posy);
+	pPlayer->Attribute("CurrLevel", &currLevel);
 
 
 	////Sword
-	TiXmlElement* pSword = pPlayer->FirstChildElement( "Sword" );
+	TiXmlElement* pSword = pPlayer->FirstChildElement("Sword");
 
 	Runes temp2;
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
 
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
-	pSword = pSword->NextSiblingElement( "Sword" );
+	pSword = pSword->NextSiblingElement("Sword");
 
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
-	pSword = pSword->NextSiblingElement( "Sword" );
+	pSword = pSword->NextSiblingElement("Sword");
 
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
 	//Armor
-	TiXmlElement* pArmor = pSword->NextSiblingElement( "Armor" );
+	TiXmlElement* pArmor = pSword->NextSiblingElement("Armor");
 
-	for( int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; i++)
 	{
 		Runes temp3;
 
-		pArmor->Attribute( "Element", &element );
-		temp3.SetElement( (Elements)element );
-		pArmor->Attribute( "Tier", &tier );
-		temp3.SetTier( tier );
+		pArmor->Attribute("Element", &element);
+		temp3.SetElement((Elements)element);
+		pArmor->Attribute("Tier", &tier);
+		temp3.SetTier(tier);
 
-		tempA.push_back( temp3 );
-		if( i < 2 )
+		tempA.push_back(temp3);
+		if (i < 2)
 		{
-			pArmor = pArmor->NextSiblingElement( "Armor" );
+			pArmor = pArmor->NextSiblingElement("Armor");
 
 		}
 	}
 
 	//Ring
-	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/ );
+	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/);
 
-	for( int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; i++)
 	{
 		Runes temp4;
 
-		pRing->Attribute( "Element", &element );
-		temp4.SetElement( (Elements)element );
-		pRing->Attribute( "Tier", &tier );
-		temp4.SetTier( tier );
+		pRing->Attribute("Element", &element);
+		temp4.SetElement((Elements)element);
+		pRing->Attribute("Tier", &tier);
+		temp4.SetTier(tier);
 
-		tempG.push_back( temp4 );
-		if( i < 2 )
+		tempG.push_back(temp4);
+		if (i < 2)
 		{
-			pRing = pRing->NextSiblingElement( "Ring" );
+			pRing = pRing->NextSiblingElement("Ring");
 
 		}
 	}
 
 	//inventory
-	TiXmlElement* pInv = pRing->NextSiblingElement( "Inventory" );
-	pInv->Attribute( "Size", &size );
+	TiXmlElement* pInv = pRing->NextSiblingElement("Inventory");
+	pInv->Attribute("Size", &size);
 
-	if( size != 0 )
+	if (size != 0)
 	{
-		TiXmlElement* pRunes = pInv->FirstChildElement( "Rune" );
+		TiXmlElement* pRunes = pInv->FirstChildElement("Rune");
 
-		while( pRunes != nullptr )
+		while (pRunes != nullptr)
 		{
 			//Read in
 			Runes temp5;
 
-			pRunes->Attribute( "Element", &element );
-			temp5.SetElement( (Elements)element );
-			pRunes->Attribute( "Tier", &tier );
-			temp5.SetTier( tier );
+			pRunes->Attribute("Element", &element);
+			temp5.SetElement((Elements)element);
+			pRunes->Attribute("Tier", &tier);
+			temp5.SetTier(tier);
 
-			tempInv.push_back( temp5 );
+			tempInv.push_back(temp5);
 
 			pRunes = pRunes->NextSiblingElement();
 		}
@@ -541,37 +557,37 @@ void LoadState::Load2( string path )
 
 
 	Game::GetInstance()->RemoveState();
-	Game::GetInstance()->AddState( GameplayState::GetInstance() );
+	Game::GetInstance()->AddState(GameplayState::GetInstance());
 
-	GameplayState::GetInstance()->SetLevel( currLevel );
+	GameplayState::GetInstance()->SetLevel(currLevel);
 	GameplayState::GetInstance()->LoadNewLevel();
 
-	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( health );
-	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
-	pInventory->AddRunesToSword0fromInventory( tempS[0] );
-	pInventory->AddRunesToSword1fromInventory( tempS[1] );
-	pInventory->AddRunesToSword2fromInventory( tempS[2] );
+	pInventory->AddRunesToSword0fromInventory(tempS[0]);
+	pInventory->AddRunesToSword1fromInventory(tempS[1]);
+	pInventory->AddRunesToSword2fromInventory(tempS[2]);
 
-	pInventory->AddRunesToArmor0fromInventory( tempA[0] );
-	pInventory->AddRunesToArmor1fromInventory( tempA[1] );
-	pInventory->AddRunesToArmor2fromInventory( tempA[2] );
+	pInventory->AddRunesToArmor0fromInventory(tempA[0]);
+	pInventory->AddRunesToArmor1fromInventory(tempA[1]);
+	pInventory->AddRunesToArmor2fromInventory(tempA[2]);
 
-	pInventory->AddRunesToRing0fromInventory( tempG[0] );
-	pInventory->AddRunesToRing1fromInventory( tempG[1] );
-	pInventory->AddRunesToRing2fromInventory( tempG[2] );
+	pInventory->AddRunesToRing0fromInventory(tempG[0]);
+	pInventory->AddRunesToRing1fromInventory(tempG[1]);
+	pInventory->AddRunesToRing2fromInventory(tempG[2]);
 
-	for( unsigned int i = 0; i < tempInv.size(); i++ )
+	for (unsigned int i = 0; i < tempInv.size(); i++)
 	{
-		pInventory->AddRunesToInventoryfromWorld( tempInv[i] );
+		pInventory->AddRunesToInventoryfromWorld(tempInv[i]);
 	}
 
 
 }
 
-void LoadState::Load3( string path )
+void LoadState::Load3(string path)
 {
 	int health, currLevel, size;
 	double posx, posy;
@@ -583,115 +599,115 @@ void LoadState::Load3( string path )
 
 	TiXmlDocument doc;
 
-	if( doc.LoadFile( path.c_str() ) == false )
+	if (doc.LoadFile(path.c_str()) == false)
 	{
 		return;
 	}
 
 	TiXmlElement* pRoot = doc.RootElement();
 
-	if( pRoot == nullptr )
+	if (pRoot == nullptr)
 	{
 		return;
 	}
 
 	TiXmlElement* pPlayer = pRoot->FirstChildElement();
 
-	pPlayer->Attribute( "Health", &health );
-	pPlayer->Attribute( "PosX", &posx );
-	pPlayer->Attribute( "PosY", &posy );
-	pPlayer->Attribute( "CurrLevel", &currLevel );
+	pPlayer->Attribute("Health", &health);
+	pPlayer->Attribute("PosX", &posx);
+	pPlayer->Attribute("PosY", &posy);
+	pPlayer->Attribute("CurrLevel", &currLevel);
 
 
 	////Sword
-	TiXmlElement* pSword = pPlayer->FirstChildElement( "Sword" );
+	TiXmlElement* pSword = pPlayer->FirstChildElement("Sword");
 
 	Runes temp2;
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
 
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
-	pSword = pSword->NextSiblingElement( "Sword" );
+	pSword = pSword->NextSiblingElement("Sword");
 
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
-	pSword = pSword->NextSiblingElement( "Sword" );
+	pSword = pSword->NextSiblingElement("Sword");
 
-	pSword->Attribute( "Element", &element );
-	temp2.SetElement( (Elements)element );
-	pSword->Attribute( "Tier", &tier );
-	temp2.SetTier( tier );
+	pSword->Attribute("Element", &element);
+	temp2.SetElement((Elements)element);
+	pSword->Attribute("Tier", &tier);
+	temp2.SetTier(tier);
 
-	tempS.push_back( temp2 );
+	tempS.push_back(temp2);
 
 	//Armor
-	TiXmlElement* pArmor = pSword->NextSiblingElement( "Armor" );
+	TiXmlElement* pArmor = pSword->NextSiblingElement("Armor");
 
-	for( int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; i++)
 	{
 		Runes temp3;
 
-		pArmor->Attribute( "Element", &element );
-		temp3.SetElement( (Elements)element );
-		pArmor->Attribute( "Tier", &tier );
-		temp3.SetTier( tier );
+		pArmor->Attribute("Element", &element);
+		temp3.SetElement((Elements)element);
+		pArmor->Attribute("Tier", &tier);
+		temp3.SetTier(tier);
 
-		tempA.push_back( temp3 );
-		if( i < 2 )
+		tempA.push_back(temp3);
+		if (i < 2)
 		{
-			pArmor = pArmor->NextSiblingElement( "Armor" );
+			pArmor = pArmor->NextSiblingElement("Armor");
 
 		}
 	}
 
 	//Ring
-	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/ );
+	TiXmlElement* pRing = pArmor->NextSiblingElement(/*"Ring"*/);
 
-	for( int i = 0; i < 3; i++ )
+	for (int i = 0; i < 3; i++)
 	{
 		Runes temp4;
 
-		pRing->Attribute( "Element", &element );
-		temp4.SetElement( (Elements)element );
-		pRing->Attribute( "Tier", &tier );
-		temp4.SetTier( tier );
+		pRing->Attribute("Element", &element);
+		temp4.SetElement((Elements)element);
+		pRing->Attribute("Tier", &tier);
+		temp4.SetTier(tier);
 
-		tempG.push_back( temp4 );
-		if( i < 2 )
+		tempG.push_back(temp4);
+		if (i < 2)
 		{
-			pRing = pRing->NextSiblingElement( "Ring" );
+			pRing = pRing->NextSiblingElement("Ring");
 
 		}
 	}
 
 	//inventory
-	TiXmlElement* pInv = pRing->NextSiblingElement( "Inventory" );
-	pInv->Attribute( "Size", &size );
+	TiXmlElement* pInv = pRing->NextSiblingElement("Inventory");
+	pInv->Attribute("Size", &size);
 
-	if( size != 0 )
+	if (size != 0)
 	{
-		TiXmlElement* pRunes = pInv->FirstChildElement( "Rune" );
+		TiXmlElement* pRunes = pInv->FirstChildElement("Rune");
 
-		while( pRunes != nullptr )
+		while (pRunes != nullptr)
 		{
 			//Read in
 			Runes temp5;
 
-			pRunes->Attribute( "Element", &element );
-			temp5.SetElement( (Elements)element );
-			pRunes->Attribute( "Tier", &tier );
-			temp5.SetTier( tier );
+			pRunes->Attribute("Element", &element);
+			temp5.SetElement((Elements)element);
+			pRunes->Attribute("Tier", &tier);
+			temp5.SetTier(tier);
 
-			tempInv.push_back( temp5 );
+			tempInv.push_back(temp5);
 
 			pRunes = pRunes->NextSiblingElement();
 		}
@@ -699,31 +715,31 @@ void LoadState::Load3( string path )
 
 
 	Game::GetInstance()->RemoveState();
-	Game::GetInstance()->AddState( GameplayState::GetInstance() );
+	Game::GetInstance()->AddState(GameplayState::GetInstance());
 
-	GameplayState::GetInstance()->SetLevel( currLevel );
+	GameplayState::GetInstance()->SetLevel(currLevel);
 	GameplayState::GetInstance()->LoadNewLevel();
 
-	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( health );
-	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
-	pInventory->AddRunesToSword0fromInventory( tempS[0] );
-	pInventory->AddRunesToSword1fromInventory( tempS[1] );
-	pInventory->AddRunesToSword2fromInventory( tempS[2] );
+	pInventory->AddRunesToSword0fromInventory(tempS[0]);
+	pInventory->AddRunesToSword1fromInventory(tempS[1]);
+	pInventory->AddRunesToSword2fromInventory(tempS[2]);
 
-	pInventory->AddRunesToArmor0fromInventory( tempA[0] );
-	pInventory->AddRunesToArmor1fromInventory( tempA[1] );
-	pInventory->AddRunesToArmor2fromInventory( tempA[2] );
+	pInventory->AddRunesToArmor0fromInventory(tempA[0]);
+	pInventory->AddRunesToArmor1fromInventory(tempA[1]);
+	pInventory->AddRunesToArmor2fromInventory(tempA[2]);
 
-	pInventory->AddRunesToRing0fromInventory( tempG[0] );
-	pInventory->AddRunesToRing1fromInventory( tempG[1] );
-	pInventory->AddRunesToRing2fromInventory( tempG[2] );
+	pInventory->AddRunesToRing0fromInventory(tempG[0]);
+	pInventory->AddRunesToRing1fromInventory(tempG[1]);
+	pInventory->AddRunesToRing2fromInventory(tempG[2]);
 
-	for( unsigned int i = 0; i < tempInv.size(); i++ )
+	for (unsigned int i = 0; i < tempInv.size(); i++)
 	{
-		pInventory->AddRunesToInventoryfromWorld( tempInv[i] );
+		pInventory->AddRunesToInventoryfromWorld(tempInv[i]);
 	}
 
 }

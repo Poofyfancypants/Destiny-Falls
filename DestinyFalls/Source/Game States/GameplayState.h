@@ -94,6 +94,7 @@ public:
 	void SetScreenShake() { m_bScreenShake = true; m_fShakeTimer = 0.3f; }
 
 private:
+
 	GameplayState() = default;
 	virtual ~GameplayState() = default;
 
@@ -152,7 +153,7 @@ private:
 	bool m_bChangeSideLevels = false;
 	bool m_bSetSidePosition = false;
 	bool m_bSetLevelPosition = false;
-
+	float m_fArcadeTimer = 0.0f;
 	// - Tutorial Level
 	SGD::HTexture m_hHero = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hRanger = SGD::INVALID_HANDLE;

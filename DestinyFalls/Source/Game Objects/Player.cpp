@@ -259,7 +259,7 @@ void Player::TakeInput()
 		m_bUpdateAnimation = false;
 		return;
 	}
-	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->IsDPadDown(0, SGD::DPad::Up))
+	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 	{
 		m_nDirection = 1;
 
@@ -271,7 +271,7 @@ void Player::TakeInput()
 		}
 
 	}
-	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->IsDPadDown(0, SGD::DPad::Down))
+	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 	{
 		m_nDirection = 2;
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingDown" )
@@ -282,7 +282,7 @@ void Player::TakeInput()
 		}
 	}
 
-	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->IsDPadDown(0, SGD::DPad::Left))
+	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 	{
 		m_nDirection = 3;
 
@@ -293,7 +293,7 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 	}
-	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->IsDPadDown(0, SGD::DPad::Right))
+	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
 	{
 		m_nDirection = 4;
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "WalkingRight" )
@@ -304,7 +304,7 @@ void Player::TakeInput()
 		}
 	}
 
-	if( pInput->IsKeyPressed( SGD::Key::P ) && m_nPotions > 0 && m_nHealth < 100 )
+	if (pInput->IsKeyPressed(SGD::Key::P) && m_nPotions > 0 && m_nHealth < 100 || pInput->IsButtonPressed(0, 2) && m_nPotions > 0 && m_nHealth < 100)
 	{
 		m_nHealth += 30;
 		pAudio->PlayAudio( Game::GetInstance()->potionSound, false );
@@ -363,7 +363,7 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_CHEST )
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Q) || pInput->IsButtonDown(0, 4))
+		if (pInput->IsKeyPressed(SGD::Key::Q) || pInput->IsButtonPressed(0, 4))
 		{
 			if( ( (Chest*)pOther )->IsTrapped() )
 			{

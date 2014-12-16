@@ -73,6 +73,8 @@ public:
 	void MuteCombatMusic();
 	void UnMuteCombatMusic();
 
+	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
+
 private:
 
 
@@ -81,7 +83,7 @@ private:
 
 	CombatState(const CombatState&) = delete;
 	CombatState& operator=(const CombatState&) = delete;
-
+	float m_fArcadeTimer = 0.0f;
 	int m_nQTLength = 3;
 
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
@@ -156,7 +158,6 @@ private:
 	int HeroIndex;					 //Player is always sub zero in this list
 
 	SGD::HTexture m_hplayer = SGD::INVALID_HANDLE;
-	SGD::HAudio cMusic = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hButton = SGD::INVALID_HANDLE;
 	SGD::HAudio cHealingAbility = SGD::INVALID_HANDLE;
 

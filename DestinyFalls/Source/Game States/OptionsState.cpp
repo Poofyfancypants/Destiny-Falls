@@ -71,84 +71,97 @@ bool OptionsState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
-
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown(0,6))
+	if (m_fArcadeTimer >= 0.5f)
 	{
-		if( PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState() )
+		if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6))
 		{
-			DeathState::GetInstance()->SetDeathState( false );
-			PauseMenuState::GetInstance()->SetPauseState( false );
+			if (PauseMenuState::GetInstance()->GetPauseState() || DeathState::GetInstance()->GetDeathState())
+			{
+				DeathState::GetInstance()->SetDeathState(false);
+				PauseMenuState::GetInstance()->SetPauseState(false);
+				Game::GetInstance()->RemoveState();
+			}
+			else
+			{
+				Game::GetInstance()->ClearStates();
+				Game::GetInstance()->AddState(MainMenuState::GetInstance());
+			}
+			m_fArcadeTimer = 0.0f;
+		}
+
+		if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+		{
+			++m_nCursor;
+			if (m_nCursor > 5)
+				m_nCursor = 1;
+			m_fArcadeTimer = 0.0f;
+
+		}
+		else if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+		{
+			--m_nCursor;
+			if (m_nCursor < 1)
+				m_nCursor = 5;
+			m_fArcadeTimer = 0.0f;
+
+		}
+
+		if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
+		{
+			switch (m_nCursor)
+			{
+			case 1:
+				pAudio->SetMasterVolume(SGD::AudioGroup::Music, pAudio->GetMasterVolume(SGD::AudioGroup::Music) - 10);
+				break;
+			case 2:
+				pAudio->SetMasterVolume(SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume(SGD::AudioGroup::SoundEffects) - 10);
+				if (!pAudio->IsAudioPlaying(m_hEffectSound))
+					pAudio->PlayAudio(m_hEffectSound, false);
+				break;
+			case 3:
+				Game::GetInstance()->SetWindowd(!Game::GetInstance()->GetWindowed());
+				break;
+			case 4:
+				Game::GetInstance()->SetIcelandic(!Game::GetInstance()->GetIcelandic());
+				Game::GetInstance()->LoadStrings();
+				break;
+			default:
+				break;
+			}
+			m_fArcadeTimer = 0.0f;
+
+		}
+		if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
+		{
+			switch (m_nCursor)
+			{
+			case 1:
+				pAudio->SetMasterVolume(SGD::AudioGroup::Music, pAudio->GetMasterVolume(SGD::AudioGroup::Music) + 10);
+				break;
+			case 2:
+				pAudio->SetMasterVolume(SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume(SGD::AudioGroup::SoundEffects) + 10);
+				if (!pAudio->IsAudioPlaying(m_hEffectSound))
+					pAudio->PlayAudio(m_hEffectSound, false);
+				break;
+			case 3:
+				Game::GetInstance()->SetWindowd(!Game::GetInstance()->GetWindowed());
+				break;
+			case 4:
+				Game::GetInstance()->SetIcelandic(!Game::GetInstance()->GetIcelandic());
+				Game::GetInstance()->LoadStrings();
+				break;
+			default:
+				break;
+			}
+			m_fArcadeTimer = 0.0f;
+
+		}
+		if (pInput->IsKeyPressed(SGD::Key::Enter) && m_nCursor == 5 || pInput->IsButtonPressed(0, 0) && m_nCursor == 5)
+		{
 			Game::GetInstance()->RemoveState();
-		}
-		else
-		{
-			Game::GetInstance()->ClearStates();
-			Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+			m_fArcadeTimer = 0.0f;
 		}
 	}
-
-	if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
-	{
-		++m_nCursor;
-		if( m_nCursor > 5 )
-			m_nCursor = 1;
-	}
-	else if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
-	{
-		--m_nCursor;
-		if( m_nCursor < 1 )
-			m_nCursor = 5;
-	}
-
-	if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
-	{
-		switch( m_nCursor )
-		{
-		case 1:
-			pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) - 10 );
-			break;
-		case 2:
-			pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) - 10 );
-			if( !pAudio->IsAudioPlaying( m_hEffectSound ) )
-				pAudio->PlayAudio( m_hEffectSound, false );
-			break;
-		case 3:
-			Game::GetInstance()->SetWindowd( !Game::GetInstance()->GetWindowed() );
-			break;
-		case 4:
-			Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
-			Game::GetInstance()->LoadStrings();
-			break;
-		default:
-			break;
-		}
-	}
-	if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
-	{
-		switch( m_nCursor )
-		{
-		case 1:
-			pAudio->SetMasterVolume( SGD::AudioGroup::Music, pAudio->GetMasterVolume( SGD::AudioGroup::Music ) + 10 );
-			break;
-		case 2:
-			pAudio->SetMasterVolume( SGD::AudioGroup::SoundEffects, pAudio->GetMasterVolume( SGD::AudioGroup::SoundEffects ) + 10 );
-			if( !pAudio->IsAudioPlaying( m_hEffectSound ) )
-				pAudio->PlayAudio( m_hEffectSound, false );
-			break;
-		case 3:
-			Game::GetInstance()->SetWindowd( !Game::GetInstance()->GetWindowed() );
-			break;
-		case 4:
-			Game::GetInstance()->SetIcelandic( !Game::GetInstance()->GetIcelandic() );
-			Game::GetInstance()->LoadStrings();
-			break;
-		default:
-			break;
-		}
-	}
-	if( pInput->IsKeyPressed( SGD::Key::Enter ) && m_nCursor == 5 || pInput->IsButtonDown(0,0) && m_nCursor == 5 )
-		Game::GetInstance()->RemoveState();
-
 	if( pInput->GetCursorMovement().x || pInput->GetCursorMovement().y )
 	{
 		if( pInput->GetCursorPosition().IsPointInRectangle( m_mMouseoverRects["Music"] ) )
@@ -243,6 +256,9 @@ void OptionsState::Update( float elapsedTime )
 	if( Game::GetInstance()->GetWindowed() != m_hWindow )
 		SGD::GraphicsManager::GetInstance()->Resize( { Game::GetInstance()->GetScreenWidth(), Game::GetInstance()->GetScreenHeight() }, Game::GetInstance()->GetWindowed() );
 	m_hWindow = Game::GetInstance()->GetWindowed();
+
+
+	m_fArcadeTimer += elapsedTime;
 }
 
 void OptionsState::Render()
