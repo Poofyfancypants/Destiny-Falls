@@ -368,7 +368,7 @@ void LoadState::Load( string path )
 
 	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( health );
 	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky })
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
@@ -529,7 +529,7 @@ void LoadState::Load2( string path )
 
 	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( health );
 	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky })
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
@@ -691,7 +691,7 @@ void LoadState::Load3( string path )
 
 	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( health );
 	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky })
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
