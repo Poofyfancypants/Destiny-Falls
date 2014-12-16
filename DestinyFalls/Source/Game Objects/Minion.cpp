@@ -19,44 +19,40 @@ void Minion::Update(float elapsedTime)
 	if (m_nHealth <= 0)
 		m_nHealth = 0;
 
-	if( m_nHealth <= 0 )
+	if (m_nHealth <= 0)
 	{
-		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
+		if (this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation")
 		{
-			this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
-			this->GetTimeStamp()->SetCurrentFrame( 0 );
-			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+			this->GetTimeStamp()->SetCurrentAnimation("DeathAnimation");
+			this->GetTimeStamp()->SetCurrentFrame(0);
+			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 		}
 		else
 		{
 			m_fDeathAnimationTimer -= elapsedTime;
 
-			if( m_fDeathAnimationTimer < 0.0f )
+			if (m_fDeathAnimationTimer < 0.0f)
 			{
 				m_fDeathAnimationTimer = 0.0f;
 			}
-			
-			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
-			
+			m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
 		}
-
-		
 	}
 
 	if (m_nHealth > 0)
-		Enemy1HB.right = Enemy1HB.left + m_nHealth;
+		Enemy1HB.right = Enemy1HB.left + (m_nHealth / m_nMaxHealth) * 100;
 
 	if (m_nHealth > 0)
-		Enemy2HB.right = Enemy2HB.left + m_nHealth;
+		Enemy2HB.right = Enemy2HB.left + (m_nHealth / m_nMaxHealth) * 100;
 
 	if (m_nHealth > 0)
-		Enemy3HB.right = Enemy3HB.left + m_nHealth;
+		Enemy3HB.right = Enemy3HB.left + (m_nHealth / m_nMaxHealth) * 100;
 
-	if (m_nHealth >= 60)
+	if ((m_nHealth / m_nMaxHealth) * 100 >= 60)
 		m_HealthColor = { 255, 0, 255, 0 };
-	else if (m_nHealth < 60 && m_nHealth >= 30)
+	else if ((m_nHealth / m_nMaxHealth) * 100 < 60 && m_nHealth >= 30)
 		m_HealthColor = { 255, 255, 255, 0 };
-	else if (m_nHealth < 30 && m_nHealth >= 0)
+	else if ((m_nHealth / m_nMaxHealth) * 100 < 30 && m_nHealth >= 0)
 		m_HealthColor = { 255, 255, 0, 0 };
 
 	if (m_bUpdateAnimation)
@@ -82,9 +78,9 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy2rect.right, (int)Enemy2rect.bottom);
 			}
 		}
-		else if( GetDeathAnimationTimer() > 0.0f )		
+		else if (GetDeathAnimationTimer() > 0.0f)
 		{
-			if( m_pAnimator->GetInstance()->CheckSize() )
+			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy2rect.right, (int)Enemy2rect.bottom);
 			}
@@ -101,9 +97,9 @@ void Minion::Render(int _posIndex)
 			}
 
 		}
-		else if( GetDeathAnimationTimer() > 0.0f )
+		else if (GetDeathAnimationTimer() > 0.0f)
 		{
-			if( m_pAnimator->GetInstance()->CheckSize() )
+			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy1rect.right, (int)Enemy1rect.bottom);
 			}
@@ -119,9 +115,9 @@ void Minion::Render(int _posIndex)
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy3rect.right, (int)Enemy3rect.bottom);
 			}
 		}
-		else if( GetDeathAnimationTimer() > 0.0f )
+		else if (GetDeathAnimationTimer() > 0.0f)
 		{
-			if( m_pAnimator->GetInstance()->CheckSize() )
+			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy3rect.right, (int)Enemy3rect.bottom);
 			}
@@ -293,7 +289,7 @@ void Minion::SetMinionAnimation(int region, int minionType)
 
 void Minion::SetMods(int _damageLevel, int _type, int _tier1, int _tier2)
 {
-	
+
 	Modifiers.DamageLevel = _damageLevel;
 	Modifiers.ElemAffinity.ElementType = _type;
 	Modifiers.ElemResistance.ElementType = _type;

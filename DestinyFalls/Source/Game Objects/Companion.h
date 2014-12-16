@@ -25,11 +25,11 @@ enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
 
 	void CurrentTurn( int * _CurrentTurn ) { m_CurrentTurn = _CurrentTurn; }
 
-	int GetHealth() const { return m_nHealth; }
-	void SetHealth( int _health ) { m_nHealth = _health; }
+	void SetHealth( float _health ) { m_nHealth = _health; }
+	float GetHealth() const { return m_nHealth; }
+	float GetMaxHealth() const { return m_nHealth; }
 
 	void SetString( int _type ) { TypeString = _type; }
-
 
 	void SetCompanionAnimation( int companionType );
 	int GetPosIndex( void ){ return m_nPosIndex; }
@@ -54,7 +54,8 @@ enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
 
 private:
 	int * m_CurrentTurn;
-	int m_nHealth = 0;
+	float m_nHealth = 0;
+	float m_nMaxHealth = 0;
 
 	bool m_Block = false;
 	int m_nPosIndex = 0;

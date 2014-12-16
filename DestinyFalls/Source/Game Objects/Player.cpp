@@ -195,7 +195,6 @@ void Player::Render( void )
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
 
-
 	if( m_bPlayCombatAnimation )
 	{
 		m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)playerRect.right, (int)playerRect.bottom);

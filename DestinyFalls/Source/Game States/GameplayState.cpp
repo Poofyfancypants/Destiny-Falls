@@ -560,7 +560,7 @@ void GameplayState::UnloadAndCreate()
 	SGD::Point prevLevelPos = m_pMap->GetPrevLevelPosition();
 	if( m_pPlayer != nullptr )
 	{
-		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
+		playerHealth = (int)( (Player*)( m_pPlayer ) )->GetHealth();
 		numPotions = ( (Player*)( m_pPlayer ) )->GetNumPotions();
 	}
 	else
@@ -581,7 +581,7 @@ void GameplayState::UnloadAndCreate()
 	}
 
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
-	( (Player*)m_pPlayer )->SetHealth( playerHealth );
+	( (Player*)m_pPlayer )->SetHealth( (float)playerHealth );
 	( (Player*)m_pPlayer )->SetPotions( numPotions );
 
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );

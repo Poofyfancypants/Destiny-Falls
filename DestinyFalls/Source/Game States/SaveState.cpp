@@ -363,7 +363,7 @@ void SaveState::LoadNames()
 
 void SaveState::Save()
 {
-	int health = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
+	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
 	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
 	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
@@ -437,7 +437,7 @@ void SaveState::Save()
 
 void SaveState::Save2()
 {
-	int health = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
+	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
 	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
 	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
@@ -511,7 +511,7 @@ void SaveState::Save2()
 
 void SaveState::Save3()
 {
-	int health = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
+	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
 	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
 	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
