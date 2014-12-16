@@ -260,6 +260,13 @@ int Game::Update( void )
 		m_fFPSTime = 0.0f;
 	}
 
+	if ((SGD::InputManager::GetInstance()->IsKeyDown(SGD::Key::LeftAlt) == true || SGD::InputManager::GetInstance()->IsKeyDown(SGD::Key::RightAlt) == true) && SGD::InputManager::GetInstance()->IsKeyPressed(SGD::Key::Enter) == true)
+	{
+		SGD::GraphicsManager::GetInstance()->Resize({ m_fScreenWidth, m_fScreenHeight }, fullscreen);
+		fullscreen = !fullscreen;
+		return 0;
+	}
+
 	int pCurrent = m_nCurrState;
 	// Let the current state handle input
 	if( m_pStateStack[m_nCurrState]->Input() == false )
