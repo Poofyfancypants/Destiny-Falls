@@ -285,32 +285,32 @@ void QuickTime::GenerateRandomLetter()
 		break;
 	case SGD::Key::Zero:
 	{
-						   m_sOutput += "0";
+						   m_sOutput += "1";
 	}
 		break;
 	case SGD::Key::One:
 	{
-						  m_sOutput += "1";
+						  m_sOutput += "2";
 	}
 		break;
 	case SGD::Key::Two:
 	{
-						  m_sOutput += "2";
+						  m_sOutput += "3";
 	}
 		break;
 	case SGD::Key::Three:
 	{
-							m_sOutput += "3";
+							m_sOutput += "4";
 	}
 		break;
 	case SGD::Key::Four:
 	{
-						   m_sOutput += "4";
+						   m_sOutput += "5";
 	}
 		break;
 	case SGD::Key::Five:
 	{
-						   m_sOutput += "5";
+						   m_sOutput += "6";
 	}
 		break;
 
@@ -364,39 +364,39 @@ void QuickTime::AddGuess( SGD::Key x )
 		break;
 	case SGD::Key::Zero:
 	{
-						   m_sInput += "0";
-						   m_sRenderInput += " 0 ";
+						   m_sInput += "1";
+						   m_sRenderInput += " 1 ";
 
 	}
 		break;
 	case SGD::Key::One:
 	{
-						  m_sInput += "1";
-						  m_sRenderInput += " 1 ";
-	}
-		break;
-	case SGD::Key::Two:
-	{
 						  m_sInput += "2";
 						  m_sRenderInput += " 2 ";
 	}
 		break;
+	case SGD::Key::Two:
+	{
+						  m_sInput += "3";
+						  m_sRenderInput += " 3 ";
+	}
+		break;
 	case SGD::Key::Three:
 	{
-							m_sInput += "3";
-							m_sRenderInput += " 3 ";
+							m_sInput += "4";
+							m_sRenderInput += " 4 ";
 	}
 		break;
 	case SGD::Key::Four:
 	{
-						   m_sInput += "4";
-						   m_sRenderInput += " 4 ";
+						   m_sInput += "5";
+						   m_sRenderInput += " 5 ";
 	}
 		break;
 	case SGD::Key::Five:
 	{
-						   m_sInput += "5";
-						   m_sRenderInput += " 5 ";
+						   m_sInput += "6";
+						   m_sRenderInput += " 6 ";
 	}
 	default:
 		break;
