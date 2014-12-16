@@ -133,6 +133,7 @@ void GameplayState::Enter()
 
 	// - Manage The map
 	m_nCurrentLevel = 0;
+	m_nCurrentSideLevel = -1;
 	LoadNewLevel();
 
 
@@ -290,6 +291,7 @@ void GameplayState::Update( float elapsedTime )
 	}
 
 	m_pObjects->UpdateAll( elapsedTime );
+	m_pObjects->CheckCollisions( BOULDER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, BOULDER_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, ENEMY_BUCKET );
 	m_pObjects->CheckCollisions( PLAYER_BUCKET, CHEST_BUCKET );
@@ -301,8 +303,8 @@ void GameplayState::Update( float elapsedTime )
 		float randY = 0;
 		float randX = 0;
 
-		randX = (float)(rand() % 6 - 3);
-		randY = (float)(rand() % 6 - 3);
+		randX = (float)( rand() % 6 - 3 );
+		randY = (float)( rand() % 6 - 3 );
 
 		if( m_fShakeTimer <= 0.0f )
 		{
@@ -556,10 +558,12 @@ void GameplayState::UnloadAndCreate()
 {
 
 	int playerHealth, numPotions;
+	SGD::Point checkpoint;
 	SGD::Point prevPos = m_pMap->GetPrevPosition();
 	SGD::Point prevLevelPos = m_pMap->GetPrevLevelPosition();
 	if( m_pPlayer != nullptr )
 	{
+		checkpoint = ( (Player*)( m_pPlayer ) )->GetCheckpoint();;
 		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
 		numPotions = ( (Player*)( m_pPlayer ) )->GetNumPotions();
 	}
@@ -589,6 +593,7 @@ void GameplayState::UnloadAndCreate()
 
 	delete m_pMap;
 	m_pMap = new TileManager;
+	( (Player*)( m_pPlayer ) )->SetCheckPoint( checkpoint );
 	m_pMap->SetPrevPosition( prevPos );
 	m_pMap->SetPrevLevelPosition( prevLevelPos );
 
@@ -605,7 +610,7 @@ void GameplayState::UnloadAndCreate()
 }
 void GameplayState::LoadNewLevel()
 {
-	if( MainMenuState::GetInstance()->GetTutorial() )
+	if( MainMenuState::GetInstance()->GetTutorial() && m_nCurrentLevel != 0 )
 	{
 		Game::GetInstance()->ClearStates();
 		Game::GetInstance()->AddState( MainMenuState::GetInstance() );

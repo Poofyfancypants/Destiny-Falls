@@ -476,17 +476,22 @@ bool CombatState::Input(void)
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
-	//if (pInput->IsKeyPressed(SGD::Key::Escape))
-	//{
-	//	((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
-	//	pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
-	//	Game::GetInstance()->RemoveState();
-	//}
+	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	{
+		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
+		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
+		Game::GetInstance()->RemoveState();
+	}
+
 	if (pInput->IsKeyPressed(SGD::Key::B))
 	{
 		selected = false;
 		spellSelect = -1;
 	}
+	//if( pInput->IsKeyPressed(SGD::Key::Escape) )
+	//{
+	//	Game::GetInstance()->RemoveState();
+	//}
 	return true;
 }
 
