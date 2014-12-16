@@ -408,6 +408,7 @@ void CombatState::Enter(void)
 		m_pHeroes.push_back(temp);
 		//}
 	}
+
 #pragma endregion
 
 	for (size_t i = 1; i < m_pObjects.size(); i++)
@@ -476,17 +477,22 @@ bool CombatState::Input(void)
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
-	//if (pInput->IsKeyPressed(SGD::Key::Escape))
-	//{
-	//	((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
-	//	pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
-	//	Game::GetInstance()->RemoveState();
-	//}
+	if (pInput->IsKeyPressed(SGD::Key::Escape))
+	{
+		((Player*)GameplayState::GetInstance()->GetPlayer())->SetCombat(false);
+		pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
+		Game::GetInstance()->RemoveState();
+	}
+
 	if (pInput->IsKeyPressed(SGD::Key::B) || pInput->IsButtonPressed(0, 5))
 	{
 		selected = false;
 		spellSelect = -1;
 	}
+	//if( pInput->IsKeyPressed(SGD::Key::Escape) )
+	//{
+	//	Game::GetInstance()->RemoveState();
+	//}
 	return true;
 }
 
@@ -506,15 +512,14 @@ void CombatState::Update(float elapsedTime)
 
 	if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 	{
-		PlayerHB.right = PlayerHB.left + ((Player*)m_pHeroes[0])->GetHealth();
+
+		PlayerHB.right = PlayerHB.left + (((Player*)m_pHeroes[0])->GetHealth() / ((Player*)m_pHeroes[0])->GetMaxHealth()) * 100;
 		((Player*)m_pHeroes[0])->Update(elapsedTime);
 
 		for (unsigned int i = 1; i < m_pHeroes.size(); i++)
 		{
 			if (((Companion*)m_pHeroes[i])->GetHealth())
-			{
 				((Companion*)m_pHeroes[i])->Update(elapsedTime);
-			}
 		}
 		if (((Player*)m_pHeroes[0])->GetHealth() < 25 && m_fFlash > 2)
 		{
@@ -531,7 +536,6 @@ void CombatState::Update(float elapsedTime)
 			((Player*)m_pHeroes[0])->SetCombat(false);
 			Game::GetInstance()->RemoveState();
 			return;
-
 		}
 		else
 		{
@@ -599,7 +603,6 @@ void CombatState::Update(float elapsedTime)
 					tempRune2.SetElement((Elements)GameplayState::GetInstance()->GetCurrentLevel());
 					tempRune2.SetTier(3);
 					InventoryState::GetInstance()->AddRunesToInventoryfromWorld(tempRune2);
-
 				}
 				pAudio->PlayAudio(GameplayState::GetInstance()->bmusic, true);
 
@@ -672,13 +675,9 @@ void CombatState::Update(float elapsedTime)
 	else
 	{
 		for (size_t i = 0; i < m_pHeroes.size(); i++)
-		{
 			m_pHeroes[i]->SetDeltaHPPosY(m_pHeroes[i]->GetDeltaHPPosY() + 100 * elapsedTime);
-		}
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
-		{
 			m_pEnemies[i]->SetDeltaHPPosY(m_pEnemies[i]->GetDeltaHPPosY() + 100 * elapsedTime);
-		}
 
 		if (Attacker1 != -1)
 		{
@@ -724,16 +723,14 @@ void CombatState::Render(void)
 
 
 	SGD::Color pHcolor;
-	if (((Player*)m_pHeroes[0])->GetHealth() > 50)
+	if ((((Player*)m_pHeroes[0])->GetHealth() / ((Player*)m_pHeroes[0])->GetMaxHealth()) * 100 > 50)
 		pHcolor = { 255, 0, 255, 0 };
-	else if (((Player*)m_pHeroes[0])->GetHealth() > 20)
+	else if ((((Player*)m_pHeroes[0])->GetHealth() / ((Player*)m_pHeroes[0])->GetMaxHealth()) * 100 > 20)
 		pHcolor = { 255, 255, 255, 0 };
 	else
 		pHcolor = { 255, 255, 0, 0 };
 
-	//pGraphics->DrawRectangle(Playerrect, SGD::Color{ 100, 0, 0, 150 }, SGD::Color{ 255, 255, 255, 255 });
-
-	if (PlayerHB.right > PlayerHB.left)
+	if (PlayerHB.right > PlayerHB.left && ((Player*)m_pHeroes[0])->GetHealth() > 0)
 		pGraphics->DrawRectangle(PlayerHB, pHcolor);
 
 	((Player*)m_pHeroes[0])->Render();
@@ -1380,6 +1377,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 			  }
 
 			  temp->SetHealth(randHealth);
+			  temp->SetMaxHealth(randHealth);
 	}
 		break;
 	case 2: //Mini Bosses
@@ -1435,6 +1433,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				}
 
 				temp->SetHealth(200);
+				temp->SetMaxHealth(200);
 	}
 		break;
 	case 3: //Level Bosses
@@ -1490,7 +1489,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				}
 
 				temp->SetHealth(300);
-
+				temp->SetMaxHealth(300);
 	}
 		break;
 	case 4: //Final Boss
@@ -1502,6 +1501,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				temp->SetMinionAnimation(_region, 0);
 				temp->SetAffinity(Earth);
 				temp->SetAttckSpd(12);
+				temp->SetHealth(500);
 				temp->SetHealth(500);
 	}
 		break;
@@ -1819,9 +1819,9 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 					return 0;
 				}
 			}
-			else if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Mini_Boss || ((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Level_Boss)
+			else if (((Minion*)_To)->GetAIType() == Minion::AI_Type::Mini_Boss || ((Minion*)_To)->GetAIType() == Minion::AI_Type::Level_Boss)
 			{
-				if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::AIR_LEVEL) //Dodge
+				if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::AIR_LEVEL)
 				{
 					if (rand() % 20 < 10)
 					{
@@ -1832,7 +1832,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 						_To->SetInit(25);
 					}
 				}
-				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::WATER_LEVEL) //Repel
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::WATER_LEVEL)
 				{
 					if (rand() % 20 < 10)
 					{
@@ -1843,7 +1843,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 						_From->SetInit(-5);
 					}
 				}
-				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::EARTH_LEVEL) // ???
+				else if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::EARTH_LEVEL)
 				{
 					if (rand() % 20 < 10)
 					{
@@ -1939,7 +1939,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 					return 0;
 				}
 			}
-			else if (((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Mini_Boss || ((Minion*)m_pEnemies[i])->GetAIType() == Minion::AI_Type::Level_Boss)
+			else if (((Minion*)_To)->GetAIType() == Minion::AI_Type::Mini_Boss || ((Minion*)_To)->GetAIType() == Minion::AI_Type::Level_Boss)
 			{
 				if (GameplayState::GetInstance()->GetCurrentLevel() == GameplayState::AIR_LEVEL) //Dodge
 				{
@@ -2206,7 +2206,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		stuff += " on the ";
 		SetAction(stuff += Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
-		_To->SetDeltaHP(Total);
+		_To->SetDeltaHP(-Total);
 		m_nNumQtCorrect = 0;
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
@@ -2550,7 +2550,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 	int Total;
 
 	Total = rand() % 30 + 20;
-	if (_From->GetType() == iObject::OBJ_PLAYER)
+	if (_From->GetType() == iObject::OBJ_PLAYER) //player never heals, but w/e
 	{
 		pAudio->PlayAudio(cHealingAbility, false);
 		((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() + Total);
@@ -2559,6 +2559,9 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 	{
 		pAudio->PlayAudio(cHealingAbility, false);
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() + Total);
+
+		if (((Minion*)_To)->GetHealth() > ((Minion*)_To)->GetMaxHealth())
+			((Minion*)_To)->SetHealth(((Minion*)_To)->GetMaxHealth());
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
@@ -2611,9 +2614,12 @@ int CombatState::DealAOEDamage(Object* _From, Object* _To)
 
 		for (size_t i = 0; i < m_pHeroes.size(); i++)
 		{
-			Total = rand() % 20 + 15;
-			m_pHeroes[i]->SetDeltaHP(-Total);
-			((Player*)m_pHeroes[i])->SetHealth(((Player*)m_pHeroes[i])->GetHealth() - Total);
+			if (((Player*)m_pHeroes[i])->GetHealth() > 0)
+			{
+				Total = rand() % 20 + 15;
+				m_pHeroes[i]->SetDeltaHP(-Total);
+				((Player*)m_pHeroes[i])->SetHealth(((Player*)m_pHeroes[i])->GetHealth() - Total);
+			}
 		}
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
@@ -2634,13 +2640,15 @@ int CombatState::DealAOEDamage(Object* _From, Object* _To)
 		SetAction(message += "Fury!");
 		for (size_t i = 0; i < m_pEnemies.size(); i++)
 		{
-			Total = rand() % 20 + 15;
-			m_pEnemies[i]->SetDeltaHP(-Total);
-			((Minion*)m_pEnemies[i])->SetHealth(((Minion*)m_pEnemies[i])->GetHealth() - Total);
+			if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+			{
+				Total = rand() % 20 + 15;
+				m_pEnemies[i]->SetDeltaHP(-Total);
+				((Minion*)m_pEnemies[i])->SetHealth(((Minion*)m_pEnemies[i])->GetHealth() - Total);
+			}
 		}
 	}
 	m_bShake = true;
-
 	return Total;
 }
 bool CombatState::TakeTurn(Object* _this)
@@ -2755,7 +2763,6 @@ bool CombatState::TakeTurn(Object* _this)
 										if (m_nCursor >(int)pCombat->GetEnemies().size() - 1)
 											m_nCursor = 0;
 
-
 										//Second Selection >> Target
 										if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 										{
@@ -2786,11 +2793,11 @@ bool CombatState::TakeTurn(Object* _this)
 												QuickTimeState::GetInstance()->StopQuickTime();
 												TakeAction(ActionSelected, _this, m_nCursor);
 												m_nCursor = 0;
+												((Player*)_this)->ResetAnimation();
 												return true;
 											}
 										}
 
-										((Player*)_this)->ResetAnimation();
 									}
 									else if (ActionSelected == 1) //Magic
 									{
@@ -3669,9 +3676,6 @@ bool CombatState::TakeTurn(Object* _this)
 												TakeAction(CombatState::ActionType::Magic, _this, target);
 											else
 												TakeAction(CombatState::ActionType::Melee, _this, target);
-
-											((Minion*)_this)->SetAnimation(true);
-											((Minion*)_this)->ResetAnimation();
 										}
 										break;
 									case Elements::Water:
@@ -3721,6 +3725,9 @@ bool CombatState::TakeTurn(Object* _this)
 											TakeAction(CombatState::ActionType::Melee, _this, target);
 										}
 										break;
+
+										((Minion*)_this)->SetAnimation(true);
+										((Minion*)_this)->ResetAnimation();
 									}
 									break;
 
@@ -3741,7 +3748,6 @@ bool CombatState::TakeTurn(Object* _this)
 										pCombat->SetActionTimer(1);
 										TakeAction(CombatState::ActionType::Melee, _this, target);
 										((Minion*)_this)->SetAnimation(true);
-
 										((Minion*)_this)->ResetAnimation();
 									}
 									break;

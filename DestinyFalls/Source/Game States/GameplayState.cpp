@@ -139,6 +139,7 @@ void GameplayState::Enter()
 
 	// - Manage The map
 	m_nCurrentLevel = 0;
+	m_nCurrentSideLevel = -1;
 	LoadNewLevel();
 
 
@@ -209,15 +210,16 @@ bool GameplayState::Input()
 	//	Game::GetInstance()->RemoveState(); //Make this Pause
 	//	Game::GetInstance()->AddState( MainMenuState::GetInstance() );
 	//}
-	if (m_fArcadeTimer >= 1.5f)
+	if (m_fArcadeTimer >= 0.5f)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6))
-		{
-			m_bPaused = !m_bPaused;
-			m_fArcadeTimer = 0.0f;
-			Game::GetInstance()->AddState(PauseMenuState::GetInstance());
-		}
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6))
+	{
+		m_bPaused = !m_bPaused;
+		m_fArcadeTimer = 0.0f;
+		Game::GetInstance()->AddState(PauseMenuState::GetInstance());
+	}
 
+	
 		if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonPressed(0, 4) || pInput->IsKeyPressed(SGD::Key::MouseRight))
 		{
 			m_fArcadeTimer = 0.0f;
@@ -237,11 +239,11 @@ bool GameplayState::Input()
 	{
 		m_pPlayer->SetPosition(SGD::Point(17 * 32, 21 * 32));
 	}
-	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	//{
-	//	NextLevel();
-	//	m_bChangeLevels = true;
-	//}
+	if (pInput->IsKeyPressed(SGD::Key::F6))
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 
 	// Toggle Inventory
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
@@ -303,6 +305,7 @@ void GameplayState::Update(float elapsedTime)
 	}
 
 	m_pObjects->UpdateAll(elapsedTime);
+	m_pObjects->CheckCollisions(BOULDER_BUCKET, BOULDER_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, BOULDER_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, ENEMY_BUCKET);
 	m_pObjects->CheckCollisions(PLAYER_BUCKET, CHEST_BUCKET);
@@ -575,11 +578,13 @@ void GameplayState::UnloadAndCreate()
 {
 
 	int playerHealth, numPotions;
+	SGD::Point checkpoint;
 	SGD::Point prevPos = m_pMap->GetPrevPosition();
 	SGD::Point prevLevelPos = m_pMap->GetPrevLevelPosition();
 	if (m_pPlayer != nullptr)
 	{
-		playerHealth = ((Player*)(m_pPlayer))->GetHealth();
+		checkpoint = ((Player*)(m_pPlayer))->GetCheckpoint();;
+		playerHealth = (int)((Player*)(m_pPlayer))->GetHealth();
 		numPotions = ((Player*)(m_pPlayer))->GetNumPotions();
 	}
 	else
@@ -600,7 +605,7 @@ void GameplayState::UnloadAndCreate()
 	}
 
 	m_pPlayer = CreatePlayer(SGD::Point(150, 150));
-	((Player*)m_pPlayer)->SetHealth(playerHealth);
+	((Player*)m_pPlayer)->SetHealth((float)playerHealth);
 	((Player*)m_pPlayer)->SetPotions(numPotions);
 
 	m_pObjects->AddObject(m_pPlayer, PLAYER_BUCKET);
@@ -608,6 +613,7 @@ void GameplayState::UnloadAndCreate()
 
 	delete m_pMap;
 	m_pMap = new TileManager;
+	((Player*)(m_pPlayer))->SetCheckPoint(checkpoint);
 	m_pMap->SetPrevPosition(prevPos);
 	m_pMap->SetPrevLevelPosition(prevLevelPos);
 
@@ -626,30 +632,9 @@ void GameplayState::LoadNewLevel()
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 
-	/*switch (m_nCurrentLevel)
-	{
-	case GameplayState::TUTORIAL_LEVEL:
 
-	break;
-	case GameplayState::EARTH_LEVEL:
-	pAudio->PlayAudio(bLevel1Music, false);
-	break;
-	case GameplayState::WATER_LEVEL:
-	pAudio->StopAudio(bLevel1Music);
-	pAudio->PlayAudio(bLevel2Music, false);
-	break;
-	case GameplayState::AIR_LEVEL:
-	pAudio->StopAudio(bLevel2Music);
-	pAudio->PlayAudio(bLevel3Music, false);
-	break;
-	case GameplayState::FIRE_LEVEL:
-	pAudio->StopAudio(bLevel3Music);
-	pAudio->PlayAudio(bLevel4Music, true);
-	break;
 
-	}*/
-
-	if (MainMenuState::GetInstance()->GetTutorial())
+	if (MainMenuState::GetInstance()->GetTutorial() && m_nCurrentLevel != 0)
 	{
 		Game::GetInstance()->ClearStates();
 		Game::GetInstance()->AddState(MainMenuState::GetInstance());
@@ -681,10 +666,8 @@ void GameplayState::LoadNewLevel()
 				pAudio->StopAudio(bmusic);
 			if (pAudio->IsAudioPlaying(bLevel2Music))
 				pAudio->StopAudio(bLevel2Music);
-			if (pAudio->IsAudioPlaying(CombatState::GetInstance()->cMusic))
-				pAudio->StopAudio(bLevel1Music);
-			else
-				pAudio->PlayAudio(bLevel1Music);
+
+			pAudio->PlayAudio(bLevel1Music);
 			break;
 		case GameplayState::WATER_LEVEL:
 			UnloadAndCreate();
@@ -699,10 +682,8 @@ void GameplayState::LoadNewLevel()
 			if (pAudio->IsAudioPlaying(bLevel3Music))
 				pAudio->StopAudio(bLevel3Music);
 
-			if (pAudio->IsAudioPlaying(CombatState::GetInstance()->cMusic))
-				pAudio->StopAudio(bLevel2Music);
-			else
-				pAudio->PlayAudio(bLevel2Music);
+
+			pAudio->PlayAudio(bLevel2Music);
 
 			break;
 		case GameplayState::AIR_LEVEL:
@@ -717,10 +698,8 @@ void GameplayState::LoadNewLevel()
 			if (pAudio->IsAudioPlaying(bLevel4Music))
 				pAudio->StopAudio(bLevel4Music);
 
-			if (pAudio->IsAudioPlaying(CombatState::GetInstance()->cMusic))
-				pAudio->StopAudio(bLevel3Music);
-			else
-				pAudio->PlayAudio(bLevel3Music);
+
+			pAudio->PlayAudio(bLevel3Music);
 			break;
 		case GameplayState::FIRE_LEVEL:
 			UnloadAndCreate();
@@ -732,10 +711,8 @@ void GameplayState::LoadNewLevel()
 			if (pAudio->IsAudioPlaying(bLevel3Music))
 				pAudio->StopAudio(bLevel3Music);
 
-			if (pAudio->IsAudioPlaying(CombatState::GetInstance()->cMusic))
-				pAudio->StopAudio(bLevel4Music);
-			else
-				pAudio->PlayAudio(bLevel4Music);
+
+			pAudio->PlayAudio(bLevel4Music);
 
 			break;
 		case GameplayState::BOSS_LEVEL:

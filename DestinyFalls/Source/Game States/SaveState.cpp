@@ -392,10 +392,12 @@ void SaveState::LoadNames()
 
 void SaveState::Save()
 {
-	int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
-	float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
-	float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
+	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
+	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
+	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
+	float checkx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().x;
+	float checky = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().y;
 
 	TiXmlDocument doc;
 
@@ -415,6 +417,8 @@ void SaveState::Save()
 	pPlayer->SetDoubleAttribute("PosX", posx);
 	pPlayer->SetDoubleAttribute("PosY", posy);
 	pPlayer->SetAttribute("CurrLevel", currLevel);
+	pPlayer->SetDoubleAttribute("CheckpointX", checkx);
+	pPlayer->SetDoubleAttribute("CheckpointY", checky);
 
 	for (unsigned int i = 0; i < InventoryState::GetInstance()->m_vSword.size(); i++)
 	{
@@ -466,10 +470,12 @@ void SaveState::Save()
 
 void SaveState::Save2()
 {
-	int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
-	float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
-	float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
+	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
+	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
+	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
+	float checkx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().x;
+	float checky = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().y;
 
 	TiXmlDocument doc;
 
@@ -489,6 +495,8 @@ void SaveState::Save2()
 	pPlayer->SetDoubleAttribute("PosX", posx);
 	pPlayer->SetDoubleAttribute("PosY", posy);
 	pPlayer->SetAttribute("CurrLevel", currLevel);
+	pPlayer->SetDoubleAttribute("CheckpointX", checkx);
+	pPlayer->SetDoubleAttribute("CheckpointY", checky);
 
 	for (unsigned int i = 0; i < InventoryState::GetInstance()->m_vSword.size(); i++)
 	{
@@ -540,10 +548,12 @@ void SaveState::Save2()
 
 void SaveState::Save3()
 {
-	int health = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
-	float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
-	float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
+	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
+	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
+	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
+	float checkx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().x;
+	float checky = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().y;
 
 	TiXmlDocument doc;
 
@@ -563,6 +573,8 @@ void SaveState::Save3()
 	pPlayer->SetDoubleAttribute("PosX", posx);
 	pPlayer->SetDoubleAttribute("PosY", posy);
 	pPlayer->SetAttribute("CurrLevel", currLevel);
+	pPlayer->SetDoubleAttribute("CheckpointX", checkx);
+	pPlayer->SetDoubleAttribute("CheckpointY", checky);
 
 	for (unsigned int i = 0; i < InventoryState::GetInstance()->m_vSword.size(); i++)
 	{

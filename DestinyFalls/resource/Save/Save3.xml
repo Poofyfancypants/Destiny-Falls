@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Save3>
-    <player_info Health="0" PosX="707.750000" PosY="192.000000" CurrLevel="0">
+    <player_info Health="100" PosX="96.000000" PosY="64.000000" CurrLevel="0">
         <Sword Element="4" Tier="0" />
         <Sword Element="4" Tier="0" />
         <Sword Element="4" Tier="0" />
@@ -10,14 +10,8 @@
         <Ring Element="4" Tier="0" />
         <Ring Element="4" Tier="0" />
         <Ring Element="4" Tier="0" />
-        <Inventory Size="7">
-            <Rune Element="1" Tier="1" />
-            <Rune Element="0" Tier="1" />
-            <Rune Element="2" Tier="2" />
-            <Rune Element="3" Tier="2" />
-            <Rune Element="1" Tier="1" />
-            <Rune Element="0" Tier="2" />
-            <Rune Element="3" Tier="1" />
+        <Inventory Size="1">
+            <Rune Element="2" Tier="1" />
         </Inventory>
     </player_info>
 </Save3>

@@ -42,14 +42,11 @@ bool PauseMenuState::Input(void)
 {
 	SGD::InputManager * pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
+
+
 	if (m_fArcadeTimer >= 0.5f)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6))
-		{
-			Game::GetInstance()->RemoveState();
-			m_fArcadeTimer = 0.0f;
-		}
-		if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+		if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
 		{
 			if (m_nCursor <= resume)
 				m_nCursor = exit;
@@ -68,6 +65,7 @@ bool PauseMenuState::Input(void)
 			m_fArcadeTimer = 0.0f;
 		}
 	}
+
 
 	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonPressed(0, 0))
 	{
@@ -141,12 +139,5 @@ void PauseMenuState::Render(void)
 		.7f, { 247, 180, 91 });
 	}
 
-	//string cursor = ">>";
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 8 ).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 } );
-
-	//pFonts->Render( "Bernardo", cursor.c_str(), SGD::Point( 275, ( m_nCursor * 100 ) + 100 ), 2, { 255, 255, 255, 0 } );
-	/*pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );*/
 }
 

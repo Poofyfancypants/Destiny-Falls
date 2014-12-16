@@ -75,6 +75,7 @@ void MainMenuState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hButton );
 	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hButtonHighlighted );
 	SGD::AudioManager::GetInstance()->UnloadAudio( m_hMusic );
+
 }
 
 bool MainMenuState::Input()

@@ -11,6 +11,7 @@
 #include "../../SGD Wrappers/SGD_AudioManager.h"
 #include <fstream>
 #include "GameplayState.h"
+#include "InventoryState.h"
 #include "../TinyXML/tinystr.h"
 #include "../TinyXML/tinyxml.h"
 
@@ -29,6 +30,7 @@ void LoadState::Enter()
 	m_hButtonHighlighted = pGraphics->LoadTexture("resource/graphics/optionHighlighted.png");
 	m_hNameFrame = pGraphics->LoadTexture("resource/graphics/MenuBackgrounds/saveScroll.png");
 
+	//SlotName();
 	LoadNames();
 }
 
@@ -251,6 +253,7 @@ void LoadState::Load(string path)
 {
 	int health, currLevel, size;
 	double posx, posy;
+	double checkx, checky;
 	int element, tier;
 	vector<Runes> tempS;
 	vector<Runes> tempA;
@@ -277,7 +280,8 @@ void LoadState::Load(string path)
 	pPlayer->Attribute("PosX", &posx);
 	pPlayer->Attribute("PosY", &posy);
 	pPlayer->Attribute("CurrLevel", &currLevel);
-
+	pPlayer->Attribute("CheckpointX", &checkx);
+	pPlayer->Attribute("CheckpointY", &checky);
 
 	////Sword
 	TiXmlElement* pSword = pPlayer->FirstChildElement("Sword");
@@ -380,8 +384,9 @@ void LoadState::Load(string path)
 	GameplayState::GetInstance()->SetLevel(currLevel);
 	GameplayState::GetInstance()->LoadNewLevel();
 
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
+	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( (float)health );
 	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
@@ -406,33 +411,9 @@ void LoadState::Load(string path)
 
 void LoadState::Load2(string path)
 {
-	/*fstream fin;
-	fin.open("resource/Save/Save2.txt", ios_base::in | ios_base::binary);
-	if (fin.is_open())
-	{
-	int health, currLevel;
-	float posx, posy;
-
-	fin.read((char*)&health, sizeof(int));
-	fin.read((char*)&posx, sizeof(float));
-	fin.read((char*)&posy, sizeof(float));
-	fin.read((char*)&currLevel, sizeof(int));
-
-	Game::GetInstance()->RemoveState();
-	Game::GetInstance()->AddState(GameplayState::GetInstance());
-
-
-	GameplayState::GetInstance()->SetLevel(currLevel);
-	GameplayState::GetInstance()->LoadNewLevel();
-
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ posx, posy });
-
-	fin.close();
-	}*/
-
 	int health, currLevel, size;
 	double posx, posy;
+	double checkx, checky;
 	int element, tier;
 	vector<Runes> tempS;
 	vector<Runes> tempA;
@@ -459,6 +440,8 @@ void LoadState::Load2(string path)
 	pPlayer->Attribute("PosX", &posx);
 	pPlayer->Attribute("PosY", &posy);
 	pPlayer->Attribute("CurrLevel", &currLevel);
+	pPlayer->Attribute("CheckpointX", &checkx);
+	pPlayer->Attribute("CheckpointY", &checky);
 
 
 	////Sword
@@ -562,8 +545,9 @@ void LoadState::Load2(string path)
 	GameplayState::GetInstance()->SetLevel(currLevel);
 	GameplayState::GetInstance()->LoadNewLevel();
 
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
+	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( (float)health );
+	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 
@@ -591,6 +575,7 @@ void LoadState::Load3(string path)
 {
 	int health, currLevel, size;
 	double posx, posy;
+	double checkx, checky;
 	int element, tier;
 	vector<Runes> tempS;
 	vector<Runes> tempA;
@@ -617,6 +602,8 @@ void LoadState::Load3(string path)
 	pPlayer->Attribute("PosX", &posx);
 	pPlayer->Attribute("PosY", &posy);
 	pPlayer->Attribute("CurrLevel", &currLevel);
+	pPlayer->Attribute("CheckpointX", &checkx);
+	pPlayer->Attribute("CheckpointY", &checky);
 
 
 	////Sword
@@ -720,8 +707,9 @@ void LoadState::Load3(string path)
 	GameplayState::GetInstance()->SetLevel(currLevel);
 	GameplayState::GetInstance()->LoadNewLevel();
 
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetHealth(health);
-	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetPosition(SGD::Point{ (float)posx, (float)posy });
+	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetHealth( (float)health );
+	( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->SetPosition( SGD::Point{ (float)posx, (float)posy } );
+	((Player*)(GameplayState::GetInstance()->GetPlayer()))->SetCheckPoint(SGD::Point{ (float)checkx, (float)checky });
 
 	InventoryState* pInventory = InventoryState::GetInstance();
 

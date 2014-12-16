@@ -90,14 +90,17 @@ bool DeathState::Input(void)
 		}
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0) && m_fArcadeTimer >= 1.5f|| pInput->IsKeyPressed(SGD::Key::MouseLeft))
+	if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0) || pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
-		Player* player = ((Player*)(GameplayState::GetInstance()->GetPlayer()));
-		switch (m_nCursor)
+		Player* player;
+		switch( m_nCursor )
 		{
 		case PauseSelections::resume:
-			player->SetPosition(player->GetCheckpoint());
-			player->SetHealth(100);
+			GameplayState::GetInstance()->UnloadAndCreate();
+			GameplayState::GetInstance()->LoadNewLevel();
+			player = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) );
+			player->SetHealth( 100 );
+			player->SetPosition( player->GetCheckpoint() );
 			Game::GetInstance()->RemoveState();
 			break;
 		case PauseSelections::save:

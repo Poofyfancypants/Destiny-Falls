@@ -133,5 +133,27 @@ void Boulder::HandleCollision( const iObject* pOther )
 			}
 
 		}
+		if( pOther->GetType() == OBJ_BOULDER )
+		{
+
+			switch( m_nDirection )
+			{
+			case 1: // - Up
+				m_ptPosition.y = pOther->GetRect().bottom + 3;
+				break;
+			case 2: // - Down
+				m_ptPosition.y = pOther->GetRect().top - m_szSize.height - 3;
+				break;
+			case 3: // - Left
+				m_ptPosition.x = pOther->GetRect().right + 3;
+				break;
+			case 4: // - Right
+				m_ptPosition.x = pOther->GetRect().left - m_szSize.width - 3;
+				break;
+			default:
+				break;
+			}
+			m_nDirection = 0;
+		}
 	}
 }

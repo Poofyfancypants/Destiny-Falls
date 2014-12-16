@@ -8,6 +8,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 
+
 InventoryState* InventoryState::GetInstance()
 {
 	static InventoryState s_Instance;
@@ -48,6 +49,7 @@ void InventoryState::Enter()
 	m_vRing.resize(3);
 	m_vArmor.resize(3);
 	//m_vCompanion.resize(2);
+
 
 }
 
@@ -482,19 +484,24 @@ bool InventoryState::Input()
 				case 0:
 					AddRunesToArmor0fromInventory(m_ptSelectedRune);
 					pauseSelection = false;
+					m_fArcadeTimer = 0.0f;
+
 					break;
 				case 1:
 					AddRunesToArmor1fromInventory(m_ptSelectedRune);
 					pauseSelection = false;
+					m_fArcadeTimer = 0.0f;
+
 					break;
 				case 2:
 					AddRunesToArmor2fromInventory(m_ptSelectedRune);
 					pauseSelection = false;
+					m_fArcadeTimer = 0.0f;
+
 					break;
 				default:
 					break;
 				}
-				m_fArcadeTimer = 0.0f;
 			}
 		}
 
@@ -1867,132 +1874,38 @@ void InventoryState::Render()
 			pFonts->Render("Other", "Failing QuickTime will result in a padded failure.", SGD::Point(505, 125), 0.4f, SGD::Color(0, 0, 0));
 			pFonts->Render("Other", "Damage can still be done to the opponent if it is Failed", SGD::Point(505, 155), 0.4f, SGD::Color(0, 0, 0));
 			pFonts->Render("Other", "Credit will be Given up to the amound of successful QuickTimes ", SGD::Point(505, 185), 0.4f, SGD::Color(0, 0, 0));
-
 		}
 #pragma endregion
 
-		//pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hFiret1, { IventoryRect1.left, IventoryRect1.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect2, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hFiret2, { IventoryRect2.left, IventoryRect2.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hFiret3, { IventoryRect3.left, IventoryRect3.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect4, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hWatert1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect5, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hWatert2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect6, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hWatert3, { IventoryRect6.left, IventoryRect6.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect7, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hAirt1, { IventoryRect7.left, IventoryRect7.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect8, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hAirt2, { IventoryRect8.left, IventoryRect8.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect9, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hAirt3, { IventoryRect9.left, IventoryRect9.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect10, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hEartht1, { IventoryRect10.left, IventoryRect10.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect11, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hEartht2, { IventoryRect11.left, IventoryRect11.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect12, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hEartht3, { IventoryRect12.left, IventoryRect12.top }, {}, {}, {}, { 0.55f, 0.55f });
-		//sword
-		//pGraphics->DrawRectangle( Equip1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( Equip2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( Equip3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		////armor
-		//pGraphics->DrawRectangle( EquipA1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipA2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipA3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		////gauntlet
-		//pGraphics->DrawRectangle( EquipG1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipG2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipG3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-
-
-
-
-
 		//highlight selection
 		if (equipPos == 0)
-		{
 			pGraphics->DrawRectangle(IventoryRect1, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 4)
-		{
 			pGraphics->DrawRectangle(IventoryRect2, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 8)
-		{
 			pGraphics->DrawRectangle(IventoryRect3, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 1)
-		{
 			pGraphics->DrawRectangle(IventoryRect4, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 5)
-		{
 			pGraphics->DrawRectangle(IventoryRect5, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 9)
-		{
 			pGraphics->DrawRectangle(IventoryRect6, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 2)
-		{
 			pGraphics->DrawRectangle(IventoryRect7, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 6)
-		{
 			pGraphics->DrawRectangle(IventoryRect8, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 10)
-		{
 			pGraphics->DrawRectangle(IventoryRect9, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 3)
-		{
 			pGraphics->DrawRectangle(IventoryRect10, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 7)
-		{
 			pGraphics->DrawRectangle(IventoryRect11, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 11)
-		{
 			pGraphics->DrawRectangle(IventoryRect12, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
-
-
 	}
-
-
 	// - Tutorial
 	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
 		HandleTutorial();
-
-
 }
 
 #pragma region Add
@@ -2119,6 +2032,7 @@ void InventoryState::ClearInventory()
 	m_vArmor.clear();
 	m_vSword.clear();
 	m_vRing.clear();
+	m_vRunes.clear();
 }
 
 void InventoryState::HandleTutorial()
