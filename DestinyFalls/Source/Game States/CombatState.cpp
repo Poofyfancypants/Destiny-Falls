@@ -714,9 +714,10 @@ void CombatState::Render(void)
 
 	float width = Game::GetInstance()->GetScreenWidth();
 	int len = ActionMessage.length();
-	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 100, 0, 0, 0 });
-	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 100, 0, 0, 0 });
-	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 0, 0, 0));
+
+	pGraphics->DrawRectangle(AbilityRect, SGD::Color{ 200, 0, 0, 0 });
+	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 200, 0, 0, 0 });
+	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 255, 255, 255));
 
 	//Enemy Icons
 	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
@@ -771,14 +772,14 @@ void CombatState::Render(void)
 	{
 		string message = to_string(m_pObjects[i]->GetDeltaHP()).c_str();
 		if (m_pObjects[i]->GetDeltaHP() < 0)
-			pFont->Render("Bernardo", message.c_str(), { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y - m_pObjects[i]->GetDeltaHPPosY() }, 2.0, SGD::Color{ 255, 255, 0, 0 });
+			pFont->Render("Other", message.c_str(), { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y - m_pObjects[i]->GetDeltaHPPosY() }, 2.0, SGD::Color{ 255, 255, 0, 0 });
 		else if (m_pObjects[i]->GetDeltaHP() > 0)
-			pFont->Render("Bernardo", to_string(m_pObjects[i]->GetDeltaHP()).c_str(), { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y - m_pObjects[i]->GetDeltaHPPosY() }, 2.0, SGD::Color{ 255, 0, 255, 0 });
+			pFont->Render("Other", to_string(m_pObjects[i]->GetDeltaHP()).c_str(), { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y - m_pObjects[i]->GetDeltaHPPosY() }, 2.0, SGD::Color{ 255, 0, 255, 0 });
 
 		else if (m_pObjects[i]->GetTurnID() == 1)
-			pFont->Render("Bernardo", "+", { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y }, 3.0, SGD::Color{ 255, 160, 32, 240 });
+			pFont->Render("Other", "+", { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y }, 3.0, SGD::Color{ 255, 160, 32, 240 });
 		else if (m_pObjects[i]->GetTurnID() == 2)
-			pFont->Render("Bernardo", "-", { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y }, 3.0, SGD::Color{ 255, 255, 165, 0 });
+			pFont->Render("Other", "-", { m_pObjects[i]->GetPosition().x, m_pObjects[i]->GetPosition().y }, 3.0, SGD::Color{ 255, 255, 165, 0 });
 	}
 
 	if (CurrentTurn < (int)m_pObjects.size()) //Combat takeTurn rendering in unison with turn order loop
@@ -1211,7 +1212,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  }
 				  break;
 			  case 1: // Offensive
-				  randHealth = rand() % 45 + 55;
+				  randHealth = rand() % 35 + 55;
 
 				  if (randHealth > 50)
 					  temp->SetMods(5, _region, 2, 1);
@@ -1246,7 +1247,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  }
 				  break;
 			  case 2: // Defensive
-				  randHealth = rand() % 20 + 80;
+				  randHealth = rand() % 30 + 90;
 
 				  if (randHealth > 90)
 					  temp->SetMods(2, _region, 1, 3);
@@ -1281,7 +1282,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  }
 				  break;
 			  case 3: // Healing
-				  randHealth = rand() % 45 + 55;
+				  randHealth = rand() % 25 + 65;
 
 				  if (randHealth > 60)
 					  temp->SetMods(1, _region, 1, 2);
@@ -1522,6 +1523,7 @@ Object* CombatState::AddCompanion(int _type)
 		break;
 	}
 	temp->SetHealth(100);
+	temp->SetMaxHealth(100);
 	temp->SetSize({ 64, 64 });
 	temp->CurrentTurn(&CurrentTurn);
 	return temp;
@@ -1845,6 +1847,8 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			{
 				if (rand() % 20 > 1)
 				{
+					_To->SetDeltaHP(-Total);
+
 					DealCounterDamage(_To, _From);
 					return 0;
 				}
@@ -1882,6 +1886,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 				((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 				if (rand() % 20 > 15)
 				{
+					_To->SetDeltaHP(-Total);
 					DealCounterDamage(_To, _From);
 					return 0;
 				}
@@ -1894,6 +1899,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 				{
 					if (rand() % 20 > 15)
 					{
+						_To->SetDeltaHP(-Total);
 						DealCounterDamage(_To, _From);
 						return 0;
 					}
@@ -1960,7 +1966,7 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 
 		if (!localBlock)
 		{
-			Total = rand() % 15 + 30;
+			Total = rand() % 25 + 30;
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			string message = "Your Ally attacks the ";
 			message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
@@ -2160,21 +2166,21 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			Elements e1;
 			stuff += spell1.c_str();
 			e1 = InventoryState::GetInstance()->GetRingSlot1();
-			Total = (int)(((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15));
+			Total = (int)(((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15 + (rand() % 10 - 5)));
 			((Player*)_From)->SetSpell1Cool(2);
 			break;
 		case 1:
 			ComboElements d1;
 			stuff += spell2.c_str();
 			d1 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15));
+			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15 + (rand() % 10 - 5)));
 			((Player*)_From)->SetSpell2Cool(3);
 			break;
 		case 2:
 			ComboElements d2;
 			stuff += spell3.c_str();
 			d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot2(), InventoryState::GetInstance()->GetRingSlot3());
-			Total = (int)(((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15)));
+			Total = (int)(((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15 + (rand() % 10 - 5))));
 			((Player*)_From)->SetSpell3Cool(4);
 			break;
 		default:
@@ -2497,7 +2503,7 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 
 		m_nNumQtCorrect = 0;
 
-		Total = (int)((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 50 + (m_nNumQtCorrect * 5)));
+		Total = rand() % 15 + 10;
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
@@ -2514,7 +2520,7 @@ int CombatState::BlockAttack(Object* _From, Object* _To)
 		message += (Game::GetInstance()->GetString(((Minion*)_To)->GetName(0), ((Minion*)_To)->GetName(1)).c_str());
 		SetAction(message += " Intercepts your Ally's Attack!");
 
-		Total = rand() % 15 + 20; // make this half minion's damage
+		Total = rand() % 15 + 10;
 		((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 	}
 	m_bShake = true;
@@ -2550,7 +2556,7 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 			if (((Player*)_To)->GetHealth() > ((Player*)_To)->GetMaxHealth())
 				((Player*)_To)->SetHealth(((Player*)_To)->GetMaxHealth());
 		}
-		else
+		else if (_To->GetType() == iObject::OBJ_COMPANION)
 		{
 			pAudio->PlayAudio(cHealingAbility, false);
 			((Companion*)_To)->SetHealth(((Companion*)_To)->GetHealth() + Total);
@@ -2589,13 +2595,19 @@ int CombatState::DealAOEDamage(Object* _From, Object* _To)
 		message += (Game::GetInstance()->GetString(((Minion*)m_pObjects[CurrentTurn])->GetName(0), ((Minion*)m_pObjects[CurrentTurn])->GetName(1)).c_str());
 		SetAction(message += " Uses Ground Slam!");
 
-		for (size_t i = 0; i < m_pHeroes.size(); i++)
+		if (((Player*)m_pHeroes[0])->GetHealth() > 0)
 		{
-			if (((Player*)m_pHeroes[i])->GetHealth() > 0)
+			Total = rand() % 20 + 15;
+			m_pHeroes[0]->SetDeltaHP(-Total);
+			((Player*)m_pHeroes[0])->SetHealth(((Player*)m_pHeroes[0])->GetHealth() - Total);
+		}
+		for (size_t i = 1; i < m_pHeroes.size(); i++)
+		{
+			if (((Companion*)m_pHeroes[i])->GetHealth() > 0)
 			{
 				Total = rand() % 20 + 15;
 				m_pHeroes[i]->SetDeltaHP(-Total);
-				((Player*)m_pHeroes[i])->SetHealth(((Player*)m_pHeroes[i])->GetHealth() - Total);
+				((Companion*)m_pHeroes[i])->SetHealth(((Companion*)m_pHeroes[i])->GetHealth() - Total);
 			}
 		}
 	}

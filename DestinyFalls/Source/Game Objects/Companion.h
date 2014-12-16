@@ -27,7 +27,9 @@ enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
 
 	void SetHealth( float _health ) { m_nHealth = _health; }
 	float GetHealth() const { return m_nHealth; }
-	float GetMaxHealth() const { return m_nHealth; }
+
+	void SetMaxHealth(float _health) { m_nMaxHealth = _health; }
+	float GetMaxHealth() const { return m_nMaxHealth; }
 
 	void SetString( int _type ) { TypeString = _type; }
 
@@ -54,8 +56,8 @@ enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
 
 private:
 	int * m_CurrentTurn;
-	float m_nHealth = 0;
-	float m_nMaxHealth = 0;
+	float m_nHealth = 0.0f;
+	float m_nMaxHealth = 100.0f;
 
 	bool m_Block = false;
 	int m_nPosIndex = 0;
