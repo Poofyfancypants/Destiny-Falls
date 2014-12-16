@@ -24,7 +24,7 @@ void CreditState::Enter()
 	m_vCredits.push_back( "AP:" );
 	m_vCredits.push_back( "Sean Hathaway" );
 	m_vCredits.push_back( "Artist:" );
-	m_vCredits.push_back( "Caris Frazie" );
+	m_vCredits.push_back( "Caris Frazier" );
 	m_vCredits.push_back( "Gregory Bey:" );
 	m_vCredits.push_back( "Developers:" );
 	m_vCredits.push_back( "Numi Stefansson" );
