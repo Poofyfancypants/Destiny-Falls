@@ -135,6 +135,8 @@ private:
 	bool m_bWindowed = false;
 	unsigned long m_ulGameTime = 0;
 
+	bool fullscreen = false;
+
 	int m_nCurrState = 0;
 	std::string m_StringTable[15][10];
 
