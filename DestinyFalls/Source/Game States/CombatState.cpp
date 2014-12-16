@@ -408,6 +408,7 @@ void CombatState::Enter(void)
 		m_pHeroes.push_back(temp);
 		//}
 	}
+
 #pragma endregion
 
 	for (size_t i = 1; i < m_pObjects.size(); i++)

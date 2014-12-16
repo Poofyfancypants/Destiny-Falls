@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Save1>
-    <player_info Health="100" PosX="96.000000" PosY="64.000000" CurrLevel="0">
+    <player_info Health="100" PosX="96.000000" PosY="64.000000" CurrLevel="0" CheckpointX="96.000000" CheckpointY="64.000000">
         <Sword Element="4" Tier="0" />
         <Sword Element="4" Tier="0" />
         <Sword Element="4" Tier="0" />
