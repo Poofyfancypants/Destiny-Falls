@@ -32,10 +32,10 @@ public:
 	void SetVelocity( SGD::Vector _vel ) { velocity = _vel; }
 	void SetDirection( int _direction ) { m_nDirection = _direction; }
 	void SetCombat( bool _combat = false ) { m_bCombat = _combat; }
-	void SetHealth( int _health ) { m_nHealth = _health; }
 	void SetPotions( int _potion ) { m_nPotions = _potion; }
-	virtual int GetHealth() const { return m_nHealth; }
-	int GetMaxHealth() const { return m_nMaxHealth; }
+	void SetHealth( float _health ) { m_nHealth = _health; }
+	virtual float GetHealth() const { return m_nHealth; }
+	float GetMaxHealth() const { return m_nMaxHealth; }
 
 	bool GetMoving() const { return m_bMoving; }
 	SGD::Point GetCheckpoint() { return m_ptCheckpoint; }
@@ -94,8 +94,9 @@ private:
 	bool m_bCollision = false;
 	SGD::Vector velocity = SGD::Vector();
 	SGD::Point m_ptCheckpoint;
-	int m_nHealth = 100;
-	int m_nMaxHealth = 100;
+
+	float m_nHealth = 100;
+	float m_nMaxHealth = 100;
 
 	bool m_bCombat = false;
 

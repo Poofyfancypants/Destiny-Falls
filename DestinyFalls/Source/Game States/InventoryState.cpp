@@ -8,6 +8,7 @@
 #include "../../SGD Wrappers/SGD_GraphicsManager.h"
 
 
+
 InventoryState* InventoryState::GetInstance()
 {
 	static InventoryState s_Instance;
@@ -48,6 +49,7 @@ void InventoryState::Enter()
 	m_vRing.resize(3);
 	m_vArmor.resize(3);
 	//m_vCompanion.resize(2);
+
 
 }
 

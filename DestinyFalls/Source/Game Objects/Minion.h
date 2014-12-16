@@ -84,8 +84,12 @@ public:
 
 	void CurrentTurn(int * _CurrentTurn) { m_CurrentTurn = _CurrentTurn; }
 	
-	int GetHealth() const { return m_nHealth; }
-	void SetHealth(int _health) { m_nHealth = _health; }
+	float GetHealth() const { return m_nHealth; }
+	void SetHealth(float _health) { m_nHealth = _health; }
+
+	float GetMaxHealth() const { return m_nHealth; }
+	void SetMaxHealth(float _health) { m_nMaxHealth = _health; }
+
 	Elements GetAffinity() { return m_rAffinity; }
 	void SetAffinity(Elements x) { m_rAffinity = x; }
 
@@ -119,8 +123,9 @@ public:
 
 private:
 	int * m_CurrentTurn;
-	int m_nHealth = 0;
-	
+	float m_nHealth = 0;
+	float m_nMaxHealth = 100;
+
 	AI_Type m_AIType;
 	int AIString = 0;
 	int RegionString = 0;

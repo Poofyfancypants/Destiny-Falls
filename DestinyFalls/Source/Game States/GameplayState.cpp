@@ -224,11 +224,11 @@ bool GameplayState::Input()
 	{
 		m_pPlayer->SetPosition( SGD::Point( 17 * 32, 21 * 32 ) );
 	}
-	//if( pInput->IsKeyPressed( SGD::Key::F6 ) )
-	//{
-	//	NextLevel();
-	//	m_bChangeLevels = true;
-	//}
+	if( pInput->IsKeyPressed( SGD::Key::F6 ) )
+	{
+		NextLevel();
+		m_bChangeLevels = true;
+	}
 
 	// Toggle Inventory
 	if( pInput->IsKeyPressed( SGD::Key::MouseLeft ) )
@@ -564,7 +564,7 @@ void GameplayState::UnloadAndCreate()
 	if( m_pPlayer != nullptr )
 	{
 		checkpoint = ( (Player*)( m_pPlayer ) )->GetCheckpoint();;
-		playerHealth = ( (Player*)( m_pPlayer ) )->GetHealth();
+		playerHealth = (int)( (Player*)( m_pPlayer ) )->GetHealth();
 		numPotions = ( (Player*)( m_pPlayer ) )->GetNumPotions();
 	}
 	else
@@ -585,7 +585,7 @@ void GameplayState::UnloadAndCreate()
 	}
 
 	m_pPlayer = CreatePlayer( SGD::Point( 150, 150 ) );
-	( (Player*)m_pPlayer )->SetHealth( playerHealth );
+	( (Player*)m_pPlayer )->SetHealth( (float)playerHealth );
 	( (Player*)m_pPlayer )->SetPotions( numPotions );
 
 	m_pObjects->AddObject( m_pPlayer, PLAYER_BUCKET );
