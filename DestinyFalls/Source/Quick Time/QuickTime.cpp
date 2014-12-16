@@ -219,8 +219,6 @@ void QuickTime::Render()
 			SGD::GraphicsManager::GetInstance()->DrawRectangle( timer , SGD::Color( 255 , 0 , 0 , 0 ) );
 			if( m_sRenderOutput.size() )
 			{
-
-
 				switch( m_sRenderOutput[ 1 ] )
 				{
 					case '1':
@@ -294,8 +292,6 @@ void QuickTime::Render()
 			////
 			if( m_sRenderInput.size() )
 			{
-
-
 				switch( m_sRenderInput[ 1 ] )
 				{
 					case '1':
