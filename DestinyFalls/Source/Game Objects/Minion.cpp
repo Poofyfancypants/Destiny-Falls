@@ -71,8 +71,15 @@ void Minion::Render(int _posIndex)
 	case 0: //Middle
 		if (m_nHealth > 0)
 		{
+			pGraphics->DrawRectangle({ 605, 200, 705, 230 }, { 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 255 });
+			string message = to_string((int)m_nHealth);
+			message += "/";
+			message += to_string((int)m_nMaxHealth);
+
+			pFont->Render("Dialog", message.c_str(), { Enemy2HB.left + 10, Enemy2HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+
+			pFont->Render("Other", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 0 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy2rect.right, (int)Enemy2rect.bottom);
@@ -89,8 +96,14 @@ void Minion::Render(int _posIndex)
 	case 1:  //Top 
 		if (m_nHealth > 0)
 		{
+			pGraphics->DrawRectangle({ 670, 100, 770, 130 }, { 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy1HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 255 });
+			string message = to_string((int)m_nHealth);
+			message += "/";
+			message += to_string((int)m_nMaxHealth);
+			pFont->Render("Dialog", message.c_str(), { Enemy1HB.left + 10, Enemy1HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+
+			pFont->Render("Other", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 0 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy1rect.right, (int)Enemy1rect.bottom);
@@ -108,8 +121,14 @@ void Minion::Render(int _posIndex)
 	case 2: //Bottom
 		if (m_nHealth > 0)
 		{
+			pGraphics->DrawRectangle({ 670, 310, 770, 340 }, { 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy3HB, m_HealthColor);
-			pFont->Render("Bernardo", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 255 });
+			string message = to_string((int)m_nHealth);
+			message += "/";
+			message += to_string((int)m_nMaxHealth);
+			pFont->Render("Dialog", message.c_str(), { Enemy3HB.left + 10, Enemy3HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+
+			pFont->Render("Other", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 0 });
 			if (m_pAnimator->GetInstance()->CheckSize())
 			{
 				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Enemy3rect.right, (int)Enemy3rect.bottom);
