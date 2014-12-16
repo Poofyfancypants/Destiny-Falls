@@ -71,7 +71,7 @@ void Minion::Render(int _posIndex)
 	case 0: //Middle
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle({ 605, 200, 605 + m_nMaxHealth, 230 }, { 255, 255, 255, 255 });
+			pGraphics->DrawRectangle({ 605, 200, 705, 230 }, { 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy2HB, m_HealthColor);
 			string message = to_string((int)m_nHealth);
 			message += "/";
@@ -96,7 +96,7 @@ void Minion::Render(int _posIndex)
 	case 1:  //Top 
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle({ 670, 100, 670 + m_nMaxHealth, 130 }, { 255, 255, 255, 255 });
+			pGraphics->DrawRectangle({ 670, 100, 770, 130 }, { 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy1HB, m_HealthColor);
 			string message = to_string((int)m_nHealth);
 			message += "/";
@@ -121,7 +121,7 @@ void Minion::Render(int _posIndex)
 	case 2: //Bottom
 		if (m_nHealth > 0)
 		{
-			pGraphics->DrawRectangle({ 670, 310, 670 + m_nMaxHealth, 340 }, { 255, 255, 255, 255 });
+			pGraphics->DrawRectangle({ 670, 310, 770, 340 }, { 255, 255, 255, 255 });
 			pGraphics->DrawRectangle(Enemy3HB, m_HealthColor);
 			string message = to_string((int)m_nHealth);
 			message += "/";
