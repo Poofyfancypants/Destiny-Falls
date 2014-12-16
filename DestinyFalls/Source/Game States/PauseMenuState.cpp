@@ -47,14 +47,14 @@ bool PauseMenuState::Input( void )
 	{
 		Game::GetInstance()->RemoveState();
 	}
-	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) )
+	if( pInput->IsKeyPressed( SGD::Key::Up ) || pInput->IsKeyPressed( SGD::Key::W ) )
 	{
 		if( m_nCursor <= resume )
 			m_nCursor = exit;
 		else
 			m_nCursor--;
 	}
-	else if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyDown( SGD::Key::S ) )
+	else if( pInput->IsKeyPressed( SGD::Key::Down ) || pInput->IsKeyPressed( SGD::Key::S ) )
 	{
 		if( m_nCursor >= exit )
 			m_nCursor = resume;
@@ -132,12 +132,5 @@ void PauseMenuState::Render( void )
 		.7f, { 247, 180, 91 } );
 	}
 
-	//string cursor = ">>";
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 8 ).c_str(), { 330, 215 }, 2, { 255, 0, 0, 255 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 3 ).c_str(), { 327, 315 }, 2, { 255, 0, 0, 150 } );
-	//pFonts->Render( "Bernardo", Game::GetInstance()->GetString( 0, 6 ).c_str(), { 327, 415 }, 2, { 255, 0, 0, 150 } );
-
-	//pFonts->Render( "Bernardo", cursor.c_str(), SGD::Point( 275, ( m_nCursor * 100 ) + 100 ), 2, { 255, 255, 255, 0 } );
-	/*pGraphics->DrawRectangle( SGD::Rectangle{ 40, (float)( 40 * m_nCursor + 60 ), 50, (float)( 40 * m_nCursor + 70 ) }, SGD::Color{ 255, 0, 255, 0 } );*/
 }
 

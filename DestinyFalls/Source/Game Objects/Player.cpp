@@ -42,7 +42,7 @@ Player::~Player()
 void Player::Update( float elapsedTime )
 {
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-	if( m_nHealth <= 0 && m_fDeathAnimationTimer > 0.0f)
+	if( m_nHealth <= 0 && m_fDeathAnimationTimer > 0.0f )
 	{
 		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
 		{
@@ -59,7 +59,7 @@ void Player::Update( float elapsedTime )
 				m_fDeathAnimationTimer = 0.0f;
 			}
 
-			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp(), elapsedTime );
 		}
 		return;
 	}
@@ -73,8 +73,6 @@ void Player::Update( float elapsedTime )
 			m_nHealth = 0;
 			Game::GetInstance()->AddState( DeathState::GetInstance() );
 
-			
-			m_nHealth = 100;
 		}
 	}
 	else
@@ -91,8 +89,6 @@ void Player::Update( float elapsedTime )
 			m_nHealth = 0;
 			m_bSliding = false;
 			Game::GetInstance()->AddState( DeathState::GetInstance() );
-
-			//m_nHealth = 100;
 		}
 		if( !m_bSliding )
 			m_nDirection = 0;
@@ -161,21 +157,6 @@ void Player::Update( float elapsedTime )
 		}
 	}
 
-	// - Scrolling Damage
-
-	//// - Distance for the text to travel.
-	//float dp = 500;
-
-	//// - Starting position
-	//if( !m_PrintDMG )
-	//	p1 = m_ptPosition.y;
-	//p2 = p1 + dp;
-	//v1 = ( p2 - p1 ) * elapsedTime;
-	//if( p1 > p2 )
-	//	m_PrintDMG = false;
-	//else
-	//	p1 -= v1;
-
 	if( m_PrintDMG )
 	{
 		m_fSecond += elapsedTime;
@@ -203,7 +184,7 @@ void Player::Render( void )
 
 	if( m_bPlayCombatAnimation )
 	{
-		m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)playerRect.right, (int)playerRect.bottom);
+		m_pAnimator->GetInstance()->Render( *this->GetTimeStamp(), (int)playerRect.right, (int)playerRect.bottom );
 	}
 	else
 	{
@@ -218,12 +199,13 @@ void Player::Render( void )
 		}
 
 		SGD::Point currentHealthHUD = { 0, 0 };
-		// Red Health Bar
+		// Health Bar
 		currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() / 10 ) };
-		pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetMaxHealth(), currentHealthHUD.y }, { 255, 0, 0 }, 17U );
-		// Green Health Bar
-		currentHealthHUD = { ( Game::GetInstance()->GetScreenWidth() * 1 / 5 ) - 75, ( Game::GetInstance()->GetScreenHeight() / 10 ) };
-		pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + this->GetHealth(), currentHealthHUD.y }, { 0, 255, 0 }, 17U );
+		pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + 100, currentHealthHUD.y }, { 255, 0, 0 }, 17U );
+		if( m_nHealth >= 0 )
+		{
+			pGraphics->DrawLine( currentHealthHUD, SGD::Point{ currentHealthHUD.x + m_nHealth, currentHealthHUD.y }, { 0, 255, 0 }, 17U );
+		}
 		pGraphics->DrawTexture( m_hPortrait, SGD::Point( currentHealthHUD.x - 70, currentHealthHUD.y - 30 ), {}, {}, {}, { .5f, .5f } );
 
 		if( m_pAnimator->GetInstance()->CheckSize() )
@@ -264,8 +246,7 @@ void Player::TakeInput()
 		m_bUpdateAnimation = false;
 		return;
 	}
-
-	if (pInput->IsKeyDown(SGD::Key::Up) || pInput->IsKeyDown(SGD::Key::W) || pInput->IsDPadDown(0, SGD::DPad::Up))
+	if( pInput->IsKeyDown( SGD::Key::Up ) || pInput->IsKeyDown( SGD::Key::W ) || pInput->IsDPadDown( 0, SGD::DPad::Up ) )
 	{
 		m_nDirection = 1;
 		m_bUpdateAnimation = true;
@@ -351,7 +332,7 @@ void Player::TakeInput()
 		}
 	}
 
-	if( pInput->IsKeyPressed(SGD::Key::X) )
+	if( pInput->IsKeyPressed( SGD::Key::X ) )
 	{
 		m_nHealth = 3;
 	}
@@ -381,7 +362,7 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_CHEST )
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Q) || pInput->IsButtonDown(0, 4))
+		if( pInput->IsKeyPressed( SGD::Key::Q ) || pInput->IsButtonDown( 0, 4 ) )
 		{
 			if( ( (Chest*)pOther )->IsTrapped() )
 			{

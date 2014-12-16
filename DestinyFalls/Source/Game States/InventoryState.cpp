@@ -86,17 +86,17 @@ bool InventoryState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape) && tabLock == false || pInput->IsButtonDown(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) && tabLock == false || pInput->IsButtonPressed(0, 6))
 		Game::GetInstance()->RemoveState(); //Make this Pause
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonDown(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6))
 		tabLock = false;
 
 	if (pInput->IsKeyPressed(SGD::Key::UpArrow) || pInput->IsDPadUp(0, SGD::DPad::Up))
 		tabLock = false;
 
 
-	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonDown(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonPressed(0, 6))
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
