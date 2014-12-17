@@ -35,6 +35,7 @@ private:
 
 	int m_nCursor = 0;
 	bool m_bSelect = false;
+	float m_fArcadeTimer = 0.0f;
 
 	//GameState Selection Rectangles
 	SGD::Rectangle playRect = { 124, 162, 232, 457 };

@@ -23,6 +23,8 @@ private:
 
 	SaveState( const SaveState& ) = delete;
 	SaveState& operator=( const SaveState& ) = delete;
+	
+	float m_fArcadeTimer = 0.0f;
 
 	int m_nRenameCursor = 0;
 	int m_nCursor = 0;

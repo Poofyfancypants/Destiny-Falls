@@ -55,7 +55,7 @@ bool CreditState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonDown( 0, 6 ) || m_bExit )
+	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonPressed( 0, 6 ) || m_bExit )
 	{
 		Game::GetInstance()->ClearStates();
 		//pAudio->StopAudio(Game::GetInstance()->m_mWinMusic);

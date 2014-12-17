@@ -18,6 +18,8 @@ public:
 	virtual void Update( float elapsedTime )	override;
 	virtual void Render( void )				override;
 private:
+	float m_fArcadeTimer = 0.0f;
+
 	LoadState() = default;
 	virtual ~LoadState() = default;
 

@@ -36,7 +36,7 @@ void InventoryState::Enter()
 
 	m_hArmorBackground = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/ArmorInventory.jpg");
 	m_hWeaponBackground = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WeaponInventory.jpg");
-
+	m_hQtImage = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/QuickTime.png");
 
 	m_hHunterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/HunterIcon.png");
 	m_hFighterIcon = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/FighterIcon.png");
@@ -79,6 +79,8 @@ void InventoryState::Exit()
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hHeroBackground);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hArmorBackground);
 	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hWeaponBackground);
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hQtImage);
+
 
 }
 
@@ -86,38 +88,57 @@ bool InventoryState::Input()
 {
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape) && tabLock == false || pInput->IsButtonPressed(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) && tabLock == false || pInput->IsButtonPressed(0, 6) && m_fArcadeTimer >= 0.5f)
+	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
+		m_fArcadeTimer = 0.0f;
+	}
 
-	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6) && m_fArcadeTimer >= 0.5f)
+	{
 		tabLock = false;
+		m_fArcadeTimer = 0.0f;
+	}
 
-	if (pInput->IsKeyPressed(SGD::Key::UpArrow) || pInput->IsDPadUp(0, SGD::DPad::Up))
+	if (pInput->IsKeyPressed(SGD::Key::UpArrow) || pInput->GetLeftJoystick(0).y == -1)
+	{
 		tabLock = false;
+		m_fArcadeTimer = 0.0f;
+	}
 
-
-	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsButtonPressed(0, 6))
+	if (pInput->IsKeyPressed(SGD::Key::E) || pInput->IsKeyPressed(SGD::Key::MouseRight) || pInput->IsButtonPressed(0, 3))
 	{
 		Game::GetInstance()->RemoveState(); //Make this Pause
 	}
 
-
-	if (pInput->IsKeyPressed(SGD::Key::RightArrow) && tabLock == false || pInput->IsDPadDown(0, SGD::DPad::Right))
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
 	{
-		m_ntabCursor++;
-		if (m_ntabCursor == -1)
-			m_ntabCursor = 3;
-		else if (m_ntabCursor == 4)
-			m_ntabCursor = 0;
+		if (pInput->GetCursorPosition().IsPointInRectangle(QTinfoButton))
+			Qt = !Qt;
 	}
-
-	if (pInput->IsKeyPressed(SGD::Key::LeftArrow) && tabLock == false || pInput->IsDPadDown(0, SGD::DPad::Left))
+	if (m_fArcadeTimer >= 0.5f)
 	{
-		m_ntabCursor--;
-		if (m_ntabCursor == -1)
-			m_ntabCursor = 3;
-		else if (m_ntabCursor == 4)
-			m_ntabCursor = 0;
+		if (pInput->IsKeyPressed(SGD::Key::RightArrow) && tabLock == false || pInput->GetLeftJoystick(0).x == 1 && tabLock == false)
+		{
+			m_ntabCursor++;
+			if (m_ntabCursor == -1)
+				m_ntabCursor = 3;
+			else if (m_ntabCursor == 4)
+				m_ntabCursor = 0;
+
+			m_fArcadeTimer = 0.0f;
+		}
+
+		if (pInput->IsKeyPressed(SGD::Key::LeftArrow) && tabLock == false || pInput->GetLeftJoystick(0).x == -1 && tabLock == false)
+		{
+			m_ntabCursor--;
+			if (m_ntabCursor == -1)
+				m_ntabCursor = 3;
+			else if (m_ntabCursor == 4)
+				m_ntabCursor = 0;
+
+			m_fArcadeTimer = 0.0f;
+		}
 	}
 
 	if (pInput->IsKeyPressed(SGD::Key::MouseLeft))
@@ -165,8 +186,11 @@ bool InventoryState::Input()
 
 	if (tabLock == false)
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Enter))
+		if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
+		{
 			tabLock = true;
+			m_fArcadeTimer = 0.0f;
+		}
 	}
 
 	if (tabLock)
@@ -175,11 +199,19 @@ bool InventoryState::Input()
 		{
 			if (!OnlyEquipEnter)
 			{
-
-				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-					m_nCursor--;
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-					m_nCursor++;
+				if (m_fArcadeTimer >= 0.5f)
+				{
+					if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
+					{
+						m_nCursor--;
+						m_fArcadeTimer = 0.0f;
+					}
+					if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
+					{
+						m_nCursor++;
+						m_fArcadeTimer = 0.0f;
+					}
+				}
 
 				// loop check
 				if (m_nCursor < 0)
@@ -187,11 +219,14 @@ bool InventoryState::Input()
 				else if (m_nCursor > 1)
 					m_nCursor = 0;
 			}
-
-			if (pInput->IsKeyPressed(SGD::Key::Enter) && !OnlyEquipEnter || pInput->IsKeyPressed(SGD::Key::MouseLeft))
+			if (m_fArcadeTimer >= 0.5f)
 			{
-				OnlyEquipEnter = true;
-				return true;
+				if (pInput->IsKeyPressed(SGD::Key::Enter) && !OnlyEquipEnter || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonPressed(0, 0))
+				{
+					OnlyEquipEnter = true;
+					m_fArcadeTimer = 0.0f;
+					return true;
+				}
 			}
 
 			if (OnlyEquipEnter)
@@ -204,15 +239,17 @@ bool InventoryState::Input()
 				if (CompanionSelect == 4)
 					CompanionSelect = 0;
 
-				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1 && m_fArcadeTimer >= 0.5f)
 				{
 					CompanionSelect++;
+					m_fArcadeTimer = 0.0f;
 				}
-				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1 && m_fArcadeTimer >= 0.5f)
 				{
 					CompanionSelect--;
+					m_fArcadeTimer = 0.0f;
 				}
-				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 				{
 					switch (m_nCursor)
 					{
@@ -230,6 +267,7 @@ bool InventoryState::Input()
 					default:
 						break;
 					}
+					m_fArcadeTimer = 0.0f;
 				}
 			}
 
@@ -267,11 +305,19 @@ bool InventoryState::Input()
 		if (!pauseSelection)
 		{
 			equipPos = 30;
-
-			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-				m_nCursor--;
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-				m_nCursor++;
+			if (m_fArcadeTimer >= 1.5)
+			{
+				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
+				{
+					m_nCursor--;
+					m_fArcadeTimer = 0.0f;
+				}
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
+				{
+					m_nCursor++;
+					m_fArcadeTimer = 0.0f;
+				}
+			}
 
 			// loop check
 			if (m_nCursor < 0)
@@ -279,11 +325,14 @@ bool InventoryState::Input()
 			else if (m_nCursor > 2)
 				m_nCursor = 0;
 		}
-
-		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection)
+		if (m_fArcadeTimer >= 0.5f)
 		{
-			pauseSelection = true;
-			return true;
+			if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonPressed(0, 0) && !pauseSelection)
+			{
+				pauseSelection = true;
+				m_fArcadeTimer = 0.0f;
+				return true;
+			}
 		}
 
 		if (pauseSelection)
@@ -297,15 +346,17 @@ bool InventoryState::Input()
 			else if (equipPos == -1)
 				equipPos = 11;
 
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
+			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1 && m_fArcadeTimer >= 0.25f)
 			{
 				equipPos++;
+				m_fArcadeTimer = 0.0f;
 			}
-			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1 && m_fArcadeTimer >= 0.25f)
 			{
 				equipPos--;
+				m_fArcadeTimer = 0.0f;
 			}
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 			{
 				switch (m_nCursor)
 				{
@@ -324,6 +375,7 @@ bool InventoryState::Input()
 				default:
 					break;
 				}
+				m_fArcadeTimer = 0.0f;
 			}
 		}
 
@@ -372,14 +424,18 @@ bool InventoryState::Input()
 		{
 			equipPos = 30;
 
-
-			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			if (m_fArcadeTimer >= 0.5f)
 			{
-				m_nCursor--;
-			}
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-			{
-				m_nCursor++;
+				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
+				{
+					m_nCursor--;
+					m_fArcadeTimer = 0.0f;
+				}
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
+				{
+					m_nCursor++;
+					m_fArcadeTimer = 0.0f;
+				}
 			}
 			// loop check
 			if (m_nCursor < 0)
@@ -388,12 +444,16 @@ bool InventoryState::Input()
 				m_nCursor = 0;
 
 		}
-
-		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2) && !pauseSelection)
+		if (m_fArcadeTimer >= 0.5f)
 		{
-			pauseSelection = true;
-			return true;
+			if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonPressed(0, 0) && !pauseSelection)
+			{
+				pauseSelection = true;
+				m_fArcadeTimer = 0.0f;
+				return true;
+			}
 		}
+
 		if (pauseSelection)
 		{
 			if (equipPos == 30)
@@ -403,40 +463,50 @@ bool InventoryState::Input()
 				equipPos = 0;
 			else if (equipPos == -1)
 				equipPos = 11;
+			if (m_fArcadeTimer >= .25f)
+			{
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
+				{
+					equipPos++;
+					m_fArcadeTimer = 0.0f;
+				}
+				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
+				{
+					equipPos--;
+					m_fArcadeTimer = 0.0f;
+				}
+			}
 
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-			{
-				equipPos++;
-			}
-			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-			{
-				equipPos--;
-			}
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 			{
 				switch (m_nCursor)
 				{
 				case 0:
 					AddRunesToArmor0fromInventory(m_ptSelectedRune);
 					pauseSelection = false;
+					m_fArcadeTimer = 0.0f;
+
 					break;
 				case 1:
 					AddRunesToArmor1fromInventory(m_ptSelectedRune);
 					pauseSelection = false;
+					m_fArcadeTimer = 0.0f;
+
 					break;
 				case 2:
 					AddRunesToArmor2fromInventory(m_ptSelectedRune);
 					pauseSelection = false;
+					m_fArcadeTimer = 0.0f;
+
 					break;
 				default:
 					break;
 				}
-
 			}
 		}
 
 
-		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 		{
 
 			if (pInput->GetCursorPosition().IsPointInRectangle(EquipA1))
@@ -477,22 +547,23 @@ bool InventoryState::Input()
 
 	if (m_bRunesTab)
 	{
-		if (pauseSelection == false && OnlyEquipEnter == false)
+
+		if (!pauseSelection)
 		{
-			equipPos = 30;
+		equipPos = 30;
 
-			if (equipPos == 12)
-				equipPos = 0;
-			else if (equipPos == -1)
-				equipPos = 11;
-
-			if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
+			if (m_fArcadeTimer >= 0.5f)
 			{
-				m_nCursor--;
-			}
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-			{
-				m_nCursor++;
+				if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1)
+				{
+					m_nCursor--;
+					m_fArcadeTimer = 0.0f;
+				}
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1)
+				{
+					m_nCursor++;
+					m_fArcadeTimer = 0.0f;
+				}
 			}
 
 			// loop check
@@ -502,12 +573,16 @@ bool InventoryState::Input()
 				m_nCursor = 0;
 
 		}
-
-		if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonDown(0, 2))
+		if (m_fArcadeTimer >= 0.5f)
 		{
-			pauseSelection = true;
-			return true;
+			if (pInput->IsKeyPressed(SGD::Key::Enter) && !pauseSelection || pInput->IsButtonPressed(0, 0))
+			{
+				pauseSelection = true;
+				m_fArcadeTimer = 0.0f;
+				return true;
+			}
 		}
+
 		if (pauseSelection)
 		{
 			if (equipPos == 30)
@@ -517,16 +592,21 @@ bool InventoryState::Input()
 				equipPos = 0;
 			else if (equipPos == -1)
 				equipPos = 11;
+			if (m_fArcadeTimer >= .25f)
+			{
+				if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->GetLeftJoystick(0).x == 1  )
+				{
+					equipPos++;
+					m_fArcadeTimer = 0.0f;
+				}
+				else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->GetLeftJoystick(0).x == -1 )
+				{
+					equipPos--;
+					m_fArcadeTimer = 0.0f;
+				}
+			}
 
-			if (pInput->IsKeyPressed(SGD::Key::RightArrow) || pInput->IsDPadDown(0, SGD::DPad::Right))
-			{
-				equipPos++;
-			}
-			else if (pInput->IsKeyPressed(SGD::Key::LeftArrow) || pInput->IsDPadDown(0, SGD::DPad::Left))
-			{
-				equipPos--;
-			}
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 			{
 				switch (m_nCursor)
 				{
@@ -546,11 +626,12 @@ bool InventoryState::Input()
 					break;
 				}
 
+				m_fArcadeTimer = 0.0f;
 			}
 		}
 
 
-		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+		if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 		{
 
 			if (pInput->GetCursorPosition().IsPointInRectangle(EquipG1))
@@ -585,6 +666,7 @@ bool InventoryState::Input()
 				else
 					AddRunesToInventoryfromRing1();
 			}
+
 		}
 	}
 
@@ -593,7 +675,7 @@ bool InventoryState::Input()
 
 
 
-	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pauseSelection || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 2))
+	if (pInput->IsKeyPressed(SGD::Key::MouseLeft) || pauseSelection || pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 	{
 		m_bShowToolTip1 = false;
 		m_bShowToolTip2 = false;
@@ -670,6 +752,7 @@ bool InventoryState::Input()
 			m_ptSelectedRune.SetElement(Earth);
 			m_ptSelectedRune.SetTier(3);
 		}
+
 
 	}
 	// remove runes from the equipped slot
@@ -918,6 +1001,8 @@ bool InventoryState::Input()
 void InventoryState::Update(float elapsedTime)
 {
 	// - Tutorial timer.
+	m_fArcadeTimer += elapsedTime;
+
 	m_fTimer += elapsedTime;
 	if (m_fTimer >= m_fDialogScroll)
 	{
@@ -1776,131 +1861,51 @@ void InventoryState::Render()
 				pGraphics->DrawRectangle(IventoryRect12, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
 				pGraphics->DrawTexture(m_hEartht3, { IventoryRect12.left, IventoryRect12.top }, {}, {}, {}, { 0.55f, 0.55f });
 			}
+
+		}
+		pGraphics->DrawTexture(m_hQtImage, SGD::Point(QTinfoButton.left, QTinfoButton.top), {}, {}, {}, { .5f, .5f });
+		if (Qt)
+		{
+			pGraphics->DrawRectangle(SGD::Rectangle(500, 0, 900, 200), SGD::Color(255, 255, 255), SGD::Color(0, 0, 0));
+			pFonts->Render("Other", "QuickTime Information", SGD::Point(600, 5), .75f, SGD::Color(0, 255, 0));
+			pFonts->Render("Other", "Melee and Magic abilities are directly affected by QuickTime", SGD::Point(505, 25), 0.4f, SGD::Color(0, 0, 0));
+			pFonts->Render("Other", "If You Have Runes Equipped, it Will Lengthen the QuickTime amount", SGD::Point(505, 55), 0.4f, SGD::Color(0, 0, 0));
+			pFonts->Render("Other", "Filling all 3 slots per item will give you 9 QuickTime opportunites", SGD::Point(505, 95), 0.4f, SGD::Color(0, 0, 0));
+			pFonts->Render("Other", "Failing QuickTime will result in a padded failure.", SGD::Point(505, 125), 0.4f, SGD::Color(0, 0, 0));
+			pFonts->Render("Other", "Damage can still be done to the opponent if it is Failed", SGD::Point(505, 155), 0.4f, SGD::Color(0, 0, 0));
+			pFonts->Render("Other", "Credit will be Given up to the amound of successful QuickTimes ", SGD::Point(505, 185), 0.4f, SGD::Color(0, 0, 0));
 		}
 #pragma endregion
 
-		//pGraphics->DrawRectangle(IventoryRect1, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hFiret1, { IventoryRect1.left, IventoryRect1.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect2, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hFiret2, { IventoryRect2.left, IventoryRect2.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect3, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hFiret3, { IventoryRect3.left, IventoryRect3.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect4, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hWatert1, { IventoryRect4.left, IventoryRect4.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect5, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hWatert2, { IventoryRect5.left, IventoryRect5.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect6, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hWatert3, { IventoryRect6.left, IventoryRect6.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect7, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hAirt1, { IventoryRect7.left, IventoryRect7.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect8, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hAirt2, { IventoryRect8.left, IventoryRect8.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect9, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hAirt3, { IventoryRect9.left, IventoryRect9.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect10, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hEartht1, { IventoryRect10.left, IventoryRect10.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect11, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hEartht2, { IventoryRect11.left, IventoryRect11.top }, {}, {}, {}, { 0.55f, 0.55f });
-
-
-		//pGraphics->DrawRectangle(IventoryRect12, SGD::Color{ 200, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 });
-		//pGraphics->DrawTexture(m_hEartht3, { IventoryRect12.left, IventoryRect12.top }, {}, {}, {}, { 0.55f, 0.55f });
-		//sword
-		//pGraphics->DrawRectangle( Equip1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( Equip2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( Equip3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		////armor
-		//pGraphics->DrawRectangle( EquipA1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipA2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipA3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		////gauntlet
-		//pGraphics->DrawRectangle( EquipG1, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipG2, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-		//pGraphics->DrawRectangle( EquipG3, SGD::Color{ 0, 250, 250, 250 }, SGD::Color{ 255, 255, 255, 255 } );
-
-
-
-
-
 		//highlight selection
 		if (equipPos == 0)
-		{
 			pGraphics->DrawRectangle(IventoryRect1, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 4)
-		{
 			pGraphics->DrawRectangle(IventoryRect2, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 8)
-		{
 			pGraphics->DrawRectangle(IventoryRect3, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 1)
-		{
 			pGraphics->DrawRectangle(IventoryRect4, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 5)
-		{
 			pGraphics->DrawRectangle(IventoryRect5, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 9)
-		{
 			pGraphics->DrawRectangle(IventoryRect6, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 2)
-		{
 			pGraphics->DrawRectangle(IventoryRect7, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 6)
-		{
 			pGraphics->DrawRectangle(IventoryRect8, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 10)
-		{
 			pGraphics->DrawRectangle(IventoryRect9, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 3)
-		{
 			pGraphics->DrawRectangle(IventoryRect10, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 7)
-		{
 			pGraphics->DrawRectangle(IventoryRect11, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
 		if (equipPos == 11)
-		{
 			pGraphics->DrawRectangle(IventoryRect12, SGD::Color(0, 255, 255, 0), SGD::Color(0, 0, 0));
-		}
-
-
 	}
-
-
 	// - Tutorial
 	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
 		HandleTutorial();
-
-
 }
 
 #pragma region Add
@@ -2027,6 +2032,7 @@ void InventoryState::ClearInventory()
 	m_vArmor.clear();
 	m_vSword.clear();
 	m_vRing.clear();
+	m_vRunes.clear();
 }
 
 void InventoryState::HandleTutorial()

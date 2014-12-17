@@ -18,6 +18,9 @@ public:
 	void SetPauseState(bool _state) { m_pauseStage = _state;}
 	bool GetPauseState() const {return m_pauseStage;}
 private:
+
+	float m_fArcadeTimer = 0.0f;
+
 	PauseMenuState() = default;
 	virtual ~PauseMenuState() = default;
 

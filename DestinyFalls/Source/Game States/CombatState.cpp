@@ -484,7 +484,7 @@ bool CombatState::Input(void)
 		Game::GetInstance()->RemoveState();
 	}
 
-	if (pInput->IsKeyPressed(SGD::Key::B))
+	if (pInput->IsKeyPressed(SGD::Key::B) || pInput->IsButtonPressed(0, 5))
 	{
 		selected = false;
 		spellSelect = -1;
@@ -501,6 +501,7 @@ void CombatState::Update(float elapsedTime)
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
 	// Draw the bckgrnd here if you don't have screen shake reasons
 	// DrawBackground();
+	m_fArcadeTimer += elapsedTime;
 
 	ActionTimer -= elapsedTime;
 	if (ActionTimer <= 0.0f)
@@ -720,21 +721,7 @@ void CombatState::Render(void)
 	pGraphics->DrawRectangle(ActionRect, SGD::Color{ 200, 0, 0, 0 });
 	pFont->Render("Other", ActionMessage.c_str(), SGD::Point{ (width - (len * 14)) / 2, ActionRect.top + 5 }, 1, SGD::Color(255, 255, 255, 255));
 
-	//Enemy Icons
-	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
-	{
-		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
-		{
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
-				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
-		}
-	}
+
 
 	SGD::Color pHcolor;
 	if ((((Player*)m_pHeroes[0])->GetHealth() / ((Player*)m_pHeroes[0])->GetMaxHealth()) * 100 > 50)
@@ -773,6 +760,41 @@ void CombatState::Render(void)
 		if (((Companion*)m_pHeroes[j])->GetHealth() > 0)
 			((Companion*)m_pHeroes[j])->CombatRender(j);
 	}
+	//Enemy Icons
+	for (unsigned int i = 0; i < m_pEnemies.size(); i++)
+	{
+		if (((Minion*)m_pEnemies[i])->GetHealth() > 0)
+		{
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Water)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hWaterIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Fire)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hFireIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Air)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hAirIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+			if (((Minion*)(m_pEnemies[i]))->GetAffinity() == Earth)
+				pGraphics->DrawTexture(Game::GetInstance()->m_hEarthIcon, SGD::Point(m_pEnemies[i]->GetPosition().x + 50, m_pEnemies[i]->GetPosition().y - 110), {}, {}, {}, { .1f, .1f });
+		}
+	}
+
+	//if (CombatToolTip == 0)
+	//{
+	//	pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+	//	pFont->Render("Other", "Tier 1 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//	pFont->Render("Other", "1 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//}
+	//if (CombatToolTip == 1)
+	//{
+	//	pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+	//	pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//	pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//}
+	//if (CombatToolTip == 2)
+	//{
+	//	pGraphics->DrawRectangle(SGD::Rectangle(0, 500, 200, 600), SGD::Color(255, 200, 119, 40), SGD::Color(255, 255, 255, 255));
+	//	pFont->Render("Other", "Tier 2 Elemental Ability", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//	pFont->Render("Other", "2 Round CoolDown", SGD::Point{ 0, 500 }, .75, SGD::Color(0, 0, 0));
+	//}
+
 
 	if (GameplayState::GetInstance()->GetCurrentLevel() == 0)
 		HandleTutorial();
@@ -2709,10 +2731,19 @@ bool CombatState::TakeTurn(Object* _this)
 									if (spellActive)
 									{
 										pCombat->SetAction("Choose Action");
-										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-											m_nCursor--;
-										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-											m_nCursor++;
+										if (m_fArcadeTimer >= 1.0f)
+										{
+											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+											{
+												m_nCursor--;
+												m_fArcadeTimer = 0.0f;
+											}
+											if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+											{
+												m_nCursor++;
+												m_fArcadeTimer = 0.0f;
+											}
+										}
 
 										if (m_nCursor < 0)
 											m_nCursor = 0;
@@ -2725,7 +2756,7 @@ bool CombatState::TakeTurn(Object* _this)
 									}
 
 									//First Selection >> Action
-									if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+									if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 									{
 										//if
 										if (m_nCursor == 0)
@@ -2740,6 +2771,8 @@ bool CombatState::TakeTurn(Object* _this)
 											selected = true;
 											m_nCursor = 0;
 										}
+
+										m_fArcadeTimer = 0.0f;
 									}
 								}
 								else //Action selected, now pick target
@@ -2751,10 +2784,19 @@ bool CombatState::TakeTurn(Object* _this)
 
 										int prevCursor = 0;
 
-										if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-											m_nCursor--;
-										if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-											m_nCursor++;
+										if (m_fArcadeTimer >= 1.0f)
+										{
+											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+											{
+												m_nCursor--;
+												m_fArcadeTimer = 0.0f;
+											}
+											if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+											{
+												m_nCursor++;
+												m_fArcadeTimer = 0.0f;
+											}
+										}
 
 										if (m_nCursor < 0)
 											m_nCursor = m_pEnemies.size() - 1;
@@ -2770,7 +2812,7 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nCursor = 0;
 
 										//Second Selection >> Target
-										if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+										if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 										{
 											((Player*)_this)->SetAttacking(true);
 											entered = true;
@@ -2787,6 +2829,8 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nQTLength = xx * 3;
 
 											Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+
+											m_fArcadeTimer = 0.0f;
 										}
 										if (entered)
 										{
@@ -2811,23 +2855,41 @@ bool CombatState::TakeTurn(Object* _this)
 											pCombat->SetAction("Choose Spell");
 
 											if (m_nCursor == 0)
+											{
 												PlayerSelection = { Spell1Rect.left, Spell1Rect.top + 50, Spell1Rect.right, Spell1Rect.bottom + 50 };
+												CombatToolTip = 0;
+											}
 											else if (m_nCursor == 1)
+											{
 												PlayerSelection = { Spell2Rect.left, Spell2Rect.top + 50, Spell2Rect.right, Spell3Rect.bottom + 50 };
-											else if (m_nCursor == 2)
-												PlayerSelection = { Spell3Rect.left, Spell3Rect.top + 50, Spell3Rect.right, Spell3Rect.bottom + 50 };
+												CombatToolTip = 1;
 
-											if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::W))
-												m_nCursor--;
-											if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::S))
-												m_nCursor++;
+											}
+											else if (m_nCursor == 2)
+											{
+												PlayerSelection = { Spell3Rect.left, Spell3Rect.top + 50, Spell3Rect.right, Spell3Rect.bottom + 50 };
+												CombatToolTip = 2;
+											}
+											if (m_fArcadeTimer >= 1.0f)
+											{
+												if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
+												{
+													m_nCursor--;
+													m_fArcadeTimer = 0.0f;
+												}
+												if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
+												{
+													m_nCursor++;
+													m_fArcadeTimer = 0.0f;
+												}
+											}
 
 											if (m_nCursor < 0)
 												m_nCursor = 0;
 											if (m_nCursor >(int)pInventory->m_vRing.size() - 1)
 												m_nCursor = (int)pInventory->m_vRing.size() - 1;
 
-											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 											{
 												if (m_nCursor == 0)
 												{
@@ -2853,6 +2915,7 @@ bool CombatState::TakeTurn(Object* _this)
 														m_nCursor = 0;
 													}
 												}
+												m_fArcadeTimer = 0.0f;
 											}
 										}
 										//#pragma endregion
@@ -2861,11 +2924,19 @@ bool CombatState::TakeTurn(Object* _this)
 											pCombat->SetAction("Choose Target");
 											int prevCursor = m_nCursor;
 											PlayerSelection = { ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 150, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().x - 110, ((Minion*)pCombat->GetEnemies()[m_nCursor])->GetPosition().y + 40 };
-
-											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-												m_nCursor--;
-											if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-												m_nCursor++;
+											if (m_fArcadeTimer >= 1.0f)
+											{
+												if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+												{
+													m_nCursor--;
+													m_fArcadeTimer = 0.0f;
+												}
+												if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+												{
+													m_nCursor++;
+													m_fArcadeTimer = 0.0f;
+												}
+											}
 
 											if (m_nCursor < 0)
 												m_nCursor = m_pEnemies.size() - 1;
@@ -2881,7 +2952,7 @@ bool CombatState::TakeTurn(Object* _this)
 												m_nCursor = 0;
 
 											//Second Selection >> Target
-											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+											if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 											{
 
 												entered = true;
@@ -2897,6 +2968,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 												m_nQTLength = xx * 3;
 												Game::GetInstance()->AddState(QuickTimeState::GetInstance());
+												m_fArcadeTimer = 0.0f;
 											}
 											if (entered)
 											{
@@ -2936,11 +3008,20 @@ bool CombatState::TakeTurn(Object* _this)
 																			 if (!selected) //Pick an action (melee magic or armor)
 																			 {
 																				 pCombat->SetAction("Choose Action");
-																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																					 m_nCursor--;
+																				 if (m_fArcadeTimer >= 1.0f)
+																				 {
+																					 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																					 {
+																						 m_nCursor--;
+																						 m_fArcadeTimer = 0.0f;
+																					 }
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																					 m_nCursor++;
+																					 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																					 {
+																						 m_nCursor++;
+																						 m_fArcadeTimer = 0.0f;
+																					 }
+																				 }
 
 																				 if (m_nCursor < 0)
 																					 m_nCursor = 1;
@@ -2948,7 +3029,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					 m_nCursor = 0;
 
 																				 //First Selection >> Action
-																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																				 {
 																					 if (m_nCursor == 0)
 																					 {
@@ -2962,6 +3043,7 @@ bool CombatState::TakeTurn(Object* _this)
 																						 selected = true;
 																						 m_nCursor = 0;
 																					 }
+																					 m_fArcadeTimer = 0.0f;
 																				 }
 																			 }
 																			 else//Action selected, now pick target
@@ -2970,11 +3052,21 @@ bool CombatState::TakeTurn(Object* _this)
 																				 CompanionSelection = { ((Player*)m_pHeroes[m_nCursor])->GetPosition().x - 150, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y, ((Player*)m_pHeroes[m_nCursor])->GetPosition().x - 110, ((Player*)m_pHeroes[m_nCursor])->GetPosition().y + 40 };
 
 																				 int prevCursor = m_nCursor;
+																				 if (m_fArcadeTimer >= 1.0f)
+																				 {
+																					 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																					 {
+																						 m_nCursor++;
+																						 m_fArcadeTimer = 0.0f;
+																					 }
 
-																				 if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																					 m_nCursor++;
-																				 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																					 m_nCursor--;
+																					 if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																					 {
+																						 m_nCursor--;
+																						 m_fArcadeTimer = 0.0f;
+																					 }
+
+																				 }
 
 																				 if (ActionSelected == CombatState::ActionType::Heal)
 																				 {
@@ -3016,14 +3108,17 @@ bool CombatState::TakeTurn(Object* _this)
 																				 }
 
 																				 //Second Selection >> Target
-																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																				 if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																				 {
 																					 selected = false;
 																					 ((Companion*)_this)->SetAttacking(true);
 
 																					 TakeAction(ActionSelected, _this, m_nCursor);
 																					 m_nCursor = 0;
+																					 m_fArcadeTimer = 0.0f;
+
 																					 return true;
+
 																				 }
 																				 ((Companion*)_this)->SetAnimation(true);
 																				 ((Companion*)_this)->ResetAnimation();
@@ -3038,10 +3133,19 @@ bool CombatState::TakeTurn(Object* _this)
 																			if (selected == false) //Pick an action (melee magic or armor)
 																			{
 																				pCombat->SetAction("Choose Action");
-																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																					m_nCursor--;
-																				if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																					m_nCursor++;
+																				if (m_fArcadeTimer >= 1.0f)
+																				{
+																					if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																					{
+																						m_nCursor--;
+																						m_fArcadeTimer = 0.0f;
+																					}
+																					if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																					{
+																						m_nCursor++;
+																						m_fArcadeTimer = 0.0f;
+																					}
+																				}
 
 																				if (m_nCursor < 0)
 																					m_nCursor = 0;
@@ -3049,7 +3153,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					m_nCursor = 1;
 
 																				//First Selection >> Action
-																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																				{
 																					//if
 																					if (m_nCursor == 0)
@@ -3057,6 +3161,7 @@ bool CombatState::TakeTurn(Object* _this)
 																						ActionSelected = m_nCursor;
 																						selected = true;
 																						m_nCursor = 0;
+
 																					}
 
 																					if (m_nCursor == 1)
@@ -3065,6 +3170,9 @@ bool CombatState::TakeTurn(Object* _this)
 																						selected = true;
 																						m_nCursor = 0;
 																					}
+
+																					m_fArcadeTimer = 0.0f;
+
 																				}
 																			}
 																			else //Action selected, now pick target
@@ -3072,11 +3180,19 @@ bool CombatState::TakeTurn(Object* _this)
 																				pCombat->SetAction("Choose Target");
 
 																				int prevCursor = m_nCursor;
-
-																				if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																					m_nCursor--;
-																				if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																					m_nCursor++;
+																				if (m_fArcadeTimer >= 1.0f)
+																				{
+																					if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																					{
+																						m_nCursor--;
+																						m_fArcadeTimer = 0.0f;
+																					}
+																					if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																					{
+																						m_nCursor++;
+																						m_fArcadeTimer = 0.0f;
+																					}
+																				}
 
 																				if (m_nCursor < 0)
 																					m_nCursor = m_pEnemies.size() - 1;
@@ -3094,12 +3210,13 @@ bool CombatState::TakeTurn(Object* _this)
 																				CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
 
 																				//Second Selection >> Target
-																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																				if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																				{
 																					selected = false;
 																					((Companion*)_this)->SetAttacking(true);
 																					TakeAction(ActionSelected, _this, m_nCursor);
 																					m_nCursor = 0;
+																					m_fArcadeTimer = 0.0f;
 																					return true;
 																				}
 																				((Companion*)_this)->SetAnimation(true);
@@ -3123,12 +3240,21 @@ bool CombatState::TakeTurn(Object* _this)
 																			   if (spellActive)
 																			   {
 																				   pCombat->SetAction("Choose Action");
-																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																					   m_nCursor--;
+																				   if (m_fArcadeTimer >= 1.0f)
+																				   {
+																					   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																					   {
+																						   m_nCursor--;
+																						   m_fArcadeTimer = 0.0f;
+																					   }
 
-																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																					   m_nCursor++;
+																					   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																					   {
+																						   m_nCursor++;
+																						   m_fArcadeTimer = 0.0f;
+																					   }
 
+																				   }
 																				   if (m_nCursor < 0)
 																					   m_nCursor = 0;
 																				   if (m_nCursor > 1)
@@ -3140,7 +3266,7 @@ bool CombatState::TakeTurn(Object* _this)
 																			   }
 
 																			   //First Selection >> Action
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																			   {
 																				   if (m_nCursor == 0)
 																				   {
@@ -3154,6 +3280,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					   selected = true;
 																					   m_nCursor = 0;
 																				   }
+																				   m_fArcadeTimer = 0.0f;
 																			   }
 																		   }
 																		   else //Action selected, now pick target
@@ -3174,18 +3301,26 @@ bool CombatState::TakeTurn(Object* _this)
 																						   CompanionSelection = { Spell1Rect.left, Spell1Rect.top + 50, Spell1Rect.right, Spell1Rect.bottom + 50 };
 																					   else if (m_nCursor == 1)
 																						   CompanionSelection = { Spell2Rect.left, Spell2Rect.top + 50, Spell2Rect.right, Spell2Rect.bottom + 50 };
-
-																					   if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::W))
-																						   m_nCursor--;
-																					   if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::S))
-																						   m_nCursor++;
+																					   if (m_fArcadeTimer >= 1.0f)
+																					   {
+																						   if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
+																						   {
+																							   m_nCursor--;
+																							   m_fArcadeTimer = 0.0f;
+																						   }
+																						   if (pInput->IsKeyPressed(SGD::Key::Right) || pInput->IsKeyPressed(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
+																						   {
+																							   m_nCursor++;
+																							   m_fArcadeTimer = 0.0f;
+																						   }
+																					   }
 
 																					   if (m_nCursor < 0)
 																						   m_nCursor = 0;
 																					   if (m_nCursor > 1)
 																						   m_nCursor = 1;
 
-																					   if ((pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0)))
+																					   if ((pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f))
 																					   {
 																						   if (m_nCursor == 0)
 																						   {
@@ -3203,6 +3338,8 @@ bool CombatState::TakeTurn(Object* _this)
 																								   m_nCursor = 0;
 																							   }
 																						   }
+
+																						   m_fArcadeTimer = 0.0f;
 																					   }
 																				   }
 																				   else
@@ -3211,11 +3348,19 @@ bool CombatState::TakeTurn(Object* _this)
 																					   int prevCursor = m_nCursor;
 
 																					   CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
-
-																					   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																						   m_nCursor--;
-																					   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																						   m_nCursor++;
+																					   if (m_fArcadeTimer >= 1.0f)
+																					   {
+																						   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																						   {
+																							   m_nCursor--;
+																							   m_fArcadeTimer = 0.0f;
+																						   }
+																						   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																						   {
+																							   m_nCursor++;
+																							   m_fArcadeTimer = 0.0f;
+																						   }
+																					   }
 
 																					   if (m_nCursor < 0)
 																						   m_nCursor = m_pEnemies.size() - 1;
@@ -3231,7 +3376,7 @@ bool CombatState::TakeTurn(Object* _this)
 																						   m_nCursor = 0;
 
 																					   //Third Selection >> Target
-																					   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																					   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0)
 																					   {
 																						   if (spellSelect == 0)
 																						   {
@@ -3258,6 +3403,7 @@ bool CombatState::TakeTurn(Object* _this)
 																							   }
 																						   }
 
+																						   m_fArcadeTimer = 0.0;
 																					   }
 																				   }
 																			   }
@@ -3267,11 +3413,19 @@ bool CombatState::TakeTurn(Object* _this)
 																				   int prevCursor = m_nCursor;
 
 																				   CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
-
-																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																					   m_nCursor--;
-																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																					   m_nCursor++;
+																				   if (m_fArcadeTimer >= 1.0)
+																				   {
+																					   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																					   {
+																						   m_nCursor--;
+																						   m_fArcadeTimer = 0.0f;
+																					   }
+																					   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																					   {
+																						   m_nCursor++;
+																						   m_fArcadeTimer = 0.0f;
+																					   }
+																				   }
 
 																				   if (m_nCursor < 0)
 																					   m_nCursor = m_pEnemies.size() - 1;
@@ -3287,7 +3441,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					   m_nCursor = 0;
 
 																				   //Second Selection >> Target
-																				   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																				   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																				   {
 																					   selected = false;
 																					   ((Companion*)_this)->SetAttacking(true);
@@ -3311,11 +3465,20 @@ bool CombatState::TakeTurn(Object* _this)
 																		   if (selected == false) //Pick an action (melee magic or armor)
 																		   {
 																			   pCombat->SetAction("Choose Action");
-																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																				   m_nCursor--;
+																			   if (m_fArcadeTimer >= 1.0f)
+																			   {
+																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																				   {
+																					   m_nCursor--;
+																					   m_fArcadeTimer = 0.0f;
+																				   }
 
-																			   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																				   m_nCursor++;
+																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																				   {
+																					   m_nCursor++;
+																					   m_fArcadeTimer = 0.0f;
+																				   }
+																			   }
 
 																			   if (m_nCursor < 0)
 																				   m_nCursor = 0;
@@ -3323,7 +3486,7 @@ bool CombatState::TakeTurn(Object* _this)
 																				   m_nCursor = 1;
 
 																			   //First Selection >> Action
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																			   {
 																				   //if
 																				   if (m_nCursor == 0)
@@ -3339,6 +3502,7 @@ bool CombatState::TakeTurn(Object* _this)
 																					   selected = true;
 																					   m_nCursor = 0;
 																				   }
+																				   m_fArcadeTimer = 0.0f;
 																			   }
 
 																		   }
@@ -3356,11 +3520,19 @@ bool CombatState::TakeTurn(Object* _this)
 																			   int prevCursor = m_nCursor;
 
 																			   CompanionSelection = { ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 150, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().x - 110, ((Minion*)m_pEnemies[m_nCursor])->GetPosition().y + 40 };
-
-																			   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W))
-																				   m_nCursor--;
-																			   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S))
-																				   m_nCursor++;
+																			   if (m_fArcadeTimer >= 1.0f)
+																			   {
+																				   if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::W) || pInput->GetLeftJoystick(0).y == -1)
+																				   {
+																					   m_nCursor--;
+																					   m_fArcadeTimer = 0.0f;
+																				   }
+																				   if (pInput->IsKeyPressed(SGD::Key::Down) || pInput->IsKeyPressed(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+																				   {
+																						m_nCursor++;
+																						m_fArcadeTimer = 0.0f;
+																				   }
+																			   }
 
 																			   if (m_nCursor < 0)
 																				   m_nCursor = m_pEnemies.size() - 1;
@@ -3376,13 +3548,14 @@ bool CombatState::TakeTurn(Object* _this)
 																				   m_nCursor = 0;
 
 																			   //Second Selection >> Target
-																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonDown(0, 0))
+																			   if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0) && m_fArcadeTimer >= 1.0f)
 																			   {
 																				   selected = false;
 																				   ((Companion*)_this)->SetAttacking(true);
 
 																				   TakeAction(ActionSelected, _this, m_nCursor);
 																				   m_nCursor = 0;
+																				   m_fArcadeTimer = 0.0f;
 																				   return true;
 																			   }
 																			   ((Companion*)_this)->SetAnimation(true);
