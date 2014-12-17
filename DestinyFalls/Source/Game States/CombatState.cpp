@@ -744,8 +744,16 @@ void CombatState::Render(void)
 	else
 		pHcolor = { 255, 255, 0, 0 };
 
+	pGraphics->DrawRectangle({ 75, 200, 175, 230 }, { 255, 255, 255, 255 });
+
 	if (PlayerHB.right > PlayerHB.left && ((Player*)m_pHeroes[0])->GetHealth() > 0)
 		pGraphics->DrawRectangle(PlayerHB, pHcolor);
+
+	string playerHealth = to_string((int)((Player*)m_pHeroes[0])->GetHealth());
+	playerHealth += "/";
+	playerHealth += to_string((int)((Player*)m_pHeroes[0])->GetMaxHealth());
+	pFont->Render("Dialog", playerHealth.c_str(), { PlayerHB.left + 10, PlayerHB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+
 
 	((Player*)m_pHeroes[0])->Render();
 
@@ -2561,7 +2569,6 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 		((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() + Total);
 
 		_To->SetDeltaHP(Total);
-
 	}
 	else if (_From->GetType() == iObject::OBJ_MINION)
 	{
@@ -2572,7 +2579,6 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetMaxHealth());
 
 		_To->SetDeltaHP(Total);
-
 	}
 	else if (_From->GetType() == iObject::OBJ_COMPANION)
 	{
@@ -2585,7 +2591,6 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 				((Player*)_To)->SetHealth(((Player*)_To)->GetMaxHealth());
 
 			_To->SetDeltaHP(Total);
-
 		}
 		else if (_To->GetType() == iObject::OBJ_COMPANION)
 		{
@@ -2596,7 +2601,6 @@ int CombatState::HealAlly(Object* _From, Object* _To)
 				((Companion*)_To)->SetHealth(((Companion*)_To)->GetMaxHealth());
 
 			_To->SetDeltaHP(Total);
-
 		}
 	}
 
@@ -3462,7 +3466,12 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) // AOE ground slam, inherit to Boss
 										{
 											pCombat->SetActionTimer(1);
-											target = rand() % pCombat->GetHeroes().size();
+											target = rand() % pCombat->GetHeroes().size(); //Can target dead people, need to fix
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											int AI = rand() % 20;
 											if (AI <= 15 && AI > 9) //AOE attack
 												TakeAction(CombatState::ActionType::AOE, _this, target);
@@ -3479,6 +3488,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) //Repel (Sets target's initiative to 0)
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
 											if (AI > 0 && AI <= 10)
@@ -3493,6 +3507,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) //Dodge, inherit to boss
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 
 											int AI = rand() % 20;
@@ -3508,6 +3527,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0)
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
 											if (AI > 0 && AI <= 10)
@@ -3522,6 +3546,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) //There really shouldn't be a default
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 											TakeAction(CombatState::ActionType::Melee, _this, target); //No spells for dirty defaults
 											((Minion*)_this)->SetAnimation(true);
@@ -3538,8 +3567,12 @@ bool CombatState::TakeTurn(Object* _this)
 									case Elements::Earth:
 										if (((Minion*)_this)->GetHealth() > 0) //Rock Throw
 										{
-											target = rand() % pCombat->GetHeroes().size();
-
+											target = rand() % (pCombat->GetHeroes().size());
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											int AI = rand() % 20;
 											if (AI <= 15 && AI > 9) //AOE attack
 												TakeAction(CombatState::ActionType::AOE, _this, target);
@@ -3553,6 +3586,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) //Water Blast
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
 											if (AI > 0 && AI <= 9)
@@ -3565,6 +3603,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0)
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
 											if (AI > 0 && AI <= 9)
@@ -3577,6 +3620,11 @@ bool CombatState::TakeTurn(Object* _this)
 										if (((Minion*)_this)->GetHealth() > 0) //Fire Ball
 										{
 											target = rand() % pCombat->GetHeroes().size();
+											if (target > 0)
+											{
+												if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+													target = 0;
+											}
 											pCombat->SetActionTimer(1);
 											int AI = rand() % 20;
 											if (AI > 0 && AI <= 7)
@@ -3616,6 +3664,11 @@ bool CombatState::TakeTurn(Object* _this)
 											((Minion*)_this)->SetAffinity(((Elements)(rand() % 4)));
 
 										target = rand() % pCombat->GetHeroes().size();
+										if (target > 0)
+										{
+											if (((Companion*)m_pHeroes[target])->GetHealth() <= 0)
+												target = 0;
+										}
 										pCombat->SetActionTimer(1);
 										TakeAction(CombatState::ActionType::Melee, _this, target);
 										((Minion*)_this)->SetAnimation(true);
