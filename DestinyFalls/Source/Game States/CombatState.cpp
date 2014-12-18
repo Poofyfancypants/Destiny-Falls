@@ -708,7 +708,7 @@ void CombatState::Update(float elapsedTime)
 			}
 		}
 		//weird screen shake reasons
-		ShakeScreen(elapsedTime);
+		//ShakeScreen(elapsedTime);
 	}
 
 }
