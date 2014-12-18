@@ -87,33 +87,33 @@ bool SaveState::Input()
 				m_nRenameCursor = 1;
 		}
 
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonPressed(0, 0))
+		if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonPressed(0, 0))
+		{
+			if (m_nRenameCursor == 0)
+				m_bGetKey = true;
+			else if (m_nRenameCursor == 1)
 			{
-				if (m_nRenameCursor == 0)
-					m_bGetKey = true;
-				else if (m_nRenameCursor == 1)
+				m_bGetKey = false;
+
+				switch (m_nCursor)
 				{
-					m_bGetKey = false;
-
-					switch (m_nCursor)
-					{
-					case 0:
-						Save();
-						Game::GetInstance()->RemoveState();
-						break;
-					case 1:
-						Save2();
-						Game::GetInstance()->RemoveState();
-						break;
-					case 2:
-						Save3();
-						Game::GetInstance()->RemoveState();
-						break;
-					}
+				case 0:
+					Save();
+					Game::GetInstance()->RemoveState();
+					break;
+				case 1:
+					Save2();
+					Game::GetInstance()->RemoveState();
+					break;
+				case 2:
+					Save3();
+					Game::GetInstance()->RemoveState();
+					break;
 				}
-				m_bRename = false;
-
 			}
+			m_bRename = false;
+
+		}
 
 	}
 	else if (m_bGetKey)
@@ -191,7 +191,7 @@ bool SaveState::Input()
 			else
 				m_nCursor = -1;
 		}
-		if (m_fArcadeTimer >= 1.0f)
+		//if (m_fArcadeTimer >= 1.0f)
 		{
 			if (pInput->IsKeyPressed(SGD::Key::Left) || pInput->IsKeyPressed(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 			{
@@ -225,19 +225,18 @@ bool SaveState::Input()
 				m_fArcadeTimer = 0.0f;
 
 			}
+		}
 
-			if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonPressed(0, 0))
+		if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsKeyPressed(SGD::Key::MouseLeft) || pInput->IsButtonPressed(0, 0))
+		{
+			if (m_nCursor == 3)
 			{
-				if (m_nCursor == 3)
-				{
-					Game::GetInstance()->RemoveState();
-				}
-				else if (m_nCursor != -1)
-					m_bRename = true;
-
-				m_fArcadeTimer = 0.0f;
-
+				Game::GetInstance()->RemoveState();
 			}
+			else if (m_nCursor != -1)
+				m_bRename = true;
+
+			m_fArcadeTimer = 0.0f;
 		}
 	}
 
@@ -392,9 +391,9 @@ void SaveState::LoadNames()
 
 void SaveState::Save()
 {
-	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
-	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
-	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
+	int health = (int)((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
+	float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
+	float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
 	float checkx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().x;
 	float checky = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().y;
@@ -470,9 +469,9 @@ void SaveState::Save()
 
 void SaveState::Save2()
 {
-	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
-	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
-	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
+	int health = (int)((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
+	float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
+	float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
 	float checkx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().x;
 	float checky = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().y;
@@ -548,9 +547,9 @@ void SaveState::Save2()
 
 void SaveState::Save3()
 {
-	int health = (int)( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetHealth();
-	float posx = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().x;
-	float posy = ( (Player*)( GameplayState::GetInstance()->GetPlayer() ) )->GetPosition().y;
+	int health = (int)((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetHealth();
+	float posx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().x;
+	float posy = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetPosition().y;
 	int currLevel = GameplayState::GetInstance()->GetCurrentLevel();
 	float checkx = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().x;
 	float checky = ((Player*)(GameplayState::GetInstance()->GetPlayer()))->GetCheckpoint().y;
