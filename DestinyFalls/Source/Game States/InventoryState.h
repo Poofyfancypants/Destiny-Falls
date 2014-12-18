@@ -89,6 +89,8 @@ private:
 
 	InventoryState(const InventoryState&) = delete;
 	InventoryState& operator=(const InventoryState&) = delete;
+	float m_fArcadeTimer = 0.0f;
+
 	int m_ntabCursor = 0;
 	int m_nCursor = 0;
 	unsigned int CompanionSelect = 30;
@@ -125,6 +127,7 @@ private:
 	bool pauseSelection = false;
 	bool inventoryslot1 = false;
 
+	bool Qt = false;
 	int equipPos = 0;
 	Runes m_ptSelectedRune;
 
@@ -134,6 +137,8 @@ private:
 	SGD::Rectangle RuneToolRect = { 500, 50, 700, 170 };
 	// left side of inventory displaying images
 	SGD::Rectangle ImageRect = { 50, 50, 200, 400 };
+
+	SGD::Rectangle QTinfoButton = { 700, 300, 900, 500 };
 	//
 	SGD::Rectangle CompanionRectSide = { 200, 50, 500, 400 };
 	//tabs
@@ -219,7 +224,7 @@ protected:
 	SGD::HTexture m_hInventoryBackground = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hArmorBackground = SGD::INVALID_HANDLE;
 	SGD::HTexture m_hWeaponBackground = SGD::INVALID_HANDLE;
-
+	SGD::HTexture m_hQtImage = SGD::INVALID_HANDLE;
 
 
 	// icons for companions

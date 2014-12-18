@@ -26,6 +26,8 @@ private:
 	DeathState(const DeathState&) = delete;
 	DeathState& operator=(const DeathState&) = delete;
 
+	float m_fArcadeTimer = 0.0f;
+
 	int m_nCursor = 0;
 	bool m_bdeathState = false;
 	std::map<std::string, SGD::Rectangle> m_mMouseoverRects;

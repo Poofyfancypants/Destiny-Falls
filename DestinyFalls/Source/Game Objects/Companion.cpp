@@ -11,6 +11,7 @@ Companion::Companion()
 
 Companion::~Companion()
 {
+
 }
 
 void Companion::Update(float elapsedTime)
@@ -19,24 +20,24 @@ void Companion::Update(float elapsedTime)
 	if (m_nHealth <= 0)
 		m_nHealth = 0;
 
-	if( m_nHealth <= 0 )
+	if (m_nHealth <= 0)
 	{
-		if( this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation" )
+		if (this->GetTimeStamp()->GetCurrentAnimation() != "DeathAnimation")
 		{
-			this->GetTimeStamp()->SetCurrentAnimation( "DeathAnimation" );
-			this->GetTimeStamp()->SetCurrentFrame( 0 );
-			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
+			this->GetTimeStamp()->SetCurrentAnimation("DeathAnimation");
+			this->GetTimeStamp()->SetCurrentFrame(0);
+			this->GetTimeStamp()->SetTimeOnFrame(0.0f);
 		}
 		else
 		{
 			m_fDeathAnimationTimer -= elapsedTime;
 
-			if( m_fDeathAnimationTimer < 0.0f )
+			if (m_fDeathAnimationTimer < 0.0f)
 			{
 				m_fDeathAnimationTimer = 0.0f;
 			}
 
-			m_pAnimator->GetInstance()->GetInstance()->Update( *this->GetTimeStamp() , elapsedTime );
+			m_pAnimator->GetInstance()->GetInstance()->Update(*this->GetTimeStamp(), elapsedTime);
 		}
 	}
 
@@ -72,35 +73,56 @@ void Companion::Render()
 void Companion::CombatRender(int _posIndex)
 {
 	SGD::GraphicsManager* pGraphics = SGD::GraphicsManager::GetInstance();
+	BitmapFontManager* pFont = pFont->GetInstance();
+
 	switch (_posIndex)
 	{
 	case 1:
-		pGraphics->DrawRectangle(Companion1HB, m_HealthColor);
-		if (m_pAnimator->GetInstance()->CheckSize())
-		{
-			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion1rect.right, (int)Companion1rect.bottom);
-		}
-		else if( GetDeathAnimationTimer() > 0.0f )
-		{
-			if( m_pAnimator->GetInstance()->CheckSize() )
-			{
-				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion1rect.right, (int)Companion1rect.bottom);
-			}
-		}
+	{
+			  pGraphics->DrawRectangle({ 50, 60, 150, 90 }, { 255, 255, 255, 255 });
+			  pGraphics->DrawRectangle(Companion1HB, m_HealthColor);
+
+			  string message = to_string((int)m_nHealth);
+			  message += "/";
+			  message += to_string((int)m_nMaxHealth);
+
+			  pFont->Render("Dialog", message.c_str(), { Companion1HB.left + 5, Companion1HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+
+			  if (m_pAnimator->GetInstance()->CheckSize())
+			  {
+				  m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion1rect.right, (int)Companion1rect.bottom);
+			  }
+			  else if (GetDeathAnimationTimer() > 0.0f)
+			  {
+				  if (m_pAnimator->GetInstance()->CheckSize())
+				  {
+					  m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion1rect.right, (int)Companion1rect.bottom);
+				  }
+			  }
+	}
 		break;
 	case 2:
-		pGraphics->DrawRectangle(Companion2HB, m_HealthColor);
-		if (m_pAnimator->GetInstance()->CheckSize())
-		{
-			m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion2rect.right, (int)Companion2rect.bottom);
-		}
-		else if( GetDeathAnimationTimer() > 0.0f )
-		{
-			if( m_pAnimator->GetInstance()->CheckSize() )
-			{
-				m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion2rect.right, (int)Companion2rect.bottom);
-			}
-		}
+	{
+			  pGraphics->DrawRectangle({ 50, 260, 150, 290 }, { 255, 255, 255, 255 });
+			  pGraphics->DrawRectangle(Companion2HB, m_HealthColor);
+
+			  string message = to_string((int)m_nHealth);
+			  message += "/";
+			  message += to_string((int)m_nMaxHealth);
+			  pFont->Render("Dialog", message.c_str(), { Companion2HB.left + 5, Companion2HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+
+			  if (m_pAnimator->GetInstance()->CheckSize())
+			  {
+				  m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion2rect.right, (int)Companion2rect.bottom);
+			  }
+			  else if (GetDeathAnimationTimer() > 0.0f)
+			  {
+				  if (m_pAnimator->GetInstance()->CheckSize())
+				  {
+					  m_pAnimator->GetInstance()->Render(*this->GetTimeStamp(), (int)Companion2rect.right, (int)Companion2rect.bottom);
+				  }
+			  }
+	}
 		break;
 
 	default:

@@ -23,7 +23,6 @@ void WinState::Enter()
 	//SGD::AudioManager::GetInstance()->PlayAudio(m_haBackground);
 
 	SGD::AudioManager * pAudio = SGD::AudioManager::GetInstance();
-	pAudio->StopAudio(GameplayState::GetInstance()->bmusic);
 	pAudio->PlayAudio(Game::GetInstance()->m_mWinMusic, false);
 }
 
