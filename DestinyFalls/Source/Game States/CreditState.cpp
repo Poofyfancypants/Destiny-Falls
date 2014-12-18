@@ -18,34 +18,36 @@ CreditState* CreditState::GetInstance()
 
 void CreditState::Enter()
 {
-	m_particle.ReadXML( "resource/XML/Test2.xml" );
-	m_vCredits.push_back( "EP:" );
-	m_vCredits.push_back( "John OLeske:" );
-	m_vCredits.push_back( "AP:" );
-	m_vCredits.push_back( "Sean Hathaway" );
-	m_vCredits.push_back( "Artist:" );
-	m_vCredits.push_back( "Caris Frazier" );
-	m_vCredits.push_back( "Gregory Bey:" );
-	m_vCredits.push_back( "Developers:" );
-	m_vCredits.push_back( "Numi Stefansson" );
-	m_vCredits.push_back( "Bobby Criswell" );
-	m_vCredits.push_back( "Jeff Lamas" );
-	m_vCredits.push_back( "Yvonne Neuland" );
-	m_vCredits.push_back( "Evan Doyle" );
-	m_vCredits.push_back( "Thanks To:" );
-	m_vCredits.push_back( "Spencer Slaton" );
-	m_vCredits.push_back( "Dave Olack" );
-	m_vCredits.push_back( "Riley Wood" );
-	m_vCredits.push_back( "Kidnapped Brick" );
+	m_particle.ReadXML("resource/XML/Test2.xml");
+	m_vCredits.push_back( "EP:");
+	m_vCredits.push_back( "John OLeske:");
+	m_vCredits.push_back( "AP:");
+	m_vCredits.push_back( "Sean Hathaway");
+	m_vCredits.push_back( "Artist:");
+	m_vCredits.push_back( "Caris Frazier");
+	m_vCredits.push_back( "Gregory Bey:");
+	m_vCredits.push_back( "Developers:");
+	m_vCredits.push_back( "Numi Stefansson");
+	m_vCredits.push_back( "Bobby Criswell");
+	m_vCredits.push_back( "Jeff Lamas");
+	m_vCredits.push_back( "Yvonne Neuland");
+	m_vCredits.push_back( "Evan Doyle");
+	m_vCredits.push_back( "Thanks To:");
+	m_vCredits.push_back( "Spencer Slaton");
+	m_vCredits.push_back( "Dave Olack");
+	m_vCredits.push_back( "Riley Wood");
+	m_vCredits.push_back( "Kidnapped Brick");
+	m_vCredits.push_back( "Vito Messina");
+	m_vCredits.push_back( "Theo Kalloo");
 
-	m_hBackground = SGD::GraphicsManager::GetInstance()->LoadTexture( "resource/graphics/MenuBackgrounds/creditBackground.png" );
+	m_hBackground = SGD::GraphicsManager::GetInstance()->LoadTexture("resource/graphics/MenuBackgrounds/creditBackground.png");
 	m_bExit = false;
 }
 
 void CreditState::Exit()
 {
 	m_particle.Exit();
-	SGD::GraphicsManager::GetInstance()->UnloadTexture( m_hBackground );
+	SGD::GraphicsManager::GetInstance()->UnloadTexture(m_hBackground);
 	m_vCredits.clear();
 }
 
@@ -55,30 +57,30 @@ bool CreditState::Input()
 	SGD::InputManager* pInput = SGD::InputManager::GetInstance();
 	SGD::AudioManager* pAudio = SGD::AudioManager::GetInstance();
 
-	if( pInput->IsKeyPressed( SGD::Key::Escape ) || pInput->IsButtonPressed( 0, 6 ) || m_bExit )
+	if (pInput->IsKeyPressed(SGD::Key::Escape) || pInput->IsButtonPressed(0, 6) || m_bExit)
 	{
 		Game::GetInstance()->ClearStates();
 		//pAudio->StopAudio(Game::GetInstance()->m_mWinMusic);
-		Game::GetInstance()->AddState( MainMenuState::GetInstance() );
+		Game::GetInstance()->AddState(MainMenuState::GetInstance());
 
 	}
 	return true;
 }
 
-void CreditState::Update( float elapsedTime )
+void CreditState::Update(float elapsedTime)
 {
 	Timer -= 1 * elapsedTime;
 
 
 	m_fSecond += elapsedTime;
-	if( m_fSecond >= .05f )
+	if (m_fSecond >= .05f)
 	{
 		m_fScroll += 1.0f;
 		m_fSecond = 0;
-		for( size_t i = 0; i < m_vScrollCount.size(); i++ )
+		for (size_t i = 0; i < m_vScrollCount.size(); i++)
 			m_vScrollCount[i] += 1.0f;
 	}
-	if( m_fScroll > 100.0f )
+	if (m_fScroll > 100.0f)
 	{
 		//	m_fScroll = 0.0f;
 	}
@@ -112,32 +114,32 @@ void CreditState::Render()
 	pGraphics->SetClearColor();
 
 	BitmapFontManager* pFonts = pFonts->GetInstance();
-	SGD::Color fontColor = SGD::Color( 0,0,0 );
+	SGD::Color fontColor = SGD::Color(0, 0, 0);
 	//SGD::Color fontColor = SGD::Color( 12, 243, 215 );
 	float x = Game::GetInstance()->GetScreenWidth() / 1024;
 	float y = Game::GetInstance()->GetScreenHeight() / 512;
-	pGraphics->DrawTexture( Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f } );
-	pGraphics->DrawTexture( Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f } );
+	pGraphics->DrawTexture(Game::GetInstance()->GetLoadingScreenBkGround(), { 0, 0 }, 0, {}, {}, { .78f, 1.2f });
+	pGraphics->DrawTexture(Game::GetInstance()->GetGameIcon(), { 100, 0 }, 0, {}, {}, { 0.3f, 0.3f });
 
-	pFonts->Render( "Other", "Credits:", { 100, 25 }, 2, { 0,0,0 } );
+	pFonts->Render("Other", "Credits:", { 100, 25 }, 2, { 0, 0, 0 });
 	// 0 , 2, 4, 7, 13
 
-	for( size_t i = 0; i < m_vCredits.size(); i++ )
+	for (size_t i = 0; i < m_vCredits.size(); i++)
 	{
-		float futureY = (float)( ( 650 + ( 30 * i ) ) - 5 * m_fScroll );
+		float futureY = (float)((650 + (30 * i)) - 5 * m_fScroll);
 
-		if( i == m_vCredits.size() - 1 && futureY < 50.0f )
+		if (i == m_vCredits.size() - 1 && futureY < 50.0f)
 		{
 			m_bExit = true;
 			m_fScroll = 0;
-			futureY = (float)( ( 650 + ( 30 * i ) ) - 5 * m_fScroll );
+			futureY = (float)((650 + (30 * i)) - 5 * m_fScroll);
 		}
-		if( futureY > 80.0f )
+		if (futureY > 80.0f)
 		{
-			if( i == 0 || i == 2 || i == 4 || i == 7 || i == 13 )
-				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 100, futureY ), 1, fontColor );
+			if (i == 0 || i == 2 || i == 4 || i == 7 || i == 13)
+				pFonts->Render("Other", m_vCredits[i].c_str(), SGD::Point(100, futureY), 1, fontColor);
 			else
-				pFonts->Render( "Other", m_vCredits[i].c_str(), SGD::Point( 130, futureY ), 1, fontColor );
+				pFonts->Render("Other", m_vCredits[i].c_str(), SGD::Point(130, futureY), 1, fontColor);
 		}
 
 	}

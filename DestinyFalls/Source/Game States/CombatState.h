@@ -89,9 +89,9 @@ private:
 	SGD::Rectangle AbilityRect = { 200, 400, 600, 575 };
 	SGD::Rectangle ActionRect = { 100, 10, 700, 50 };
 
-	SGD::Rectangle Spell1Rect = { 215, 420, 300, 440 };
-	SGD::Rectangle Spell2Rect = { 345, 420, 430, 440 };
-	SGD::Rectangle Spell3Rect = { 475, 420, 565, 440 };
+	SGD::Rectangle Spell1Rect = { 350, 420, 420, 440 };
+	SGD::Rectangle Spell2Rect = { 350, 460, 420, 480 };
+	SGD::Rectangle Spell3Rect = { 350, 500, 420, 520 };
 
 	SGD::Rectangle Playerrect	= { 225, 200, 289, 264 };
 	SGD::Rectangle PlayerHB		= { 75, 200, 175, 230 };
@@ -184,6 +184,6 @@ private:
 	Runes Rune3;
 
 	SGD::HTexture m_hTurnIndicator = SGD::INVALID_HANDLE;
-
+	SGD::HTexture m_hTargetSelector = SGD::INVALID_HANDLE;
 };
 

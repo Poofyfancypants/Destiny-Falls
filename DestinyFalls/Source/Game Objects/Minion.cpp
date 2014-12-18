@@ -77,7 +77,7 @@ void Minion::Render(int _posIndex)
 			message += "/";
 			message += to_string((int)m_nMaxHealth);
 
-			pFont->Render("Dialog", message.c_str(), { Enemy2HB.left + 10, Enemy2HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+			pFont->Render("Dialog", message.c_str(), { Enemy2HB.left + 5, Enemy2HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
 
 			pFont->Render("Other", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy2rect.right, Enemy2rect.bottom), 1, { 255, 225, 255, 0 });
 			if (m_pAnimator->GetInstance()->CheckSize())
@@ -101,7 +101,7 @@ void Minion::Render(int _posIndex)
 			string message = to_string((int)m_nHealth);
 			message += "/";
 			message += to_string((int)m_nMaxHealth);
-			pFont->Render("Dialog", message.c_str(), { Enemy1HB.left + 10, Enemy1HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+			pFont->Render("Dialog", message.c_str(), { Enemy1HB.left + 5, Enemy1HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
 
 			pFont->Render("Other", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy1rect.right, Enemy1rect.bottom), 1, { 255, 225, 255, 0 });
 			if (m_pAnimator->GetInstance()->CheckSize())
@@ -126,7 +126,7 @@ void Minion::Render(int _posIndex)
 			string message = to_string((int)m_nHealth);
 			message += "/";
 			message += to_string((int)m_nMaxHealth);
-			pFont->Render("Dialog", message.c_str(), { Enemy3HB.left + 10, Enemy3HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+			pFont->Render("Dialog", message.c_str(), { Enemy3HB.left + 5, Enemy3HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
 
 			pFont->Render("Other", Game::GetInstance()->GetString(RegionString, AIString).c_str(), SGD::Point(Enemy3rect.right, Enemy3rect.bottom), 1, { 255, 225, 255, 0 });
 			if (m_pAnimator->GetInstance()->CheckSize())
@@ -236,7 +236,8 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("OrcElementalAttack2");
 				   break;
 			   case 1:
-				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack3");
+				   //this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack3");
+				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack1");
 				   break;
 			   case 2:
 				   this->GetTimeStamp()->SetCurrentAnimation("AirElementalAttack");
@@ -266,10 +267,10 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("OrcElementalAttack2");
 				   break;
 			   case 1:
-				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack1");
+				   this->GetTimeStamp()->SetCurrentAnimation("EarthEnemyAttack");
 				   break;
 			   case 2:
-				   this->GetTimeStamp()->SetCurrentAnimation("EarthEnemyAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("RockElementalAttack");
 				   break;
 			   case 3:
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack1");
