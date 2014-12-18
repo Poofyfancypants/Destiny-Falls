@@ -9,7 +9,7 @@ class Companion :
 {
 public:
 
-enum Companion_Type { Cleric  , Melee, Mage, Tank , NonClass};
+enum Companion_Type { Cleric, Mage, Melee, Tank , NonClass};
 
 	Companion();
 	~Companion();

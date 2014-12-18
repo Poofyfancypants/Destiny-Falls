@@ -86,7 +86,7 @@ void Companion::CombatRender(int _posIndex)
 			  message += "/";
 			  message += to_string((int)m_nMaxHealth);
 
-			  pFont->Render("Dialog", message.c_str(), { Companion1HB.left + 10, Companion1HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+			  pFont->Render("Dialog", message.c_str(), { Companion1HB.left + 5, Companion1HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
 
 			  if (m_pAnimator->GetInstance()->CheckSize())
 			  {
@@ -109,7 +109,7 @@ void Companion::CombatRender(int _posIndex)
 			  string message = to_string((int)m_nHealth);
 			  message += "/";
 			  message += to_string((int)m_nMaxHealth);
-			  pFont->Render("Dialog", message.c_str(), { Companion2HB.left + 10, Companion2HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
+			  pFont->Render("Dialog", message.c_str(), { Companion2HB.left + 5, Companion2HB.top }, 1.0f, SGD::Color{ 255, 0, 0, 0 });
 
 			  if (m_pAnimator->GetInstance()->CheckSize())
 			  {
