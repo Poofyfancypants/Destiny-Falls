@@ -25,9 +25,9 @@ void InventoryState::Enter()
 	m_hAirt1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air1.png");
 	m_hAirt2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air2.png");
 	m_hAirt3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_air3.png");
-	m_hWatert1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterRunet1.png");
-	m_hWatert2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterRunet2.png");
-	m_hWatert3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/WaterRunet3.png");
+	m_hWatert1 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_water1.png");
+	m_hWatert2 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_water2.png");
+	m_hWatert3 = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/1411_Turn5_runes1_water3.png");
 	m_hHero = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Hero.png");
 	m_hSword = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Sword.png");
 	m_hGauntlet = SGD::GraphicsManager::GetInstance()->LoadTexture(L"resource/graphics/Gauntlet.jpg");
