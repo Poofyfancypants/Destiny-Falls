@@ -259,7 +259,7 @@ void Player::TakeInput()
 		}
 
 	}
-	if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
+	else if (pInput->IsKeyDown(SGD::Key::Down) || pInput->IsKeyDown(SGD::Key::S) || pInput->GetLeftJoystick(0).y == 1)
 	{
 		m_bUpdateAnimation = true;
 		m_nDirection = 2;
@@ -270,8 +270,7 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 	}
-
-	if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
+	else if (pInput->IsKeyDown(SGD::Key::Left) || pInput->IsKeyDown(SGD::Key::A) || pInput->GetLeftJoystick(0).x == -1)
 	{
 		m_nDirection = 3;
 		m_bUpdateAnimation = true;
@@ -283,7 +282,7 @@ void Player::TakeInput()
 			this->GetTimeStamp()->SetTimeOnFrame( 0.0f );
 		}
 	}
-	if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
+	else if (pInput->IsKeyDown(SGD::Key::Right) || pInput->IsKeyDown(SGD::Key::D) || pInput->GetLeftJoystick(0).x == 1)
 	{
 		m_bUpdateAnimation = true;
 		m_nDirection = 4;
