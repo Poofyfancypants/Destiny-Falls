@@ -357,6 +357,11 @@ void Player::HandleCollision( const iObject* pOther )
 		{
 			CombatEnemyID = ( (Enemy*)pOther )->GetEnemyType();
 			pAudio->StopAudio( GameplayState::GetInstance()->bmusic );
+			pAudio->StopAudio(GameplayState::GetInstance()->bLevel1Music);
+			pAudio->StopAudio(GameplayState::GetInstance()->bLevel2Music);
+			pAudio->StopAudio(GameplayState::GetInstance()->bLevel3Music);
+			pAudio->StopAudio(GameplayState::GetInstance()->bLevel4Music);
+
 			Game::GetInstance()->AddState( CombatState::GetInstance() );
 		}
 
