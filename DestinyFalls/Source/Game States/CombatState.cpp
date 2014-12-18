@@ -218,6 +218,7 @@ void CombatState::Enter(void)
 	SGD::AudioManager::GetInstance()->PlayAudio(cMusic, true);
 
 #pragma region AddingCombatEnemies
+	//Possibly get combinations of enemy minion affinities per region
 	if (player->CombatEnemyID == 1)
 	{
 		int randEnemies = (rand() % 2) + 2;
@@ -1277,6 +1278,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 
 				  case 0:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity((Elements)(rand() % 4));
 					  temp->SetAIType(Minion::AI_Type::Off_AI);
 					  temp->SetMinionAnimation(_region, randAI);
 					  break;
@@ -1327,8 +1329,9 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					  break;
 				  case 3:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity(Elements::Earth);
 					  temp->SetAIType(Minion::AI_Type::Def_AI);
-					  temp->SetMinionAnimation(_region, randAI);
+					  temp->SetMinionAnimation(Elements::Earth, randAI);
 					  break;
 				  }
 				  break;
@@ -1346,12 +1349,13 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  {
 				  case 0:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity((Elements)(rand() % 2));
 					  temp->SetAIType(Minion::AI_Type::Heal_AI);
 					  temp->SetMinionAnimation(_region, randAI);
-
 					  break;
 				  case 1:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity((Elements)(rand() % 2));
 					  temp->SetAIType(Minion::AI_Type::Heal_AI);
 					  temp->SetMinionAnimation(_region, randAI);
 					  break;
@@ -1381,6 +1385,7 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 				  {
 				  case 0:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity((Elements)(rand() % 4));
 					  temp->SetAIType(Minion::AI_Type::AOE_AI);
 					  temp->SetMinionAnimation(_region, randAI);
 					  break;
@@ -1391,11 +1396,13 @@ Object* CombatState::AddMinion(int _region, int EnemyID) //This is gonna get big
 					  break;
 				  case 2:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity((Elements)(rand() % 4));
 					  temp->SetAIType(Minion::AI_Type::AOE_AI);
 					  temp->SetMinionAnimation(_region, randAI);
 					  break;
 				  case 3:
 					  temp->SetString(_region, randAI);
+					  temp->SetAffinity((Elements)(rand() % 4));
 					  temp->SetAIType(Minion::AI_Type::AOE_AI);
 					  temp->SetMinionAnimation(_region, randAI);
 					  break;
@@ -1830,6 +1837,8 @@ bool CombatState::TakeAction(int _ActionType, Object* _this, int _target, int _s
 
 int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 {
+	// Would like to get damage modifiers for minion attacks against armor runes
+
 	int Total = 0;
 	bool localBlock = false;
 
@@ -1932,7 +1941,33 @@ int CombatState::DealMeleeDamage(Object* _From, Object* _To)
 			if (_To->GetType() == iObject::OBJ_PLAYER)
 			{
 				RuneManager rmtemp;
-				Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot1()));
+
+				switch (((Minion*)_From)->GetAIType())
+				{
+				case Minion::AI_Type::Off_AI:
+					Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot2()));
+					break;
+				case Minion::AI_Type::Def_AI:
+					Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot3()));
+					break;
+				case Minion::AI_Type::Heal_AI:
+					Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot1()));
+					break;
+				case Minion::AI_Type::AOE_AI:
+					Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot1()));
+					break;
+				default:
+					int boss = rand() % 3;
+					if (boss == 0)
+						Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot1()));
+					else if (boss == 1)
+						Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot2()));
+					else if (boss == 2)
+						Total *= (int)(rmtemp.DamageReduction((((Minion*)_From)->GetAffinity()), InventoryState::GetInstance()->GetArmorSlot3()));
+					break;
+				}
+
+
 				((Player*)_To)->SetHealth(((Player*)_To)->GetHealth() - Total);
 				if (rand() % 20 > 15)
 				{
@@ -2216,22 +2251,22 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 			Elements e1;
 			stuff += spell1.c_str();
 			e1 = InventoryState::GetInstance()->GetRingSlot1();
-			Total = (int)(((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15 + (rand() % 10 - 5)));
-			((Player*)_From)->SetSpell1Cool(2);
+			Total = (int)((((mag.DamagetoBaseElement(e1, ((Minion*)_To)->GetAffinity()) * 2 + m_nNumQtCorrect) * (pInventory->m_vRing[0].GetTier() * 5)) / (((Minion*)_To)->GetMods().ElemResistance.ElementTier) + (rand() % 10 - 5)));
+			((Player*)_From)->SetSpell1Cool(pInventory->m_vRing[0].GetTier());
 			break;
 		case 1:
 			ComboElements d1;
 			stuff += spell2.c_str();
 			d1 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot1(), InventoryState::GetInstance()->GetRingSlot2());
-			Total = (int)(((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect) * 15 + (rand() % 10 - 5)));
-			((Player*)_From)->SetSpell2Cool(3);
+			Total = (int)((((mag.DamageComboElement(d1, ((Minion*)_To)->GetAffinity()) * 2 + m_nNumQtCorrect) * (pInventory->m_vRing[1].GetTier() * 5)) / (((Minion*)_To)->GetMods().ElemResistance.ElementTier) + (rand() % 10 - 5)));
+			((Player*)_From)->SetSpell2Cool(pInventory->m_vRing[1].GetTier());
 			break;
 		case 2:
 			ComboElements d2;
 			stuff += spell3.c_str();
 			d2 = mag.ElementCombination(InventoryState::GetInstance()->GetRingSlot2(), InventoryState::GetInstance()->GetRingSlot3());
-			Total = (int)(((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) + m_nNumQtCorrect * 15 + (rand() % 10 - 5))));
-			((Player*)_From)->SetSpell3Cool(4);
+			Total = (int)((((mag.DamageComboElement(d2, ((Minion*)_To)->GetAffinity()) * 2 + m_nNumQtCorrect) * (pInventory->m_vRing[2].GetTier() * 5)) / (((Minion*)_To)->GetMods().ElemResistance.ElementTier) + (rand() % 10 - 5)));
+			((Player*)_From)->SetSpell3Cool(pInventory->m_vRing[2].GetTier());
 			break;
 		default:
 			break;
@@ -2250,7 +2285,7 @@ int CombatState::DealMagicDamage(Object* _From, Object* _To, int _spell)
 		{
 		case 0: //Earth
 			message += "Wind Gust";
-			Total = (((rand() % 5 + 7) * 5) - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
+			Total = ((rand() % 5 + 7) * 5 - (rand() % (((Minion*)_To)->GetMods().ElemResistance.ElementTier) * 3 + (rand() % 10 - 5)));
 			Total *= (int)(mag.DamagetoBaseElement(Elements::Air, ((Minion*)_To)->GetAffinity()));
 			((Minion*)_To)->SetHealth(((Minion*)_To)->GetHealth() - Total);
 			break;
@@ -2768,14 +2803,11 @@ bool CombatState::TakeTurn(Object* _this)
 											m_nCursor = 1;
 									}
 									else if (!spellActive)
-									{
 										SetAction("No Spells Available!");
-									}
 
 									//First Selection >> Action
 									if (pInput->IsKeyPressed(SGD::Key::Enter) || pInput->IsButtonPressed(0, 0))
 									{
-										//if
 										if (m_nCursor == 0)
 										{
 											ActionSelected = m_nCursor;
@@ -2788,7 +2820,6 @@ bool CombatState::TakeTurn(Object* _this)
 											selected = true;
 											m_nCursor = 0;
 										}
-
 										m_fArcadeTimer = 0.0f;
 									}
 								}
@@ -2857,7 +2888,6 @@ bool CombatState::TakeTurn(Object* _this)
 												return true;
 											}
 										}
-
 									}
 									else if (ActionSelected == 1) //Magic
 									{
@@ -2868,7 +2898,7 @@ bool CombatState::TakeTurn(Object* _this)
 
 											if (m_nCursor == 0)
 											{
-												PlayerSelection = { Spell1Rect.left - 50, Spell1Rect.top, Spell1Rect.right - 50, Spell1Rect.bottom};
+												PlayerSelection = { Spell1Rect.left - 50, Spell1Rect.top, Spell1Rect.right - 50, Spell1Rect.bottom };
 												CombatToolTip = 0;
 											}
 											else if (m_nCursor == 1)
@@ -2882,7 +2912,6 @@ bool CombatState::TakeTurn(Object* _this)
 												PlayerSelection = { Spell3Rect.left - 50, Spell3Rect.top, Spell3Rect.right - 50, Spell3Rect.bottom };
 												CombatToolTip = 2;
 											}
-
 											if (pInput->IsKeyPressed(SGD::Key::Up) || pInput->IsKeyPressed(SGD::Key::A) || ((pInput->GetLeftJoystick(0).x == -1 || pInput->IsKeyDown(SGD::Key::Down)) && m_fArcadeTimer >= 0.5f))
 											{
 												m_nCursor--;
@@ -2965,9 +2994,9 @@ bool CombatState::TakeTurn(Object* _this)
 												entered = true;
 
 												int xx = 0;
-												for (int i = 0; i < (int)InventoryState::GetInstance()->m_vSword.size(); i++)
+												for (int i = 0; i < (int)InventoryState::GetInstance()->m_vRing.size(); i++)
 												{
-													if (InventoryState::GetInstance()->m_vSword[i].GetElement() != None)
+													if (InventoryState::GetInstance()->m_vRing[i].GetElement() != None)
 														xx++;
 												}
 												if (xx == 0)

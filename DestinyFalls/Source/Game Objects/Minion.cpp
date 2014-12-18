@@ -236,7 +236,8 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("OrcElementalAttack2");
 				   break;
 			   case 1:
-				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack3");
+				   //this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack3");
+				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack1");
 				   break;
 			   case 2:
 				   this->GetTimeStamp()->SetCurrentAnimation("AirElementalAttack");
@@ -266,10 +267,10 @@ void Minion::SetMinionAnimation(int region, int minionType)
 				   this->GetTimeStamp()->SetCurrentAnimation("OrcElementalAttack2");
 				   break;
 			   case 1:
-				   this->GetTimeStamp()->SetCurrentAnimation("BehemothAttack1");
+				   this->GetTimeStamp()->SetCurrentAnimation("EarthEnemyAttack");
 				   break;
 			   case 2:
-				   this->GetTimeStamp()->SetCurrentAnimation("EarthEnemyAttack");
+				   this->GetTimeStamp()->SetCurrentAnimation("RockElementalAttack");
 				   break;
 			   case 3:
 				   this->GetTimeStamp()->SetCurrentAnimation("BombAttack1");
