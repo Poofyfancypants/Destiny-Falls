@@ -363,7 +363,7 @@ void Player::HandleCollision( const iObject* pOther )
 	}
 	if( pOther->GetType() == OBJ_CHEST )
 	{
-		if (pInput->IsKeyPressed(SGD::Key::Q) || pInput->IsButtonPressed(0, 4))
+		if (pInput->IsKeyPressed(SGD::Key::Q) || pInput->IsButtonPressed(0, 3))
 		{
 			if( ( (Chest*)pOther )->IsTrapped() )
 			{
